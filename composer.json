@@ -1,0 +1,41 @@
+{
+  "name": "wasabi-cms/core",
+  "description": "more information coming soon",
+  "type": "cakephp-plugin",
+  "keywords": ["cakephp", "wasabi", "cms", "core"],
+  "homepage": "https://github.com/wasabi-cms/core",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Frank Förster",
+      "homepage": "http://frankfoerster.com",
+      "role": "Author"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/wasabi-cms/core/issues",
+    "source": "https://github.com/wasabi-cms/core"
+  },
+  "require": {
+    "cakephp/cakephp": "~3.0"
+  },
+  "require-dev": {
+    "cakephp/cakephp-codesniffer": "dev-master",
+    "phpunit/phpunit": "~4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Wasabi\\Core\\": "src",
+      "Wasabi\\Core\\Test\\Fixture\\": "tests\\Fixture"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Cake\\Test\\": "vendor/cakephp/cakephp/tests",
+      "Wasabi\\Core\\Test\\": "tests"
+    }
+  },
+  "installer-params": {
+    "name": "Core"
+  }
+}
