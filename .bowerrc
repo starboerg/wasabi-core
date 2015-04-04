@@ -1,5 +1,5 @@
 {
   "analytics": true,
   "cwd": "src/Assets/js",
-  "directory": "src/Assets/js/vendor"
+  "directory": "src/Assets/vendor"
 }
