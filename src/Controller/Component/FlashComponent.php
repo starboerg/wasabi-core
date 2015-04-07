@@ -15,14 +15,39 @@
 namespace Wasabi\Core\Controller\Component;
 
 use \Cake\Controller\Component\FlashComponent as CakeFlashComponent;
+use Cake\Network\Exception\InternalErrorException;
 
 /**
  * Class FlashComponent
  *
- * @method void error() error(string $message, $options = [])
- * @method void success() success(string $message, $options = [])
- * @method void warning() warning(string $message, $options = [])
+ * @method void error() error(string $message, string $key = 'flash', boolean $dismiss = true)
+ * @method void success() success(string $message, string $key = 'flash', boolean $dismiss = true)
+ * @method void warning() warning(string $message, string $key = 'flash', boolean $dismiss = true)
  */
 class FlashComponent extends CakeFlashComponent
 {
+    public function __call($name, $args)
+    {
+        if (count($args) < 1) {
+            throw new InternalErrorException('Flash message missing.');
+        }
+
+        $message = $args[0];
+        $key = (isset($args[1]) && !empty($args[1])) ? $args[1] : 'flash';
+        $dismiss = isset($args[2]) ? $args[2] : true;
+        $params = [
+            'type' => $name,
+            'plugin' => 'Wasabi/Core'
+        ];
+
+        if ($dismiss === false) {
+            $params['class'] = 'flash-message--no-dismiss';
+        }
+
+        parent::set($message, [
+            'key' => $key,
+            'element' => 'default',
+            'params' => $params
+        ]);
+    }
 }

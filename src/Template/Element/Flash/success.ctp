@@ -1,1 +1,0 @@
-<div class="flash-message flash-message--success"><?= $message ?></div>

@@ -114,23 +114,23 @@ class UsersController extends BackendAppController
                         '<a href="' . Router::url(array('plugin' => 'Wasabi/Core', 'controller' => 'Users', 'action' => 'requestNewVerificationEmail')) . '">' . __d('wasabi_core', 'here') .'</a>'
                     );
                     unset($this->request->data['password']);
-                    $this->Flash->warning($message, ['key' => 'auth']);
+                    $this->Flash->warning($message, 'auth', false);
                 } elseif ((bool)$user['active'] === false) {
                     $message = __d(
                         'wasabi_core',
                         'Your account has not yet been activated. Once your account has been checked by an administrator, you will receive a notification email.'
                     );
                     unset($this->request->data['password']);
-                    $this->Flash->warning($message, ['key' => 'auth']);
+                    $this->Flash->warning($message, 'auth', false);
                 } else {
                     $this->Auth->setUser($user);
-                    $this->Flash->success(__d('wasabi_core', 'Welcome back <strong>{0}</strong>.', $user['username']), ['key' => 'auth']);
+                    $this->Flash->success(__d('wasabi_core', 'Welcome back <strong>{0}</strong>.', $user['username']), 'auth');
                     $this->redirect($this->Auth->redirectUrl());
                     return;
                 }
             } else {
                 unset($this->request->data['password']);
-                $this->Flash->error(__d('wasabi', 'Username or password is incorrect.'), ['key' => 'auth']);
+                $this->Flash->error(__d('wasabi', 'Username or password is incorrect.'), 'auth', false);
             }
         }
         $this->render(null, 'support');
