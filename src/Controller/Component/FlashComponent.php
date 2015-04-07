@@ -21,7 +21,7 @@ use \Cake\Controller\Component\FlashComponent as CakeFlashComponent;
  *
  * @method void error() error(string $message, $options = [])
  * @method void success() success(string $message, $options = [])
- * @method void warning() alert(string $message, $options = [])
+ * @method void warning() warning(string $message, $options = [])
  */
 class FlashComponent extends CakeFlashComponent
 {
