@@ -1,1 +1,4 @@
-.
+[![composer Dependency Status](https://www.versioneye.com/user/projects/5520772f529844625d00001b/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5520772f529844625d00001b)
+[![node.js Dependency Status](https://www.versioneye.com/user/projects/55207500529844e4f400000a/badge.svg?style=flat-squared)](https://www.versioneye.com/user/projects/55207500529844e4f400000a)
+[![JavaScript Dependency Status](https://www.versioneye.com/user/projects/5520756b5298444610000007/badge.svg?style=flat-squared)](https://www.versioneye.com/user/projects/5520756b5298444610000007)
+[![Software License](https://img.shields.io/packagist/l/wasabi-cms/core.svg?style=flat-square)](LICENSE.txt)
