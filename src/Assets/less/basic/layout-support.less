@@ -1,0 +1,154 @@
+@import (reference) "../__config";
+@import (reference) "../__colors";
+@import (reference) "../__mixins";
+
+.support {
+  background-color: #efefef;
+
+  .support-wrapper {
+    margin: 0 auto;
+    padding-top: 100px;
+    max-width: 600px;
+  }
+
+  h1 {
+    padding: 0 20px;
+    margin: 0;
+    color: #fff;
+    font-size: 1.7em;
+    font-weight: normal;
+    line-height: 2.2em;
+    background-color: #222;
+    border-bottom: 1px solid #000;
+  }
+
+  .support-content {
+    padding: 20px 20px 0;
+    background-color: #fff;
+  }
+
+  .form-controls {
+    border-width: 1px 0 0;
+    border-style: solid;
+    border-color: @borderLight;
+  }
+}
+
+.support.login {
+
+  .support-wrapper {
+    max-width: 340px;
+
+    img {
+      padding: 0 0 20px 50px;
+    }
+  }
+
+  .flash-message {
+    margin-bottom: 0;
+    padding: 15px 20px 14px;
+    border-width: 0 0 1px 0;
+  }
+
+  form {
+    border-left: 1px solid @borderMain;
+    border-top: 1px solid @borderMain;
+    .box-shadow(3px 3px 4px #bbb);
+
+    .lt-ie9 & {
+      border: 1px solid #ddd;
+    }
+  }
+
+  label {
+    font-family: 'open_sans_webfont_semibold';
+    font-weight: normal;
+  }
+
+  .input {
+    margin-bottom: 10px;
+
+    &.checkbox {
+      margin: 20px 0 0;
+      padding-bottom: 20px;
+    }
+  }
+
+  .lt-ie9 & {
+
+    input[type="password"] {
+      font-family: Arial;
+    }
+  }
+
+  .form-controls {
+    text-align: right;
+
+    button {
+      margin-right: 0;
+    }
+  }
+
+  .bottom-links {
+    padding: 20px;
+  }
+}
+
+.support.browser {
+
+  h1, p, .browsers li {
+    text-align: center;
+  }
+
+  .browsers {
+    padding-bottom: 20px;
+
+    a {
+      display: block;
+      padding: 8px;
+      border: 1px solid transparent;
+
+      &:hover {
+        border-color: #ddd;
+        background-color: #efefef;
+      }
+    }
+
+    i {
+      display: inline-block;
+      width: 128px;
+      height: 128px;
+      cursor: pointer;
+
+      &.ie {
+        margin-left: -20px;
+        //noinspection CssUnknownTarget
+        background-image: url("../img/browsers/ie9-10_128x128.png");
+      }
+
+      &.firefox {
+        //noinspection CssUnknownTarget
+        background-image: url(../img/browsers/firefox_128x128.png);
+      }
+
+      &.chrome {
+        //noinspection CssUnknownTarget
+        background-image: url(../img/browsers/chrome_128x128.png);
+      }
+    }
+  }
+}
+
+.support.error {
+
+  .support-wrapper {
+    max-width: 1000px;
+    margin-top: 100px;
+    padding: 20px;
+    background-color: #fff;
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+}

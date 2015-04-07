@@ -1,0 +1,179 @@
+table.list {
+  width: 100%;
+  border-bottom: 1px solid @borderLight;
+  //  border: 1px solid #d7d7d7;
+  //  border-bottom: 1px solid #e6e6e3;
+
+  th {
+    color: #333;
+    //    background-color: #eee;
+    background-color: @darkerGreyBg;//#ededee;
+    font-family: 'open_sans_webfont_semibold';
+    font-weight: normal;
+    text-align: left;
+    border-bottom: 1px solid @borderMain;
+
+    &.center {
+      text-align: center;
+    }
+  }
+
+  thead tr:first-child th {
+    border-top: none;
+  }
+
+  thead, tfoot {
+
+    tr {
+
+      th {
+        padding: 0 @computed-height--half;
+        line-height: (2 * @computed-height) - 2;
+
+        &:first-child {
+          border-left: 1px solid @borderMain;
+        }
+
+        &:last-child {
+          border-right: 1px solid @borderMain;
+        }
+
+        a {
+          color: #333;
+
+          span {
+            border-bottom: 1px dotted darken(@borderMain, 15%);
+          }
+
+          &:hover span {
+            border-color: #333;
+          }
+        }
+      }
+
+      &:first-child th {
+        border-top: 1px solid @borderMain;
+      }
+    }
+  }
+
+  tbody {
+
+    tr {
+
+      td {
+
+        &:first-child {
+          border-left: 1px solid @borderLight;
+        }
+
+        &:last-child {
+          border-right: 1px solid @borderLight;
+        }
+      }
+    }
+  }
+
+  tbody tr:first-child td {
+    border-top: none;
+  }
+
+  td {
+    border-top: 1px solid #e6e6e3;
+    padding: (@computed-height--half);
+  }
+
+  tr.new {
+    display: none;
+  }
+
+  tbody tr:hover td {
+    background-color: @rowHover;
+  }
+
+  tr.selected td {
+    background-color: @rowSelected;
+  }
+
+  tbody tr.selected:hover td {
+    background-color: @rowSelectedHover;
+  }
+
+  &.valign-middle td {
+    vertical-align: middle;
+  }
+
+  tr.valign-top td {
+    vertical-align: top;
+  }
+
+  .tselect input[type="checkbox"] {
+    margin: 0 0 0 8px;
+    vertical-align: middle;
+  }
+
+  &.nobb {
+    border-bottom: none;
+  }
+
+  tfoot tr th {
+    border-top: 1px solid #d7d7d7;
+  }
+
+  & + .form-controls {
+    border-top: none;
+  }
+
+  td.actions {
+
+    [class*="icon-"] {
+      line-height: 21px;
+      vertical-align: top;
+    }
+
+    a {
+      margin-left: 7px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+
+    .icon-edit:before {
+      top: 1px;
+    }
+
+    .icon-delete {
+      color: #c90000;
+    }
+  }
+
+}
+
+.field > table.list {
+  th, td {
+    font-size: 13px;
+  }
+
+  td {
+    padding: 8px;
+  }
+}
+
+.field > table.list, .field > .list-content {
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    display: block;
+  }
+
+  input[type="text"], input[type="password"], textarea {
+    padding: 4px;
+    font-size: 13px;
+  }
+
+  select {
+    font-size: 13px;
+    padding: 3px 4px;
+  }
+}

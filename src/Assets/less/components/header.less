@@ -1,0 +1,72 @@
+@import (reference) "../__config";
+@import (reference) "../__colors";
+@import (reference) "../__mixins";
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0 @computed-height 0 0;
+  background-color: @headerBg;
+  z-index: 9999;
+  min-width: @min-width;
+  width: 100%;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  & > ul {
+
+    & > li {
+      float: left;
+    }
+  }
+
+  .brand {
+    margin-left: @computed-height--half;
+    display: inline-block;
+    line-height: @header-height;
+    font-size: @computed-height;
+    color: #fff;
+  }
+
+  .back-to-frontend {
+    float: right;
+    margin-right: 20px;
+
+    a {
+      display: inline-block;
+      line-height: @header-height;
+      color: #fff;
+      padding: 0 14px;
+
+      &:hover,
+      &:focus {
+        background-color: @navToggle;
+      }
+    }
+  }
+
+  .toggle-nav {
+    display: inline-block;
+    line-height: @header-height;
+    color: #fff;
+    text-decoration: none;
+    background-color: @navToggle;
+    outline: none;
+
+    i {
+      display: inline-block;
+      width: 36px;
+      text-align: center;
+      .transform(translate(0, 5px));
+    }
+
+    body.nav-closed & {
+      background-color: transparent;
+    }
+  }
+}

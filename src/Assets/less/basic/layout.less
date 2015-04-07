@@ -1,0 +1,70 @@
+@import (reference) "../__colors";
+@import (reference) "../__config";
+@import (reference) "../__mixins";
+
+*, *:before, *:after {
+  .box-sizing(border-box);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font: @font-size~'/'@line-height @font-os;
+  color: #333;
+  background-color: @bodyBg;
+}
+
+nav {
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+a {
+  color: @link;
+  text-decoration: none;
+
+  &:hover {
+    color: @linkHover;
+  }
+}
+
+b, strong {
+  font-family: @font-os-semibold;
+  font-weight: normal;
+}
+
+.center {
+  text-align: center;
+}
+
+.valign-middle {
+  vertical-align: middle;
+}
+
+.accessibility {
+  display: none;
+}
+
+#wrapper {
+  width: 100%;
+  min-height: 100%;
+}
+
+#content {
+  margin-left: @aside-width;
+  padding: (@header-height + @computed-height) @computed-height (2 * @computed-height);
+
+  body.nav-closed & {
+    margin-left: 0;
+  }
+
+  @media only screen and (max-width: @menuBreakPoint) {
+    margin-left: @aside-width--collapsed;
+  }
+}

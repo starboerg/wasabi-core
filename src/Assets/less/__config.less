@@ -1,0 +1,26 @@
+//----------------------------------------------- FONT-SIZE ----------------------------------------------------------//
+@font-os: 'open_sans_webfont', sans-serif;
+@font-os-light: 'open_sans_webfont_light', sans-serif;
+@font-os-semibold: 'open_sans_webfont_semibold', sans-serif;
+
+@font-size: 14px;
+@line-height: 1.5;
+@computed-height: (@font-size * @line-height);
+@computed-height--half: floor(@computed-height / 2);
+
+//------------------------------------------------- SIZE -------------------------------------------------------------//
+@min-width: (34 * @computed-height);  // 714px
+@aside-width: (9 * @computed-height); // 189px 200px;
+@aside-width--collapsed: 37px;
+@header-height: 2 * @computed-height;
+
+//----------------------------------------------- BREAK POINTS -------------------------------------------------------//
+@menuBreakPoint: 900px;
+
+@zindex-navbar:            1000;
+@zindex-dropdown:          1000;
+@zindex-popover:           1060;
+@zindex-tooltip:           1070;
+@zindex-navbar-fixed:      1030;
+@zindex-modal-background:  1040;
+@zindex-modal:             1050;

@@ -1,0 +1,41 @@
+@import (reference) "../__config";
+@import (reference) "../__colors";
+@import (reference) "../__mixins";
+
+.user-menu {
+  float: right;
+
+  & > a {
+    padding: 0 @computed-height--half 0 @font-size;
+    display: inline-block;
+    line-height: @header-height;
+    color: #fff;
+
+    i {
+      display: inline-block;
+      position: relative;
+      margin-left: 5px;
+      width: 12px;
+      font-size: @font-size + 2px;
+      top: 3px;
+    }
+
+    &:hover,
+    &:focus {
+      background-color: @navToggle;
+    }
+  }
+
+  .dropdown-menu {
+    background-color: @navToggle;
+
+    a {
+      display: block;
+      color: #fff;
+
+      &:hover {
+        background-color: lighten(@navToggle, 7%);
+      }
+    }
+  }
+}
