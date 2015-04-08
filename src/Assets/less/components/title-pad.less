@@ -2,87 +2,88 @@
 @import (reference) "../__colors";
 @import (reference) "../__mixins";
 
-.title-pad {
+.titlepad {
   position: relative;
   margin: 0 0 @computed-height;
+}
 
-  .page-title {
-    margin: 0;
-    font-size: (@font-size * 2);
-    font-weight: normal;
-    color: #444;
+.titlepad-title {
+  margin: 0;
+  font-size: (@font-size * 2);
+  font-weight: normal;
+  color: #444;
+  letter-spacing: -1px;
 
-    small {
-      color: #888;
-      font-size: 14px;
-      font-weight: 300;
-      letter-spacing: 0;
+  small {
+    color: #888;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0;
+  }
+
+  .lang {
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 8px;
+    padding: 0 5px 2px;
+    font-size: 65%;
+    font-weight: 400;
+    background-color: #999;
+    color: #fff;
+    vertical-align: top;
+  }
+}
+
+.titlepad-actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a.add, a.sync {
+    display: block;
+    width: 61px;
+    height: (2 * @computed-height);
+    line-height: (2 * @computed-height);
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    .transition(background-color .1s linear .0s);
+  }
+
+  a.add {
+    background-color: #9cb800;
+
+    &:hover {
+      background-color: #aac600;
     }
 
-    .lang {
-      display: inline-block;
-      margin-left: 10px;
-      margin-top: 8px;
-      padding: 0 5px 2px;
-      font-size: 65%;
-      font-weight: 400;
-      background-color: #999;
-      color: #fff;
-      vertical-align: top;
+    i {
+      font-size: 16px;
     }
   }
 
-  .actions {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  a.sync {
+    background-color: #368EE0;
 
-    a.add, a.sync {
-      display: block;
-      width: 61px;
-      height: (2 * @computed-height);
-      line-height: (2 * @computed-height);
-      color: #fff;
-      font-size: 20px;
-      text-align: center;
-      .transition(background-color .1s linear .0s);
+    &:hover {
+      background-color: #39b1ff;
     }
 
-    a.add {
-      background-color: #9cb800;
-
-      &:hover {
-        background-color: #aac600;
-      }
-
-      i {
-        font-size: 16px;
-      }
+    i {
+      font-size: 36px;
+      .transform(translate(0, 0));
     }
+  }
 
-    a.sync {
-      background-color: #368EE0;
+  a.no-icon {
+    line-height: 60px;
+  }
 
-      &:hover {
-        background-color: #39b1ff;
-      }
-
-      i {
-        font-size: 36px;
-        .transform(translate(0, 0));
-      }
-    }
-
-    a.no-icon {
-      line-height: 60px;
-    }
-
-    [class^="icon-"] {
-      display: inline-block;
-      .transform(translate(0, -1px));
-    }
+  [class^="icon-"] {
+    display: inline-block;
+    .transform(translate(0, -1px));
   }
 }
