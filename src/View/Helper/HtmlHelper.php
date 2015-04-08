@@ -147,10 +147,10 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
         if ($this->_title === false) {
             return $out;
         }
-        $out .= '<div class="title-pad">';
+        $out .= '<div class="titlepad">';
         $out .= $this->_pageTitle($this->_title, $this->_subTitle);
         if (!empty($this->_actions)) {
-            $out .= '<ul class="actions">';
+            $out .= '<ul class="titlepad-actions">';
             foreach ($this->_actions as $action) {
                 $out .= '<li>' . $action . '</li>';
             }
@@ -196,7 +196,7 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
 
     protected function _pageTitle($title, $subtitle = false)
     {
-        $out = '<h1 class="page-title">' . $title;
+        $out = '<h1 class="titlepad-title">' . $title;
         if ($subtitle !== false) {
             $out .= ' <small>' . $subtitle . '</small>';
         }
