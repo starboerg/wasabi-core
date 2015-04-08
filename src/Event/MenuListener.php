@@ -50,7 +50,7 @@ class MenuListener implements EventListenerInterface
         $menu
             ->addMenuItem([
                 'alias' => 'dashboard',
-                'name' => __d('wasabi', 'Dashboard'),
+                'name' => __d('wasabi_core', 'Dashboard'),
                 'priority' => 1,
                 'url' => [
                     'plugin' => 'Wasabi/Core',
@@ -61,13 +61,13 @@ class MenuListener implements EventListenerInterface
             ])
             ->addMenuItem([
                 'alias' => 'content',
-                'name' => __d('wasabi', 'Content'),
+                'name' => __d('wasabi_core', 'Content'),
                 'priority' => 1000,
                 'icon' => 'icon-layers',
             ])
             ->addMenuItem([
                 'alias' => 'menus',
-                'name' => __d('wasabi', 'Menus'),
+                'name' => __d('wasabi_core', 'Menus'),
                 'priority' => 2000,
                 'url' => [
                     'plugin' => 'Wasabi/Core',
@@ -78,7 +78,7 @@ class MenuListener implements EventListenerInterface
             ])
             ->addMenuItem([
                 'alias' => 'media',
-                'name' => __d('wasabi', 'Media'),
+                'name' => __d('wasabi_core', 'Media'),
                 'priority' => 3000,
                 'url' => [
                     'plugin' => 'Wasabi/Core',
@@ -89,13 +89,13 @@ class MenuListener implements EventListenerInterface
             ])
             ->addMenuItem([
                 'alias' => 'administration',
-                'name' => __d('wasabi', 'Administration'),
+                'name' => __d('wasabi_core', 'Administration'),
                 'priority' => 4000,
                 'icon' => 'icon-settings'
             ])
             ->addMenuItem([
                 'alias' => 'users',
-                'name' => __d('wasabi', 'Users'),
+                'name' => __d('wasabi_core', 'Users'),
                 'priority' => 100,
                 'parent' => 'administration',
                 'url' => [
@@ -106,7 +106,7 @@ class MenuListener implements EventListenerInterface
             ])
             ->addMenuItem([
                 'alias' => 'groups',
-                'name' => __d('wasabi', 'Groups'),
+                'name' => __d('wasabi_core', 'Groups'),
                 'priority' => 200,
                 'parent' => 'administration',
                 'url' => [
@@ -117,7 +117,7 @@ class MenuListener implements EventListenerInterface
             ])
             ->addMenuItem([
                 'alias' => 'languages',
-                'name' => __d('wasabi', 'Languages'),
+                'name' => __d('wasabi_core', 'Languages'),
                 'priority' => 300,
                 'parent' => 'administration',
                 'url' => [
@@ -128,7 +128,7 @@ class MenuListener implements EventListenerInterface
             ])
             ->addMenuItem([
                 'alias' => 'plugins',
-                'name' => __d('wasabi', 'Plugins'),
+                'name' => __d('wasabi_core', 'Plugins'),
                 'priority' => 400,
                 'parent' => 'administration',
                 'url' => [
@@ -139,7 +139,7 @@ class MenuListener implements EventListenerInterface
             ])
             ->addMenuItem([
                 'alias' => 'permissions',
-                'name' => __d('wasabi', 'Permissions'),
+                'name' => __d('wasabi_core', 'Permissions'),
                 'priority' => 500,
                 'parent' => 'administration',
                 'url' => [
@@ -150,13 +150,13 @@ class MenuListener implements EventListenerInterface
             ])
             ->addMenuItem([
                 'alias' => 'settings',
-                'name' => __d('wasabi', 'Settings'),
+                'name' => __d('wasabi_core', 'Settings'),
                 'priority' => 5000,
                 'icon' => 'icon-spanner'
             ])
             ->addMenuItem([
                 'alias' => 'settings_general',
-                'name' => __d('wasabi', 'General'),
+                'name' => __d('wasabi_core', 'General'),
                 'priority' => 100,
                 'parent' => 'settings',
                 'url' => [
@@ -168,7 +168,7 @@ class MenuListener implements EventListenerInterface
             ])
             ->addMenuItem([
                 'alias' => 'settings_cache',
-                'name' => __d('wasabi', 'Cache'),
+                'name' => __d('wasabi_core', 'Cache'),
                 'priority' => 200,
                 'parent' => 'settings',
                 'url' => [
@@ -180,7 +180,7 @@ class MenuListener implements EventListenerInterface
             ])
             ->addMenuItem([
                 'alias' => 'settings_media',
-                'name' => __d('wasabi', 'Media'),
+                'name' => __d('wasabi_core', 'Media'),
                 'priority' => 300,
                 'parent' => 'settings',
                 'url' => [
