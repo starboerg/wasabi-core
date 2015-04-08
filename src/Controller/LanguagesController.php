@@ -12,18 +12,15 @@
  */
 namespace Wasabi\Core\Controller;
 
-use Wasabi\Core\Model\Entity\Language;
-use Wasabi\Core\Model\Table\LanguagesTable;
-
 /**
  * Class LanguagesController
  *
- * @property LanguagesTable $Languages
+ * @property \Wasabi\Core\Model\Table\LanguagesTable $Languages
  */
 class LanguagesController extends BackendAppController
 {
     /**
-     * Initialization of this controller.
+     * Initialization hook method.
      */
     public function initialize()
     {
@@ -36,8 +33,8 @@ class LanguagesController extends BackendAppController
      */
     public function index()
     {
-        $languages = $this->Languages->find('all')->hydrate(false);
+        $languages = $this->Languages->find('allFrontendBackend')->hydrate(false);
         $this->set('languages', $languages);
-        $this->set('language', new Language());
+        $this->set('language', $this->Languages->newEntity());
     }
 }

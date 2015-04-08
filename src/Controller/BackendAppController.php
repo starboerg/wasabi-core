@@ -14,8 +14,11 @@
  */
 namespace Wasabi\Core\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Controller\Component\AuthComponent;
+use Cake\Core\Configure;
 use Cake\Event\Event;
+use Wasabi\Core\Model\Table\LanguagesTable;
 use Wasabi\Core\Nav;
 
 /**
@@ -41,6 +44,27 @@ class BackendAppController extends AppController
             'className' => 'Wasabi/Core.Guardian'
         ]
     ];
+
+    /**
+     * Default Flash message when form errors are present.
+     *
+     * @var string
+     */
+    public $formErrorMessage;
+
+    /**
+     * Default Flash message when a request is invalid.
+     *
+     * @var string
+     */
+    public $invalidRequestMessage;
+
+    /**
+     * The name of the View class this controller sends output to.
+     *
+     * @var string
+     */
+    public $viewClass = 'Wasabi/Core.App';
 
     /**
      * initialization hook method
@@ -76,7 +100,9 @@ class BackendAppController extends AppController
         // Load all menu items from all plugins.
         $this->eventManager()->dispatch(new Event('Wasabi.Backend.Menu.initMain', Nav::createMenu('backend.main')));
 
-        $this->viewClass = 'Wasabi/Core.App';
+        // Setup default flash messages.
+        $this->formErrorMessage = __d('wasabi_core', 'Please correct the marked errors.');
+        $this->invalidRequestMessage = __d('wasabi_core', 'Invalid Request.');
     }
 
     /**
@@ -94,6 +120,9 @@ class BackendAppController extends AppController
         }
 
         $this->_allow();
+        $this->_setupLanguages();
+
+        $this->set('formTemplates', Configure::read('Wasabi.Form.Templates'));
     }
 
     /**
@@ -126,5 +155,24 @@ class BackendAppController extends AppController
         if ($this->Guardian->isGuestAction($url)) {
             $this->Auth->allow($this->request->params['action']);
         }
+    }
+
+    /**
+     * Load and setup all languages and language related config options.
+     */
+    protected function _setupLanguages()
+    {
+        $languages = Cache::remember('languages', function() {
+            /** @var LanguagesTable $Languages */
+            $Languages = $this->loadModel('Wasabi/Core.Languages');
+            $langs = $Languages->find('allFrontendBackend')->all();
+
+            return [
+                'frontend' => $Languages->filterFrontend($langs)->toArray(),
+                'backend' => $Languages->filterBackend($langs)->toArray()
+            ];
+        }, 'wasabi/core/longterm');
+
+        Configure::write('languages', $languages);
     }
 }

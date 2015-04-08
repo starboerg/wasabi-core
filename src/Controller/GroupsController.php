@@ -90,6 +90,9 @@ class GroupsController extends BackendAppController
         ]
     ];
 
+    /**
+     * Initialization hook method.
+     */
     public function initialize()
     {
         parent::initialize();
@@ -104,5 +107,24 @@ class GroupsController extends BackendAppController
     {
         $groups = $this->Groups->find('all')->hydrate(false);
         $this->set('groups', $groups);
+    }
+
+    /**
+     * Add action
+     * GET | POST
+     */
+    public function add() {
+        $group = $this->Groups->newEntity();
+        if ($this->request->is('post') && !empty($this->request->data)) {
+            $this->Groups->patchEntity($group, $this->request->data);
+            if ($this->Groups->save($group)) {
+                $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been added.', array($this->request->data['Group']['name'])));
+                $this->redirect(array('action' => 'index'));
+                return;
+            } else {
+                $this->Flash->error($this->formErrorMessage);
+            }
+        }
+        $this->set('group', $group);
     }
 }
