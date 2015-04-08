@@ -2,7 +2,7 @@
 @import (reference) "../__mixins";
 
 @font-face {
-  @icomoon-key: '2kkmci';
+  @icomoon-key: '-9uaun7';
   font-family: 'icomoon';
   src:url('../fonts/icomoon/icomoon.eot?@{icomoon-key}');
   src:url('../fonts/icomoon/icomoon.eot?#iefix@{icomoon-key}') format('embedded-opentype'),
@@ -50,6 +50,14 @@
 
 .icon-arrow-right:before {
   content: "\e60e";
+}
+
+.icon-arrow-down3:before {
+  content: "\e612";
+}
+
+.icon-arrow-up3:before {
+  content: "\e613";
 }
 
 .icon-image:before {
@@ -100,20 +108,39 @@
   content: "\e611";
 }
 
+.icon-move:before {
+  content: "\e614";
+}
+
+.icon-move-alt1:before {
+  content: "\e615";
+}
+
 .icon-plus:before {
   content: "\ea0a";
 }
 
-.a-icon-move-vertical {
-  padding-left: 16px;
-  //noinspection CssUnknownTarget
-  background: url('../img/move-vertical.png') no-repeat scroll 0 7px;
-  line-height: 0;
+.icon-move-vertical {
+  display: inline-block;
+  position: relative;
+  left: -8px;
+  content: " ";
+  font-size: @font-size + 2px;
+
+  &:before {
+    position: absolute;
+    content: "\e613";
+  }
+
+  &:after {
+    position: absolute;
+    content: "\e612";
+    top: 1px;
+  }
 }
 
 [class*="icon-sortable"] {
   display: inline-block;
-  font-family: 'icomoon';
   font-size: @font-size + 2px;
   content: " ";
   position: relative;
