@@ -92,6 +92,9 @@ class UsersController extends BackendAppController
         ]
     ];
 
+    /**
+     * Initialization hook method.
+     */
     public function initialize()
     {
         parent::initialize();
@@ -130,7 +133,7 @@ class UsersController extends BackendAppController
                 }
             } else {
                 unset($this->request->data['password']);
-                $this->Flash->error(__d('wasabi', 'Username or password is incorrect.'), 'auth', false);
+                $this->Flash->error(__d('wasabi_core', 'Username or password is incorrect.'), 'auth', false);
             }
         }
         $this->render(null, 'support');
@@ -156,11 +159,11 @@ class UsersController extends BackendAppController
         if ($this->request->is('post')) {
             $user->set('group_id', 1);
             if ($this->Users->save($user)) {
-                $this->Flash->success(__d('wasabi', 'The user has been saved.'));
+                $this->Flash->success(__d('wasabi_core', 'The user has been saved.'));
                 $this->redirect(['action' => 'register']);
                 return;
             }
-            $this->Flash->error(__d('wasabi', 'Unable to add the user.'));
+            $this->Flash->error(__d('wasabi_core', 'Unable to add the user.'));
         }
         $this->set('user', $user);
     }
@@ -171,7 +174,7 @@ class UsersController extends BackendAppController
      */
     public function index()
     {
-        $users = $this->Users->find('all')->contain('Groups')->hydrate(false);
+        $users = $this->Users->find('withGroupName')->hydrate(false);
         $this->set('users', $users);
     }
 
