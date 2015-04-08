@@ -14,6 +14,17 @@ namespace Wasabi\Core\Model\Entity;
 
 use Cake\ORM\Entity;
 
+/**
+ * Class Language
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $iso2
+ * @property string $iso3
+ * @property string $lang
+ * @property bool $available_at_backend
+ * @property bool $available_at_frontend
+ */
 class Language extends Entity
 {
     /**
