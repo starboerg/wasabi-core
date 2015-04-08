@@ -16,6 +16,11 @@ use Cake\ORM\Table;
 
 class GroupsTable extends Table
 {
+    /**
+     * Initialize a table instance. Called after the constructor.
+     *
+     * @param array $config Configuration options passed to the constructor
+     */
     public function initialize(array $config)
     {
         $this->hasMany('Users', [

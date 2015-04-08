@@ -17,6 +17,11 @@ use Cake\ORM\Table;
 
 class GroupPermissionsTable extends Table
 {
+    /**
+     * Initialize a table instance. Called after the constructor.
+     *
+     * @param array $config Configuration options passed to the constructor
+     */
     public function initialize(array $config)
     {
         $this->belongsTo('Groups', [
