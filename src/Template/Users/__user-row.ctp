@@ -1,4 +1,9 @@
-<tr<?= $class ?>>
+<?php
+/**
+ * @var \Wasabi\Core\View\AppView $this
+ * @var array $u user
+ */
+?><tr<?= $class ?>>
     <td class="center"><?= $u['id'] ?></td>
     <td>
         <?php
@@ -62,6 +67,7 @@
         <?php
         if ($u['id'] != $this->request->session()->read('User.id') && $u['id'] != 1) {
             echo $this->Guardian->protectedConfirmationLink('<i class="icon-delete"></i>', '/backend/users/delete/' . $u['id'], [
+                'class' => 'action-delete',
                 'title' => 'Diesen Benutzer löschen',
                 'confirm-message' => __d('wasabi_core', 'Benutzer <strong>{0}</strong> wirklich löschen?', $u['username']),
                 'confirm-title' => __d('wasabi_core', 'Confirm Deletion'),

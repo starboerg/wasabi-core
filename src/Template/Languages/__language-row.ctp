@@ -1,4 +1,10 @@
-<tr<?= $class ?>>
+<?php
+/**
+ * @var \Wasabi\Core\View\AppView $this
+ * @var array $lang language
+ * @var integer $key
+ */
+?><tr<?= $class ?>>
     <td class="center">
         <?= $this->Form->input('Language.' . $key . '.id', ['type' => 'hidden', 'value' => $lang['id']]) ?>
         <?= $this->Form->input('Language.' . $key . '.position', ['type' => 'hidden', 'value' => $lang['position'], 'class' => 'position']) ?>
@@ -26,7 +32,7 @@
     </td>
     <td class="actions center">
         <?php
-        echo $this->Html->link(__d('wasabi_core', 'sort'), 'javascript:void(0)', ['title' => __d('wasabi_core', 'Change the position of this Language'), 'class' => 'wicon-sort sort']);
+        echo $this->Html->link('<i class="icon-move-vertical"></i>', 'javascript:void(0)', ['title' => __d('wasabi_core', 'Change the position of this Language'), 'class' => 'action-sort', 'escapeTitle' => false]);
         if (!in_array($lang['id'], [1, 2])) {
             echo $this->Html->backendConfirmationLink(__d('wasabi_core', 'delete'), '/backend/languages/delete/' . $lang['id'], [
                 'title' => __d('wasabi_core', 'Delete language "{0}"', $lang['name']),
