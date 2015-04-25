@@ -1276,12 +1276,13 @@ div.error-message {
   border-width: 0 1px;
 }
 .form-row > label {
-  float: left;
-  min-width: 200px;
-  width: 100%;
-  vertical-align: top;
-  font-weight: 600;
   padding: 27px 20px 20px;
+  float: left;
+  width: 100%;
+  min-width: 200px;
+  font-family: 'open_sans_webfont_semibold', sans-serif;
+  font-weight: normal;
+  vertical-align: top;
 }
 .form-row > .field {
   float: none;
