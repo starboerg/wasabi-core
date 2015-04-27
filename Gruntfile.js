@@ -36,13 +36,13 @@ module.exports = function(grunt) {
         'src/Assets/js/**/*.js'
       ]
     },
-    browserifyBowerResolve: {
+    browserifyResolve: {
       options: {
         bower: grunt.file.readJSON('bower.json'),
         pkg: grunt.file.readJSON('package.json')
       },
       common: {
-        bowerOnly: true,
+        vendorOnly: true,
         dest: 'webroot/js/common.js'
       },
       core: {
@@ -80,11 +80,11 @@ module.exports = function(grunt) {
       },
       commonjs: {
         files: ['src/vendor/**/*.js'],
-        tasks: ['browserifyBowerResolve:common']
+        tasks: ['browserifyResolve:common']
       },
       appjs: {
         files: ['src/Assets/js/**/*.js'],
-        tasks: ['jshint:core', 'browserifyBowerResolve:core']
+        tasks: ['jshint:core', 'browserifyResolve:core']
       }
     }
 
@@ -95,13 +95,12 @@ module.exports = function(grunt) {
     'less:compile',
     'cssmin:core',
     'jshint:core',
-    'browserifyBowerResolve:common',
-    'browserifyBowerResolve:core',
+    'browserifyResolve:common',
+    'browserifyResolve:core',
     'uglify:all'
   ]);
 
-  grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-browserify-bower-resolve');
+  grunt.loadNpmTasks('grunt-browserify-resolve');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
