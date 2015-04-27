@@ -121,8 +121,6 @@ class BackendAppController extends AppController
 
         $this->_allow();
         $this->_setupLanguages();
-
-        $this->set('formTemplates', Configure::read('Wasabi.Form.Templates'));
     }
 
     /**

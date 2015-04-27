@@ -34,12 +34,26 @@ class AppView extends \App\View\AppView
     public $sortFields;
     public $defaultSort;
 
-    public function __construct(
-        Request $request = null,
-        Response $response = null,
-        EventManager $eventManager = null,
-        array $viewOptions = []
-    )
+    public function initialize()
+    {
+        if (join('.', [
+                $this->request->params['plugin'],
+                $this->request->params['controller'],
+                $this->request->params['action']
+            ]) !== 'Wasabi/Core.Users.login'
+        ) {
+            $this->loadHelper('Form', [
+                'templates' => 'Wasabi/Core.form_templates',
+                'widgets' => [
+                    'label' => ['Wasabi\Core\View\Widget\LabelWidget'],
+                    'section' => ['Wasabi\Core\View\Widget\SectionWidget'],
+                    '_default' => ['Wasabi\Core\View\Widget\BasicWidget']
+                ]
+            ]);
+        }
+    }
+
+    public function __construct(Request $request = null, Response $response = null, EventManager $eventManager = null, array $viewOptions = [])
     {
         parent::__construct($request, $response, $eventManager, $viewOptions);
 //		if (isset($controller->Filter)) {

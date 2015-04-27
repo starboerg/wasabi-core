@@ -26,8 +26,6 @@ try {
     foreach (Configure::consume('Cache') as $key => $config) {
         Cache::config($key, $config);
     }
-    // Load the Wasabi Core Form templates
-    Configure::load('Wasabi/Core.form_templates', 'default');
 } catch (\Exception $e) {
     die($e->getMessage() . "\n");
 }
