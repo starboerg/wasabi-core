@@ -24,10 +24,4 @@ class Group extends Entity
     protected $_accessible = [
         '*' => true
     ];
-
-    public $hasMany = [
-        'User' => [
-            'className' => 'Wasabi/Core.User'
-        ]
-    ];
 }

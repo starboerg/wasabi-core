@@ -12,6 +12,8 @@
  */
 namespace Wasabi\Core\Controller;
 
+use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\Network\Exception\NotFoundException;
 use Wasabi\Core\Model\Table\GroupsTable;
 
 /**
@@ -113,18 +115,50 @@ class GroupsController extends BackendAppController
      * Add action
      * GET | POST
      */
-    public function add() {
+    public function add()
+    {
         $group = $this->Groups->newEntity();
         if ($this->request->is('post') && !empty($this->request->data)) {
             $this->Groups->patchEntity($group, $this->request->data);
             if ($this->Groups->save($group)) {
-                $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been added.', array($this->request->data['Group']['name'])));
-                $this->redirect(array('action' => 'index'));
+                $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been created.', $this->request->data['name']));
+                $this->redirect(['action' => 'index']);
                 return;
             } else {
                 $this->Flash->error($this->formErrorMessage);
             }
         }
         $this->set('group', $group);
+    }
+
+    /**
+     * Edit action
+     * GET | PUT
+     *
+     * @param int|string $id
+     */
+    public function edit($id)
+    {
+        if (!$id || !$this->Groups->exists(['id' => $id])) {
+            throw new NotFoundException();
+        }
+        if (!$this->request->is(['get', 'put'])) {
+            throw new MethodNotAllowedException();
+        }
+
+        $group = $this->Groups->get($id);
+
+        if ($this->request->is('put')) {
+            $group = $this->Groups->patchEntity($group, $this->request->data);
+            if ($this->Groups->save($group)) {
+                $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been saved.', $this->request->data['name']));
+                $this->redirect(['action' => 'index']);
+                return;
+            } else {
+                $this->Flash->error($this->formErrorMessage);
+            }
+        }
+        $this->set('group', $group);
+        $this->render('add');
     }
 }

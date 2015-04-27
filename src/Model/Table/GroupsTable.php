@@ -12,7 +12,9 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Validation\Validator;
 
 class GroupsTable extends Table
 {
@@ -31,5 +33,29 @@ class GroupsTable extends Table
         ]);
 
         $this->addBehavior('Timestamp');
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param Validator $validator
+     * @return Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notEmpty('name', __d('wasabi_core', 'Please enter a name for the group.'));
+        return $validator;
+    }
+
+    /**
+     * Pre persistence rules.
+     *
+     * @param RulesChecker $rules
+     * @return RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['name'], __d('wasabi_core', 'Another group with this name already exists.')));
+        return $rules;
     }
 }

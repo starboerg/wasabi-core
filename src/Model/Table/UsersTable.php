@@ -12,9 +12,17 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use ArrayObject;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use Cake\Validation\Validator;
 
+/**
+ * Class UsersTable
+ * @property GroupsTable Groups
+ * @package Wasabi\Core\Model\Table
+ */
 class UsersTable extends Table
 {
     /**
@@ -30,6 +38,71 @@ class UsersTable extends Table
 
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
         $this->addBehavior('Timestamp');
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param Validator $validator
+     * @return Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        return $validator
+            ->notEmpty('username', __d('wasabi_core', 'Please enter a username.'))
+            ->notEmpty('email', __d('wasabi_core', 'Please enter an email address.'))
+            ->add('email', [
+                'email' => [
+                    'rule' => 'email',
+                    'message' => __d('wasabi_core', 'Please enter a valid email address.')
+                ]
+            ])
+            ->notEmpty('group_id', __d('wasabi_core', 'Please select a group this user belongs to.'))
+            ->notEmpty('password', __d('wasabi_core', 'Please enter a password.'), 'create')
+            ->add('password', [
+                'length' => [
+                    'rule'=> ['minLength', 6],
+                    'message' => __d('wasabi_core', 'Ensure your password consists of at least 6 characters.')
+                ]
+            ])
+            ->notEmpty('password_confirmation', __d('wasabi_core', 'Please repeat your Password.'), function ($context) {
+                if ($context['newRecord'] === true) {
+                    return true;
+                }
+                if (isset($context['data']['password']) && !empty($context['data']['password'])) {
+                    return true;
+                }
+                return false;
+            })
+            ->add('password_confirmation', 'equalsPassword', [
+                'rule' => function ($passwordConfirmation, $provider) {
+                    if ($passwordConfirmation !== $provider['data']['password']) {
+                        return __d('wasabi_core', 'The Password Confirmation does not match the Password field.');
+                    }
+                    return true;
+                }
+            ]);
+    }
+
+    /**
+     * Called before request data is converted to an entity.
+     *
+     * @param Event $event
+     * @param ArrayObject $data
+     * @param ArrayObject $options
+     */
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+        if (isset($data['id'])) {
+            // Unset password and password confirmation if password is empty when editing a user.
+            if (isset($data['password']) && empty($data['password'])) {
+                unset($data['password']);
+
+                if (isset($data['password_confirmation'])) {
+                    unset($data['password_confirmation']);
+                }
+            }
+        }
     }
 
     /**
@@ -58,6 +131,7 @@ class UsersTable extends Table
                 'id',
                 'username',
                 'email',
+                'verified',
                 'active'
             ])
             ->contain([

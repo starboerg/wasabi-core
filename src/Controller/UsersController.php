@@ -12,6 +12,8 @@
  */
 namespace Wasabi\Core\Controller;
 
+use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
 use Wasabi\Core\Model\Table\UsersTable;
 
@@ -176,6 +178,71 @@ class UsersController extends BackendAppController
     {
         $users = $this->Users->find('withGroupName')->hydrate(false);
         $this->set('users', $users);
+    }
+
+    /**
+     * Add action
+     * GET | POST
+     */
+    public function add()
+    {
+        $user = $this->Users->newEntity();
+        $groups = $this->Users->Groups->find('list');
+        if ($this->request->is('post') && !empty($this->request->data)) {
+            $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__d('wasabi_core', 'The user <strong>{0}</strong> has been created.', $this->request->data['username']));
+                $this->redirect(['action' => 'index']);
+                return;
+            } else {
+                $this->Flash->error($this->formErrorMessage);
+            }
+        }
+        $this->set([
+            'user' => $user,
+            'groups' => $groups
+        ]);
+    }
+
+    /**
+     * Edit action
+     * GET | PUT
+     *
+     * @param string $id
+     */
+    public function edit($id)
+    {
+        if (!$id || !$this->Users->exists(['id' => $id])) {
+            throw new NotFoundException();
+        }
+        if (!$this->request->is(['get', 'put'])) {
+            throw new MethodNotAllowedException();
+        }
+
+        $user = $this->Users->get($id, [
+            'fields' => [
+                'id',
+                'username',
+                'email',
+                'group_id'
+            ]
+        ]);
+        $groups = $this->Users->Groups->find('list');
+        if ($this->request->is('put')) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__d('wasabi_core', 'The user <strong>{0}</strong> has been saved.', $this->request->data['username']));
+                $this->redirect(['action' => 'index']);
+                return;
+            } else {
+                $this->Flash->error($this->formErrorMessage);
+            }
+        }
+        $this->set([
+            'user' => $user,
+            'groups' => $groups
+        ]);
+        $this->render('add');
     }
 
     public function unauthorized()

@@ -24,10 +24,4 @@ class GroupPermission extends Entity
     protected $_accessible = [
         '*' => true
     ];
-
-    public $belongsTo = [
-        'Group' => [
-            'className' => 'Wasabi/Core.Group'
-        ]
-    ];
 }
