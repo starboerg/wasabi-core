@@ -3,6 +3,8 @@
 @import (reference) '../__mixins';
 
 label {
+  font-family: @font-os-semibold;
+  font-weight: normal;
   cursor: pointer;
 
   .form-row.required &:before {
@@ -18,12 +20,13 @@ label {
   small {
     color: #888;
     display: block;
-    font-size: 80%;
+    font-family: @font-os;
     font-weight: normal;
+    font-size: 80%;
   }
 }
 
-input[type="text"], input[type="password"], input[type="number"], textarea {
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea {
   background-attachment: scroll;
   background-clip: border-box;
   background-color: #fff;
@@ -116,8 +119,6 @@ span.error-message, div.error-message {
     float: left;
     width: 100%;
     min-width: 200px;
-    font-family: @font-os-semibold;
-    font-weight: normal;
     vertical-align: top;
   }
 
@@ -178,8 +179,13 @@ span.error-message, div.error-message {
 }
 
 .form-row.error, div.input.error {
-  input[type="text"], input[type="password"], textarea, select {
-    border-color: #990000;
+
+  input[type="text"], input[type="email"], input[type="password"], textarea, select {
+    border-color: @errorColor;
+  }
+
+  & > label {
+    color: @errorColor;
   }
 }
 

@@ -474,6 +474,9 @@ th {
 .icon-cross:before {
   content: "\e611";
 }
+.icon-delete:before {
+  content: "\e611";
+}
 .icon-move:before {
   content: "\e614";
 }
@@ -522,6 +525,24 @@ th {
 }
 .icon-sortable-desc:after {
   color: #888;
+}
+.cursor--help {
+  cursor: help;
+}
+.cursor--default {
+  cursor: default;
+}
+.xdebug-var-dump {
+  z-index: 99999;
+  background-color: #fff;
+}
+.cake-error ~ header,
+.xdebug-var-dump ~ header {
+  position: static;
+}
+.cake-error ~ #wrapper aside,
+.xdebug-var-dump ~ #wrapper aside {
+  position: static;
 }
 .dropup,
 .dropdown {
@@ -969,19 +990,16 @@ body.nav-closed aside {
     box-shadow: none;
   }
 }
-[class*="flash-message"],
-[class*="message"] {
+[class*="flash-message"] {
   position: relative;
   border: 1px solid #ddd;
   margin-bottom: 20px;
   padding: 10px 35px 10px 15px;
 }
-[class*="flash-message"].flash-message--no-dismiss,
-[class*="message"].flash-message--no-dismiss {
+[class*="flash-message"].flash-message--no-dismiss {
   padding: 10px 15px;
 }
-[class*="flash-message"].flash-message--no-dismiss .dismiss-flash,
-[class*="message"].flash-message--no-dismiss .dismiss-flash {
+[class*="flash-message"].flash-message--no-dismiss .dismiss-flash {
   display: none;
 }
 .dismiss-flash {
@@ -995,7 +1013,7 @@ body.nav-closed aside {
 .flash-message--error,
 .message--error {
   background-color: #f2dede;
-  border: 1px solid #990000;
+  border: 1px solid #d49494;
   color: #990000;
 }
 .flash-message--error a,
@@ -1164,6 +1182,8 @@ body.nav-closed aside {
   background-color: #9cb800;
 }
 label {
+  font-family: 'open_sans_webfont_semibold', sans-serif;
+  font-weight: normal;
   cursor: pointer;
 }
 .form-row.required label:before {
@@ -1178,10 +1198,12 @@ label {
 label small {
   color: #888;
   display: block;
-  font-size: 80%;
+  font-family: 'open_sans_webfont', sans-serif;
   font-weight: normal;
+  font-size: 80%;
 }
 input[type="text"],
+input[type="email"],
 input[type="password"],
 input[type="number"],
 textarea {
@@ -1205,6 +1227,7 @@ textarea {
   max-width: 900px;
 }
 input[type="text"]:focus,
+input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="number"]:focus,
 textarea:focus {
@@ -1215,6 +1238,7 @@ textarea:focus {
   /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
 }
 input[type="text"]:disabled,
+input[type="email"]:disabled,
 input[type="password"]:disabled,
 input[type="number"]:disabled,
 textarea:disabled {
@@ -1251,7 +1275,7 @@ div.error-message {
   border-collapse: separate;
 }
 .input-group > input.form-error {
-  border: 1px solid #990000;
+  border: 1px solid #d49494;
 }
 .input-group > .input-group-addon {
   padding: 5px 7px 6px 5px;
@@ -1280,8 +1304,6 @@ div.error-message {
   float: left;
   width: 100%;
   min-width: 200px;
-  font-family: 'open_sans_webfont_semibold', sans-serif;
-  font-weight: normal;
   vertical-align: top;
 }
 .form-row > .field {
@@ -1330,6 +1352,8 @@ div.error-message {
 }
 .form-row.error input[type="text"],
 div.input.error input[type="text"],
+.form-row.error input[type="email"],
+div.input.error input[type="email"],
 .form-row.error input[type="password"],
 div.input.error input[type="password"],
 .form-row.error textarea,
@@ -1337,6 +1361,10 @@ div.input.error textarea,
 .form-row.error select,
 div.input.error select {
   border-color: #990000;
+}
+.form-row.error > label,
+div.input.error > label {
+  color: #990000;
 }
 form.no-top-section {
   border-top: 1px solid #e3e5e6;
