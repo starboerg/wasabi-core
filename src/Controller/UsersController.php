@@ -245,6 +245,36 @@ class UsersController extends BackendAppController
         $this->render('add');
     }
 
+    /**
+     * Delete action
+     * POST
+     *
+     * @param string $id
+     */
+    public function delete($id)
+    {
+        if (!$id || !$this->Users->exists($id)) {
+            throw new NotFoundException();
+        }
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+
+        $user = $this->Users->get($id);
+        if ($this->Users->delete($user)) {
+            $this->Flash->success(__d('wasabi_core', 'The user <strong>{0}</strong> has been deleted.', $user->username));
+        } else {
+            $this->Flash->error($this->dbErrorMessage);
+        }
+
+        $this->redirect(['action' => 'index']);
+        return;
+    }
+
+    /**
+     * This action is called whenever a user tries to access a controller action
+     * without the proper access rights.
+     */
     public function unauthorized()
     {
     }
