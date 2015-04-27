@@ -12,6 +12,7 @@
  */
 namespace Wasabi\Core\Controller;
 
+use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Exception\NotFoundException;
 use Wasabi\Core\Model\Table\GroupsTable;
@@ -135,7 +136,7 @@ class GroupsController extends BackendAppController
      * Edit action
      * GET | PUT
      *
-     * @param int|string $id
+     * @param string $id
      */
     public function edit($id)
     {
@@ -160,5 +161,61 @@ class GroupsController extends BackendAppController
         }
         $this->set('group', $group);
         $this->render('add');
+    }
+
+    /**
+     * Delete action
+     * POST
+     *
+     * @param string $id
+     */
+    public function delete($id)
+    {
+        if (!$id || !$this->Groups->exists($id)) {
+            throw new NotFoundException();
+        }
+        if ($id === '1') {
+            throw new ForbiddenException();
+        }
+        if (!$this->request->is(['post'])) {
+            throw new MethodNotAllowedException();
+        }
+
+        $this->Groups->connection()->begin();
+        $group = $this->Groups->get($id);
+        $userCount = (int) $group->user_count;
+        $groupCanBeDeleted = ($userCount === 0);
+
+        $alternativeGroup = null;
+        if (($alternativeGroupId = $this->request->data('alternative_group_id')) !== null &&
+            $this->Groups->exists($alternativeGroupId)
+        ) {
+            // move existing users of the group to the submitted alternative group
+            $alternativeGroup = $this->Groups->get($alternativeGroupId);
+            $groupCanBeDeleted = (bool)$this->Groups->moveUsersToAlternativeGroup($group, $alternativeGroup);
+        }
+
+        if ($groupCanBeDeleted === true) {
+            if ($this->Groups->delete($group)) {
+                $this->Groups->connection()->commit();
+                if ($userCount > 0) {
+                    $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been deleted. Prior <strong>{1}</strong> group member(s) ha(s/ve) been moved to the <strong>{2}</strong> group.', $group->name, $userCount, $alternativeGroup->name));
+                } else {
+                    $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been deleted.', $group->name));
+                }
+            } else {
+                $this->Groups->connection()->rollback();
+                $this->Flash->error($this->dbErrorMessage);
+            }
+            $this->redirect(['action' => 'index']);
+            return;
+        } else {
+            $this->Groups->connection()->rollback();
+            $this->Flash->warning(__d('wasabi_core', 'The group <strong>{0}</strong> has <strong>{1}</strong> member(s) that need to be moved to another group.', $group->name, $userCount));
+            $this->set([
+                'group' => $group,
+                'groups' => $this->Groups->find('list')->where(['not' => ['id' => $id]])
+            ]);
+        }
     }
 }

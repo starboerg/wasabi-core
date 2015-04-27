@@ -12,10 +12,17 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Wasabi\Core\Model\Entity\Group;
 
+/**
+ * Class GroupsTable
+ * @property UsersTable Users
+ * @package Wasabi\Core\Model\Table
+ */
 class GroupsTable extends Table
 {
     /**
@@ -57,5 +64,25 @@ class GroupsTable extends Table
     {
         $rules->add($rules->isUnique(['name'], __d('wasabi_core', 'Another group with this name already exists.')));
         return $rules;
+    }
+
+    /**
+     * Move users from one group to another.
+     *
+     * @param Group $groupFrom
+     * @param Group $groupTo
+     * @return int number of affected user rows
+     */
+    public function moveUsersToAlternativeGroup($groupFrom, $groupTo)
+    {
+        $affectedUsers = $this->Users->updateAll(['group_id' => $groupTo->id], ['group_id' => $groupFrom->id]);
+        if ($affectedUsers > 0) {
+            // manually update group counter cache
+            $subFromUserCountExpression = new QueryExpression('user_count = user_count - ' . $affectedUsers);
+            $this->updateAll([$subFromUserCountExpression], ['id' => $groupFrom->id]);
+            $addToUserCountExpression = new QueryExpression('user_count = user_count + ' . $affectedUsers);
+            $this->updateAll([$addToUserCountExpression], ['id' => $groupTo->id]);
+        }
+        return $affectedUsers;
     }
 }
