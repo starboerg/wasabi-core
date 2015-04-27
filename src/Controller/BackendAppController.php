@@ -60,6 +60,13 @@ class BackendAppController extends AppController
     public $invalidRequestMessage;
 
     /**
+     * Default Flash message when a database request produced an error.
+     *
+     * @var string
+     */
+    public $dbErrorMessage;
+
+    /**
      * The name of the View class this controller sends output to.
      *
      * @var string
@@ -103,6 +110,7 @@ class BackendAppController extends AppController
         // Setup default flash messages.
         $this->formErrorMessage = __d('wasabi_core', 'Please correct the marked errors.');
         $this->invalidRequestMessage = __d('wasabi_core', 'Invalid Request.');
+        $this->dbErrorMessage = __d('wasabi_core', 'Something went wrong. Please try again.');
     }
 
     /**
