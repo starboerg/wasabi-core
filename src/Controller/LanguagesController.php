@@ -34,7 +34,29 @@ class LanguagesController extends BackendAppController
     public function index()
     {
         $languages = $this->Languages->find('allFrontendBackend')->hydrate(false);
-        $this->set('languages', $languages);
-        $this->set('language', $this->Languages->newEntity());
+        $this->set([
+            'languages' => $languages,
+            'language' => $this->Languages->newEntity()
+        ]);
+    }
+
+    /**
+     * Add action
+     * GET | POST
+     */
+    public function add()
+    {
+        $language = $this->Languages->newEntity();
+        if ($this->request->is('post') && !empty($this->request->data)) {
+            $this->Languages->patchEntity($language, $this->request->data);
+            if ($this->Languages->save($language)) {
+                $this->Flash->success(__d('wasabi_core', 'The language <strong>{0}</strong> has been created.', $language->name));
+                $this->redirect(['action' => 'index']);
+                return;
+            } else {
+                $this->Flash->error($this->formErrorMessage);
+            }
+        }
+        $this->set('language', $language);
     }
 }
