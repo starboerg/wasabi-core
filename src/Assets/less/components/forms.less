@@ -167,9 +167,19 @@ span.error-message, div.error-message {
     border: 1px solid #ddd;
   }
 
-  &.checkbox {
+  &.form-row-checkbox {
+
     & > label {
       padding-top: 20px;
+    }
+
+    .field > label {
+      font-family: @font-os;
+
+      input[type="checkbox"] {
+        position: relative;
+        top: 1px;
+      }
     }
   }
 

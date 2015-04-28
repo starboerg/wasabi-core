@@ -1344,8 +1344,15 @@ div.error-message {
   max-width: 900px;
   border: 1px solid #ddd;
 }
-.form-row.checkbox > label {
+.form-row.form-row-checkbox > label {
   padding-top: 20px;
+}
+.form-row.form-row-checkbox .field > label {
+  font-family: 'open_sans_webfont', sans-serif;
+}
+.form-row.form-row-checkbox .field > label input[type="checkbox"] {
+  position: relative;
+  top: 1px;
 }
 .form-row.last-of-section {
   border-bottom: 1px solid #d5d7d7;
