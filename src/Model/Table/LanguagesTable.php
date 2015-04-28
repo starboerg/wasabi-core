@@ -31,6 +31,12 @@ class LanguagesTable extends Table
         $this->addBehavior('Timestamp');
     }
 
+    /**
+     * Default validation rules.
+     *
+     * @param Validator $validator
+     * @return Validator
+     */
     public function validationDefault(Validator $validator) {
         return $validator
             ->notEmpty('name', __d('wasabi_core', 'Please enter the name of the language.'))
