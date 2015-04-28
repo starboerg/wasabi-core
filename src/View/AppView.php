@@ -43,6 +43,7 @@ class AppView extends \App\View\AppView
             ]) !== 'Wasabi/Core.Users.login'
         ) {
             $this->loadHelper('Form', [
+                'className' => 'Wasabi/Core.Form',
                 'templates' => 'Wasabi/Core.form_templates',
                 'widgets' => [
                     'label' => ['Wasabi\Core\View\Widget\LabelWidget'],
