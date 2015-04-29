@@ -55,7 +55,16 @@ class MenuHelper extends Helper
         return $out;
     }
 
-    public function renderNested($items, $activeClass = 'active', $openClass = 'open', $subNavClass = 'sub-nav')
+    /**
+     * Render all nested items of a menu.
+     *
+     * @param array $items items to render
+     * @param string $activeClass active css class that is applied to active items
+     * @param string $openClass open class that is applied to a parent menu item when children are active
+     * @param string $subNavClass css class applied to any child ul of a parent menu item
+     * @return string the rendered items without an outer ul
+     */
+    public function renderNested(array $items, $activeClass = 'active', $openClass = 'open', $subNavClass = 'sub-nav')
     {
         $out = '';
         foreach ($items as $item) {
