@@ -116,6 +116,13 @@ class GuardianHelper extends HtmlHelper
         return $this->link($title, $url, $linkOptions);
     }
 
+    /**
+     * @param $url
+     * @param bool $rel
+     * @return array|bool|string
+     * @deprecated
+     * @todo possibly remove this, not sure yet
+     */
     public function getBackendUrl($url, $rel = false)
     {
         $checkUrl = $this->_getUrl($url);

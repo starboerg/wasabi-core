@@ -19,8 +19,25 @@ use Cake\Utility\Hash;
 
 class HtmlHelper extends \Cake\View\Helper\HtmlHelper
 {
+    /**
+     * Holds the primary title of the title pad.
+     *
+     * @var bool|string
+     */
     protected $_title = false;
+
+    /**
+     * Holds the secondary title of the title pad.
+     *
+     * @var bool
+     */
     protected $_subTitle = false;
+
+    /**
+     * Holds all registered/added actions of the title pad.
+     *
+     * @var array
+     */
     protected $_actions = [];
 
     /**
@@ -117,6 +134,13 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
         return $this->link($title, $url, $linkOptions);
     }
 
+    /**
+     * @param $url
+     * @param bool $rel
+     * @return array|bool|string
+     * @deprecated
+     * @todo possibly remove this, not sure yet
+     */
     public function getBackendUrl($url, $rel = false)
     {
         $checkUrl = $this->_getBackendUrl($url);
@@ -126,21 +150,41 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
         return $this->_getBackendUrl($url, $rel);
     }
 
+    /**
+     * Set the primary title of the title pad.
+     *
+     * @param $title
+     */
     public function setTitle($title)
     {
         $this->_title = $title;
     }
 
+    /**
+     * Set the secondary title of the title pad.
+     *
+     * @param $subTitle
+     */
     public function setSubTitle($subTitle)
     {
         $this->_subTitle = $subTitle;
     }
 
+    /**
+     * Add an action to the title pad.
+     *
+     * @param $action
+     */
     public function addAction($action)
     {
         $this->_actions[] = $action;
     }
 
+    /**
+     * Render the title pad including primary and secondary title as well as all added actions.
+     *
+     * @return string
+     */
     public function titlePad()
     {
         $out = '';
@@ -161,6 +205,15 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
         return $out;
     }
 
+    /**
+     * @param string $type
+     * @param string $title
+     * @param array $params
+     * @param array $options
+     * @return string
+     * @deprecated
+     * @todo new implementation needed
+     */
     public function linkTo($type = 'page', $title = '', $params = [], $options = [])
     {
         $link = '';
@@ -194,6 +247,13 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
         return $link;
     }
 
+    /**
+     * Used internally to render the title (primary and secondary) of the title pad.
+     *
+     * @param string $title
+     * @param bool $subtitle
+     * @return string
+     */
     protected function _pageTitle($title, $subtitle = false)
     {
         $out = '<h1 class="titlepad-title">' . $title;
