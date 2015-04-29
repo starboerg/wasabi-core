@@ -92,4 +92,29 @@ class LanguagesController extends BackendAppController
         $this->set('language', $language);
         $this->render('add');
     }
+
+    /**
+     * Delete action
+     * POST
+     *
+     * @param $id
+     */
+    public function delete($id)
+    {
+        if (!$id || !$this->Languages->exists($id)) {
+            throw new NotFoundException();
+        }
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+
+        $language = $this->Languages->get($id);
+        if ($this->Languages->delete($language)) {
+            $this->Flash->success(__d('wasabi_core', 'The language <strong>{0}</strong> has been deleted.', $language->name));
+        } else {
+            $this->Flash->error($this->dbErrorMessage);
+        }
+        $this->redirect(['action' => 'index']);
+        return;
+    }
 }
