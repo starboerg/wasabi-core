@@ -12,8 +12,11 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use ArrayObject;
+use Cake\Cache\Cache;
 use Cake\Collection\Iterator\FilterIterator;
 use Cake\Datasource\ResultSetInterface;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -55,6 +58,34 @@ class LanguagesTable extends Table
                 'rule' => ['lengthBetween', 2, 5],
                 'message' => __d('wasbai_core', 'The HTML lang code must consist of 2 to 5 characters.')
             ]);
+    }
+
+    /**
+     * AfterSave callback
+     * This event is triggered after a successful insert or save.
+     * The type of operation performed (insert or update) can be determined by checking
+     * the entity's method `isNew`, true meaning an insert and false an update.
+     *
+     * @param Event $event
+     * @param Language $entity
+     * @param ArrayObject $options
+     */
+    public function afterSave(Event $event, Language $entity, ArrayObject $options)
+    {
+        Cache::delete('languages', 'wasabi/core/longterm');
+    }
+
+    /**
+     * AfterDelete callback
+     * Fired after the delete has been successful.
+     *
+     * @param Event $event
+     * @param Language $entity
+     * @param ArrayObject $options
+     */
+    public function afterDelete(Event $event, Language $entity, ArrayObject $options)
+    {
+        Cache::delete('languages', 'wasabi/core/longterm');
     }
 
     /**
