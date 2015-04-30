@@ -40,7 +40,8 @@ class LanguagesTable extends Table
      * @param Validator $validator
      * @return Validator
      */
-    public function validationDefault(Validator $validator) {
+    public function validationDefault(Validator $validator)
+    {
         return $validator
             ->notEmpty('name', __d('wasabi_core', 'Please enter the name of the language.'))
             ->notEmpty('iso2', __d('wasabi_core', 'Please enter the ISO 639-1 code of the language (e.g. "en")'))
@@ -95,7 +96,8 @@ class LanguagesTable extends Table
      * @param array $options
      * @return $this
      */
-    public function findAllFrontendBackend(Query $query, array $options) {
+    public function findAllFrontendBackend(Query $query, array $options)
+    {
         return $query
             ->select([
                 'id',
@@ -116,7 +118,8 @@ class LanguagesTable extends Table
      * @param ResultSetInterface $results
      * @return FilterIterator
      */
-    public function filterFrontend(ResultSetInterface $results) {
+    public function filterFrontend(ResultSetInterface $results)
+    {
         return $results->filter(function(Language $language) {
             return $language->available_at_frontend === true;
         });
@@ -128,7 +131,8 @@ class LanguagesTable extends Table
      * @param ResultSetInterface $results
      * @return FilterIterator
      */
-    public function filterBackend(ResultSetInterface $results) {
+    public function filterBackend(ResultSetInterface $results)
+    {
         return $results->filter(function(Language $language) {
             return $language->available_at_backend === true;
         });

@@ -125,7 +125,8 @@ class UsersTable extends Table
      * @param Query $query
      * @return $this|array
      */
-    public function findWithGroupName(Query $query) {
+    public function findWithGroupName(Query $query)
+    {
         return $query
             ->select([
                 'id',
