@@ -72,7 +72,7 @@ class LanguagesTable extends Table
      */
     public function afterSave(Event $event, Language $entity, ArrayObject $options)
     {
-        Cache::delete('languages', 'wasabi/core/longterm');
+        $this->eventManager()->dispatch(new Event('LanguagesTable.afterSave', $this, compact('entity', 'options', 'event')));
     }
 
     /**
@@ -85,7 +85,7 @@ class LanguagesTable extends Table
      */
     public function afterDelete(Event $event, Language $entity, ArrayObject $options)
     {
-        Cache::delete('languages', 'wasabi/core/longterm');
+        $this->eventManager()->dispatch(new Event('LanguagesTable.afterDelete', $this, compact('entity', 'options', 'event')));
     }
 
     /**

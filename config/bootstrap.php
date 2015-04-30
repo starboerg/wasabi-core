@@ -17,6 +17,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\EventManager;
 use Wasabi\Core\Event\GuardianListener;
+use Wasabi\Core\Event\LanguagesListener;
 use Wasabi\Core\Event\MenuListener;
 use Wasabi\Core\Controller\Component\GuardianComponent;
 
@@ -32,6 +33,7 @@ try {
 
 EventManager::instance()->on(new GuardianListener());
 EventManager::instance()->on(new MenuListener());
+EventManager::instance()->on(new LanguagesListener());
 
 if (!function_exists('guardian')) {
     /**
