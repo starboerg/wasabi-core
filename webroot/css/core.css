@@ -520,10 +520,10 @@ th {
   top: -8px;
   content: "\e610";
 }
-.icon-sortable-asc:before {
+.icon-sortable-asc:after {
   color: #888;
 }
-.icon-sortable-desc:after {
+.icon-sortable-desc:before {
   color: #888;
 }
 .cursor--help {
