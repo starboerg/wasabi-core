@@ -24,6 +24,7 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
     $routes->connect('/forbidden', ['controller' => 'Users', 'action' => 'unauthorized']);
 
     $routes->scope('/users', ['controller' => 'Users'], function (RouteBuilder $routes) {
+        $routes->connect('/_:sluggedFilter', ['action' => 'index'], ['pass' => ['sluggedFilter']]);
         $routes->connect('/', ['action' => 'index']);
         $routes->connect('/add', ['action' => 'add']);
         $routes->connect('/edit/:id', ['action' => 'edit'], ['pass' => ['id'], 'id' => '[0-9]+']);

@@ -21,6 +21,7 @@ use Wasabi\Core\Model\Table\UsersTable;
  * Class UsersController
  *
  * @property UsersTable $Users
+ * @property \Wasabi\Core\Controller\Component\FilterComponent Filter
  */
 class UsersController extends BackendAppController
 {
@@ -33,12 +34,24 @@ class UsersController extends BackendAppController
      * @var array
      */
     public $filterFields = [
-        'search' => [
-            'modelField' => [
-                'User.username',
-                'User.email'
-            ],
+        'user_id' => [
+            'modelField' => 'Users.id',
+            'type' => '=',
+            'actions' => ['index']
+        ],
+        'username' => [
+            'modelField' => 'Users.username',
             'type' => 'like',
+            'actions' => ['index']
+        ],
+        'email' => [
+            'modelField' => 'Users.email',
+            'type' => 'like',
+            'actions' => ['index']
+        ],
+        'group_id' => [
+            'modelField' => 'Groups.id',
+            'type' => '=',
             'actions' => ['index']
         ]
     ];
@@ -48,7 +61,7 @@ class UsersController extends BackendAppController
      *
      * @var array
      */
-    public $sluggedFilterActions = [
+    public $filterActions = [
         'index'
     ];
 
@@ -62,20 +75,20 @@ class UsersController extends BackendAppController
      */
     public $sortFields = [
         'user' => [
-            'modelField' => 'User.firstname',
+            'modelField' => 'Users.username',
             'default' => 'asc',
             'actions' => ['index']
         ],
         'email' => [
-            'modelField' => 'User.email',
+            'modelField' => 'Users.email',
             'actions' => ['index']
         ],
         'group' => [
-            'modelField' => 'Group.name',
+            'modelField' => 'Groups.name',
             'actions' => ['index']
         ],
         'status' => [
-            'modelField' => 'User.active',
+            'modelField' => 'Users.active',
             'actions' => ['index']
         ]
     ];
@@ -89,7 +102,7 @@ class UsersController extends BackendAppController
     public $limits = [
         'index' => [
             'limits' => [10, 25, 50, 75, 100, 150, 200],
-            'default' => 10,
+            'default' => 25,
             'fieldName' => 'l'
         ]
     ];
@@ -176,8 +189,11 @@ class UsersController extends BackendAppController
      */
     public function index()
     {
-        $users = $this->Users->find('withGroupName')->hydrate(false);
-        $this->set('users', $users);
+        $users = $this->Filter->filter($this->Users->find('withGroupName'));
+        $this->set([
+            'users' => $this->Filter->paginate($users)->hydrate(false),
+            'groups' => $this->Users->Groups->find('list')
+        ]);
     }
 
     /**
@@ -187,7 +203,6 @@ class UsersController extends BackendAppController
     public function add()
     {
         $user = $this->Users->newEntity();
-        $groups = $this->Users->Groups->find('list');
         if ($this->request->is('post') && !empty($this->request->data)) {
             $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
@@ -200,7 +215,7 @@ class UsersController extends BackendAppController
         }
         $this->set([
             'user' => $user,
-            'groups' => $groups
+            'groups' => $this->Users->Groups->find('list')
         ]);
     }
 
@@ -227,7 +242,6 @@ class UsersController extends BackendAppController
                 'group_id'
             ]
         ]);
-        $groups = $this->Users->Groups->find('list');
         if ($this->request->is('put')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
@@ -240,7 +254,7 @@ class UsersController extends BackendAppController
         }
         $this->set([
             'user' => $user,
-            'groups' => $groups
+            'groups' => $this->Users->Groups->find('list')
         ]);
         $this->render('add');
     }
