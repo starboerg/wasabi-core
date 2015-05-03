@@ -42,6 +42,9 @@ class BackendAppController extends AppController
         ],
         'Guardian' => [
             'className' => 'Wasabi/Core.Guardian'
+        ],
+        'Filter' => [
+            'className' => 'Wasabi/Core.Filter'
         ]
     ];
 
