@@ -23,11 +23,12 @@ $this->Html->addAction(
 );
 ?>
 <?= $this->Form->create($language) ?>
-<table class="list groups valign-middle">
+<table class="list languages valign-middle">
     <thead>
     <tr>
         <th class="t-1-16 center">ID</th>
-        <th class="t-4-16"><?= __d('wasabi_core', 'Language') ?></th>
+        <th class="t-1-16 center">Pos.</th>
+        <th class="t-3-16"><?= __d('wasabi_core', 'Language') ?></th>
         <th class="t-2-16"><?= __d('wasabi_core', 'ISO 639-1') ?></th>
         <th class="t-2-16"><?= __d('wasabi_core', 'ISO 639-2/T') ?></th>
         <th class="t-2-16"><?= __d('wasabi_core', 'HTML lang') ?></th>
