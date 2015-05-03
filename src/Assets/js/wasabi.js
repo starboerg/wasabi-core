@@ -67,6 +67,20 @@ var WS = (function() {
         return this.modules[name];
       }
       console.debug('module "' + name + " is not registered.");
+    },
+
+    createView: function(viewClass, options) {
+      return this.viewFactory.create(viewClass, options || {});
+    },
+
+    createViews: function($elements, ViewClass, options) {
+      var views = [];
+      if ($elements.length > 0) {
+        $elements.each(function(index, el) {
+          views.push(WS.createView(ViewClass, _.extend({el: el}, options || {})));
+        });
+      }
+      return views;
     }
   };
 
