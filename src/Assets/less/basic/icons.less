@@ -2,7 +2,7 @@
 @import (reference) "../__mixins";
 
 @font-face {
-  @icomoon-key: '-9uaun7';
+  @icomoon-key: 'mcgkio';
   font-family: 'icomoon';
   src:url('../fonts/icomoon/icomoon.eot?@{icomoon-key}');
   src:url('../fonts/icomoon/icomoon.eot?#iefix@{icomoon-key}') format('embedded-opentype'),
@@ -15,7 +15,6 @@
 
 [class*="icon-"] {
   font-family: 'icomoon';
-  font-size: 24px;
   //noinspection CssUnknownProperty
   speak: none;
   font-style: normal;
@@ -28,18 +27,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-arrow-down2:before {
-  content: "\e60f";
-}
-
-.icon-arrow-up2:before {
-  content: "\e610";
-}
-
-.icon-arrow-left:before {
-  content: "\e60a";
-}
-
 .icon-arrow-down:before {
   content: "\e600";
 }
@@ -48,99 +35,44 @@
   content: "\e609";
 }
 
-.icon-arrow-right:before {
-  content: "\e60e";
-}
-
-.icon-arrow-down3:before {
-  content: "\e612";
-}
-
-.icon-arrow-up3:before {
-  content: "\e613";
-}
-
 .icon-image:before {
   content: "\e601";
 }
 
-.icon-spanner:before {
+.icon-settings:before {
   content: "\e602";
 }
 
-.icon-dns:before {
-  content: "\e603";
-}
-
-.icon-home2:before {
+.icon-dashboard:before {
   content: "\e604";
 }
 
-.icon-language:before {
-  content: "\e605";
-}
-
-.icon-perm-media:before {
-  content: "\e60c";
-}
-
-.icon-settings:before {
+.icon-administration:before {
   content: "\e606";
 }
 
-.icon-view-list:before {
+.icon-menu:before {
   content: "\e607";
 }
 
-.icon-storage:before {
-  content: "\e608";
-}
-
-.icon-layers:before {
+.icon-content:before {
   content: "\e60b";
 }
 
-.icon-menu:before {
+.icon-nav:before {
   content: "\e60d";
 }
 
-.icon-cross:before {
-  content: "\e611";
+.icon-grab:before {
+  content: "\e603";
 }
 
 .icon-delete:before {
   content: "\e611";
 }
 
-.icon-move:before {
-  content: "\e614";
-}
-
-.icon-move-alt1:before {
-  content: "\e615";
-}
-
 .icon-plus:before {
   content: "\ea0a";
-}
-
-.icon-move-vertical {
-  display: inline-block;
-  position: relative;
-  left: -8px;
-  content: " ";
-  font-size: @font-size + 2px;
-
-  &:before {
-    position: absolute;
-    content: "\e613";
-  }
-
-  &:after {
-    position: absolute;
-    content: "\e612";
-    top: 1px;
-  }
 }
 
 [class*="icon-sortable"] {
@@ -176,4 +108,122 @@
   &:before {
     color: #888;
   }
+}
+
+.icon-first {
+  position: relative;
+  top: 3px;
+  font-size: 18px;
+
+  &:before {
+    content: "\e60a";
+  }
+
+  &:after {
+    display: inline-block;
+    width: 0;
+    position: relative;
+    content: "\e60a";
+    left: -13px;
+  }
+}
+
+.icon-previous {
+  position: relative;
+  top: 3px;
+  font-size: 18px;
+
+  &:before {
+    content: "\e60a";
+  }
+}
+
+.icon-next {
+  position: relative;
+  top: 3px;
+  font-size: 18px;
+
+  &:before {
+    content: "\e60e";
+  }
+}
+
+.icon-last {
+  position: relative;
+  top: 3px;
+  font-size: 18px;
+
+  &:before {
+    content: "\e60e";
+  }
+
+  &:after {
+    display: inline-block;
+    width: 0;
+    position: relative;
+    content: "\e60e";
+    left: -23px;
+  }
+}
+
+[class^="wicon-"], [class*=" wicon-"] {
+  //noinspection CssUnknownTarget
+  background-image: url(../img/sprite2.png);
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  text-indent: -9999px;
+  outline: none;
+  .border-radius(1px);
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.wicon-add {
+  background-color: #9cb800;
+  background-position: 0 0;
+}
+
+.wicon-sort {
+  background-color: #368EE0;
+  background-position: -60px 0;
+  cursor: n-resize;
+}
+
+.wicon-move {
+  background-color: #368EE0;
+  background-position: -40px 0;
+  cursor: move;
+}
+
+.wicon-copy {
+  background-color: #368EE0;
+  background-position: -80px 0;
+}
+
+.wicon-remove {
+  background-color: #cc0000;
+  background-position: -20px 0;
+}
+
+.wicon-expand, .wicon-collapse {
+  width: 9px;
+  height: 9px;
+  margin: 0;
+  .border-radius(0);
+}
+
+.wicon-expand {
+  background-position: -100px 0;
+}
+
+.wicon-collapse {
+  background-position: -111px 0;
 }

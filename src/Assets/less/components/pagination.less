@@ -1,0 +1,46 @@
+@import (reference) "../__colors";
+@import (reference) "../__config";
+@import (reference) "../__mixins";
+
+.pagination {
+  margin: 15px 0;
+  background: #fbfbfb;
+  border: 1px solid #e3e6e5;
+  line-height: 40px;
+
+  li {
+    display: inline-block;
+
+    &.active a {
+      background-color: #828282;
+      color: #fff;
+    }
+  }
+
+  a {
+    display: inline-block;
+    min-width: 35px;
+    text-align: center;
+  }
+
+  .item-count {
+    float: left;
+    font-size: 12px;
+    color: #666;
+    padding: 0 20px;
+  }
+
+  nav {
+    float: left;
+  }
+
+  .limit {
+    float: right;
+    margin: 4px 3px 0 0;
+  }
+
+  a.disabled {
+    color: #ddd;
+    cursor: default;
+  }
+}

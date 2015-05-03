@@ -66,16 +66,23 @@ aside {
     position: relative;
     top: 4px;
 
+    &:before {
+      font-size: 24px;
+    }
+
     &.icon-media, &.icon-content, &.icon-administration, &.icon-settings {
       top: 5px;
     }
 
     &[class*="icon-arrow-"] {
-      font-size: 20px;
       position: absolute;
       top: 11px;
       right: 4px;
       margin-right: 0;
+
+      &:before {
+        font-size: 20px;
+      }
     }
 
     &.icon-arrow-up {

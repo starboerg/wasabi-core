@@ -1,0 +1,70 @@
+@import (reference) '../__config';
+@import (reference) '../__mixins';
+
+.button {
+  @buttonBg: #9cb800;
+
+  padding: 7px 16px 6px;
+  display: inline-block;
+  outline: none;
+  color: #fff;
+  font-family: @font-os-semibold;
+  font-weight: normal;
+  border: none;
+  background-color: @buttonBg;
+  .border-radius(3px);
+  .box-shadow(0 -2px 0 fade(darken(@buttonBg, 10%), 40%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3););
+
+  &:hover, &:focus {
+    background-color: hsl(hue(@buttonBg) - 1, saturation(@buttonBg), lightness(@buttonBg) + 3);
+  }
+
+  &:active {
+    color: #f8f8f8;
+    .box-shadow(0 2px 1px fade(darken(@buttonBg, 20%), 40%) inset);
+  }
+
+  &.disabled {
+    @buttonBg: #ddd;
+    background-color: @buttonBg !important;
+    cursor: not-allowed !important;
+    .box-shadow(0 -2px 0 fade(darken(@buttonBg, 10%), 40%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3););
+  }
+}
+
+.button.blue {
+  @buttonBg: #368EE0;//#448AC4;
+
+  background-color: @buttonBg;
+  box-shadow: 0 -2px 0 fade(darken(@buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
+
+  &:hover, &:focus {
+    background-color: hsl(hue(@buttonBg) - 4, saturation(@buttonBg) + 3, lightness(@buttonBg) + 5);
+  }
+
+  &:active {
+    box-shadow: 0 2px 1px fade(darken(@buttonBg, 30%), 30%) inset;
+  }
+}
+
+.button.red {
+  @buttonBg: #c22d2d;
+
+  background-color: @buttonBg;
+  box-shadow: 0 -2px 0 fade(darken(@buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
+
+  &:hover, &:focus {
+    background-color: hsl(hue(@buttonBg) - 4, saturation(@buttonBg) + 3, lightness(@buttonBg) + 5);
+  }
+
+  &:active {
+    box-shadow: 0 2px 1px fade(darken(@buttonBg, 30%), 30%) inset;
+  }
+}
+
+.button.small {
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  .border-radius(3px);
+}
