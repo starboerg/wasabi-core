@@ -4,20 +4,20 @@
  * @var array $g group
  */
 ?><tr<?= $class ?>>
-    <td class="center"><?= $g['id'] ?></td>
-    <td><?= $this->Guardian->protectedLink(
+    <td class="col-id center"><?= $g['id'] ?></td>
+    <td class="col-name"><?= $this->Guardian->protectedLink(
                 $g['name'],
                 '/backend/groups/edit/' . $g['id'],
                 ['title' => __d('wasabi_core', 'Edit Group "{0}"', $g['name'])],
                 true
             )
     ?></td>
-    <td><?= $g['user_count'] ?></td>
-    <td class="actions center">
+    <td class="col-user-count"><?= $g['user_count'] ?></td>
+    <td class="col-actions center">
         <?php
         if ($g['id'] != 1) {
             echo $this->Guardian->protectedConfirmationLink(
-                '<i class="icon-delete"></i>',
+                '<i class="wicon-remove"></i>',
                 '/backend/groups/delete/' . $g['id'],
                 [
                     'escapeTitle' => false,

@@ -4,11 +4,11 @@
  * @var array $u user
  */
 ?><tr<?= $class ?>>
-    <td class="center"><?= $u['id'] ?></td>
-    <td><?= $this->Guardian->protectedLink($u['username'], '/backend/users/edit/' . $u['id'], ['title' => 'Benutzer bearbeiten'], true) ?></td>
-    <td><?= $u['email'] ?></td>
-    <td><?= $u['group']['name'] ?></td>
-    <td><?php
+    <td class="col-id center"><?= $u['id'] ?></td>
+    <td class="col-username"><?= $this->Guardian->protectedLink($u['username'], '/backend/users/edit/' . $u['id'], ['title' => __d('wasabi_core', 'Edit User')], true) ?></td>
+    <td class="col-email"><?= $u['email'] ?></td>
+    <td class="col-group-name"><?= $u['group']['name'] ?></td>
+    <td class="col-status"><?php
         $isCurrentUser = ($this->request->session()->read('Auth.User.id') === $u['id']);
         if ($u['verified'] === false) {
             echo $this->Guardian->protectedConfirmationLink(
@@ -83,9 +83,9 @@
             }
         }
     ?></td>
-    <td class="actions center"><?php
+    <td class="col-actions center"><?php
         if ($u['id'] != $this->request->session()->read('User.id') && $u['id'] != 1) {
-            echo $this->Guardian->protectedConfirmationLink('<i class="icon-delete"></i>', '/backend/users/delete/' . $u['id'], [
+            echo $this->Guardian->protectedConfirmationLink('<i class="wicon-remove"></i>', '/backend/users/delete/' . $u['id'], [
                 'class' => 'action-delete',
                 'title' => 'Diesen Benutzer löschen',
                 'confirm-message' => __d('wasabi_core', 'Benutzer <strong>{0}</strong> wirklich löschen?', $u['username']),
