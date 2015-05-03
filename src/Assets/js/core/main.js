@@ -3,6 +3,7 @@ var _ = require('underscore');
 var cNavigation = require('./components/navigation/navigation');
 var win = window;
 var doc = document;
+var WS = global.window.WS;
 
 /**
  * Setup default ajax options and global ajax event handlers.
@@ -105,6 +106,21 @@ function _initializeBackendViews() {
   this.components.navigation = new cNavigation();
 }
 
+function _toggleEmptySelects() {
+  require('jquery.livequery');
+  $('select').livequery(function() {
+    $(this).toggleClass('empty', $(this).val() === '');
+    $(this).change(function() {
+      $(this).toggleClass('empty', $(this).val() === '');
+    });
+  });
+}
+
+function _initPaginations() {
+  var Pagination = require('./components/pagination/pagination');
+  WS.createViews($('.pagination'), Pagination);
+}
+
 /**
  * Wasabi Core module
  * Initializes:
@@ -196,5 +212,7 @@ module.exports = {
 
     _setupAjax.call(this);
     _initializeBackendViews.call(this);
+    _toggleEmptySelects.call(this);
+    _initPaginations.call(this);
   }
 };
