@@ -57,13 +57,13 @@ class MenuListener implements EventListenerInterface
                     'controller' => 'Dashboard',
                     'action' => 'index'
                 ],
-                'icon' => 'icon-home2'
+                'icon' => 'icon-dashboard'
             ])
             ->addMenuItem([
                 'alias' => 'content',
                 'name' => __d('wasabi_core', 'Content'),
                 'priority' => 1000,
-                'icon' => 'icon-layers',
+                'icon' => 'icon-content',
             ])
             ->addMenuItem([
                 'alias' => 'menus',
@@ -74,7 +74,7 @@ class MenuListener implements EventListenerInterface
                     'controller' => 'Menus',
                     'action' => 'index'
                 ],
-                'icon' => 'icon-view-list',
+                'icon' => 'icon-menu',
             ])
             ->addMenuItem([
                 'alias' => 'media',
@@ -91,7 +91,7 @@ class MenuListener implements EventListenerInterface
                 'alias' => 'administration',
                 'name' => __d('wasabi_core', 'Administration'),
                 'priority' => 4000,
-                'icon' => 'icon-settings'
+                'icon' => 'icon-administration'
             ])
             ->addMenuItem([
                 'alias' => 'users',
@@ -152,7 +152,7 @@ class MenuListener implements EventListenerInterface
                 'alias' => 'settings',
                 'name' => __d('wasabi_core', 'Settings'),
                 'priority' => 5000,
-                'icon' => 'icon-spanner'
+                'icon' => 'icon-settings'
             ])
             ->addMenuItem([
                 'alias' => 'settings_general',
