@@ -16,22 +16,35 @@ use Cake\Core\Exception\Exception;
 use Cake\Network\Request;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use Wasabi\Core\Model\Entity\Filter;
 use Wasabi\Core\Model\Entity\Slug;
 
-class SluggedFiltersTable extends Table
+class FiltersTable extends Table
 {
+    /**
+     * Initialize a table instance. Called after the constructor.
+     *
+     * @param array $config
+     */
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
     }
 
-    public function findSlugByFilterData(Query $query, array $options)
+    /**
+     * Find a slug by the provided filter data ($options['filterData'].
+     *
+     * @param Query $query
+     * @param array $options
+     * @return $this
+     */
+    public function findSlugForFilterData(Query $query, array $options)
     {
         if (!isset($options['request']) || get_class($options['request']) !== Request::class) {
-            throw new Exception('The request query option must exist and must be of type Cake\Network\Request.');
+            user_error('The request query option must exist and must be of type Cake\Network\Request.');
         }
         if (!isset($options['filterData'])) {
-            throw new Exception('No filterData option provided.');
+            user_error('No filterData option provided.');
         }
         $request = $options['request'];
         $filterData = $options['filterData'];
@@ -44,7 +57,7 @@ class SluggedFiltersTable extends Table
     }
 
     /**
-     * Find a stored filter data combination for a given slug.
+     * Find stored filter data for a given slug.
      *
      * @param Query $query
      * @param array $options
@@ -52,8 +65,8 @@ class SluggedFiltersTable extends Table
      */
     public function findFilterDataBySlug(Query $query, array $options)
     {
-        if (!isset($options['request']) || get_class($options['request']) !== 'Request') {
-            throw new Exception('The request query option must exist and must be of type Cake\Network\Request.');
+        if (!isset($options['request']) || get_class($options['request']) !== Request::class) {
+            user_error('The request query option must exist and must be of type Cake\Network\Request.');
         }
         $request = $options['request'];
         $encryptedFilterData = $query->select($this->alias() . '.filter_data')->where([
@@ -61,16 +74,16 @@ class SluggedFiltersTable extends Table
             'controller' => $request->params['controller'],
             'action' => $request->params['action'],
             'slug' => $request->params['sluggedFilter']
-        ]);
+        ])->first()->toArray();
 
         if ($encryptedFilterData) {
-            return $this->_decodeFilterData($encryptedFilterData);
+            return $this->_decodeFilterData($encryptedFilterData['filter_data']);
         }
 
         return [];
     }
 
-    public function createSlugForFilterData(Request $request, array $filterData)
+    public function createFilterForFilterData(Request $request, array $filterData)
     {
         $charlist = 'abcdefghikmnopqrstuvwxyz';
 
@@ -79,22 +92,22 @@ class SluggedFiltersTable extends Table
             for ($i = 0; $i < 14; $i++) {
                 $slug .= substr($charlist, rand(0, 31), 1);
             }
-        } while (false !== $this->find('first')->select('slug')->where([
-                'slug' => $slug,
-                'plugin' => $request->params['plugin'],
-                'controller' => $request->params['controller'],
-                'action' => $request->params['action']
-            ]));
+        } while (null !== $this->find('all')->select('slug')->where([
+            'slug' => $slug,
+            'plugin' => $request->params['plugin'],
+            'controller' => $request->params['controller'],
+            'action' => $request->params['action']
+        ])->hydrate(false)->first());
 
-        $slug = new Slug([
+        $this->save(new Filter([
             'plugin' => $request->params['plugin'],
             'controller' => $request->params['controller'],
             'action' => $request->params['action'],
             'slug' => $slug,
             'filter_data' => $this->_encodeFilterData($filterData)
-        ]);
+        ]));
 
-        return $this->save($slug);
+        return $slug;
     }
 
     /**

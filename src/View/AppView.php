@@ -12,6 +12,7 @@
  */
 namespace Wasabi\Core\View;
 
+use Cake\Event\Event;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Event\EventManager;
@@ -22,18 +23,19 @@ use Cake\Event\EventManager;
  * @property \Cake\View\Helper\FlashHelper $Flash
  * @property \Cake\View\Helper\UrlHelper $Url
  * @property \Wasabi\Core\View\Helper\AssetHelper $Asset
+ * @property \Wasabi\Core\View\Helper\FilterHelper $Filter
  * @property \Wasabi\Core\View\Helper\GuardianHelper $Guardian
  * @property \Wasabi\Core\View\Helper\HtmlHelper $Html
  * @property \Wasabi\Core\View\Helper\MenuHelper $Menu
+ * @property array activeFilters
+ * @property array filterFields
+ * @property array activeSort
+ * @property array sortFields
+ * @property array paginationParams
+ * @property array defaultSort
  */
 class AppView extends \App\View\AppView
 {
-    public $activeFilters;
-    public $filterFields;
-    public $activeSort;
-    public $sortFields;
-    public $defaultSort;
-
     public function initialize()
     {
         if (join('.', [
@@ -52,18 +54,5 @@ class AppView extends \App\View\AppView
                 ]
             ]);
         }
-    }
-
-    public function __construct(Request $request = null, Response $response = null, EventManager $eventManager = null, array $viewOptions = [])
-    {
-        parent::__construct($request, $response, $eventManager, $viewOptions);
-//		if (isset($controller->Filter)) {
-//			$this->activeFilters = $controller->Filter->activeFilters;
-//			$this->filterFields = $controller->Filter->filterFields;
-//			$this->activeSort = $controller->Filter->activeSort;
-//			$this->sortFields = $controller->Filter->sortFields;
-//			$this->paginationParams = $controller->Filter->paginationParams;
-//			$this->defaultSort = $controller->Filter->defaultSort;
-//		}
     }
 }

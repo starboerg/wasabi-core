@@ -19,9 +19,10 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Network\Request;
 use Cake\Network\Session;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
-use Wasabi\Core\Model\Table\SluggedFiltersTable;
+use Wasabi\Core\Model\Table\FiltersTable;
 
 /**
  * Class FilterComponent
@@ -161,6 +162,11 @@ class FilterComponent extends Component
      */
     protected $_paginationEnabled = false;
 
+    /**
+     * Called before the controller’s beforeFilter method, but after the controller’s initialize() method.
+     *
+     * @param Event $event
+     */
     public function beforeFilter(Event $event)
     {
         $this->controller = $event->subject();
@@ -170,46 +176,42 @@ class FilterComponent extends Component
         $this->_filterEnabled = $this->_isFilterEnabled();
         $this->_paginationEnabled = $this->_isPaginationEnabled();
 
-        if ($this->_sortEnabled || $this->_filterEnabled || $this->_paginationEnabled) {
+        if ($this->_sortEnabled) {
+            $this->sortFields = $this->_getSortFields();
 
-            if ($this->_sortEnabled) {
-                $this->sortFields = $this->_getSortFields();
-
-                foreach ($this->sortFields as $field => $options) {
-                    if (!isset($options['default'])) {
-                        continue;
-                    }
-                    $dir = strtolower($options['default']);
-                    if (in_array($dir, ['asc', 'desc'])) {
-                        $this->defaultSort = [
-                            'field' => $field,
-                            'dir' => $dir
-                        ];
-                    }
+            foreach ($this->sortFields as $field => $options) {
+                if (!isset($options['default'])) {
+                    continue;
                 }
-            }
-
-            if ($this->_filterEnabled) {
-
-                if (isset($this->request->params['sluggedFilter']) && $this->request->params['sluggedFilter'] !== '') {
-                    /** @var SluggedFiltersTable $SluggedFiltersTable */
-                    $SluggedFiltersTable = TableRegistry::get('Wasabi/Core.SluggedFilter');
-                    $filterData = $SluggedFiltersTable->find('filterDataBySlug', ['request' => $this->request])->first();
-                    if (!empty($filterData)) {
-                        $this->request->data = array_merge($this->request->data, $filterData);
-                        $this->slug = $this->request->params['sluggedFilter'];
-                    }
+                $dir = strtolower($options['default']);
+                if (in_array($dir, ['asc', 'desc'])) {
+                    $this->defaultSort = [
+                        'field' => $field,
+                        'dir' => $dir
+                    ];
                 }
-
-                $this->filterFields = $this->_getFilterFields();
-            }
-
-            if ($this->_paginationEnabled) {
-                $this->defaultLimit = $this->controller->limits[$this->action]['default'];
-                $this->limits = $this->controller->limits[$this->action]['limits'];
             }
         }
-        return true;
+
+        if ($this->_filterEnabled) {
+
+            if (isset($this->request->params['sluggedFilter']) && $this->request->params['sluggedFilter'] !== '') {
+                /** @var FiltersTable $FiltersTable */
+                $FiltersTable = TableRegistry::get('Wasabi/Core.Filters');
+                $filterData = $FiltersTable->find('filterDataBySlug', ['request' => $this->request]);
+                if (!empty($filterData)) {
+                    $this->request->data = array_merge($this->request->data, $filterData);
+                    $this->slug = $this->request->params['sluggedFilter'];
+                }
+            }
+
+            $this->filterFields = $this->_getFilterFields();
+        }
+
+        if ($this->_paginationEnabled) {
+            $this->defaultLimit = $this->controller->limits[$this->action]['default'];
+            $this->limits = $this->controller->limits[$this->action]['limits'];
+        }
     }
 
     /**
@@ -226,9 +228,9 @@ class FilterComponent extends Component
         $this->_initFilterOptions();
 
         if ($this->request->is('post') &&
-            isset($this->controller->sluggedFilterActions) &&
-            is_array($this->controller->sluggedFilterActions) &&
-            in_array($this->action, $this->controller->sluggedFilterActions)
+            isset($this->controller->filterActions) &&
+            is_array($this->controller->filterActions) &&
+            in_array($this->action, $this->controller->filterActions)
         ) {
             $rawFilterData = $this->request->data;
             $filterData = [];
@@ -238,14 +240,16 @@ class FilterComponent extends Component
                 }
             }
             if (!empty($filterData)) {
-                /** @var SluggedFiltersTable $SluggedFiltersTable */
-                $SluggedFiltersTable = TableRegistry::get('Wasabi/Core.SluggedFilter');
-                $slug = $SluggedFiltersTable->find('slugByFilterData', [
+                /** @var FiltersTable $FiltersTable */
+                $FiltersTable = TableRegistry::get('Wasabi/Core.Filters');
+                $filter = $FiltersTable->find('slugForFilterData', [
                     'request' => $this->request,
                     'filterData' => $filterData
-                ]);
-                if (!$slug) {
-                    $slug = $SluggedFiltersTable->createSlugForFilterData($this->request, $filterData);
+                ])->first();
+                if (!$filter) {
+                    $slug = $FiltersTable->createFilterForFilterData($this->request, $filterData);
+                } else {
+                    $slug = $filter->slug;
                 }
                 $this->controller->redirect(['action' => $this->action, 'sluggedFilter' => $slug]);
                 return false;
@@ -258,31 +262,53 @@ class FilterComponent extends Component
         return true;
     }
 
+    public function filter(Query $query) {
+        if (!empty($this->filterOptions['conditions'])) {
+            $query->where($this->filterOptions['conditions']);
+        }
+        if (!empty($this->filterOptions['order'])) {
+            $query->order($this->filterOptions['order']);
+        }
+
+        return $query;
+    }
+
     /**
      * Paginate over a specific model with the given query $options.
      *
      * Return query option array that contains all filter, sort and pagination specific options.
      *
-     * @param Model $model
-     * @param array $options
+     * @param Query $query
+     * @param array $countFields
      * @param boolean $total
-     * @return array
+     * @return Query
      */
-    public function paginate(Model $model, $options, $total = false)
+    public function paginate(Query $query, array $countFields = [], $total = false)
     {
         $limit = $this->defaultLimit;
         if (isset($this->request->query['l']) && in_array((integer)$this->request->query['l'], $this->limits)) {
             $limit = (integer)$this->request->query['l'];
             $this->activeLimit = $limit;
         }
+        if (!$this->activeLimit) {
+            $lastLimit = $this->request->session()->read(join('.', [
+                'LIMIT_' . $this->request->params['plugin'],
+                $this->controller->name,
+                $this->action
+            ]));
+            if ($lastLimit) {
+                $limit = $lastLimit;
+                $this->activeLimit = $limit;
+            }
+        }
         $this->request->data['l'] = $limit;
 
         if ($total === false) {
-            $countOptions = $options;
-            if (isset($options['count_fields'])) {
-                $countOptions['fields'] = $options['count_fields'];
+            $countQuery = clone $query;
+            if (!empty($countFields)) {
+                $countQuery->select($countFields);
             }
-            $total = $model->find('count', $countOptions);
+            $total = $countQuery->count();
         }
 
         if ($limit !== null && $total !== null) {
@@ -297,8 +323,7 @@ class FilterComponent extends Component
             $from = ($offset > 0) ? $offset + 1 : 1;
             $to = (($from + $limit - 1) > $total) ? $total : $from + $limit - 1;
 
-            $options['limit'] = $limit;
-            $options['offset'] = $offset;
+            $query->limit($limit)->offset($offset);
 
             $this->paginationParams = [
                 'from' => ($total === 0) ? 0 : $from,
@@ -311,7 +336,7 @@ class FilterComponent extends Component
             ];
         }
 
-        return $options;
+        return $query;
     }
 
     /**
@@ -354,21 +379,32 @@ class FilterComponent extends Component
             $filterOptions['p'] = $this->paginationParams['page'];
         }
 
-        if ($this->activeLimit && $this->activeLimit !== $this->defaultLimit) {
-            $filterOptions['l'] = $this->activeLimit;
-        }
-
         $path = join('.', [
             'FILTER_' . $this->request->params['plugin'],
             $this->controller->name,
             $this->action
         ]);
+        $limitPath = str_replace('FILTER_', 'LIMIT_', $path);
+
+        if ($this->activeLimit && $this->activeLimit !== $this->defaultLimit) {
+            $this->request->session()->write($limitPath, $this->activeLimit);
+        } else {
+            $this->request->session()->delete($limitPath);
+        }
 
         if (!empty($filterOptions)) {
             $this->request->session()->write($path, $filterOptions);
         } else {
             $this->request->session()->delete($path);
         }
+
+        $view = $this->controller->getView();
+        $view->activeFilters = $this->activeFilters;
+        $view->filterFields = $this->filterFields;
+        $view->activeSort = $this->activeSort;
+        $view->sortFields = $this->sortFields;
+        $view->paginationParams = $this->paginationParams;
+        $view->defaultSort = $this->defaultSort;
 
         return true;
     }
@@ -377,9 +413,10 @@ class FilterComponent extends Component
      * Try to retrieve a filtered backlink from the session.
      *
      * @param array $url
+     * @param Request $request
      * @return array
      */
-    public static function getBacklink($url)
+    public static function getBacklink($url, Request $request)
     {
         $path = join('.', [
             'FILTER_' . ($url['plugin'] ? $url['plugin'] : ''),
@@ -387,8 +424,7 @@ class FilterComponent extends Component
             $url['action']
         ]);
 
-        App::uses('CakeSession', 'Model.Datasource');
-        if (($filterOptions = CakeSession::read($path))) {
+        if (($filterOptions = $request->session()->read($path))) {
             if (isset($filterOptions['slug'])) {
                 $url['sluggedFilter'] = $filterOptions['slug'];
                 unset($filterOptions['slug']);
@@ -640,13 +676,6 @@ class FilterComponent extends Component
                 case 'date_range':
 //						$options['conditions'][] = '';
                     break;
-            }
-
-            if (isset($filterField['contain'])) {
-                if (!isset($options['contain'])) {
-                    $options['contain'] = [];
-                }
-                $options['contain'] = array_merge($options['contain'], $filterField['contain']);
             }
         }
 

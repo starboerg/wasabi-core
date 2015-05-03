@@ -14,6 +14,6 @@ namespace Wasabi\Core\Model\Entity;
 
 use Cake\ORM\Entity;
 
-class Slug extends Entity
+class Filter extends Entity
 {
 }

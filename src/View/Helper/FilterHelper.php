@@ -54,7 +54,7 @@ class FilterHelper extends Helper
         return $this->Html->link($name, $url, $options);
     }
 
-    public function pagination($maxPageNumbers = 10, $itemType = 'Items', $class = '')
+    public function pagination($maxPageNumbers = 10, $itemType = 'Items', $class = '', $element = 'Filter/pagination')
     {
         if (empty($this->_View->paginationParams)) {
             return '';
@@ -98,7 +98,7 @@ class FilterHelper extends Helper
             $nextUrl = $this->_getPaginatedUrl($page + 1);
             $lastUrl = $this->_getPaginatedUrl($pages);
         }
-        return $this->_View->element('Filter.pagination', array(
+        return $this->_View->element($element, array(
             'total' => $this->_View->paginationParams['total'],
             'itemType' => $itemType,
             'first' => $firstUrl,
@@ -121,7 +121,7 @@ class FilterHelper extends Helper
      */
     public function getBacklink($url)
     {
-        return FilterComponent::getBacklink($url);
+        return FilterComponent::getBacklink($url, $this->request);
     }
 
     protected function _getPaginatedUrl($page)
