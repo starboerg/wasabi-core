@@ -43,6 +43,9 @@ module.exports = function(grunt) {
       },
       common: {
         vendorOnly: true,
+        require: {
+          'jquery.livequery': './src/Assets/js/common/lib/jquery.livequery.js'
+        },
         dest: 'webroot/js/common.js'
       },
       core: {
@@ -51,6 +54,9 @@ module.exports = function(grunt) {
           'wasabi.SpinPresets': './src/Assets/js/common/SpinPresets.js',
           'wasabi/core': './src/Assets/js/core/main.js'
         },
+        external: [
+          'jquery.livequery'
+        ],
         files: {
           'webroot/js/wasabi.js': ['src/Assets/js/wasabi.js']
         }
