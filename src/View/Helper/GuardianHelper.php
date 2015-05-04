@@ -14,7 +14,6 @@ namespace Wasabi\Core\View\Helper;
 
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
-use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
 
 /**
