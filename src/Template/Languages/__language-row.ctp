@@ -6,8 +6,8 @@
  */
 ?><tr<?= $class ?>>
     <td class="col-id center">
-        <?= $this->Form->input('Language.' . $key . '.id', ['type' => 'hidden', 'value' => $lang['id']]) ?>
-        <?= $this->Form->input('Language.' . $key . '.position', ['type' => 'hidden', 'value' => $lang['position'], 'class' => 'position']) ?>
+        <?= $this->Form->input($key . '.id', ['type' => 'hidden', 'value' => $lang['id']]) ?>
+        <?= $this->Form->input($key . '.position', ['type' => 'hidden', 'value' => $lang['position'], 'class' => 'position']) ?>
         <?= $lang['id'] ?>
     </td>
     <td class="col-pos center"><?= $this->Html->link('<i class="icon-grab"></i>', 'javascript:void(0)', ['title' => __d('wasabi_core', 'Change the position of this Language'), 'class' => 'action-sort', 'escapeTitle' => false]) ?></td>

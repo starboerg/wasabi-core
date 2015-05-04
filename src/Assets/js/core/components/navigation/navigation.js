@@ -1,9 +1,10 @@
-var vMenu = require('./views/Menu');
-var vNavigationToggle = require('./views/NavigationToggle');
+var Menu = require('./views/Menu');
+var NavigationToggle = require('./views/NavigationToggle');
+var LangSwitch = require('./views/LangSwitch');
+var WS = global.window.WS;
 
-var Navigation = function() {
-  this.menu = WS.viewFactory.create(vMenu, {});
-  this.navigationToggle = WS.viewFactory.create(vNavigationToggle, {});
+module.exports = function() {
+  this.menu = WS.createView(Menu);
+  this.navigationToggle = WS.createView(NavigationToggle);
+  this.langSwitch = WS.createView(LangSwitch);
 };
-
-module.exports = Navigation;

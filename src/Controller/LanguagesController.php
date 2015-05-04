@@ -11,8 +11,12 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Controller;
+use Cake\Collection\Collection;
+use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\ORM\ResultSet;
+use Wasabi\Core\Model\Entity\Language;
 
 /**
  * Class LanguagesController
@@ -27,6 +31,7 @@ class LanguagesController extends BackendAppController
     public function initialize()
     {
         parent::initialize();
+        $this->loadComponent('RequestHandler');
     }
 
     /**
@@ -116,5 +121,54 @@ class LanguagesController extends BackendAppController
         }
         $this->redirect(['action' => 'index']);
         return;
+    }
+
+    /**
+     * Save the order of languages
+     * AJAX POST
+     *
+     * @return void
+     */
+    public function sort()
+    {
+        if (!$this->request->is('ajax') || !$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+        if (empty($this->request->data)) {
+            throw new BadRequestException();
+        }
+
+        // save the new language positions
+        $languages = $this->Languages->patchEntities(
+            $this->Languages->find('allFrontendBackend'),
+            $this->request->data()
+        );
+        $this->Languages->connection()->begin();
+        foreach ($languages as $language) {
+            if (!$this->Languages->save($language)) {
+                $this->Languages->connection()->rollback();
+                break;
+            }
+        }
+        if ($this->Languages->connection()->inTransaction()) {
+            $this->Languages->connection()->commit();
+            $status = 'success';
+            $flashMessage = __d('wasabi_core', 'The language position has been updated.');
+        } else {
+            $status = 'error';
+            $flashMessage = $this->dbErrorMessage;
+        }
+
+        // create the json response
+        $frontendLanguages = $this->Languages
+            ->filterFrontend(new Collection($languages))
+            ->sortBy('position', SORT_ASC, SORT_NUMERIC)
+            ->toList();
+        $backendLanguages = $this->Languages
+            ->filterBackend(new Collection($languages))
+            ->sortBy('position', SORT_ASC, SORT_NUMERIC)
+            ->toList();
+        $this->set(compact('status', 'flashMessage', 'frontendLanguages', 'backendLanguages'));
+        $this->set('_serialize', ['status', 'flashMessage', 'frontendLanguages', 'backendLanguages']);
     }
 }

@@ -44,7 +44,10 @@ module.exports = function(grunt) {
       common: {
         vendorOnly: true,
         require: {
-          'jquery.livequery': './src/Assets/js/common/lib/jquery.livequery.js'
+          'jquery.livequery': './src/Assets/js/common/lib/frankfoerster/jquery.livequery.js',
+          'jquery.eventMagic': './src/Assets/js/common/lib/frankfoerster/jquery.eventMagic.js',
+          'jquery.scrollParent': './src/Assets/js/common/lib/frankfoerster/jquery.scrollParent.js',
+          'jquery.tSortable': './src/Assets/js/common/lib/frankfoerster/jquery.tSortable.js',
         },
         dest: 'webroot/js/common.js'
       },
@@ -55,7 +58,10 @@ module.exports = function(grunt) {
           'wasabi/core': './src/Assets/js/core/main.js'
         },
         external: [
-          'jquery.livequery'
+          'jquery.livequery',
+          'jquery.eventMagic',
+          'jquery.scrollParent',
+          'jquery.tSortable'
         ],
         files: {
           'webroot/js/wasabi.js': ['src/Assets/js/wasabi.js']

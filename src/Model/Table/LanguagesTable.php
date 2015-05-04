@@ -13,9 +13,8 @@
 namespace Wasabi\Core\Model\Table;
 
 use ArrayObject;
-use Cake\Cache\Cache;
+use Cake\Collection\CollectionInterface;
 use Cake\Collection\Iterator\FilterIterator;
-use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
@@ -115,10 +114,10 @@ class LanguagesTable extends Table
     /**
      * Filter the provided result set by languages that are available at the frontend.
      *
-     * @param ResultSetInterface $results
+     * @param CollectionInterface $results
      * @return FilterIterator
      */
-    public function filterFrontend(ResultSetInterface $results)
+    public function filterFrontend(CollectionInterface $results)
     {
         return $results->filter(function(Language $language) {
             return $language->available_at_frontend === true;
@@ -128,10 +127,10 @@ class LanguagesTable extends Table
     /**
      * Filter the provided result set by languages that are available at the backend.
      *
-     * @param ResultSetInterface $results
+     * @param CollectionInterface $results
      * @return FilterIterator
      */
-    public function filterBackend(ResultSetInterface $results)
+    public function filterBackend(CollectionInterface $results)
     {
         return $results->filter(function(Language $language) {
             return $language->available_at_backend === true;

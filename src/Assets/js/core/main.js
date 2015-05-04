@@ -121,6 +121,12 @@ function _initPaginations() {
   WS.createViews($('.pagination'), Pagination);
 }
 
+function _initSections() {
+  if (this.$body.hasClass('wasabi-core--languages-index')) {
+    WS.createView(require('./sections/LanguagesIndex'));
+  }
+}
+
 /**
  * Wasabi Core module
  * Initializes:
@@ -214,5 +220,6 @@ module.exports = {
     _initializeBackendViews.call(this);
     _toggleEmptySelects.call(this);
     _initPaginations.call(this);
+    _initSections.call(this);
   }
 };

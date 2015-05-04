@@ -10,7 +10,7 @@ use Cake\Core\Configure;
 <head>
     <?= $this->element('layout/head') ?>
 </head>
-<body>
+<body class="<?= $this->get('sectionCssClass', '') ?>">
 <?= $this->element('layout/header') ?>
 <div id="wrapper">
     <div id="asidebg"></div>

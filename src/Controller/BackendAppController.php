@@ -18,6 +18,7 @@ use Cake\Cache\Cache;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Utility\Inflector;
 use Wasabi\Core\Model\Table\LanguagesTable;
 use Wasabi\Core\Nav;
 
@@ -132,6 +133,7 @@ class BackendAppController extends AppController
 
         $this->_allow();
         $this->_setupLanguages();
+        $this->_setSectionCssClass();
     }
 
     /**
@@ -183,5 +185,15 @@ class BackendAppController extends AppController
         }, 'wasabi/core/longterm');
 
         Configure::write('languages', $languages);
+    }
+
+    protected function _setSectionCssClass() {
+        $this->set('sectionCssClass',
+            strtolower(
+                Inflector::slug($this->request->params['plugin']) . '--' .
+                $this->request->params['controller'] . '-' .
+                $this->request->params['action']
+            )
+        );
     }
 }

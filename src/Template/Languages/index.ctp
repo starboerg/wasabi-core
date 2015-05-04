@@ -22,7 +22,7 @@ $this->Html->addAction(
         ])
 );
 ?>
-<?= $this->Form->create($language) ?>
+<?= $this->Form->create($language, ['url' => ['plugin' => 'Wasabi/Core', 'controller' => 'Languages', 'action' => 'sort']]) ?>
 <table class="list languages valign-middle">
     <thead>
     <tr>

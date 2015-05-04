@@ -4,7 +4,6 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var BaseViewFactory = require('./common/BaseViewFactory');
 var bs = require('bootstrap');
-//var CoreRouter = require('./router/CoreRouter');
 
 var WS = (function() {
 
@@ -34,15 +33,12 @@ var WS = (function() {
     viewFactory: viewFactory,
 
     boot: function () {
-      //new CoreRouter(options.baseUrl);
-
       for (var i = 0, len = this.modules.registered.length; i < len; i++) {
         var registered = this.modules.registered[i];
         var name = registered.name;
         var r = registered.require;
         var options = registered.options;
         this.modules[name] = require(r);
-        console.log(this.modules);
         this.modules[name].initialize(options);
       }
 
