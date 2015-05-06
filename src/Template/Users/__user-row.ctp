@@ -21,12 +21,12 @@
                 ],
                 [
                     'escape' => false,
-                    'confirm-message' => __d('wasabi_core', 'Activate user <strong>{0}</strong>?', $u['username']),
-                    'confirm-title' => __d('wasabi_core', 'Activate User'),
+                    'confirm-message' => __d('wasabi_core', 'Verify user <strong>{0}</strong>?', $u['username']),
+                    'confirm-title' => __d('wasabi_core', 'Verify User'),
                     'title' => __d('wasabi_core', 'Manually verify the user\'s email address.'),
                     'ajax' => true,
                     'notify' => 'table.users',
-                    'event' => 'activate',
+                    'event' => 'verify',
                     'data-user-id' => $u['id']
                 ],
                 true
@@ -87,8 +87,8 @@
         if ($u['id'] != $this->request->session()->read('User.id') && $u['id'] != 1) {
             echo $this->Guardian->protectedConfirmationLink('<i class="wicon-remove"></i>', '/backend/users/delete/' . $u['id'], [
                 'class' => 'action-delete',
-                'title' => 'Diesen Benutzer löschen',
-                'confirm-message' => __d('wasabi_core', 'Benutzer <strong>{0}</strong> wirklich löschen?', $u['username']),
+                'title' => __d('wasabi_core', 'Delete User'),
+                'confirm-message' => __d('wasabi_core', 'Do you really want to delete user <strong>{0}</strong>?', $u['username']),
                 'confirm-title' => __d('wasabi_core', 'Confirm Deletion'),
                 'escape' => false
             ]);
