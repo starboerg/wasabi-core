@@ -267,7 +267,7 @@ class UsersController extends BackendAppController
      */
     public function delete($id)
     {
-        if (!$id || !$this->Users->exists($id)) {
+        if (!$id || !$this->Users->exists(['id' => $id])) {
             throw new NotFoundException();
         }
         if (!$this->request->is('post')) {
