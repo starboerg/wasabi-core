@@ -286,6 +286,52 @@ class UsersController extends BackendAppController
     }
 
     /**
+     * Verify action
+     * AJAX POST | GET
+     *
+     * @param string $id
+     */
+    public function verify($id)
+    {
+        if (!$id || !$this->Users->exists(['id' => $id])) {
+            throw new NotFoundException();
+        }
+        if (!$this->request->isAll(['ajax', 'post']) || !$this->request->is('get')) {
+            throw new MethodNotAllowedException();
+        }
+
+        $serialize = ['status', 'user'];
+
+        $user = $this->Users->get($id);
+        if ($this->Users->verify($user)) {
+
+        } else {
+            $this->set('error', $this->dbErrorMessage);
+            $serialize[] = 'error';
+        }
+
+        $this->set([
+            'status' => 'success',
+            'user' => $user,
+            '_serialize' => $serialize
+        ]);
+    }
+
+    /**
+     * @param $token
+     * @todo /verify/t/345235245389517581
+     */
+    public function verifyByToken($token)
+    {
+        if (!$this->Tokens->findByToken($token)) {
+            throw new NotFoundException();
+        }
+        if (!$this->request->is('get')) {
+            throw new MethodNotAllowedException();
+        }
+    }
+
+    /**
      * This action is called whenever a user tries to access a controller action
      * without the proper access rights.
      */

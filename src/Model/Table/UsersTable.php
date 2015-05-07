@@ -17,6 +17,7 @@ use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Wasabi\Core\Model\Entity\User;
 
 /**
  * Class UsersTable
@@ -140,5 +141,19 @@ class UsersTable extends Table
                     return $q->select(['name']);
                 }
             ]);
+    }
+
+    /**
+     * Verify the given $user.
+     *
+     * @param User $user
+     * @return bool|\Cake\Datasource\EntityInterface|mixed
+     */
+    public function verify(User $user)
+    {
+        $user->verified_at = date('Y-m-d H:i:s');
+        $user->verified = true;
+
+        return $this->save($user);
     }
 }
