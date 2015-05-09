@@ -50,6 +50,7 @@ class AppView extends \App\View\AppView
                 'widgets' => [
                     'label' => ['Wasabi\Core\View\Widget\LabelWidget'],
                     'section' => ['Wasabi\Core\View\Widget\SectionWidget'],
+                    'select' => ['Wasabi\Core\View\Widget\SelectBoxWidget'],
                     '_default' => ['Wasabi\Core\View\Widget\BasicWidget']
                 ]
             ]);
