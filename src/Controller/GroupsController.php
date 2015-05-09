@@ -171,7 +171,7 @@ class GroupsController extends BackendAppController
      */
     public function delete($id)
     {
-        if (!$id || !$this->Groups->exists($id)) {
+        if (!$id || !$this->Groups->exists(['id' => $id])) {
             throw new NotFoundException();
         }
         if ($id === '1') {
