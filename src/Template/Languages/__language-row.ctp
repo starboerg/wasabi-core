@@ -11,7 +11,16 @@
         <?= $lang['id'] ?>
     </td>
     <td class="col-pos center"><?= $this->Html->link('<i class="icon-grab"></i>', 'javascript:void(0)', ['title' => __d('wasabi_core', 'Change the position of this Language'), 'class' => 'action-sort', 'escapeTitle' => false]) ?></td>
-    <td class="col-name"><?= $this->Html->backendLink($lang['name'], '/backend/languages/edit/' . $lang['id'], ['title' => __d('wasabi_core', 'Edit language "{0}"', $lang['name'])]) ?></td>
+    <td class="col-name"><?= $this->Html->backendLink($lang['name'],
+            [
+                'plugin' => 'Wasabi/Core',
+                'controller' => 'Languages',
+                'action' => 'edit',
+                $lang['id']
+            ],
+            [
+                'title' => __d('wasabi_core', 'Edit language "{0}"', $lang['name'])
+            ]) ?></td>
     <td class="col-iso2"><?= $lang['iso2'] ?></td>
     <td class="col-iso3"><?= $lang['iso3'] ?></td>
     <td class="col-lang"><?= $lang['lang'] ?></td>
@@ -36,7 +45,12 @@
         if (!in_array($lang['id'], [1, 2])) {
             echo $this->Html->backendConfirmationLink(
                 '<i class="wicon-remove"></i>',
-                '/backend/languages/delete/' . $lang['id'],
+                [
+                    'plugin' => 'Wasabi/Core',
+                    'controller' => 'Languages',
+                    'action' => 'delete',
+                    $lang['id']
+                ],
                 [
                     'class' => 'action-delete',
                     'escapeTitle' => false,
