@@ -15,13 +15,14 @@ namespace Wasabi\Core\Controller;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
+use Wasabi\Core\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Table\UsersTable;
 
 /**
  * Class UsersController
  *
  * @property UsersTable $Users
- * @property \Wasabi\Core\Controller\Component\FilterComponent Filter
+ * @property FilterComponent Filter
  */
 class UsersController extends BackendAppController
 {
