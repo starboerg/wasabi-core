@@ -14,7 +14,14 @@ namespace Wasabi\Core\Model\Table;
 
 use Cake\Cache\Cache;
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
+use Wasabi\Core\Model\Entity\GroupPermission;
 
+/**
+ * Class GroupPermissionsTable
+ * @property GroupsTable Groups
+ * @package Wasabi\Core\Model\Table
+ */
 class GroupPermissionsTable extends Table
 {
     /**
@@ -37,7 +44,7 @@ class GroupPermissionsTable extends Table
             return [];
         }
 
-        $permissions = Cache::remember($groupId, function() use ($groupId) {
+        $permissions = Cache::remember($groupId, function () use ($groupId) {
             return $this
                 ->find('all')
                 ->select(['path'])
@@ -49,5 +56,58 @@ class GroupPermissionsTable extends Table
         }, 'wasabi/core/group_permissions');
 
         return $permissions;
+    }
+
+    /**
+     * @param array $group
+     * @param array $actionMap
+     */
+    public function createMissingPermissions(array $group, array $actionMap)
+    {
+        $groupPermissions = Hash::extract(
+            $this->find('all')
+                ->where(['group_id' => $group['id']])
+                ->hydrate(false)
+                ->toArray(),
+            '{n}.path');
+
+        $missingGroupPermissions = array_diff(array_keys($actionMap), $groupPermissions);
+
+        if (!empty($missingGroupPermissions)) {
+            $this->connection()->transactional(function () use ($missingGroupPermissions, $actionMap, $group) {
+                foreach ($missingGroupPermissions as $missingPath) {
+                    $action = $actionMap[$missingPath];
+                    if (!$this->save(new GroupPermission([
+                            'group_id' => $group['id'],
+                            'path' => $missingPath,
+                            'plugin' => $action['plugin'],
+                            'controller' => $action['controller'],
+                            'action' => $action['action'],
+                        ])
+                    )
+                    ) {
+                        $this->connection()->rollback();
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     *
+     */
+    public function deleteOrphans()
+    {
+        $groups = $this->Groups->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'id'
+        ])->toArray();
+
+        if (!$this->deleteAll([
+            'group_id NOT IN' => $groups
+        ])
+        ) {
+            $this->connection()->rollback();
+        }
     }
 }
