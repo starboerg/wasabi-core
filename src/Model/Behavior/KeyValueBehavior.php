@@ -44,6 +44,35 @@ class KeyValueBehavior extends Behavior
     ];
 
     /**
+     * Returns all keys and their values for all scopes.
+     *
+     * @return array
+     */
+    public function getAllKeyValues()
+    {
+        $query = $this->_table->query();
+
+        $query->formatResults(function(ResultSet $results) {
+                return $results->map(function ($row) {
+                    if ($row['serialized'] === true) {
+                        $row['value'] = unserialize($row['value']);
+                    }
+                    return $row;
+                });
+            });
+
+        $settings = [];
+
+        foreach ($query->all() as $row) {
+            $key = $row['scope'] . '__' . $row[$this->config('fields.key')];
+            $value = $row[$this->config('fields.value')];
+            $settings[$key] = $value;
+        }
+
+        return Hash::expand($settings, '__');
+    }
+
+    /**
      * Generate a custom entity with all keys as properties and
      * their corresponding values
      *
