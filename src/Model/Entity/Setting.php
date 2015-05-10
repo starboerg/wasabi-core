@@ -20,10 +20,10 @@ class Setting extends Entity
      * Skip error checking for the actual save operation since
      * the entity is checked for errors manually within the KeyValueBehavior.
      *
-     * @param null $field
-     * @param null $errors
-     * @param bool $overwrite
-     * @return $this|array
+     * @param string|array|null $field The field to get errors for, or the array of errors to set.
+     * @param string|array|null $errors The errors to be set for $field
+     * @param bool $overwrite Whether or not to overwrite pre-existing errors for $field
+     * @return array|$this
      */
     public function errors($field = null, $errors = null, $overwrite = false)
     {
