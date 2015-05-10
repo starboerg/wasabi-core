@@ -28,6 +28,6 @@ class AppController extends Controller
      */
     public function initialize()
     {
-        $this->loadComponent('Wasabi/Core.Flash');
+
     }
 }
