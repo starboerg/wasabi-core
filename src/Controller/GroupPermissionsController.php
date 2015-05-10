@@ -14,6 +14,7 @@ namespace Wasabi\Core\Controller;
 
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Wasabi\Core\Model\Table\GroupPermissionsTable;
 
 /**
@@ -80,11 +81,15 @@ class GroupPermissionsController extends BackendAppController
         ]);
 
         foreach ($groups as $group) {
-            // create missing permissions
-            $this->GroupPermissions->createMissingPermissions($group, $actionMap);
+            try {
+                // create missing permissions
+                $this->GroupPermissions->createMissingPermissions($group, $actionMap);
 
-            // delete orphans
-            $this->GroupPermissions->deleteOrphans();
+                // delete orphans
+                $this->GroupPermissions->deleteOrphans($group, $actionMap);
+            } catch (Exception $e) {
+                $this->GroupPermissions->connection()->rollback();
+            }
         }
 
         if ($this->GroupPermissions->connection()->inTransaction()) {
@@ -93,7 +98,7 @@ class GroupPermissionsController extends BackendAppController
         // delete guardian path cache
         $this->eventManager()->dispatch(new Event('Guardian.GroupPermissions.afterSync'));
 
-        $this->Flash->success(__d('wasabi_core','All permissions have been synchronized.'));
+        $this->Flash->success(__d('wasabi_core', 'All permissions have been synchronized.'));
         $this->redirect(['action' => 'index']);
         return;
     }

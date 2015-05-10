@@ -77,37 +77,39 @@ class GroupPermissionsTable extends Table
             $this->connection()->transactional(function () use ($missingGroupPermissions, $actionMap, $group) {
                 foreach ($missingGroupPermissions as $missingPath) {
                     $action = $actionMap[$missingPath];
-                    if (!$this->save(new GroupPermission([
+                    $this->save(new GroupPermission([
                             'group_id' => $group['id'],
                             'path' => $missingPath,
                             'plugin' => $action['plugin'],
                             'controller' => $action['controller'],
                             'action' => $action['action'],
                         ])
-                    )
-                    ) {
-                        $this->connection()->rollback();
-                    }
+                    );
                 }
             });
         }
     }
 
     /**
-     *
+     * @param array $group
+     * @param array $actionMap
      */
-    public function deleteOrphans()
+    public function deleteOrphans(array $group, array $actionMap)
     {
-        $groups = $this->Groups->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'id'
-        ])->toArray();
+        $groupPermissions = Hash::extract(
+            $this->find('all')
+                ->where(['group_id' => $group['id']])
+                ->hydrate(false)
+                ->toArray(),
+            '{n}.path');
 
-        if (!$this->deleteAll([
-            'group_id NOT IN' => $groups
-        ])
-        ) {
-            $this->connection()->rollback();
+        $orphans = array_diff($groupPermissions, array_keys($actionMap));
+
+        if (!empty($orphans)) {
+            $this->deleteAll([
+                'group_id' => $group['id'],
+                'path IN' => $orphans
+            ]);
         }
     }
 }
