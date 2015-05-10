@@ -36,9 +36,8 @@ use Cake\Event\EventManager;
  */
 class AppView extends \App\View\AppView
 {
-    public $__defaultAppViewActions = [
-        'Wasabi/Core.Users.login',
-        'Wasabi/Core.GroupPermissions.index'
+    public $defaultFormTemplateActions = [
+        'Wasabi/Core.Users.login'
     ];
 
     public function initialize()
@@ -47,7 +46,7 @@ class AppView extends \App\View\AppView
             $this->request->params['plugin'],
             $this->request->params['controller'],
             $this->request->params['action']
-        ]), $this->__defaultAppViewActions)
+        ]), $this->defaultFormTemplateActions)
         ) {
             $this->loadHelper('Form', [
                 'className' => 'Wasabi/Core.Form',
