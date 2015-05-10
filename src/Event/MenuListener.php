@@ -144,7 +144,7 @@ class MenuListener implements EventListenerInterface
                 'parent' => 'administration',
                 'url' => [
                     'plugin' => 'Wasabi/Core',
-                    'controller' => 'Permissions',
+                    'controller' => 'GroupPermissions',
                     'action' => 'index'
                 ]
             ])
