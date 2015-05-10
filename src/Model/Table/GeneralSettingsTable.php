@@ -11,6 +11,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Model\Table;
+use Cake\ORM\Entity;
 use Cake\Validation\Validator;
 use ArrayObject;
 use Cake\Event\Event;
@@ -18,6 +19,9 @@ use Wasabi\Core\Model\Entity\Setting;
 
 /**
  * Class GeneralSettingsTable
+ *
+ * @method getKeyValues(Entity $entity, array $fields) KeyValueBehavior::getKeyValues(Entity $entity, array $fields)
+ * @method saveKeyValues(Entity $entity, array $fields) KeyValueBehavrio::saveKeyValues(Entity $entity, array $fields)
  */
 class GeneralSettingsTable extends SettingsTable
 {
