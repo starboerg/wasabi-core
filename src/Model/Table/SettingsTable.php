@@ -20,6 +20,8 @@ use Wasabi\Core\Model\Entity\Setting;
 
 /**
  * Class SettingsTable
+ *
+ * @method getAllKeyValues() KeyValueBehavior::getAllKeyValues()
  */
 class SettingsTable extends Table
 {
@@ -30,6 +32,7 @@ class SettingsTable extends Table
      */
     public function initialize(array $config)
     {
+        $this->addBehavior('Wasabi/Core.KeyValue');
         $this->addBehavior('Timestamp');
     }
 
