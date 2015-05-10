@@ -14,7 +14,11 @@
  */
 namespace Wasabi\Core\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
+use Cake\Event\Event;
+use Wasabi\Core\Model\Table\SettingsTable;
 
 /**
  * Class AppController
@@ -24,10 +28,51 @@ use Cake\Controller\Controller;
 class AppController extends Controller
 {
     /**
-     * initialization hook method
+     * Called before the controller action. You can use this method to configure and customize components
+     * or perform logic that needs to happen before each controller action.
+     *
+     * @param Event $event
+     * @return void
      */
-    public function initialize()
+    public function beforeFilter(Event $event)
     {
+        $this->_loadSettings();
+    }
 
+    /**
+     * Loads all settings from db and triggers the event 'Settings.afterLoad'
+     * that can be listened to by plugins to further modify the settings.
+     *
+     * Structure:
+     * ----------
+     * Array(
+     *     'PluginName|ScopeName' => Array(
+     *         'key1' => 'value1',
+     *         ...
+     *     ),
+     *     ...
+     * )
+     *
+     * Access via:
+     * -----------
+     * Configure::read('Settings.ScopeName.key1');
+     *
+     * @return array
+     */
+    protected function _loadSettings() {
+        $settings = Cache::remember('settings', function() {
+            /** @var SettingsTable $Settings */
+            $Settings = $this->loadModel('Wasabi/Core.Settings');
+            return $Settings->getAllKeyValues();
+        }, 'wasabi/core/longterm');
+
+        $event = new Event('Settings.afterLoad', $settings);
+        $this->eventManager()->dispatch($event);
+
+        if ($event->result !== null) {
+            $settings = $event->result;
+        }
+
+        Configure::write('Settings', $settings);
     }
 }
