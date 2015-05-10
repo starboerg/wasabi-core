@@ -14,6 +14,7 @@
  */
 namespace Wasabi\Core\Event;
 
+use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Wasabi\Core\Controller\Component\GuardianComponent;
@@ -33,6 +34,9 @@ class GuardianListener implements EventListenerInterface
             'Guardian.getGuestActions' => [
                 'callable' => 'getGuestActions',
                 'priority' => Config::$priority
+            ],
+            'Guardian.GroupPermissions.afterSync' => [
+                'callable' => 'deleteGuardianPathCache'
             ]
         ];
     }
@@ -53,5 +57,13 @@ class GuardianListener implements EventListenerInterface
             'Wasabi/Core.Users.register',
             'Wasabi/Core.Users.unauthorized'
         ]);
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function deleteGuardianPathCache(Event $event)
+    {
+        Cache::clear(false, 'wasabi/core/guardian_paths');
     }
 }
