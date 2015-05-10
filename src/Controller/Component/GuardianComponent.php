@@ -17,8 +17,10 @@ namespace Wasabi\Core\Controller\Component;
 use Cake\Cache\Cache;
 use Cake\Controller\Component;
 use Cake\Core\Exception\Exception;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Event\EventManagerTrait;
+use Cake\Filesystem\Folder;
 use Cake\Network\Session;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
@@ -247,31 +249,32 @@ class GuardianComponent extends Component
      */
     public function getActionMap()
     {
-//		$plugins = $this->getLoadedPluginPaths();
-//
-//		$actionMap = [];
-//		foreach ($plugins as $plugin => $path) {
-//			$controllers = $this->getControllersForPlugin($plugin, $path);
-//			foreach ($controllers as $controller) {
-//				$actions = $this->introspectController($controller['path']);
-//				if (empty($actions)) {
-//					continue;
-//				}
-//				foreach ($actions as $action) {
-//					$path = "{$plugin}.{$controller['name']}.{$action}";
-//					if (in_array($path, $this->_guestActions)) {
-//						continue;
-//					}
-//					$actionMap[$path] = array(
-//						'plugin' => $plugin,
-//						'controller' => $controller['name'],
-//						'action' => $action
-//					);
-//				}
-//			}
-//		}
-//
-//		return $actionMap;
+		$plugins = $this->getLoadedPluginPaths();
+
+		$actionMap = [];
+		foreach ($plugins as $plugin => $path) {
+			$controllers = $this->getControllersForPlugin($plugin, $path);
+			foreach ($controllers as $controller) {
+				$actions = $this->introspectController($controller['path']);
+
+				if (empty($actions)) {
+					continue;
+				}
+				foreach ($actions as $action) {
+					$path = "{$plugin}.{$controller['name']}.{$action}";
+					if (in_array($path, $this->_guestActions)) {
+						continue;
+					}
+					$actionMap[$path] = [
+						'plugin' => $plugin,
+						'controller' => $controller['name'],
+						'action' => $action
+					];
+				}
+			}
+		}
+
+		return $actionMap;
     }
 
     /**
@@ -281,14 +284,18 @@ class GuardianComponent extends Component
      */
     public function getLoadedPluginPaths()
     {
-//		$pluginPaths = [];
-//
-//		$plugins = CakePlugin::loaded();
-//		foreach ($plugins as $p) {
-//			$pluginPaths[$p] = CakePlugin::path($p);
-//		}
-//
-//		return $pluginPaths;
+		$pluginPaths = [];
+
+		$plugins = Plugin::loaded();
+		foreach ($plugins as $p) {
+            // @TODO load active plugins from plugin manager
+            if (in_array($p, ['DebugKit', 'Migrations'])) {
+                continue;
+            }
+			$pluginPaths[$p] = Plugin::path($p);
+		}
+
+		return $pluginPaths;
     }
 
     /**
@@ -300,28 +307,28 @@ class GuardianComponent extends Component
      */
     public function getControllersForPlugin($plugin, $pluginPath)
     {
-//		$controllers = [];
-//		$Folder = new Folder();
-//
-//		$ctrlFolder = $Folder->cd($pluginPath . 'Controller');
-//
-//		if (!empty($ctrlFolder)) {
-//			$files = $Folder->find('.*Controller\.php$');
-//			$subLength = strlen('Controller.php');
-//			foreach ($files as $f) {
-//				$filename = basename($f);
-//				if ($filename === $plugin . 'AppController.php') {
-//					continue;
-//				}
-//				$ctrlName = substr($filename, 0, strlen($filename) - $subLength);
-//				$controllers[] = array(
-//					'name' => $ctrlName,
-//					'path' => $Folder->path . DS . $f
-//				);
-//			}
-//		}
-//
-//		return $controllers;
+		$controllers = [];
+		$Folder = new Folder();
+
+        $ctrlFolder = $Folder->cd($pluginPath . DS . 'src' . DS . 'Controller');
+
+		if (!empty($ctrlFolder)) {
+			$files = $Folder->find('.*Controller\.php$');
+			$subLength = strlen('Controller.php');
+			foreach ($files as $f) {
+				$filename = basename($f);
+				if ($filename === $plugin . 'AppController.php') {
+					continue;
+				}
+				$ctrlName = substr($filename, 0, strlen($filename) - $subLength);
+				$controllers[] = array(
+					'name' => $ctrlName,
+					'path' => $Folder->path . DS . $f
+				);
+			}
+		}
+
+		return $controllers;
     }
 
     /**
@@ -332,18 +339,18 @@ class GuardianComponent extends Component
      */
     public function introspectController($controllerPath)
     {
-//		$content = file_get_contents($controllerPath);
-//		preg_match_all('/public\s+function\s+\&?\s*([^(]+)/', $content, $methods);
-//
-//		$guardableActions = [];
-//		foreach ($methods[1] as $m) {
-//			if (in_array($m, array('__construct', 'setRequest', 'invokeAction', 'beforeFilter', 'beforeRender', 'beforeRedirect', 'afterFilter'))) {
-//				continue;
-//			}
-//			$guardableActions[] = $m;
-//		}
-//
-//		return $guardableActions;
+		$content = file_get_contents($controllerPath);
+		preg_match_all('/public\s+function\s+\&?\s*([^(]+)/', $content, $methods);
+
+		$guardableActions = [];
+		foreach ($methods[1] as $m) {
+			if (in_array($m, ['__construct', 'initialize', 'isAuthorized', 'setRequest', 'invokeAction', 'beforeFilter', 'beforeRender', 'beforeRedirect', 'afterFilter'])) {
+				continue;
+			}
+			$guardableActions[] = $m;
+		}
+
+		return $guardableActions;
     }
 
 //	/**
