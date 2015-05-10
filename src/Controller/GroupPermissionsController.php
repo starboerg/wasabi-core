@@ -119,7 +119,7 @@ class GroupPermissionsController extends BackendAppController
             }
         }
 
-        if (empty($this->data) && !$this->request->is('ajax')) {
+        if (empty($this->request->data) && !$this->request->is('ajax')) {
             $this->Flash->warning(__d('wasabi_core', 'There are no permissions to update yet.'));
             $this->redirect(['action' => 'index']);
             return;
@@ -141,8 +141,15 @@ class GroupPermissionsController extends BackendAppController
 
         if ($this->GroupPermissions->connection()->inTransaction()) {
             $this->GroupPermissions->connection()->commit();
-
-            $this->Flash->success(__d('wasabi_core', 'All permissions have been saved.'));
+            if ($this->request->is('ajax')) {
+                $status = 'success';
+                $this->set(compact('status'));
+                $this->set('_serialize', ['status']);
+            } else {
+                $this->Flash->success(__d('wasabi_core', 'All permissions have been saved.'));
+                $this->redirect(['action' => 'index']);
+                return;
+            }
         } else {
             $this->Flash->error($this->dbErrorMessage);
         }
