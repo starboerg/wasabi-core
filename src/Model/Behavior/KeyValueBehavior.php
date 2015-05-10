@@ -51,14 +51,20 @@ class KeyValueBehavior extends Behavior
      *
      *
      * @param Entity $entity
+     * @param array $keys
      * @return Entity
      */
-    public function getKeyValues(Entity $entity)
+    public function getKeyValues(Entity $entity, array $keys)
     {
         $scope = $this->config('scope');
         $query = $this->_table->query();
 
-        $query->where(['scope' => $scope])->hydrate(false);
+        $query
+            ->where([
+                'scope' => $scope,
+                $this->config('fields.key') . ' IN' => $keys
+            ])
+            ->hydrate(false);
 
         // unserialize serialized fields
         $query->formatResults(function(ResultSet $results) {
@@ -81,18 +87,19 @@ class KeyValueBehavior extends Behavior
      * Save key value pairs.
      *
      * @param Entity $entity
+     * @param array $keys
      * @return bool|mixed
      */
-    public function saveKeyValues(Entity $entity)
+    public function saveKeyValues(Entity $entity, array $keys)
     {
-        $event = $this->_table->dispatchEvent('Model.beforeSaveKeyValues', compact('data'));
+        $event = $this->_table->dispatchEvent('Model.beforeSaveKeyValues', compact('entity'));
 
         if ($event->isStopped()) {
             return $event->result;
         }
 
         if (!empty($event->result)) {
-            $data = $event->result;
+            $entity = $event->result;
         }
 
         $fields = $this->config('fields');
@@ -101,7 +108,7 @@ class KeyValueBehavior extends Behavior
             return true;
         }
 
-        $mappedIds = $this->_getFieldToIdMapping();
+        $mappedIds = $this->_getFieldToIdMapping($keys);
 
         $entities = [];
         foreach ($entity->toArray() as $key => $value) {
@@ -122,17 +129,16 @@ class KeyValueBehavior extends Behavior
                 'serialized' => $serialized
             ]);
 
-            if (($existingId = Hash::get($mappedIds, $this->config('scope') . '.' . $key)) !== null) {
+            if (($existingId = Hash::get($mappedIds, $key)) !== null) {
                 $kvEntity->id = $existingId;
             }
 
             $entities[] = $kvEntity;
         }
 
-        $table = $this->_table;
-        $result = $this->_table->connection()->transactional(function () use ($table, $entities) {
+        $result = $this->_table->connection()->transactional(function () use ($entities) {
             foreach ($entities as $e) {
-                $table->save($e);
+                $this->_table->save($e);
             }
         });
 
@@ -143,14 +149,20 @@ class KeyValueBehavior extends Behavior
      * Returns an array of existing keys and
      * their corresponding ids
      *
+     * @param $keys
      * @return array
      */
-    protected function _getFieldToIdMapping()
+    protected function _getFieldToIdMapping(array $keys)
     {
-        return $this->_table->find('list', [
-            'keyField' => $this->config('fields.key'),
-            'valueField' => 'id',
-            'groupField' => 'scope'
-        ])->toArray();
+        return $this->_table
+            ->find('list', [
+                'keyField' => $this->config('fields.key'),
+                'valueField' => 'id'
+            ])
+            ->where([
+                'scope' => $this->config('scope'),
+                $this->config('fields.key') . ' IN' => $keys
+            ])
+            ->toArray();
     }
 }
