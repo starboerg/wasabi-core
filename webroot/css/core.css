@@ -2181,4 +2181,36 @@ table.languages .action-sort i {
   position: relative;
   top: 1px;
 }
+table.permissions .plugin td {
+  background-color: #f2f3f4;
+  font-size: 20px;
+  line-height: 30px;
+  font-family: 'open_sans_webfont_semibold', sans-serif;
+  color: #bbc0c5;
+}
+table.permissions .plugin td:hover {
+  background-color: #f2f3f4;
+}
+table.permissions .plugin + tr td {
+  border-top: 1px solid #ddd;
+}
+table.permissions .controller {
+  background-color: #fcfcfc !important;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  font-family: 'open_sans_webfont_semibold', sans-serif;
+}
+table.permissions .action {
+  line-height: 32px;
+}
+table.permissions .last-action td {
+  border-bottom: 1px solid #ddd;
+}
+table.permissions label {
+  font-family: 'open_sans_webfont', sans-serif;
+  cursor: pointer;
+}
+table.permissions input[type=checkbox] {
+  margin: 0;
+}
 /*# sourceMappingURL=webroot/css/core.css.map */
