@@ -22,7 +22,14 @@ $this->Html->addAction(
         ])
 );
 ?>
-<?= $this->Form->create($permission, ['url' => ['plugin' => 'Wasabi/Core', 'controller' => 'GroupPermissions', 'action' => 'update']]) ?>
+<?= $this->Form->create($permission, [
+    'url' => [
+        'plugin' => 'Wasabi/Core',
+        'controller' => 'GroupPermissions',
+        'action' => 'update'
+    ],
+    'class' => 'permissions-update-form'
+]) ?>
     <table class="list permissions valign-middle">
         <thead>
         <tr>
