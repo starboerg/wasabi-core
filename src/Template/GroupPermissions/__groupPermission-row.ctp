@@ -38,7 +38,7 @@ foreach ($controllers as $controller => $actions):
                     <?php $i++; endforeach; ?>
             </td>
             <td class="center valign-middle">
-                <button class="single-submit button small" type="submit">
+                <button class="single-submit button small blue" type="submit">
                     <span><?= __d('core', 'Update') ?></span></button>
             </td>
         </tr>

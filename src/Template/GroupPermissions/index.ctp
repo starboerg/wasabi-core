@@ -9,7 +9,7 @@ $this->Html->setTitle(__d('wasabi_core', 'Permissions'));
 $this->Html->setSubTitle(__d('wasabi_core', 'Management'));
 $this->Html->addAction(
     $this->Guardian->protectedLink(
-        '<i class="icon-refresh"></i>',
+        '<i class="icon-sync"></i>',
         [
             'plugin' => 'Wasabi/Core',
             'controller' => 'GroupPermissions',

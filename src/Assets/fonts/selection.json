@@ -47,8 +47,36 @@
 				"code": 58883,
 				"name": "grab"
 			},
-			"setIdx": 0,
+			"setIdx": 1,
 			"setId": 5,
+			"iconIdx": 0
+		},
+		{
+			"icon": {
+				"paths": [
+					"M863.429 603.429q0 2.857-0.571 4-36.571 153.143-153.143 248.286t-273.143 95.143q-83.429 0-161.429-31.429t-139.143-89.714l-73.714 73.714q-10.857 10.857-25.714 10.857t-25.714-10.857-10.857-25.714v-256q0-14.857 10.857-25.714t25.714-10.857h256q14.857 0 25.714 10.857t10.857 25.714-10.857 25.714l-78.286 78.286q40.571 37.714 92 58.286t106.857 20.571q76.571 0 142.857-37.143t106.286-102.286q6.286-9.714 30.286-66.857 4.571-13.143 17.143-13.143h109.714q7.429 0 12.857 5.429t5.429 12.857zM877.714 146.286v256q0 14.857-10.857 25.714t-25.714 10.857h-256q-14.857 0-25.714-10.857t-10.857-25.714 10.857-25.714l78.857-78.857q-84.571-78.286-199.429-78.286-76.571 0-142.857 37.143t-106.286 102.286q-6.286 9.714-30.286 66.857-4.571 13.143-17.143 13.143h-113.714q-7.429 0-12.857-5.429t-5.429-12.857v-4q37.143-153.143 154.286-248.286t274.286-95.143q83.429 0 162.286 31.714t140 89.429l74.286-73.714q10.857-10.857 25.714-10.857t25.714 10.857 10.857 25.714z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"tags": [
+					"refresh"
+				],
+				"grid": 14
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"order": 1,
+				"id": 4,
+				"prevSize": 28,
+				"code": 58885,
+				"name": "sync"
+			},
+			"setIdx": 2,
+			"setId": 4,
 			"iconIdx": 0
 		},
 		{
@@ -73,7 +101,7 @@
 				"code": 58895,
 				"name": "arrow-down2"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 0
 		},
@@ -99,7 +127,7 @@
 				"code": 58896,
 				"name": "arrow-up2"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 1
 		},
@@ -124,7 +152,7 @@
 				"code": 58890,
 				"name": "arrow-left"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 2
 		},
@@ -149,7 +177,7 @@
 				"code": 58880,
 				"name": "arrow-down"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 3
 		},
@@ -174,7 +202,7 @@
 				"code": 58889,
 				"name": "arrow-up"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 4
 		},
@@ -199,7 +227,7 @@
 				"code": 58894,
 				"name": "arrow-right"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 5
 		},
@@ -224,7 +252,7 @@
 				"code": 58898,
 				"name": "arrow-down3"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 6
 		},
@@ -249,7 +277,7 @@
 				"code": 58899,
 				"name": "arrow-up3"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 7
 		},
@@ -274,7 +302,7 @@
 				"code": 58881,
 				"name": "image"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 8
 		},
@@ -297,7 +325,7 @@
 				"code": 58882,
 				"name": "spanner"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 9
 		},
@@ -320,7 +348,7 @@
 				"code": 58884,
 				"name": "home2"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 11
 		},
@@ -343,7 +371,7 @@
 				"code": 58886,
 				"name": "settings"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 14
 		},
@@ -366,7 +394,7 @@
 				"code": 58887,
 				"name": "view-list"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 15
 		},
@@ -389,7 +417,7 @@
 				"code": 58891,
 				"name": "layers"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 17
 		},
@@ -412,7 +440,7 @@
 				"code": 58893,
 				"name": "menu"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 18
 		},
@@ -437,7 +465,7 @@
 				"code": 58897,
 				"name": "cross"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 19
 		},
@@ -460,7 +488,7 @@
 				"code": 58900,
 				"name": "move"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 20
 		},
@@ -483,7 +511,7 @@
 				"code": 58901,
 				"name": "move-alt1"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 21
 		},
@@ -510,7 +538,7 @@
 				"ligatures": "plus, add",
 				"name": "plus"
 			},
-			"setIdx": 4,
+			"setIdx": 5,
 			"setId": 1,
 			"iconIdx": 22
 		}
