@@ -86,6 +86,7 @@ class GroupPermissionsTable extends Table
      * supplied $actionMap.
      *
      * @param string $groupId
+     * @param array $actionMap
      */
     public function createMissingPermissions($groupId, array $actionMap)
     {
@@ -118,15 +119,11 @@ class GroupPermissionsTable extends Table
      * that are no longer present in the codebase.
      *
      * @param string $groupId
+     * @param array $actionMap
      */
     public function deleteOrphans($groupId, array $actionMap)
     {
-        $groupPermissions = Hash::extract(
-            $this->find('all')
-                ->where(['group_id' => $groupId])
-                ->hydrate(false)
-                ->toArray(),
-            '{n}.path');
+        $groupPermissions = $this->getAllPermissionPathsForGroup($groupId);
 
         $orphans = array_diff($groupPermissions, array_keys($actionMap));
 
