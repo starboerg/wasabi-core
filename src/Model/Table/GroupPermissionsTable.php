@@ -65,46 +65,65 @@ class GroupPermissionsTable extends Table
     }
 
     /**
-     * @param array $group
-     * @param array $actionMap
+     * Get all permissions paths (Plugin.Controller.action) for a specific $groupId.
+     *
+     * @param string $groupId
+     * @return array of permission paths
      */
-    public function createMissingPermissions(array $group, array $actionMap)
+    public function getAllPermissionPathsForGroup($groupId)
     {
-        $groupPermissions = Hash::extract(
-            $this->find('all')
-                ->where(['group_id' => $group['id']])
-                ->hydrate(false)
-                ->toArray(),
-            '{n}.path');
+        $groupPermissions = $this->find('all')
+            ->select('path')
+            ->where(['group_id' => $groupId])
+            ->hydrate(false)
+            ->toArray();
 
-        $missingGroupPermissions = array_diff(array_keys($actionMap), $groupPermissions);
-
-        if (!empty($missingGroupPermissions)) {
-            $this->connection()->transactional(function () use ($missingGroupPermissions, $actionMap, $group) {
-                foreach ($missingGroupPermissions as $missingPath) {
-                    $action = $actionMap[$missingPath];
-                    $this->save(new GroupPermission([
-                            'group_id' => $group['id'],
-                            'path' => $missingPath,
-                            'plugin' => $action['plugin'],
-                            'controller' => $action['controller'],
-                            'action' => $action['action'],
-                        ])
-                    );
-                }
-            });
-        }
+        return Hash::extract($groupPermissions, '{n}.path');
     }
 
     /**
-     * @param array $group
-     * @param array $actionMap
+     * Create all missing permissions for a specific $groupId and the
+     * supplied $actionMap.
+     *
+     * @param string $groupId
      */
-    public function deleteOrphans(array $group, array $actionMap)
+    public function createMissingPermissions($groupId, array $actionMap)
+    {
+        $existingPaths = $this->getAllPermissionPathsForGroup($groupId);
+
+        $missingPaths = array_diff(array_keys($actionMap), $existingPaths);
+
+        if (empty($missingPaths)) {
+            return;
+        }
+
+        $this->connection()->transactional(function () use ($missingPaths, $actionMap, $groupId) {
+            foreach ($missingPaths as $missingPath) {
+                $action = $actionMap[$missingPath];
+                $this->save(
+                    new GroupPermission([
+                        'group_id' => $groupId,
+                        'path' => $missingPath,
+                        'plugin' => $action['plugin'],
+                        'controller' => $action['controller'],
+                        'action' => $action['action'],
+                    ])
+                );
+            }
+        });
+    }
+
+    /**
+     * Delete all permission for a $groupId for paths (Plugin.Controller.action)
+     * that are no longer present in the codebase.
+     *
+     * @param string $groupId
+     */
+    public function deleteOrphans($groupId, array $actionMap)
     {
         $groupPermissions = Hash::extract(
             $this->find('all')
-                ->where(['group_id' => $group['id']])
+                ->where(['group_id' => $groupId])
                 ->hydrate(false)
                 ->toArray(),
             '{n}.path');
@@ -113,7 +132,7 @@ class GroupPermissionsTable extends Table
 
         if (!empty($orphans)) {
             $this->deleteAll([
-                'group_id' => $group['id'],
+                'group_id' => $groupId,
                 'path IN' => $orphans
             ]);
         }

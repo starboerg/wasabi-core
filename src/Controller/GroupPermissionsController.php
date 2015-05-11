@@ -82,11 +82,8 @@ class GroupPermissionsController extends BackendAppController
 
         foreach ($groups as $group) {
             try {
-                // create missing permissions
-                $this->GroupPermissions->createMissingPermissions($group, $actionMap);
-
-                // delete orphans
-                $this->GroupPermissions->deleteOrphans($group, $actionMap);
+                $this->GroupPermissions->createMissingPermissions($group['id'], $actionMap);
+                $this->GroupPermissions->deleteOrphans($group['id'], $actionMap);
             } catch (Exception $e) {
                 $this->GroupPermissions->connection()->rollback();
             }

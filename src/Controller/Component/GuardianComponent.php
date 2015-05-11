@@ -367,7 +367,7 @@ class GuardianComponent extends Component
     }
 
     /**
-     * Get or initialize an instance of the GroupPermission model.
+     * Get or initialize an instance of the GroupPermissionsTable.
      *
      * @return GroupPermissionsTable
      */
