@@ -38,6 +38,12 @@ class GroupPermissionsTable extends Table
         $this->addBehavior('Timestamp');
     }
 
+    /**
+     * Find all permissions for a specific $groupId.
+     *
+     * @param string $groupId
+     * @return array|mixed
+     */
     public function findAllForGroup($groupId)
     {
         if (!$groupId) {
