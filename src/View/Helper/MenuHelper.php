@@ -105,4 +105,28 @@ class MenuHelper extends Helper
 
         return $out;
     }
+
+    public function renderTree($menuItems, $level = null)
+    {
+        $output = '';
+
+        $depth = ($level !== null) ? $level : 1;
+
+        foreach ($menuItems as $key => $menuItem) {
+            $classes = ['menu-item'];
+            $menuItemRow = $this->_View->element('../Menus/__menu-item-row', [
+                'menuItem' => $menuItem,
+                'level' => $level
+            ]);
+
+            if (!empty($menuItem['children'])) {
+                $menuItemRow .= '<ul>' . $this->renderTree($menuItem['children'], $depth + 1) . '</ul>';
+            } else {
+                $classes[] = 'no-children';
+            }
+            $output .= '<li class="' . join(' ', $classes) . '" data-menu-item-id="' . $menuItem['id'] . '">' . $menuItemRow . '</li>';
+        }
+
+        return $output;
+    }
 }
