@@ -2,27 +2,17 @@
   "name": "wasabi-cms.core",
   "devDependencies": {
     "bower": "^1.4.1",
-    "bower-resolve": "^2.2.1",
-    "browserify": "^9.0.8",
     "grunt": "~0.4.5",
     "grunt-bower-requirejs": "^2.0.0",
-    "grunt-browserify": "3.8.0",
-    "grunt-browserify-resolve": "0.2.0",
     "grunt-bytesize": "^0.1.1",
     "grunt-contrib-copy": "~0.8.0",
     "grunt-contrib-cssmin": "^0.12.2",
-    "grunt-contrib-imagemin": "~0.9.4",
     "grunt-contrib-jshint": "0.11.2",
     "grunt-contrib-less": "~1.0.0",
     "grunt-contrib-requirejs": "^0.4.4",
     "grunt-contrib-uglify": "^0.8.1",
     "grunt-contrib-watch": "~0.6.1",
-    "grunt-exec": "^0.4.6",
-    "gulp": "^3.8.11",
     "less-plugin-clean-css": "~1.5.0",
-    "lodash": "^3.7.0",
-    "modernizr": "^3.0.0-alpha.4",
-    "vinyl-source-stream": "^1.1.0",
-    "webpack": "1.9.4"
+    "modernizr": "^3.0.0-alpha.4"
   }
 }
