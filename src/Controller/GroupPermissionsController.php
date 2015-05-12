@@ -24,6 +24,15 @@ use Wasabi\Core\Model\Table\GroupPermissionsTable;
 class GroupPermissionsController extends BackendAppController
 {
     /**
+     * Initialization hook method
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+    }
+
+    /**
      * Index action
      * GET
      */
