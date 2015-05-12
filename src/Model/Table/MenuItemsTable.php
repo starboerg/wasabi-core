@@ -1,18 +1,19 @@
 <?php
 /**
  * Wasabi CMS
- * Copyright (c) Frank Förster (http://frankfoerster.com)
+ * Copyright (c) Frank FÃ¶rster (http://frankfoerster.com)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @copyright     Copyright (c) Frank FÃ¶rster (http://frankfoerster.com)
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Model\Table;
 
 use Cake\ORM\Table;
+use Cake\Validation\Validator;
 
 /**
  * Class MenuItemsTable
@@ -34,5 +35,16 @@ class MenuItemsTable extends Table
 
         $this->addBehavior('CounterCache', ['Menus' => ['menu_item_count']]);
         $this->addBehavior('Timestamp');
+    }
+
+        /**
+     * Default validation rules.
+     *
+     * @param Validator $validator
+     * @return Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        return $validator->notEmpty('name', __d('wasabi_core', 'Please enter a name for the menu item.'));
     }
 }
