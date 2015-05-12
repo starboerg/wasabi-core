@@ -128,6 +128,9 @@ define(function(require) {
     if (this.$body.hasClass('wasabi-core--languages-index')) {
       WS.createView(require('core/sections/LanguagesIndex'));
     }
+    if (this.$body.hasClass('wasabi-core--grouppermissions-index')) {
+      WS.createView(require('core/sections/PermissionsIndex'));
+    }
   }
 
   /**
