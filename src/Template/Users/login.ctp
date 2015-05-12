@@ -20,15 +20,15 @@ if (Configure::read('Settings.Core.Login.Message.show') === '1' && $message) {
 <?= $this->Form->create(null) ?>
     <?= $this->Flash->render('auth') ?>
     <div class="support-content">
-        <?= $this->Form->input('username', ['label' => __d('core', 'Username') . ':']) ?>
-        <?= $this->Form->input('password', ['label' => __d('core', 'Password') . ':']) ?>
+        <?= $this->Form->input('username', ['label' => __d('wasabi_core', 'Username') . ':']) ?>
+        <?= $this->Form->input('password', ['label' => __d('wasabi_core', 'Password') . ':']) ?>
         <?= $this->Form->input('remember', [
-            'label' => __d('core', 'Remember me for 2 weeks'),
+            'label' => __d('wasabi_core', 'Remember me for 2 weeks'),
             'type' => "checkbox"
         ]) ?>
     </div>
     <div class="form-controls">
-        <?= $this->Form->button(__d('core', 'Login'), ['class' => 'button blue']) ?>
+        <?= $this->Form->button(__d('wasabi_core', 'Login'), ['class' => 'button blue']) ?>
     </div>
 <?= $this->Form->end() ?>
 <div class="bottom-links">

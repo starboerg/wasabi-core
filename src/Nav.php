@@ -35,7 +35,7 @@ class Nav
     public static function createMenu($alias)
     {
         if (isset(self::$_menus[$alias])) {
-            throw new Exception(__d('core', 'A Menu with alias "' . $alias . '" already exists.'));
+            throw new Exception(__d('wasabi_core', 'A Menu with alias "' . $alias . '" already exists.'));
         }
         self::$_menus[$alias] = new Menu($alias);
 
@@ -54,7 +54,7 @@ class Nav
     public static function getMenu($alias, $ordered = false)
     {
         if (!isset(self::$_menus[$alias])) {
-            throw new Exception(__d('core', 'No menu with alias "' . $alias . '" does exist.'));
+            throw new Exception(__d('wasabi_core', 'No menu with alias "' . $alias . '" does exist.'));
         }
         if (!$ordered) {
             return self::$_menus[$alias];
