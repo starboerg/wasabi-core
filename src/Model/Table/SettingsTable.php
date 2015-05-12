@@ -12,29 +12,19 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use ArrayObject;
+use Cake\Cache\Cache;
+use Cake\Event\Event;
 use Cake\ORM\Table;
+use Wasabi\Core\Model\Entity\Setting;
 
 /**
- * Class TokensTable
- * @package Wasabi\Core\Model\Table
+ * Class SettingsTable
+ *
+ * @method getAllKeyValues() KeyValueBehavior::getAllKeyValues()
  */
-class TokensTable extends Table
+class SettingsTable extends Table
 {
-
-    const TYPE_EMAIL_VERIFICATION = 'email_verification';
-    const TYPE_LOST_PASSWORD = 'lost_password';
-
-    /**
-     * Holds the configuration for all token types
-     * and tells how long a token is valid to be used.
-     *
-     * @var array
-     */
-    public $timeToLive = [
-        self::TYPE_EMAIL_VERIFICATION => '+2 days',
-        self::TYPE_LOST_PASSWORD => '+2 days'
-    ];
-
     /**
      * Initialize a table instance. Called after the constructor.
      *
@@ -42,10 +32,20 @@ class TokensTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->belongsTo('Users', [
-            'className' => 'Wasabi/Core.Users'
-        ]);
-
+        $this->addBehavior('Wasabi/Core.KeyValue');
         $this->addBehavior('Timestamp');
+    }
+
+    /**
+     * Called after an entity is saved.
+     *
+     * @param Event $event
+     * @param Setting $entity
+     * @param ArrayObject $options
+     */
+    public function afterSave(Event $event, Setting $entity, ArrayObject $options)
+    {
+        Cache::delete('settings', 'wasabi/core/longterm');
+        $this->eventManager()->dispatch(new Event('Wasabi.Settings.changed'));
     }
 }

@@ -30,13 +30,16 @@ use Cake\Core\Configure;
         ?>
     </div>
 </div>
-<?= $this->Asset->js('common' . (!Configure::read('debug') ? '.min' : ''), 'Wasabi/Core') ?>
-<?= $this->Asset->js('wasabi' . (!Configure::read('debug') ? '.min' : ''), 'Wasabi/Core') ?>
+<?= $this->Asset->js('require', 'Wasabi/Core') ?>
+<?= $this->Asset->js('common', 'Wasabi/Core') ?>
+<?= $this->Asset->js('wasabi', 'Wasabi/Core') ?>
 <script>
-    WS.registerModule('wasabi/core', {
-        baseUrl: '<?= $this->Url->build('/backend', true) ?>'
+    require(['wasabi', 'common'], function(WS) {
+        WS.registerModule('wasabi.core', {
+            baseUrl: '<?= $this->Url->build('/backend', true) ?>'
+        });
+        WS.boot();
     });
-    WS.boot();
 </script>
 </body>
 </html>

@@ -5,7 +5,8 @@
  * Copyright (c) 2013, Frank Förster (http://frankfoerster.com)
  * Licensed under the MIT License
  */
-(function($) {
+define(function(require) {
+  var $ = require('jquery');
 
   function run(bind, events) {
     var i, _i, len = events.length, _len, el, _el, evt, _evt, fn;
@@ -39,6 +40,4 @@
     }
 
   });
-
-
-})(jQuery);
+});

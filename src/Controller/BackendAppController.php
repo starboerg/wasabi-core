@@ -107,6 +107,7 @@ class BackendAppController extends AppController
         ]);
 
         $this->loadComponent('Wasabi/Core.Guardian');
+        $this->loadComponent('Wasabi/Core.Flash');
 
         // Load all menu items from all plugins.
         $this->eventManager()->dispatch(new Event('Wasabi.Backend.Menu.initMain', Nav::createMenu('backend.main')));

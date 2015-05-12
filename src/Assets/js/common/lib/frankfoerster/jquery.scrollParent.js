@@ -7,7 +7,8 @@
  *  (c) 2013 Frank Förster (http://frankfoerster.com)
  * Licensed under the MIT License
  */
-(function($) {
+define(function(require) {
+  var $ = require('jquery');
 
   $.fn.extend({
     scrollParent: function() {
@@ -25,5 +26,4 @@
       return ( /fixed/ ).test( this.css( "position") ) || !scrollParent.length ? $( this[ 0 ].ownerDocument || document ) : scrollParent;
     }
   });
-
-})(jQuery);
+});

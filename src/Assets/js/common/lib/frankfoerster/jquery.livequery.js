@@ -9,13 +9,15 @@
  * Dual licensed under the MIT (MIT_LICENSE.txt)
  * and GPL Version 2 (GPL_LICENSE.txt) licenses.
  */
-(function($, undefined) {
+define(function(require) {
+  var $ = require('jquery');
+  var strundefined = undefined;
 
   // Add ECMA262-5 Array methods if not supported natively
   // Fix for <= IE 8
   if (!('indexOf' in Array.prototype)) {
     Array.prototype.indexOf= function(find, i /*opt*/) {
-      if (i===undefined) i= 0;
+      if (i===strundefined) i= 0;
       if (i<0) i+= this.length;
       if (i<0) i= 0;
       for (var n= this.length; i<n; i++)
@@ -199,14 +201,14 @@
     },
 
     run: function(id) {
-      if (id !== undefined) {
+      if (id !== strundefined) {
         // Put the particular Live Query in the queue if it doesn't already exist
         if ($.inArray(id, $jQlq.queue) < 0) {
           $jQlq.queue.push(id);
         }
       }
       else
-        // Put each Live Query in the queue if it doesn't already exist
+      // Put each Live Query in the queue if it doesn't already exist
         $.each($jQlq.queries, function(id) {
           if ($.inArray(id, $jQlq.queue) < 0) {
             $jQlq.queue.push(id);
@@ -222,7 +224,7 @@
     },
 
     stop: function(id) {
-      if (id !== undefined) {
+      if (id !== strundefined) {
         // Stop are particular Live Query
         $jQlq.queries[id].stop();
       } else {
@@ -240,5 +242,4 @@
   $(function() {
     $jQlq.play();
   });
-
-})(jQuery);
+});

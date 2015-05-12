@@ -4,11 +4,13 @@
  * Copyright (c) 2013 Frank Förster (http://frankfoerster.com)
  * Licensed under the MIT License
  */
-(function($, doc, win) {
-  "use strict";
-
+define(function(require) {
+  var $ = require('jquery');
   require('jquery.eventMagic');
   require('jquery.scrollParent');
+
+  var win = window;
+  var doc = document;
 
   var TableSortable = function(el, options) {
     this.$el = $(el);
@@ -194,9 +196,9 @@
       this.$placeholder
         .addClass(this.settings.placeholder)
         .find('> td').first()
-          .css({
-            height: this.placeholderHeight
-          });
+        .css({
+          height: this.placeholderHeight
+        });
       this.$tr.after(this.$placeholder);
     },
 
@@ -278,5 +280,13 @@
     scrollSensitivity: 20,
     scrollSpeed: 20
   };
+});
+
+(function($, doc, win) {
+  "use strict";
+
+
+
+
 
 })(jQuery, document, window);
