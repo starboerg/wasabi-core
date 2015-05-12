@@ -1,4 +1,3 @@
 .idea
 node_modules
 composer.lock
-src/Assets/vendor/*
