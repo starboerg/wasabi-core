@@ -1,22 +1,27 @@
-var $ = require('jquery');
-window.jQuery = $;
-var _ = require('underscore');
-var Backbone = require('backbone');
-var BaseViewFactory = require('./common/BaseViewFactory');
-var bs = require('bootstrap');
-
-var WS = (function() {
+define(function(require) {
+  var $ = require('jquery');
+  var _ = require('underscore');
+  var Backbone = require('backbone');
+  var BaseViewFactory = require('./common/BaseViewFactory');
+  require('bootstrap.dropdown');
 
   var eventBus = _.extend({}, Backbone.Events);
   var viewFactory = new BaseViewFactory(eventBus);
   var resizeTimeout = 0;
+  var strundefined = 'undefined';
 
-  return {
+  if (typeof window.WS !== strundefined) {
+    return window.WS;
+  }
+
+  var WS = {
     features: {},
 
     modules: {
       registered: []
     },
+
+    views: [],
 
     /**
      * Global event bus.
@@ -33,13 +38,20 @@ var WS = (function() {
     viewFactory: viewFactory,
 
     boot: function () {
+      var that = this;
+
+      function loadModule(module) {
+        var name = module.name;
+        var r = module.require;
+        var options = module.options;
+        require([r], function(module) {
+          that.modules[name] = module;
+          that.modules[name].initialize(options);
+        });
+      }
+
       for (var i = 0, len = this.modules.registered.length; i < len; i++) {
-        var registered = this.modules.registered[i];
-        var name = registered.name;
-        var r = registered.require;
-        var options = registered.options;
-        this.modules[name] = require(r);
-        this.modules[name].initialize(options);
+        loadModule(this.modules.registered[i]);
       }
 
       $(window).on('resize', function() {
@@ -80,6 +92,7 @@ var WS = (function() {
     }
   };
 
-})();
+  window.WS = WS;
 
-global.window.WS = WS;
+  return WS;
+});
