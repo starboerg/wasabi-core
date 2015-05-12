@@ -2207,6 +2207,7 @@ table.permissions .action {
   line-height: 32px;
 }
 table.permissions .last-action td {
+  position: relative;
   border-bottom: 1px solid #ddd;
 }
 table.permissions label {
