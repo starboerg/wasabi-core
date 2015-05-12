@@ -13,6 +13,7 @@ require.config({
     underscore: 'vendor/underscore/underscore',
     'wasabi.BaseView': 'common/BaseView',
     'wasabi.core': 'core/main',
+    'jquery.color': 'vendor/jquery-color/jquery.color',
     'jquery.eventMagic': 'common/lib/frankfoerster/jquery.eventMagic',
     'jquery.scrollParent': 'common/lib/frankfoerster/jquery.scrollParent',
     'jquery.livequery': 'common/lib/frankfoerster/jquery.livequery',
