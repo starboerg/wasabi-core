@@ -28,10 +28,10 @@ class CreateMenus extends AbstractMigration
 
         $menus = [
             new Menu([
-                'name' => 'Main Menu'
+                'name' => 'Main'
             ]),
             new Menu([
-                'name' => 'Footer Menu'
+                'name' => 'Footer'
             ])
         ];
 
