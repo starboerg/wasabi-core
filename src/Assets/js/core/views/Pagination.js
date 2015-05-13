@@ -14,7 +14,7 @@ define(function(require) {
       var $target = $(event.target);
       var limit = $target.val();
       var targetUrl = $target.attr('data-url');
-      var currentUrl = global.purl(window.location);
+      var currentUrl = purl(window.location);
       var limitParamName = $target.attr('name').split('data[').join('').split(']').join('');
 
       var params = currentUrl.data.param.query;
