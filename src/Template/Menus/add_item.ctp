@@ -13,19 +13,30 @@ if ($this->request->params['action'] === 'add_item') {
     $this->Html->setSubTitle($this->request->data('name'));
     $isEdit = true;
 }
+$this->Html->addAction($this->Html->backendLink(
+    __d('wasabi_core', 'Back to {0} Menu', [$menu->get('name')]),
+    [
+        'plugin' => 'Wasabi/Core',
+        'controller' => 'Menus',
+        'action' => 'edit',
+        $menu->get('id')
+    ],
+    [
+        'class' => 'no-icon'
+    ]
+));
 
-echo $this->Html->backendLink(__d('wasabi_core', 'Back to {0} Menu', [$menu->get('name')]), [
-    'plugin' => 'Wasabi/Core',
-    'controller' => 'Menus',
-    'action' => 'edit',
-    $menu->get('id')
-], ['class' => 'no-icon']);
+$nameOpts = ['label' => __d('wasabi_core', 'Menu Item Name')];
 
-echo $this->Form->create($menuItem, ['novalidate' => true]);
+if (!$isEdit) {
+    $nameOpts['autofocus'] = '';
+}
+
+echo $this->Form->create($menuItem, ['class' => 'no-top-section']);
     if ($isEdit) {
         echo $this->Form->input('id', ['type' => 'hidden']);
     }
-    echo $this->Form->input('name', ['label' => __d('wasabi_core', 'Menu Item Name')]);
+    echo $this->Form->input('name', $nameOpts);
     echo $this->Html->div('form-controls');
         echo $this->Form->button('<span>' . __d('wasabi_core', 'Save') . '</span>', ['div' => false, 'class' => 'button']);
         echo $this->Html->backendLink(__d('wasabi_core', 'Cancel'), [

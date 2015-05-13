@@ -23,7 +23,7 @@ $this->Html->addAction(
 <table class="list menus valign-middle">
     <thead>
     <tr>
-        <th class="t-1-12 center">ID</th>
+        <th class="t-1-12 center"><?= $this->Filter->sortLink('ID', 'id') ?></th>
         <th class="t-5-12"><?= $this->Filter->sortLink(__d('wasabi_core', 'Menu Name'), 'name') ?></th>
         <th class="t-4-12"><?= $this->Filter->sortLink(__d('wasabi_core', '# Menu Items'), 'menu_item_count') ?></th>
         <th class="t-2-12 center"><?= __d('wasabi_core', 'Actions') ?></th>
