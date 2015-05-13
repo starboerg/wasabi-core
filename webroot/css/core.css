@@ -1197,16 +1197,17 @@ body.nav-closed aside {
     box-shadow: none;
   }
 }
-[class*="flash-message"] {
+[class*="flash-message--"],
+[class*="message--"] {
   position: relative;
   border: 1px solid #ddd;
   margin-bottom: 20px;
   padding: 10px 35px 10px 15px;
 }
-[class*="flash-message"].flash-message--no-dismiss {
+[class*="message--no-dismiss"] {
   padding: 10px 15px;
 }
-[class*="flash-message"].flash-message--no-dismiss .dismiss-flash {
+[class*="message--no-dismiss"] .dismiss-flash {
   display: none;
 }
 .dismiss-flash {
@@ -1228,33 +1229,33 @@ body.nav-closed aside {
   color: #8a1f11;
 }
 .flash-message--warning,
-.message-warning {
+.message--warning {
   background-color: #fff6bf;
   border-color: #ffd324;
   color: #514721;
 }
 .flash-message--warning a,
-.message-warning a {
+.message--warning a {
   color: #000;
 }
 .flash-message--success,
-.message-success {
+.message--success {
   background-color: #e6efc2;
   border-color: #c6d880;
   color: #264409;
 }
 .flash-message--success a,
-.message-success a {
+.message--success a {
   color: #000;
 }
 .flash-message--info,
-.message-info {
+.message--info {
   background-color: #d5edf8;
   border-color: #92cae4;
   color: #205791;
 }
 .flash-message--info a,
-.message-info a {
+.message--info a {
   color: #000;
 }
 .titlepad {
@@ -1822,6 +1823,37 @@ table.list .col-actions {
 .field > .list-content select {
   font-size: 13px;
   padding: 3px 4px;
+}
+.field > .table-head {
+  font-size: 13px;
+}
+.table-head {
+  color: #333;
+  background-color: #f2f3f4;
+  font-size: 14px;
+  font-family: 'open_sans_webfont_semibold', sans-serif;
+  text-align: left;
+  border-style: solid;
+  border-color: #d5d7d7;
+  border-width: 1px 1px 0 1px;
+}
+.table-head > div {
+  padding: 0 10px;
+  line-height: 40px;
+}
+.table-body {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-style: solid;
+  border-width: 1px 1px 0;
+  border-color: #d5d7d7 #e3e5e6 #e3e5e6 #e3e5e6;
+}
+.table-body li > .row {
+  border-bottom: 1px solid #e3e5e6;
+}
+.table-body li > .row:hover {
+  background-color: #f8f8f8;
 }
 .button {
   padding: 7px 16px 6px;
