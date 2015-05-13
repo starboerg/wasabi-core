@@ -17,43 +17,19 @@ namespace Wasabi\Core\Controller;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Utility\Hash;
+use Wasabi\Core\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Table\MenusTable;
 use Wasabi\Core\Model\Table\MenuItemsTable;
 
 /**
  * Class MenusController
+ *
+ * @property FilterComponent $Filter
  * @property MenusTable $Menus
  * @property MenuItemsTable $MenuItems
  */
 class MenusController extends BackendAppController
 {
-    /**
-     * Filter fields definitions
-     *
-     * `actions` describes on which controller
-     * action this filter field is available.
-     *
-     * @var array
-     */
-    public $filterFields = [
-        'search' => [
-            'modelField' => [
-                'Menu.name'
-            ],
-            'type' => 'like',
-            'actions' => ['index']
-        ]
-    ];
-
-    /**
-     * Controller actions where slugged filters are used.
-     *
-     * @var array
-     */
-    public $sluggedFilterActions = [
-        'index'
-    ];
-
     /**
      * Sortable Fields definition
      *
@@ -63,9 +39,13 @@ class MenusController extends BackendAppController
      * @var array
      */
     public $sortFields = [
+        'id' => [
+            'modelField' => 'Menus.id',
+            'default' => 'asc',
+            'actions' => ['index']
+        ],
         'name' => [
             'modelField' => 'Menus.name',
-            'default' => 'asc',
             'actions' => ['index']
         ],
         'menu_item_count' => [
