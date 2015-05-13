@@ -30,16 +30,6 @@ use Cake\Core\Configure;
         ?>
     </div>
 </div>
-<?= $this->Asset->js('require', 'Wasabi/Core') ?>
-<?= $this->Asset->js('common', 'Wasabi/Core') ?>
-<?= $this->Asset->js('wasabi', 'Wasabi/Core') ?>
-<script>
-    require(['wasabi', 'common'], function(WS) {
-        WS.registerModule('wasabi.core', {
-            baseUrl: '<?= $this->Url->build('/backend', true) ?>'
-        });
-        WS.boot();
-    });
-</script>
+<?= $this->element('layout/js-setup') ?>
 </body>
 </html>
