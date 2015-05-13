@@ -2207,7 +2207,6 @@ table.permissions .action {
   line-height: 32px;
 }
 table.permissions .last-action td {
-  position: relative;
   border-bottom: 1px solid #ddd;
 }
 table.permissions label {
@@ -2216,5 +2215,8 @@ table.permissions label {
 }
 table.permissions input[type=checkbox] {
   margin: 0;
+}
+table.permissions .spinner {
+  position: relative !important;
 }
 /*# sourceMappingURL=webroot/css/core.css.map */
