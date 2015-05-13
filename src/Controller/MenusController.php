@@ -64,12 +64,12 @@ class MenusController extends BackendAppController
      */
     public $sortFields = [
         'name' => [
-            'modelField' => 'Menu.name',
+            'modelField' => 'Menus.name',
             'default' => 'asc',
             'actions' => ['index']
         ],
         'menu_item_count' => [
-            'modelField' => 'Menu.menu_item_count',
+            'modelField' => 'Menus.menu_item_count',
             'actions' => ['index']
         ]
     ];
@@ -89,7 +89,7 @@ class MenusController extends BackendAppController
      */
     public function index()
     {
-        $menus = $this->Menus->find('all')->hydrate(false);
+        $menus = $this->Filter->filter($this->Menus->find('all'))->hydrate(false);
         $this->set('menus', $menus);
     }
 
