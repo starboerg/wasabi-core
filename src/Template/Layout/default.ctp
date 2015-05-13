@@ -8,10 +8,10 @@ use Cake\Core\Configure;
 ?><!DOCTYPE html>
 <html class="no-js" lang="en-US">
 <head>
-    <?= $this->element('layout/head') ?>
+    <?= $this->element('Wasabi/Core.Layout/head') ?>
 </head>
 <body class="<?= $this->get('sectionCssClass', '') ?>">
-<?= $this->element('layout/header') ?>
+<?= $this->element('Wasabi/Core.Layout/header') ?>
 <div id="wrapper">
     <div id="asidebg"></div>
     <aside>
@@ -30,6 +30,6 @@ use Cake\Core\Configure;
         ?>
     </div>
 </div>
-<?= $this->element('layout/js-setup') ?>
+<?= $this->element('Wasabi/Core.Layout/js-setup') ?>
 </body>
 </html>
