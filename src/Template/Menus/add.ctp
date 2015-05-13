@@ -33,13 +33,13 @@ echo $this->Form->input('name', $nameOpts); ?>
     <div class="field<?= (!$isEdit) ? ' no-input' : '' ?>">
         <?php if($isEdit): ?>
             <div class="message--info message--no-dismiss"><?= __d('wasabi_core', 'Tip: The maximum nesting level is <strong>2</strong>.') ?></div>
-            <div class="list-header row">
+            <div class="table-head row">
 				<div class="grid-10-16"><?= __d('wasabi_core', 'Menu Item') ?></div>
 				<div class="grid-2-16 center"><?= __d('wasabi_core', 'Status') ?></div>
 				<div class="grid-2-16 center"><?= __d('wasabi_core', 'Sort') ?></div>
 				<div class="grid-2-16 center"><?= __d('wasabi_core', 'Actions') ?></div>
 			</div>
-            <ul class="menu-items list-content" data-reorder-url="<?= Router::url([
+            <ul class="menu-items table-body" data-reorder-url="<?= Router::url([
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Menus',
                 'action' => 'reorderItems'

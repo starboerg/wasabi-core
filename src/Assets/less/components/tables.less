@@ -185,3 +185,40 @@ table.list {
     padding: 3px 4px;
   }
 }
+
+.field > .table-head {
+  font-size: 13px;
+}
+
+.table-head {
+  color: #333;
+  background-color: @darkerGreyBg;
+  font-size: 14px;
+  font-family: @font-os-semibold;
+  text-align: left;
+  border-style: solid;
+  border-color: @borderMain;
+  border-width: 1px 1px 0 1px;
+
+  & > div {
+    padding: 0 @computed-height--half;
+    line-height: (2 * @computed-height - 2);
+  }
+}
+
+.table-body {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-style: solid;
+  border-width: 1px 1px 0;
+  border-color: @borderMain @borderLight @borderLight @borderLight;
+
+  li > .row {
+    border-bottom: 1px solid @borderLight;
+
+    &:hover {
+      background-color: #f8f8f8;
+    }
+  }
+}
