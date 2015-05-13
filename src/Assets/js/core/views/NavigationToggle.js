@@ -1,7 +1,6 @@
-var $ = require('jquery');
-var BaseView = require('wasabi.BaseView');
-
-module.exports = (function() {
+define(function(require) {
+  var $ = require('jquery');
+  var BaseView = require('wasabi.BaseView');
 
   /**
    * Holds a reference to the body.
@@ -75,5 +74,4 @@ module.exports = (function() {
       }
     }
   });
-
-})();
+});

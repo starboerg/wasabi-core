@@ -36,7 +36,8 @@ class GroupsTable extends Table
             'className' => 'Wasabi/Core.Users'
         ]);
         $this->hasMany('GroupPermissions', [
-            'className' => 'Wasabi/Core.GroupPermissions'
+            'className' => 'Wasabi/Core.GroupPermissions',
+            'dependent' => true
         ]);
 
         $this->addBehavior('Timestamp');

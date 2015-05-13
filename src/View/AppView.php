@@ -36,13 +36,17 @@ use Cake\Event\EventManager;
  */
 class AppView extends \App\View\AppView
 {
+    public $defaultFormTemplateActions = [
+        'Wasabi/Core.Users.login'
+    ];
+
     public function initialize()
     {
-        if (join('.', [
-                $this->request->params['plugin'],
-                $this->request->params['controller'],
-                $this->request->params['action']
-            ]) !== 'Wasabi/Core.Users.login'
+        if (!in_array(join('.', [
+            $this->request->params['plugin'],
+            $this->request->params['controller'],
+            $this->request->params['action']
+        ]), $this->defaultFormTemplateActions)
         ) {
             $this->loadHelper('Form', [
                 'className' => 'Wasabi/Core.Form',
@@ -50,6 +54,7 @@ class AppView extends \App\View\AppView
                 'widgets' => [
                     'label' => ['Wasabi\Core\View\Widget\LabelWidget'],
                     'section' => ['Wasabi\Core\View\Widget\SectionWidget'],
+                    'select' => ['Wasabi\Core\View\Widget\SelectBoxWidget'],
                     '_default' => ['Wasabi\Core\View\Widget\BasicWidget']
                 ]
             ]);

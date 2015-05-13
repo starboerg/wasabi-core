@@ -16,7 +16,6 @@ use Cake\ORM\Table;
 
 /**
  * Class TokensTable
- * @property GroupsTable Groups
  * @package Wasabi\Core\Model\Table
  */
 class TokensTable extends Table

@@ -9,7 +9,7 @@
 <!--[if IE 8]>        <html class="no-js lt-ie9" lang="en-US"><![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" lang="en-US"><!--<![endif]-->
 <head>
-    <?= $this->element('layout/head') ?>
+    <?= $this->element('Wasabi/Core.Layout/head') ?>
 </head>
 <body<?= $this->get('bodyCssClass') ? ' class="' . implode(' ', $this->get('bodyCssClass')) . '"' : '' ?>>
 <div class="support-wrapper">
