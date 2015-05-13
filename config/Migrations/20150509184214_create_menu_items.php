@@ -9,7 +9,7 @@ class CreateMenuItems extends AbstractMigration
     public function up()
     {
         $table = $this->table('menu_items');
-        $table->addColumn('parent_id', 'integer', ['limit' => 11, 'signed' => false, 'null' => false])
+        $table->addColumn('parent_id', 'integer', ['limit' => 11, 'signed' => false, 'null' => true, 'default' => null])
             ->addColumn('menu_id', 'integer', ['limit' => 11, 'signed' => false, 'null' => false])
             ->addColumn('name', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('item', 'string', ['limit' => 255, 'null' => false])
