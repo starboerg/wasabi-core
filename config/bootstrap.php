@@ -16,6 +16,7 @@
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\EventManager;
+use Cake\Routing\DispatcherFactory;
 use Wasabi\Core\Event\GuardianListener;
 use Wasabi\Core\Event\LanguagesListener;
 use Wasabi\Core\Event\MenuListener;
@@ -45,4 +46,8 @@ if (!function_exists('guardian')) {
     function guardian() {
         return GuardianComponent::getInstance();
     }
+}
+
+if (Configure::read('debug')) {
+    DispatcherFactory::add('Wasabi/Core.Asset');
 }
