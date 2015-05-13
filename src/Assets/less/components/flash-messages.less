@@ -2,18 +2,18 @@
 @import (reference) "../__config";
 @import (reference) "../__mixins";
 
-[class*="flash-message"] {
+[class*="flash-message--"], [class*="message--"] {
   position: relative;
   border: 1px solid #ddd;
   margin-bottom: 20px;
   padding: 10px 35px 10px 15px;
+}
 
-  &.flash-message--no-dismiss {
-    padding: 10px 15px;
+[class*="message--no-dismiss"] {
+  padding: 10px 15px;
 
-    .dismiss-flash {
-      display: none;
-    }
+  .dismiss-flash {
+    display: none;
   }
 }
 
@@ -37,7 +37,7 @@
   }
 }
 
-.flash-message--warning, .message-warning {
+.flash-message--warning, .message--warning {
   background-color: #fff6bf;
   border-color: #ffd324;
   color: #514721;
@@ -47,7 +47,7 @@
   }
 }
 
-.flash-message--success, .message-success {
+.flash-message--success, .message--success {
   background-color: #e6efc2;
   border-color: #c6d880;
   color: #264409;
@@ -57,7 +57,7 @@
   }
 }
 
-.flash-message--info, .message-info {
+.flash-message--info, .message--info {
   background-color: #d5edf8;
   border-color: #92cae4;
   color: #205791;
