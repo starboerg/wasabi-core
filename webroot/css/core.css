@@ -2176,47 +2176,47 @@ table.list .col-actions {
 .ps-container.ie.hover .ps-scrollbar-y {
   visibility: visible;
 }
-table.languages .action-sort {
+.wasabi-core--languages-index .languages .action-sort {
   color: #bbb;
   cursor: row-resize;
 }
-table.languages .action-sort i {
+.wasabi-core--languages-index .languages .action-sort i {
   position: relative;
   top: 1px;
 }
-table.permissions .plugin td {
+.wasabi-core--grouppermissions-index .permissions .plugin td {
   background-color: #f2f3f4;
   font-size: 20px;
   line-height: 30px;
   font-family: 'open_sans_webfont_semibold', sans-serif;
   color: #bbc0c5;
 }
-table.permissions .plugin td:hover {
+.wasabi-core--grouppermissions-index .permissions .plugin td:hover {
   background-color: #f2f3f4;
 }
-table.permissions .plugin + tr td {
+.wasabi-core--grouppermissions-index .permissions .plugin + tr td {
   border-top: 1px solid #ddd;
 }
-table.permissions .controller {
+.wasabi-core--grouppermissions-index .permissions .controller {
   background-color: #fcfcfc !important;
   border-right: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   font-family: 'open_sans_webfont_semibold', sans-serif;
 }
-table.permissions .action {
+.wasabi-core--grouppermissions-index .permissions .action {
   line-height: 32px;
 }
-table.permissions .last-action td {
+.wasabi-core--grouppermissions-index .permissions .last-action td {
   border-bottom: 1px solid #ddd;
 }
-table.permissions label {
+.wasabi-core--grouppermissions-index .permissions label {
   font-family: 'open_sans_webfont', sans-serif;
   cursor: pointer;
 }
-table.permissions input[type=checkbox] {
+.wasabi-core--grouppermissions-index .permissions input[type=checkbox] {
   margin: 0;
 }
-table.permissions .spinner {
+.wasabi-core--grouppermissions-index .permissions .spinner {
   position: relative !important;
 }
 /*# sourceMappingURL=webroot/css/core.css.map */
