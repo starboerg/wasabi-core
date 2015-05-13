@@ -2251,4 +2251,55 @@ table.list .col-actions {
 .wasabi-core--grouppermissions-index .permissions .spinner {
   position: relative !important;
 }
+.wasabi-core--menus-edit .menu-items > .no-items,
+.wasabi-core--menus-edit .menu-items .menu-item [class*="grid-"] {
+  padding: 8px;
+  background-color: #fff;
+  -webkit-box-shadow: inset 0 -1px 0 #e3e5e6;
+  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  box-shadow: inset 0 -1px 0 #e3e5e6;
+  /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
+}
+.wasabi-core--menus-edit .menu-items .menu-item {
+  background-color: #ddd;
+}
+.wasabi-core--menus-edit .menu-items .menu-item .actions {
+  padding-left: 0;
+  padding-right: 0;
+}
+.wasabi-core--menus-edit .menu-items .menu-item > .row {
+  position: relative;
+  border-bottom: none;
+}
+.wasabi-core--menus-edit .menu-items .spacer {
+  float: left;
+  width: 10px;
+  margin: -8px 8px -8px -8px;
+  background-color: #ddd;
+  line-height: 36px;
+  display: none;
+}
+.wasabi-core--menus-edit .menu-items .sortable-placeholder {
+  -webkit-box-shadow: inset 0 -1px 0 #dddddd;
+  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  box-shadow: inset 0 -1px 0 #dddddd;
+  /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
+}
+.wasabi-core--menus-edit .menu-items > .menu-item > ul > .sortable-placeholder {
+  margin-left: 20px;
+}
+.wasabi-core--menus-edit .menu-items > .menu-item > ul > .menu-item > .row .spacer {
+  width: 20px;
+  display: block;
+}
+.wasabi-core--menus-edit .menu-items > .menu-item > ul > .menu-item > ul > .sortable-placeholder {
+  margin-left: 40px;
+}
+.wasabi-core--menus-edit .menu-items > .menu-item > ul > .menu-item > ul > .menu-item > .row .spacer {
+  width: 40px;
+  display: block;
+}
+.wasabi-core--menus-edit .menu-items [class*="wicon-"] {
+  vertical-align: top;
+}
 /*# sourceMappingURL=webroot/css/core.css.map */
