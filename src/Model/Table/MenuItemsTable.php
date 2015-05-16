@@ -59,7 +59,8 @@ class MenuItemsTable extends Table
      *
      * @param string $menuId
      */
-    public function setScope($menuId) {
+    public function setScope($menuId)
+    {
         $this->behaviors()->Tree->config('scope', [
             'menu_id' => $menuId
         ]);
