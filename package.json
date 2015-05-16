@@ -13,6 +13,7 @@
     "grunt-contrib-uglify": "^0.8.1",
     "grunt-contrib-watch": "~0.6.1",
     "less-plugin-clean-css": "~1.5.0",
-    "modernizr": "^3.0.0-alpha.4"
+    "modernizr": "^3.0.0-alpha.4",
+    "time-grunt": "^1.2.0"
   }
 }
