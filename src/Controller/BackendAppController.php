@@ -30,26 +30,6 @@ use Wasabi\Core\Nav;
 class BackendAppController extends AppController
 {
     /**
-     * Helpers available for all backend controllers.
-     *
-     * @var array
-     */
-    public $helpers = [
-        'Html' => [
-            'className' => 'Wasabi/Core.Html'
-        ],
-        'Menu' => [
-            'className' => 'Wasabi/Core.Menu'
-        ],
-        'Guardian' => [
-            'className' => 'Wasabi/Core.Guardian'
-        ],
-        'Filter' => [
-            'className' => 'Wasabi/Core.Filter'
-        ]
-    ];
-
-    /**
      * Default Flash message when form errors are present.
      *
      * @var string

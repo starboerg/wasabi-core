@@ -36,12 +36,35 @@ use Cake\Event\EventManager;
  */
 class AppView extends \App\View\AppView
 {
+    /**
+     * All plugin controller actions that use CakePHP's default form templates.
+     *
+     * @var array
+     */
     public $defaultFormTemplateActions = [
         'Wasabi/Core.Users.login'
     ];
 
+    /**
+     * Initialization hook method.
+     */
     public function initialize()
     {
+        parent::initialize();
+
+        $this->loadHelper('Html', [
+            'className' => 'Wasabi/Core.Html'
+        ]);
+        $this->loadHelper('Menu', [
+            'className' => 'Wasabi/Core.Menu'
+        ]);
+        $this->loadHelper('Guardian', [
+            'className' => 'Wasabi/Core.Guardian'
+        ]);
+        $this->loadHelper('Filter', [
+            'className' => 'Wasabi/Core.Filter'
+        ]);
+
         if (!in_array(join('.', [
             $this->request->params['plugin'],
             $this->request->params['controller'],
