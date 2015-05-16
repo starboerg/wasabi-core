@@ -34,8 +34,7 @@ class MenuItemsTable extends Table
     public function initialize(array $config)
     {
         $this->belongsTo('Menus', [
-            'className' => 'Wasabi/Core.Menus',
-            'counterCache' => true
+            'className' => 'Wasabi/Core.Menus'
         ]);
 
         $this->addBehavior('CounterCache', ['Menus' => ['menu_item_count']]);
