@@ -22,7 +22,11 @@ use Cake\Routing\Router;
     require(['common'], function() {
         require(['wasabi'], function(WS) {
             WS.registerModule('wasabi.core', {
-                baseUrl: '<?= $this->Url->build('/backend', true) ?>'
+                baseUrl: '<?= $this->Url->build('/backend', true) ?>',
+                translations: {
+                    confirmYes: '<?= __d('wasabi_core', 'Yes') ?>',
+                    confirmNo: '<?= __d('wasabi_core', 'No') ?>'
+                }
             });
             WS.boot();
         });

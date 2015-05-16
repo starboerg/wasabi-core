@@ -5,7 +5,9 @@ define(function(require) {
   var NavigationToggleView = require('core/views/NavigationToggle');
   var LangSwitchView = require('core/views/LangSwitch');
   var PaginationView = require('core/views/Pagination');
+  var ModalView = require('common/ModalView');
   var WS = require('wasabi');
+  require('jquery.livequery');
 
   var win = window;
   var doc = document;
@@ -82,6 +84,29 @@ define(function(require) {
     }
   }
 
+  function _detectFeatures() {
+
+    function getScrollbarWidth() {
+      var $scrollDetector = $('<div/>').css({
+        width: '100px',
+        height: '100px',
+        overflow: 'scroll',
+        position: 'absolute',
+        top: '-9999px'
+      });
+      var $body = $('body');
+      $scrollDetector.prependTo($body);
+      var scrollbarWidth = 0;
+      setTimeout(function() {
+        scrollbarWidth = $scrollDetector[0].offsetWidth - $scrollDetector[0].clientWidth;
+      }, 0);
+      $scrollDetector.remove();
+      return scrollbarWidth;
+    }
+
+    WS.features.scrollbarWidth = getScrollbarWidth();
+  }
+
   /**
    * Render a flash message after a specific element.
    *
@@ -115,12 +140,29 @@ define(function(require) {
   }
 
   function _toggleEmptySelects() {
-    require('jquery.livequery');
     $('select').livequery(function() {
       $(this).toggleClass('empty', $(this).val() === '');
       $(this).change(function() {
         $(this).toggleClass('empty', $(this).val() === '');
       });
+    });
+  }
+
+  /**
+   * Initialize modal dialogs
+   *
+   * @private
+   */
+  function _initModals() {
+    var that = this;
+    WS.views.modals = [];
+    $('[data-toggle="modal"], [data-toggle="confirm"]').livequery(function() {
+      WS.views.modals.push(WS.createView(ModalView, {
+        el: $(this),
+        scrollbarWidth: WS.features.scrollbarWidth,
+        confirmYes: that.options.translations.confirmYes,
+        confirmNo: that.options.translations.confirmNo
+      }));
     });
   }
 
@@ -226,8 +268,10 @@ define(function(require) {
       this.$body = $('body');
 
       _setupAjax.call(this);
+      _detectFeatures.call(this);
       _initializeBackendViews.call(this);
       _toggleEmptySelects.call(this);
+      _initModals.call(this);
       _initSections.call(this);
     }
   };

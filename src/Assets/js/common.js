@@ -7,20 +7,26 @@ require.config({
   paths: {
     backbone: 'vendor/backbone/backbone',
     bootstrap: 'vendor/bootstrap/dist/js/bootstrap',
+    hbs: 'vendor/require-handlebars-plugin/hbs',
     jquery: 'vendor/jquery/dist/jquery',
     purl: 'vendor/purl/purl',
     spin: 'vendor/spin.js/spin',
     underscore: 'vendor/underscore/underscore',
-    'wasabi.BaseView': 'common/BaseView',
     'wasabi.core': 'core/main',
     'jquery.color': 'vendor/jquery-color/jquery.color',
-    'jquery.eventMagic': 'common/lib/frankfoerster/jquery.eventMagic',
-    'jquery.livequery': 'common/lib/frankfoerster/jquery.livequery',
-    'jquery.nSortable': 'common/lib/frankfoerster/jquery.nSortable',
-    'jquery.scrollParent': 'common/lib/frankfoerster/jquery.scrollParent',
+    'jquery.eventMagic': 'common/jquery-plugins/jquery.eventMagic',
+    'jquery.scrollParent': 'common/jquery-plugins/jquery.scrollParent',
+    'jquery.livequery': 'common/jquery-plugins/jquery.livequery',
+    'jquery.nSortable': 'common/jquery-plugins/jquery.nSortable',
     'jquery.spin': 'vendor/spin.js/jquery.spin',
-    'jquery.tSortable': 'common/lib/frankfoerster/jquery.tSortable',
+    'jquery.tSortable': 'common/jquery-plugins/jquery.tSortable',
     'bootstrap.dropdown': 'vendor/bootstrap/js/dropdown'
+  },
+  hbs: { // optional
+    helpers: true,            // default: true
+    i18n: false,              // default: false
+    templateExtension: 'hbs', // default: 'hbs'
+    partialsUrl: ''           // default: ''
   },
   packages: [
     {
@@ -64,9 +70,6 @@ require.config({
       'jquery'
     ],
     'jquery.nSortable': [
-      'jquery'
-    ],
-    'jquery.tSortable': [
       'jquery'
     ]
   }
