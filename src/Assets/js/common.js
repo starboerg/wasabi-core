@@ -35,19 +35,10 @@ require.config({
     }
   ],
   shim: {
-    backbone: {
-      deps: [
-        'underscore',
-        'jquery'
-      ],
-      exports: 'Backbone'
-    },
-    underscore: {
-      exports: '_'
-    },
-    jquery: {
-      exports: '$'
-    },
+    backbone: [
+      'underscore',
+      'jquery'
+    ],
     'bootstrap.dropdown': [
       'jquery'
     ],
