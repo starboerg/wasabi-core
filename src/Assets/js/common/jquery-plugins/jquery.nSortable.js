@@ -112,107 +112,113 @@
       var placeholderIndex = $lis.index(this.$placeholder);
       var isLastItem = (placeholderIndex === $lis.length - 1);
       var hasPrevItem = (placeholderIndex > 0);
+      var that = this;
 
-      (function(that) {
-        if (that._yIntersectsPlaceholder(event)) {
-          // move placeholder to parent list if it is the last item of it's current list
-          if (isLastItem && (that.targetDepth < that.placeholderDepth)) {
-            var $placeholderUl = that.$placeholder.parent();
-            var $placeholderParentLi = $placeholderUl.parent();
-            var $placeholderUlChildren = $placeholderUl.find('> li').filter(function() {
+      var $placeholderUl;
+      var $placeholderParentLi;
+      var $placeholderUlChildren;
+      var $prevItem;
+      var $prevItemUl;
+      var $items;
+
+      if (this._yIntersectsPlaceholder(event)) {
+        // move placeholder to parent list if it is the last item of it's current list
+        if (isLastItem && (this.targetDepth < this.placeholderDepth)) {
+          $placeholderUl = this.$placeholder.parent();
+          $placeholderParentLi = $placeholderUl.parent();
+          $placeholderUlChildren = $placeholderUl.find('> li').filter(function() {
+            return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
+          });
+          this.$placeholder.insertAfter($placeholderParentLi);
+          if (!$placeholderUlChildren.length) {
+            $placeholderParentLi.addClass(this.settings.noChildClass);
+          }
+          return;
+        }
+
+        // make the item a child of its prev item
+        if (hasPrevItem && (this.targetDepth > this.placeholderDepth)) {
+          $prevItem = $($lis.get(placeholderIndex - 1));
+          $prevItemUl = $prevItem.find('> ul');
+          if (!$prevItemUl.length) {
+            $prevItemUl = $('<ul></ul>');
+            $prevItem.append($prevItemUl);
+          }
+          $prevItemUl.append(this.$placeholder).parent().removeClass(this.settings.noChildClass);
+        }
+      } else {
+        $items = this.$el.find('li').filter(function() {
+          return (
+            ($(this)[0] !== that.$li[0]) &&
+            ($(this).css('display') !== 'none') &&
+            ($(this).css('position') !== 'absolute') &&
+            !$(this).parents('li').filter(function() {
+              return ($(this).css('position') === 'absolute') || $(this).is(that.$li);
+            }).length &&
+            !$(this).hasClass(that.settings.placeholder)
+          );
+        }).find(this.settings.containerElement);
+
+        var $intersectedItem = null;
+        var direction = null;
+
+        $items.each(function() {
+          var min = $(this).position().top;
+          var max = min + $(this).outerHeight();
+          var middle = parseInt((min + max) / 2);
+          if (event.pageY >= min && event.pageY < middle) {
+            $intersectedItem = $(this).parent();
+            direction = 'up';
+            return;
+          }
+          if (event.pageY > middle && event.pageY <= max ) {
+            $intersectedItem = $(this).parent();
+            direction = 'down';
+            return;
+          }
+        });
+
+        if ($intersectedItem === null) {
+          return;
+        }
+
+        var intersectedItemDepth = $intersectedItem.parentsUntil(this.$el, 'ul').length;
+        if (this.targetDepth !== intersectedItemDepth) {
+          return;
+        }
+
+        if (this.targetDepth === intersectedItemDepth) {
+          if (direction === 'up') {
+            if ($intersectedItem.prev().hasClass(this.settings.placeholder)) {
+              return;
+            }
+            $placeholderUl = this.$placeholder.parent();
+            $placeholderParentLi = $placeholderUl.parent();
+            $placeholderUlChildren = $placeholderUl.find('> li').filter(function() {
               return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
             });
-            that.$placeholder.insertAfter($placeholderParentLi);
+            this.$placeholder.insertBefore($intersectedItem);
             if (!$placeholderUlChildren.length) {
-              $placeholderParentLi.addClass(that.settings.noChildClass);
+              $placeholderParentLi.addClass(this.settings.noChildClass);
             }
             return;
           }
-
-          // make the item a child of its prev item
-          if (hasPrevItem && (that.targetDepth > that.placeholderDepth)) {
-            var $prevItem = $($lis.get(placeholderIndex - 1));
-            var $prevItemUl = $prevItem.find('> ul');
-            if (!$prevItemUl.length) {
-              $prevItemUl = $('<ul></ul>');
-              $prevItem.append($prevItemUl);
-            }
-            $prevItemUl.append(that.$placeholder).parent().removeClass(that.settings.noChildClass);
-          }
-        } else {
-          var $items = that.$el.find('li').filter(function() {
-            return (
-              ($(this)[0] !== that.$li[0]) &&
-              ($(this).css('display') !== 'none') &&
-              ($(this).css('position') !== 'absolute') &&
-              !$(this).parents('li').filter(function() {
-                return ($(this).css('position') === 'absolute') || $(this).is(that.$li)
-              }).length &&
-              !$(this).hasClass(that.settings.placeholder)
-            );
-          }).find(that.settings.containerElement);
-
-          var $intersectedItem = null;
-          var direction = null;
-
-          $items.each(function() {
-            var min = $(this).position().top;
-            var max = min + $(this).outerHeight();
-            var middle = parseInt((min + max) / 2);
-            if (event.pageY >= min && event.pageY < middle) {
-              $intersectedItem = $(this).parent();
-              direction = 'up';
+          if (direction === 'down') {
+            if ($intersectedItem.next().css('display') === 'none' && $intersectedItem.next().next().hasClass(this.settings.placeholder)) {
               return;
             }
-            if (event.pageY > middle && event.pageY <= max ) {
-              $intersectedItem = $(this).parent();
-              direction = 'down';
-              return;
-            }
-          });
-
-          if ($intersectedItem === null) {
-            return;
-          }
-
-          var intersectedItemDepth = $intersectedItem.parentsUntil(that.$el, 'ul').length;
-          if (that.targetDepth !== intersectedItemDepth) {
-            return;
-          }
-
-          if (that.targetDepth === intersectedItemDepth) {
-            if (direction === 'up') {
-              if ($intersectedItem.prev().hasClass(that.settings.placeholder)) {
-                return;
-              }
-              $placeholderUl = that.$placeholder.parent();
-              $placeholderParentLi = $placeholderUl.parent();
-              $placeholderUlChildren = $placeholderUl.find('> li').filter(function() {
-                return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
-              });
-              that.$placeholder.insertBefore($intersectedItem);
-              if (!$placeholderUlChildren.length) {
-                $placeholderParentLi.addClass(that.settings.noChildClass);
-              }
-              return;
-            }
-            if (direction === 'down') {
-              if ($intersectedItem.next().css('display') === 'none' && $intersectedItem.next().next().hasClass(that.settings.placeholder)) {
-                return;
-              }
-              $placeholderUl = that.$placeholder.parent();
-              $placeholderParentLi = $placeholderUl.parent();
-              $placeholderUlChildren = $placeholderUl.find('> li').filter(function() {
-                return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
-              });
-              that.$placeholder.insertAfter($intersectedItem);
-              if (!$placeholderUlChildren.length) {
-                $placeholderParentLi.addClass(that.settings.noChildClass);
-              }
+            $placeholderUl = this.$placeholder.parent();
+            $placeholderParentLi = $placeholderUl.parent();
+            $placeholderUlChildren = $placeholderUl.find('> li').filter(function() {
+              return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
+            });
+            this.$placeholder.insertAfter($intersectedItem);
+            if (!$placeholderUlChildren.length) {
+              $placeholderParentLi.addClass(this.settings.noChildClass);
             }
           }
         }
-      })(this);
+      }
 
       // remove empty uls
       this.$el.find('ul').not(':has(li)').remove();
@@ -423,7 +429,7 @@
         throw new Error('nSortable is not initialized on this DOM element.');
       }
       if (nSortable && nSortable[options]) {
-        return nSortable[options].apply(nSortable, Array.prototype.slice.apply(arguments, [1]))
+        return nSortable[options].apply(nSortable, Array.prototype.slice.apply(arguments, [1]));
       }
     }
     throw new Error('"' + options + '" is no valid api method.');

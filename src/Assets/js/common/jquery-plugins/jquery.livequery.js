@@ -11,7 +11,7 @@
  */
 define(function(require) {
   var $ = require('jquery');
-  var strundefined = undefined;
+  var strundefined;
 
   // Add ECMA262-5 Array methods if not supported natively
   // Fix for <= IE 8
