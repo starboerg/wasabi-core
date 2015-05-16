@@ -28,6 +28,7 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
         $routes->connect('/', ['action' => 'index']);
         $routes->connect('/add', ['action' => 'add']);
         $routes->connect('/edit/:id', ['action' => 'edit'], ['pass' => ['id'], 'id' => '[0-9]+']);
+        $routes->connect('/delete/:id', ['action' => 'delete'], ['pass' => ['id'], 'id' => '[0-9]+']);
         $routes->connect('/activate/:id', ['action' => 'activate'], ['pass' => ['id'], 'id' => '[0-9]+']);
         $routes->connect('/deactivate/:id', ['action' => 'deactivate'], ['pass' => ['id'], 'id' => '[0-9]+']);
     });
@@ -44,6 +45,12 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
         $routes->connect('/add', ['action' => 'add']);
         $routes->connect('/edit/:id', ['action' => 'edit'], ['pass' => ['id'], 'id' => '[0-9]+']);
         $routes->connect('/delete/:id', ['action' => 'delete'], ['pass' => ['id'], 'id' => '[0-9]+']);
+    });
+
+    $routes->scope('/permissions', ['controller' => 'GroupPermissions'], function (RouteBuilder $routes) {
+        $routes->connect('/', ['action' => 'index']);
+        $routes->connect('/sync', ['action' => 'sync']);
+        $routes->connect('/update', ['action' => 'update']);
     });
 
     /**
