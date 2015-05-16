@@ -49,6 +49,11 @@ class MenusTable extends Table
         return $validator;
     }
 
+    /**
+     * Find all menu items as list.
+     *
+     * @return $this
+     */
     public function findAsList()
     {
         return $this->find('all', [
