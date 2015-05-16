@@ -26,7 +26,7 @@ echo $this->Form->create($group, array('class' => 'no-top-section'));
     echo $this->Form->input('name', $nameOpts);
     echo $this->Html->div('form-controls');
         echo $this->Form->button(__d('wasabi_core', 'Save'), array('div' => false, 'class' => 'button'));
-        echo $this->Html->backendLink(__d('wasabi_core', 'Cancel'), [
+        echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Groups',
             'action' => 'index'

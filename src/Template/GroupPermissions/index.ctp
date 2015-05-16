@@ -53,7 +53,7 @@ $this->Html->addAction(
     <div class="form-controls">
         <?php
         echo $this->Form->button(__d('wasabi_core', 'Update all'), array('div' => false, 'class' => 'button'));
-        echo $this->Guardian->backendLink(__d('wasabi_core', 'Cancel'), [
+        echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
             'plugin' => 'Wasabi/Core',
             'controller' => 'GroupPermissions',
             'action' => 'index'

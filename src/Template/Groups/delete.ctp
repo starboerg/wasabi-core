@@ -16,7 +16,7 @@ echo $this->Form->create($group, ['class' => 'no-top-section', 'type' => 'post']
     ]);
     echo $this->Html->div('form-controls');
         echo $this->Form->button(__d('core', 'Move Members & Delete Group'), array('div' => false, 'class' => 'button red'));
-        echo $this->Html->backendLink(__d('core', 'Cancel'), [
+        echo $this->Guardian->protectedLink(__d('core', 'Cancel'), [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Groups',
             'action' => 'index',

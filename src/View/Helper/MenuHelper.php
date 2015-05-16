@@ -17,7 +17,7 @@ use Cake\View\Helper;
 /**
  * Class MenuHelper
  *
- * @property HtmlHelper $Html
+ * @property GuardianHelper $Guardian
  */
 class MenuHelper extends Helper
 {
@@ -28,8 +28,8 @@ class MenuHelper extends Helper
      * @var array
      */
     public $helpers = array(
-        'Html' => array(
-            'className' => 'Wasabi/Core.Html'
+        'Guardian' => array(
+            'className' => 'Wasabi/Core.Guardian'
         )
     );
 
@@ -49,7 +49,7 @@ class MenuHelper extends Helper
                 $class = ' class="' . $activeClass . '"';
             }
             $out .= '<li' . $class . '>';
-            $out .= $this->Html->backendLink($item['name'], $item['url']);
+            $out .= $this->Guardian->protectedLink($item['name'], $item['url']);
             $out .= '</li>';
         }
         return $out;
@@ -82,7 +82,7 @@ class MenuHelper extends Helper
                     $item['name'] = '<i class="' . $item['icon'] . '"></i><span class="item-name">' . $item['name'] . '</span>';
                     $options['escape'] = false;
                 }
-                $out .= $this->Html->backendLink($item['name'], $item['url'], $options);
+                $out .= $this->Guardian->protectedLink($item['name'], $item['url'], $options);
             } else {
                 $out .= '<a href="javascript:void(0)">';
                 if (isset($item['icon'])) {
@@ -106,6 +106,14 @@ class MenuHelper extends Helper
         return $out;
     }
 
+    /**
+     * Used to render menu items as a ul li fake table
+     * in the backend.
+     *
+     * @param $menuItems
+     * @param null $level
+     * @return string
+     */
     public function renderTree($menuItems, $level = null)
     {
         $output = '';

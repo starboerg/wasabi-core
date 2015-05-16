@@ -116,22 +116,6 @@ class GuardianHelper extends HtmlHelper
     }
 
     /**
-     * @param $url
-     * @param bool $rel
-     * @return array|bool|string
-     * @deprecated
-     * @todo possibly remove this, not sure yet
-     */
-    public function getBackendUrl($url, $rel = false)
-    {
-        $checkUrl = $this->_getUrl($url);
-        if (!guardian()->hasAccess($checkUrl)) {
-            return false;
-        }
-        return $this->_getUrl($url, $rel);
-    }
-
-    /**
      * Transform the supplied $url into a properly prefixed backend url.
      *
      * @param array|string $url

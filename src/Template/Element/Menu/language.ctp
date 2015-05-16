@@ -16,13 +16,14 @@ use \Cake\Core\Configure;
 				if ($lang->id == Configure::read('Wasabi.content_language.id')) {
 					$class = ' class="active"';
 				}
-                echo '<li' . $class . ' data-language-id="' . $lang->id . '">' . $this->Html->backendLink($lang->iso2, [
-                            'plugin' => 'Wasabi/Core',
-                            'controller' => 'Languages',
-                            'action' => 'switch',
-                            $lang->id
-                        ]
-                    ) . '</li>';
+                echo '<li' . $class . ' data-language-id="' . $lang->id . '">'
+					. $this->Html->link($lang->iso2, [
+						'plugin' => 'Wasabi/Core',
+						'controller' => 'Languages',
+						'action' => 'switch',
+						$lang->id
+					])
+				. '</li>';
 			}
 		}
 		?>

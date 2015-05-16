@@ -11,7 +11,7 @@
         <?= $lang['id'] ?>
     </td>
     <td class="col-pos center"><?= $this->Html->link('<i class="icon-grab"></i>', 'javascript:void(0)', ['title' => __d('wasabi_core', 'Change the position of this Language'), 'class' => 'action-sort', 'escapeTitle' => false]) ?></td>
-    <td class="col-name"><?= $this->Html->backendLink($lang['name'],
+    <td class="col-name"><?= $this->Guardian->protectedLink($lang['name'],
             [
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Languages',
@@ -43,7 +43,7 @@
     <td class="col-actions center">
         <?php
         if (!in_array($lang['id'], [1, 2])) {
-            echo $this->Html->backendConfirmationLink(
+            echo $this->Guardian->protectedConfirmationLink(
                 '<i class="wicon-remove"></i>',
                 [
                     'plugin' => 'Wasabi/Core',

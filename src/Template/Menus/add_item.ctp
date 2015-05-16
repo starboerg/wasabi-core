@@ -13,7 +13,7 @@ if ($this->request->params['action'] === 'add_item') {
     $this->Html->setSubTitle($this->request->data('name'));
     $isEdit = true;
 }
-$this->Html->addAction($this->Html->backendLink(
+$this->Html->addAction($this->Guardian->protectedLink(
     __d('wasabi_core', 'Back to {0} Menu', [$menu->get('name')]),
     [
         'plugin' => 'Wasabi/Core',
@@ -39,7 +39,7 @@ echo $this->Form->create($menuItem, ['class' => 'no-top-section']);
     echo $this->Form->input('name', $nameOpts);
     echo $this->Html->div('form-controls');
         echo $this->Form->button('<span>' . __d('wasabi_core', 'Save') . '</span>', ['div' => false, 'class' => 'button']);
-        echo $this->Html->backendLink(__d('wasabi_core', 'Cancel'), [
+        echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Menus',
             'action' => 'edit',

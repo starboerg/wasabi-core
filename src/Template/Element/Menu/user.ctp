@@ -6,8 +6,22 @@ if ($this->request->session()->check('Auth.User.id')): ?>
 	<li class="user-menu dropdown">
 		<a data-toggle="dropdown" href="javascript:void(0)"><?= $this->request->session()->read('Auth.User.username') ?><i class="icon-arrow-down"></i></a>
 		<ul class="dropdown-menu dropdown-menu-right">
-			<li><?= $this->Html->backendUnprotectedLink(__d('wasabi_core', 'Edit Profile'), '/backend/profile') ?></li>
-			<li><?= $this->Html->backendUnprotectedLink(__d('wasabi_core', 'Logout'), '/backend/logout') ?></li>
+			<li><?= $this->Guardian->protectedLink(
+				__d('wasabi_core', 'Edit Profile'),
+				[
+					'plugin' => 'Wasabi/Core',
+					'controller' => 'Users',
+					'action' => 'profile'
+				]
+			) ?></li>
+			<li><?= $this->Html->link(
+				__d('wasabi_core', 'Logout'),
+				[
+					'plugin' => 'Wasabi/Core',
+					'controller' => 'Users',
+					'action' => 'logout'
+				]
+			) ?></li>
 		</ul>
 	</li>
 <?php endif; ?>
