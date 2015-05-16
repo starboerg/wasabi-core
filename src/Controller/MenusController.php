@@ -156,13 +156,17 @@ class MenusController extends BackendAppController
      * Add action
      * GET | POST
      *
-     * @param $menuId
-     * @param null $parentId
+     * @param string $menuId
+     * @param null|string $parentId
      */
-    public function add_item($menuId = null, $parentId = null)
+    public function addItem($menuId, $parentId = null)
     {
-        if ($menuId === null || !$this->Menus->exists(['id' => $menuId])) {
-            $this->Flash->error($this->invalidRequestMessage);
+        if (!$menuId || !$this->Menus->exists(['id' => $menuId])) {
+            throw new NotFoundException();
+        }
+
+        if ($parentId !== null && !$this->Menus->MenuItems->exists(['id' => $parentId])) {
+            $this->Flash->error(__d('wasabi_core', 'A menu with id <strong>{0}</strong> does not exist.', $parentId));
             $this->redirect(['action' => 'index']);
             return;
         }
@@ -173,6 +177,7 @@ class MenusController extends BackendAppController
                 'menu_id' => $menuId,
                 'parent_id' => $parentId
             ]));
+            $this->Menus->MenuItems->setScope($menuId);
             if ($this->Menus->MenuItems->save($menuItem)) {
                 $this->Flash->success(__d('wasabi_core', 'Menu Item <strong>{0}</strong> has been updated.', [$this->request->data['name']]));
                 $this->redirect(['action' => 'edit', $menuId]);
