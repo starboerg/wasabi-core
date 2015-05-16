@@ -14,11 +14,11 @@ require.config({
     'wasabi.BaseView': 'common/BaseView',
     'wasabi.core': 'core/main',
     'jquery.color': 'vendor/jquery-color/jquery.color',
-    'jquery.eventMagic': 'common/lib/frankfoerster/jquery.eventMagic',
-    'jquery.scrollParent': 'common/lib/frankfoerster/jquery.scrollParent',
-    'jquery.livequery': 'common/lib/frankfoerster/jquery.livequery',
+    'jquery.eventMagic': 'common/jquery-plugins/jquery.eventMagic',
+    'jquery.scrollParent': 'common/jquery-plugins/jquery.scrollParent',
+    'jquery.livequery': 'common/jquery-plugins/jquery.livequery',
     'jquery.spin': 'vendor/spin.js/jquery.spin',
-    'jquery.tSortable': 'common/lib/frankfoerster/jquery.tSortable',
+    'jquery.tSortable': 'common/jquery-plugins/jquery.tSortable',
     'bootstrap.dropdown': 'vendor/bootstrap/js/dropdown'
   },
   packages: [
