@@ -22,6 +22,11 @@ use Cake\Validation\Validator;
 class MenuItemsTable extends Table
 {
     /**
+     * The maximum nesting level of menu items.
+     */
+    const MAXIMUM_NESTING_LEVEL = 2;
+
+    /**
      * Initialize a table instance. Called after the constructor.
      *
      * @param array $config Configuration options passed to the constructor

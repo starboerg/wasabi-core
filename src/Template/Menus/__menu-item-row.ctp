@@ -5,6 +5,8 @@
  * @var integer $key
  * @var array $menuItem
  */
+use Wasabi\Core\Model\Table\MenuItemsTable;
+
 ?>
 <div class="row">
     <div class="grid-10-16">
@@ -13,7 +15,7 @@
             <?= $this->Guardian->protectedLink($menuItem['name'], [
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Menus',
-                'action' => 'edit_item',
+                'action' => 'editItem',
                 $menuItem['id']
             ]); ?>
         </div>
@@ -29,13 +31,13 @@
             'class' => 'wicon-add',
             'title' => __d('wasabi_core', 'Add a child to this Menu Item')
         ];
-        if ($level > 2) {
-            $options['class'] .= ' hide';
+        if ($level > MenuItemsTable::MAXIMUM_NESTING_LEVEL) {
+            $options['class'] .= ' hidden';
         }
         echo $this->Guardian->protectedLink(__d('wasabi_core', 'add parent'), [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Menus',
-            'action' => 'add_item',
+            'action' => 'addItem',
             $menuItem['menu_id'],
             $menuItem['id'],
         ], $options);

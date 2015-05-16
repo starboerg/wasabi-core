@@ -6,6 +6,7 @@
  */
 
 use Cake\Routing\Router;
+use Wasabi\Core\Model\Table\MenuItemsTable;
 
 $isEdit = false;
 if ($this->request->params['action'] === 'add') {
@@ -29,17 +30,17 @@ if ($isEdit) {
 }
 echo $this->Form->input('name', $nameOpts); ?>
 <div class="form-row row">
-    <label><?= __d('wasabi_core', 'Menu Items') ?></label>
+    <label class="cursor--default"><?= __d('wasabi_core', 'Menu Items') ?></label>
     <div class="field<?= (!$isEdit) ? ' no-input' : '' ?>">
         <?php if($isEdit): ?>
-            <div class="message--info message--no-dismiss"><?= __d('wasabi_core', 'Tip: The maximum nesting level is <strong>2</strong>.') ?></div>
+            <div class="message--info message--no-dismiss"><?= __d('wasabi_core', 'Tip: The maximum nesting level is <strong>{0}</strong>.', MenuItemsTable::MAXIMUM_NESTING_LEVEL) ?></div>
             <div class="table-head row">
 				<div class="grid-10-16"><?= __d('wasabi_core', 'Menu Item') ?></div>
 				<div class="grid-2-16 center"><?= __d('wasabi_core', 'Status') ?></div>
 				<div class="grid-2-16 center"><?= __d('wasabi_core', 'Sort') ?></div>
 				<div class="grid-2-16 center"><?= __d('wasabi_core', 'Actions') ?></div>
 			</div>
-            <ul class="menu-items table-body" data-reorder-url="<?= Router::url([
+            <ul class="menu-items table-body" data-maximum-nesting-level="<?= MenuItemsTable::MAXIMUM_NESTING_LEVEL ?>" data-reorder-url="<?= Router::url([
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Menus',
                 'action' => 'reorderItems'

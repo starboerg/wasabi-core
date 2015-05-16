@@ -14,6 +14,7 @@
  */
 namespace Wasabi\Core\Controller;
 
+use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Utility\Hash;
@@ -61,6 +62,7 @@ class MenusController extends BackendAppController
     {
         parent::initialize();
         $this->loadComponent('Wasabi/Core.Filter');
+        $this->loadComponent('RequestHandler');
     }
 
     /**
@@ -122,7 +124,7 @@ class MenusController extends BackendAppController
         }
         $this->set([
             'menu' => $menu,
-            'menuItems' => $this->Menus->MenuItems->find('threaded')->where(['MenuItems.menu_id' => $id])->hydrate(false)
+            'menuItems' => $this->Menus->MenuItems->find('threaded', ['order' => ['lft' => 'ASC']])->where(['MenuItems.menu_id' => $id])->hydrate(false)
         ]);
         $this->render('add');
     }
@@ -166,9 +168,13 @@ class MenusController extends BackendAppController
         }
 
         if ($parentId !== null && !$this->Menus->MenuItems->exists(['id' => $parentId])) {
-            $this->Flash->error(__d('wasabi_core', 'A menu with id <strong>{0}</strong> does not exist.', $parentId));
-            $this->redirect(['action' => 'index']);
+            $this->Flash->error(__d('wasabi_core', 'A menu item with id <strong>{0}</strong> does not exist.', $parentId));
+            $this->redirect(['action' => 'edit', $menuId]);
             return;
+        }
+
+        if (!$this->request->is(['get', 'post'])) {
+            throw new MethodNotAllowedException();
         }
 
         $menuItem = $this->Menus->MenuItems->newEntity();
@@ -179,7 +185,7 @@ class MenusController extends BackendAppController
             ]));
             $this->Menus->MenuItems->setScope($menuId);
             if ($this->Menus->MenuItems->save($menuItem)) {
-                $this->Flash->success(__d('wasabi_core', 'Menu Item <strong>{0}</strong> has been updated.', [$this->request->data['name']]));
+                $this->Flash->success(__d('wasabi_core', 'Menu Item <strong>{0}</strong> has been created.', [$this->request->data['name']]));
                 $this->redirect(['action' => 'edit', $menuId]);
                 return;
             } else {
@@ -190,7 +196,6 @@ class MenusController extends BackendAppController
             'menu' => $this->Menus->get($menuId),
             'menuItem' => $menuItem
         ]);
-        $this->render('add_item');
     }
 
     /**
@@ -199,26 +204,18 @@ class MenusController extends BackendAppController
      *
      * @param $id
      */
-    public function edit_item($id)
+    public function editItem($id)
     {
-        if ($id === null || !$this->Menus->MenuItems->exists(['id' => $id])) {
-            $this->Flash->error($this->invalidRequestMessage);
-            $this->redirect(['action' => 'index']);
-            return;
+        if (!$id || !$this->Menus->MenuItems->exists(['id' => $id])) {
+            throw new NotFoundException();
         }
 
         if (!$this->request->is(['get', 'put'])) {
             throw new MethodNotAllowedException();
         }
 
-        $menuItem = $this->Menus->MenuItems->get($id, [
-            'fields' => [
-                'id',
-                'name',
-                'menu_id'
-            ]
-        ]);
-        if ($this->request->is('put')) {
+        $menuItem = $this->Menus->MenuItems->get($id);
+        if ($this->request->is('put') && !empty($this->request->data)) {
             $menuItem = $this->Menus->MenuItems->patchEntity($menuItem, $this->request->data);
             if ($this->Menus->MenuItems->save($menuItem)) {
                 $this->Flash->success(__d('wasabi_core', 'Menu Item <strong>{0}</strong> has been updated.', $this->request->data['name']));
@@ -233,5 +230,55 @@ class MenusController extends BackendAppController
             'menuItem' => $menuItem
         ]);
         $this->render('add_item');
+    }
+
+    /**
+     * reorderItems action
+     * AJAX POST
+     */
+    public function reorderItems()
+    {
+        if (!$this->request->isAll(['ajax', 'post'])) {
+            throw new MethodNotAllowedException();
+        }
+
+        if (empty($this->request->data)) {
+            throw new BadRequestException();
+        }
+
+        $this->request->data = Hash::map($this->request->data, '{n}', function($item) {
+            if ($item['parent_id'] === 'null') {
+                $item['parent_id'] = null;
+            }
+            return $item;
+        });
+
+        // save the new language positions
+        $menuItems = $this->Menus->MenuItems->patchEntities(
+            $this->Menus->MenuItems->find('threaded'),
+            $this->request->data()
+        );
+        $this->Menus->MenuItems->connection()->begin();
+        foreach ($menuItems as $menuItem) {
+            $this->Menus->MenuItems->behaviors()->unload('Tree');
+            if (!$this->Menus->MenuItems->save($menuItem)) {
+                $this->Menus->MenuItems->connection()->rollback();
+                break;
+            }
+        }
+        if ($this->Menus->MenuItems->connection()->inTransaction()) {
+            $this->Menus->MenuItems->connection()->commit();
+            $status = 'success';
+            $flashMessage = __d('wasabi_core', 'The menu item positions have been updated.');
+        } else {
+            $status = 'error';
+            $flashMessage = $this->dbErrorMessage;
+        }
+
+        $this->set([
+            'status' => $status,
+            'flashMessage' => $flashMessage,
+            '_serialize' => ['status', 'flashMessage']
+        ]);
     }
 }
