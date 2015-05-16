@@ -7,10 +7,10 @@
  */
 ?>
 <div class="row">
-    <div class="span10">
+    <div class="grid-10-16">
         <div class="row">
             <div class="spacer">&nbsp;</div>
-            <?= $this->Html->backendLink($menuItem['name'], [
+            <?= $this->Guardian->protectedLink($menuItem['name'], [
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Menus',
                 'action' => 'edit_item',
@@ -18,12 +18,12 @@
             ]); ?>
         </div>
     </div>
-    <div class="span2 center">active</div>
-    <div class="span2 center">
+    <div class="grid-2-16 center">active</div>
+    <div class="grid-2-16 center">
         <a href="javascript:void(0)" class="wicon-move move"
            title="<?= __d('wasabi_core', 'Change the position of this Menu Item') ?>">move</a>
     </div>
-    <div class="span2 center actions">
+    <div class="grid-2-16 center actions">
         <?php
         $options = [
             'class' => 'wicon-add',
@@ -32,7 +32,7 @@
         if ($level > 2) {
             $options['class'] .= ' hide';
         }
-        echo $this->Html->backendLink(__d('wasabi_core', 'add parent'), [
+        echo $this->Guardian->protectedLink(__d('wasabi_core', 'add parent'), [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Menus',
             'action' => 'add_item',
