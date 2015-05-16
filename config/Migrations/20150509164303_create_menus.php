@@ -23,7 +23,6 @@ class CreateMenus extends AbstractMigration
         $id->setIdentity(true)
             ->setType('integer')
             ->setOptions(['limit' => 11, 'signed' => false, 'null' => false]);
-
         $table->changeColumn('id', $id)->save();
 
         $menus = [
