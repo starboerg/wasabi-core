@@ -34,6 +34,7 @@ class MenuItemsTable extends Table
         ]);
 
         $this->addBehavior('CounterCache', ['Menus' => ['menu_item_count']]);
+        $this->addBehavior('Tree');
         $this->addBehavior('Timestamp');
     }
 
@@ -46,5 +47,16 @@ class MenuItemsTable extends Table
     public function validationDefault(Validator $validator)
     {
         return $validator->notEmpty('name', __d('wasabi_core', 'Please enter a name for the menu item.'));
+    }
+
+    /**
+     * Set the scope of the menu item to a specific $menuId.
+     *
+     * @param string $menuId
+     */
+    public function setScope($menuId) {
+        $this->behaviors()->Tree->config('scope', [
+            'menu_id' => $menuId
+        ]);
     }
 }
