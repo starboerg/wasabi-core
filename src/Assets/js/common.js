@@ -15,8 +15,9 @@ require.config({
     'wasabi.core': 'core/main',
     'jquery.color': 'vendor/jquery-color/jquery.color',
     'jquery.eventMagic': 'common/lib/frankfoerster/jquery.eventMagic',
-    'jquery.scrollParent': 'common/lib/frankfoerster/jquery.scrollParent',
     'jquery.livequery': 'common/lib/frankfoerster/jquery.livequery',
+    'jquery.nSortable': 'common/lib/frankfoerster/jquery.nSortable',
+    'jquery.scrollParent': 'common/lib/frankfoerster/jquery.scrollParent',
     'jquery.spin': 'vendor/spin.js/jquery.spin',
     'jquery.tSortable': 'common/lib/frankfoerster/jquery.tSortable',
     'bootstrap.dropdown': 'vendor/bootstrap/js/dropdown'
@@ -60,6 +61,12 @@ require.config({
       'jquery'
     ],
     'jquery.perfectScrollbar': [
+      'jquery'
+    ],
+    'jquery.nSortable': [
+      'jquery'
+    ],
+    'jquery.tSortable': [
       'jquery'
     ]
   }

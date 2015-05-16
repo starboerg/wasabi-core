@@ -1,5 +1,5 @@
 define(function(require) {
-  var BaseView = require('wasabi.BaseView');
+  var BaseView = require('common/BaseView');
   var WS = require('wasabi');
   var LanguagesTable = require('../views/LanguagesTable');
 

@@ -1,6 +1,6 @@
 define(function(require) {
   var $ = require('jquery');
-  var BaseView = require('wasabi.BaseView');
+  var BaseView = require('common/BaseView');
 
   /**
    * Holds a reference to the body.

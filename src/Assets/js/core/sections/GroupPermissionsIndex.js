@@ -1,6 +1,6 @@
 define(function(require) {
   var $ = require('jquery');
-  var BaseView = require('wasabi.BaseView');
+  var BaseView = require('common/BaseView');
   var SpinPresets = require('common/SpinPresets');
   require('jquery.color');
   require('jquery.spin');
