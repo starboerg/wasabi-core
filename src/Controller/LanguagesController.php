@@ -168,7 +168,10 @@ class LanguagesController extends BackendAppController
             ->filterBackend(new Collection($languages))
             ->sortBy('position', SORT_ASC, SORT_NUMERIC)
             ->toList();
+
         $this->set(compact('status', 'flashMessage', 'frontendLanguages', 'backendLanguages'));
         $this->set('_serialize', ['status', 'flashMessage', 'frontendLanguages', 'backendLanguages']);
+
+        $this->RequestHandler->renderAs($this, 'json');
     }
 }

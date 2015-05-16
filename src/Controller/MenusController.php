@@ -307,5 +307,7 @@ class MenusController extends BackendAppController
             'flashMessage' => $flashMessage,
             '_serialize' => ['status', 'flashMessage']
         ]);
+
+        $this->RequestHandler->renderAs($this, 'json');
     }
 }
