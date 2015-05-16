@@ -41,10 +41,20 @@ use Wasabi\Core\Model\Table\MenuItemsTable;
             $menuItem['menu_id'],
             $menuItem['id'],
         ], $options);
-        echo $this->Html->link(__d('wasabi_core', 'delete'), 'javascript:void(0)', [
-            'title' => __d('wasabi_core', 'Delete this Menu Item'),
-            'class' => 'wicon-remove remove-item'
-        ]);
+        echo $this->Guardian->protectedConfirmationLink(
+            '<i class="wicon-remove"></i>',
+            [
+                'plugin' => 'Wasabi/Core',
+                'controller' => 'Menus',
+                'action' => 'deleteItem',
+                $menuItem['id']
+            ], [
+                'title' => __d('wasabi_core', 'Delete this Menu Item'),
+                'confirm-message' => __d('wasabi_core', 'Do you really want to delete the menu item <strong>{0}</strong>?', $menuItem['name']),
+                'confirm-title' => __d('wasabi_core', 'Confirm Deletion'),
+                'escape' => false
+            ]
+        );
         ?>
     </div>
 </div>

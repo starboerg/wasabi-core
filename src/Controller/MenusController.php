@@ -233,6 +233,33 @@ class MenusController extends BackendAppController
     }
 
     /**
+     * Delete a menu item.
+     * POST
+     *
+     * @param string $id
+     */
+    public function deleteItem($id)
+    {
+        if (!$id || !$this->Menus->MenuItems->exists(['id' => $id])) {
+            throw new NotFoundException();
+        }
+
+        if (!$this->request->is('post')) {
+            throw new MethodNotAllowedException();
+        }
+
+        $menuItem = $this->Menus->MenuItems->get($id);
+        if ($this->Menus->MenuItems->delete($menuItem)) {
+            $this->Flash->success(__d('wasabi_core', 'The menu item <strong>{0}</strong> has been deleted.', $menuItem->get('name')));
+        } else {
+            $this->Flash->error($this->dbErrorMessage);
+        }
+
+        $this->redirect(['action' => 'edit', $menuItem->get('menu_id')]);
+        return;
+    }
+
+    /**
      * reorderItems action
      * AJAX POST
      */
