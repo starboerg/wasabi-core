@@ -43,7 +43,7 @@ class MenuItemsTable extends Table
         $this->addBehavior('Timestamp');
     }
 
-        /**
+    /**
      * Default validation rules.
      *
      * @param Validator $validator
