@@ -842,7 +842,7 @@ strong {
 .valign-middle {
   vertical-align: middle;
 }
-.accessibility {
+.hidden {
   display: none;
 }
 #wrapper {
@@ -2280,10 +2280,16 @@ table.list .col-actions {
   display: none;
 }
 .wasabi-core--menus-edit .menu-items .sortable-placeholder {
+  background-color: #fff6bf;
   -webkit-box-shadow: inset 0 -1px 0 #dddddd;
   /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
   box-shadow: inset 0 -1px 0 #dddddd;
   /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
+}
+.wasabi-core--menus-edit .menu-items ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 .wasabi-core--menus-edit .menu-items > .menu-item > ul > .sortable-placeholder {
   margin-left: 20px;
