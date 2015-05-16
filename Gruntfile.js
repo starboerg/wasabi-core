@@ -1,6 +1,9 @@
 module.exports = function(grunt) {
   "use strict";
 
+  // measures the time each task takes
+  require('time-grunt')(grunt);
+
   var vendorModules = [
     'jquery',
     'underscore',
@@ -14,13 +17,12 @@ module.exports = function(grunt) {
     'jquery.scrollParent',
     'jquery.livequery',
     'jquery.spin',
+    'jquery.nSortable',
     'jquery.tSortable',
     'bootstrap.dropdown'
   ];
 
   grunt.initConfig({
-
-    pkg: grunt.file.readJSON('package.json'),
 
     //-------------------------------------------- STYLE PROCESSING --------------------------------------------------//
     less: {
@@ -78,7 +80,7 @@ module.exports = function(grunt) {
           mainConfigFile: 'src/Assets/js/common.js',
           findNestedDependencies: true,
 
-          waitSeconds: 0,
+          fileExclusionRegExp: /^\.|\.md$|^LICENSE$|\.json$|^src$|\.map$|^demo$|^test$|^tests$|\.TXT$|\.txt$|^fonts$|^css$|\.css$|^less$|\.less$|^grunt$|\.sh$|^r.js$/,
 
           // Define the modules to compile.
           modules: [
@@ -126,38 +128,6 @@ module.exports = function(grunt) {
           { src: 'src/Assets/_build/js/common.js', dest: 'webroot/js/common.js' },
           { src: 'src/Assets/_build/js/wasabi.js', dest: 'webroot/js/wasabi.js' }
         ]
-      }
-    },
-    browserifyResolve: {
-      options: {
-        bower: grunt.file.readJSON('bower.json'),
-        pkg: grunt.file.readJSON('package.json')
-      },
-      common: {
-        vendorOnly: true,
-        require: {
-          'jquery.livequery': './src/Assets/js/common/lib/frankfoerster/jquery.livequery.js',
-          'jquery.eventMagic': './src/Assets/js/common/lib/frankfoerster/jquery.eventMagic.js',
-          'jquery.scrollParent': './src/Assets/js/common/lib/frankfoerster/jquery.scrollParent.js',
-          'jquery.tSortable': './src/Assets/js/common/lib/frankfoerster/jquery.tSortable.js'
-        },
-        dest: 'webroot/js/common.js'
-      },
-      core: {
-        require: {
-          'wasabi.BaseView': './src/Assets/js/common/BaseView.js',
-          'wasabi.SpinPresets': './src/Assets/js/common/SpinPresets.js',
-          'wasabi/core': './src/Assets/js/core/main.js'
-        },
-        external: [
-          'jquery.livequery',
-          'jquery.eventMagic',
-          'jquery.scrollParent',
-          'jquery.tSortable'
-        ],
-        files: {
-          'webroot/js/wasabi.js': ['src/Assets/js/wasabi.js']
-        }
       }
     },
 
