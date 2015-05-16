@@ -30,6 +30,6 @@ use Cake\Core\Configure;
         ?>
     </div>
 </div>
-<?= $this->element('Wasabi/Core.Layout/js-setup') ?>
+<?= $this->element('Wasabi/Core.JavaScript/setup') ?>
 </body>
 </html>
