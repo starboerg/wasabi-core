@@ -71,6 +71,9 @@ require.config({
     ],
     'jquery.nSortable': [
       'jquery'
+    ],
+    'jquery.tSortable': [
+      'jquery'
     ]
   }
 });
