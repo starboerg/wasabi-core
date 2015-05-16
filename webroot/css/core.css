@@ -524,11 +524,12 @@ th {
 }
 [class^="wicon-"],
 [class*=" wicon-"] {
+  position: relative;
+  top: 1px;
   background-image: url(../img/sprite2.png);
   display: inline-block;
   width: 20px;
   height: 20px;
-  margin-left: 5px;
   text-indent: -9999px;
   outline: none;
   -webkit-border-radius: 1px;
@@ -538,10 +539,6 @@ th {
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
-}
-[class^="wicon-"]:first-child,
-[class*=" wicon-"]:first-child {
-  margin-left: 0;
 }
 [class^="wicon-"]:focus,
 [class*=" wicon-"]:focus {
@@ -1854,6 +1851,14 @@ table.list .col-actions {
 }
 .table-body li > .row:hover {
   background-color: #f8f8f8;
+}
+table.list tbody .col-actions > a,
+.table-body .col-actions > a {
+  margin-left: 5px;
+}
+table.list tbody .col-actions > a:first-child,
+.table-body .col-actions > a:first-child {
+  margin-left: 0;
 }
 .button {
   padding: 7px 16px 6px;

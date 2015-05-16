@@ -171,19 +171,16 @@
 }
 
 [class^="wicon-"], [class*=" wicon-"] {
+  position: relative;
+  top: 1px;
   //noinspection CssUnknownTarget
   background-image: url(../img/sprite2.png);
   display: inline-block;
   width: 20px;
   height: 20px;
-  margin-left: 5px;
   text-indent: -9999px;
   outline: none;
   .border-radius(1px);
-
-  &:first-child {
-    margin-left: 0;
-  }
 
   &:focus {
     outline: none;
