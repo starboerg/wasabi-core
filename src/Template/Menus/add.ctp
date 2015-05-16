@@ -58,7 +58,7 @@ echo $this->Form->input('name', $nameOpts); ?>
                         'plugin' => 'Wasabi/Core',
                         'controller' => 'Menus',
                         'action' => 'addItem',
-                        $menu['id']
+                        'menuId' => $menu['id']
                     ]
                 ) ?>
             </div>

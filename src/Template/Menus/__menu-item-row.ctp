@@ -16,6 +16,7 @@ use Wasabi\Core\Model\Table\MenuItemsTable;
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Menus',
                 'action' => 'editItem',
+                'menuId' => $menuItem['menu_id'],
                 $menuItem['id']
             ]); ?>
         </div>
@@ -39,8 +40,8 @@ use Wasabi\Core\Model\Table\MenuItemsTable;
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Menus',
                 'action' => 'addItem',
-                $menuItem['menu_id'],
-                $menuItem['id']
+                'menuId' => $menuItem['menu_id'],
+                'parentId' => $menuItem['id']
             ],
             $options
         );
@@ -50,6 +51,7 @@ use Wasabi\Core\Model\Table\MenuItemsTable;
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Menus',
                 'action' => 'deleteItem',
+                'menuId' => $menuItem['menu_id'],
                 $menuItem['id']
             ], [
                 'title' => __d('wasabi_core', 'Delete this Menu Item'),
