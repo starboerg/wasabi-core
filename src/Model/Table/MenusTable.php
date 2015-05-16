@@ -30,7 +30,8 @@ class MenusTable extends Table
     public function initialize(array $config)
     {
         $this->hasMany('MenuItems', [
-            'className' => 'Wasabi/Core.MenuItems'
+            'className' => 'Wasabi/Core.MenuItems',
+            'dependent' => true
         ]);
 
         $this->addBehavior('Timestamp');
