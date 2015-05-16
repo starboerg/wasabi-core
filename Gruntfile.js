@@ -154,7 +154,8 @@ module.exports = function(grunt) {
     'less:compile',
     'cssmin:core',
     'jshint:core',
-    'uglify:all'
+    'requirejs:compile',
+    'copy:js'
   ]);
 
   grunt.loadNpmTasks('grunt-contrib-copy');
