@@ -7,11 +7,11 @@ require.config({
   paths: {
     backbone: 'vendor/backbone/backbone',
     bootstrap: 'vendor/bootstrap/dist/js/bootstrap',
+    hbs: 'vendor/require-handlebars-plugin/hbs',
     jquery: 'vendor/jquery/dist/jquery',
     purl: 'vendor/purl/purl',
     spin: 'vendor/spin.js/spin',
     underscore: 'vendor/underscore/underscore',
-    'wasabi.BaseView': 'common/BaseView',
     'wasabi.core': 'core/main',
     'jquery.color': 'vendor/jquery-color/jquery.color',
     'jquery.eventMagic': 'common/jquery-plugins/jquery.eventMagic',
@@ -20,6 +20,12 @@ require.config({
     'jquery.spin': 'vendor/spin.js/jquery.spin',
     'jquery.tSortable': 'common/jquery-plugins/jquery.tSortable',
     'bootstrap.dropdown': 'vendor/bootstrap/js/dropdown'
+  },
+  hbs: { // optional
+    helpers: true,            // default: true
+    i18n: false,              // default: false
+    templateExtension: 'hbs', // default: 'hbs'
+    partialsUrl: ''           // default: ''
   },
   packages: [
     {

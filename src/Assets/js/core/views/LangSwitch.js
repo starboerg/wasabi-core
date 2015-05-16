@@ -1,6 +1,6 @@
 define(function(require) {
   var _ = require('underscore');
-  var BaseView = require('wasabi.BaseView');
+  var BaseView = require('common/BaseView');
 
   return BaseView.extend({
 
