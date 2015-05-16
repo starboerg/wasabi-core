@@ -53,7 +53,7 @@ define(function(require) {
           continue;
         }
         var item = items[key];
-        var $add = this.$el.find('li[data-menu-item-id="' + item.id + '"]').first().find('a.wicon-add').first();
+        var $add = this.$el.find('li[data-menu-item-id="' + item.id + '"]').first().find('.wicon-add').first().parent();
         if (item.depth > 2) {
           $add.addClass('hidden');
         } else {
