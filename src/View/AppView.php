@@ -46,12 +46,22 @@ class AppView extends \App\View\AppView
     ];
 
     /**
+     * The default layout to render.
+     *
+     * @var string
+     */
+    public $layout = 'Wasabi/Core.default';
+
+    /**
      * Initialization hook method.
      */
     public function initialize()
     {
         parent::initialize();
 
+        $this->loadHelper('Asset', [
+            'className' => 'Wasabi/Core.Asset'
+        ]);
         $this->loadHelper('Html', [
             'className' => 'Wasabi/Core.Html'
         ]);
