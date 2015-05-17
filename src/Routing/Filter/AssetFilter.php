@@ -44,8 +44,12 @@ class AssetFilter extends \Cake\Routing\Filter\AssetFilter
             }
             $pluginPart[] = Inflector::camelize($parts[$i]);
             $plugin = implode('/', $pluginPart);
-            if ($plugin === 'WasabiCore') {
-                $plugin = 'Wasabi/Core';
+            $pos = strlen('Wasabi');
+            if (strpos($plugin, 'Wasabi') !== false && strpos($plugin, '/') === false && (strlen($plugin) > $pos)) {
+                $plugin = join('/', [
+                    substr($plugin, 0, $pos),
+                    substr($plugin, $pos)
+                ]);
             }
             if ($plugin && Plugin::loaded($plugin)) {
                 $parts = array_slice($parts, $i + 1);
