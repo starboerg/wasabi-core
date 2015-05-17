@@ -28,6 +28,7 @@ use Cake\Routing\Router;
                     confirmNo: '<?= __d('wasabi_core', 'No') ?>'
                 }
             });
+<?= $this->fetch('requirejs') ?>
             WS.boot();
         });
     });
