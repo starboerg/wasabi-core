@@ -17,7 +17,6 @@ use Cake\Network\Request;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Wasabi\Core\Model\Entity\Filter;
-use Wasabi\Core\Model\Entity\Slug;
 
 class FiltersTable extends Table
 {
