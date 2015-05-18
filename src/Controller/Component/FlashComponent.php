@@ -46,7 +46,7 @@ class FlashComponent extends CakeFlashComponent
 
         parent::set($message, [
             'key' => $key,
-            'element' => 'default',
+            'element' => 'Wasabi/Core.default',
             'params' => $params
         ]);
     }
