@@ -56,9 +56,9 @@ define(function(require) {
 
       $(window).on('resize', function() {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(_.bind(function() {
-          this.eventBus.trigger('window.resize');
-        }, this), 100);
+        resizeTimeout = setTimeout(function() {
+          WS.eventBus.trigger('window.resize');
+        }, 100);
       });
     },
 
