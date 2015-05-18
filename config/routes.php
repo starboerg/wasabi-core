@@ -66,6 +66,11 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
         $routes->connect('/update', ['action' => 'update']);
     });
 
+    $routes->scope('/settings', ['controller' => 'Settings'], function (RouteBuilder $routes) {
+        $routes->connect('/general', ['action' => 'general']);
+        $routes->connect('/cache', ['action' => 'cache']);
+    });
+
     /**
      * Connect a route for the index action of any controller.
      * And a more general catch all route for any action.
