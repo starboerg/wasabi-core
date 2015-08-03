@@ -1,0 +1,877 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# 
+# Translators:
+# Frank Förster, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: core\n"
+"POT-Creation-Date: 2015-07-07 17:41+0000\n"
+"PO-Revision-Date: 2015-07-07 17:56+0000\n"
+"Last-Translator: Frank Förster\n"
+"Language-Team: German (http://www.transifex.com/projects/p/core-3/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: Nav.php:38
+msgid "A Menu with alias \""
+msgstr ""
+
+#: Nav.php:57
+msgid "No menu with alias \""
+msgstr ""
+
+#: Controller/BackendAppController.php:98
+msgid "Please correct the marked errors."
+msgstr ""
+
+#: Controller/BackendAppController.php:99
+msgid "Invalid Request."
+msgstr ""
+
+#: Controller/BackendAppController.php:100
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: Controller/GroupPermissionsController.php:107
+msgid "All permissions have been synchronized."
+msgstr "Alle Rechte wurden erfolgreich synchronisiert."
+
+#: Controller/GroupPermissionsController.php:129
+msgid "There are no permissions to update yet."
+msgstr ""
+
+#: Controller/GroupPermissionsController.php:155
+msgid "All permissions have been saved."
+msgstr "Alle Rechte wurden gespeichert."
+
+#: Controller/GroupsController.php:125
+msgid "The group <strong>{0}</strong> has been created."
+msgstr "Die Gruppe <strong>{0}</strong> wurde erstellt."
+
+#: Controller/GroupsController.php:155
+msgid "The group <strong>{0}</strong> has been saved."
+msgstr "Die Gruppe <strong>{0}</strong> wurde gespeichert."
+
+#: Controller/GroupsController.php:202
+msgid ""
+"The group <strong>{0}</strong> has been deleted. Prior <strong>{1}</strong> "
+"group member(s) ha(s/ve) been moved to the <strong>{2}</strong> group."
+msgstr "Die Gruppe <strong>{0}</strong> wurde gelöscht. Vor dem Löschvorgang wurden <strong>{1}</strong> bestehende Gruppenmitglieder der Gruppe <strong>{2}</strong> zugeordnet."
+
+#: Controller/GroupsController.php:204
+msgid "The group <strong>{0}</strong> has been deleted."
+msgstr "Die Gruppe <strong>{0}</strong> wurde gelöscht."
+
+#: Controller/GroupsController.php:214
+msgid ""
+"The group <strong>{0}</strong> has <strong>{1}</strong> member(s) that need "
+"to be moved to another group."
+msgstr "Die Gruppe <strong>{0}</strong> hat <strong>{1}</strong> Mitglieder, die vor dem Löschen einer anderen Gruppe zugeordnet werden müssen."
+
+#: Controller/LanguagesController.php:61
+msgid "The language <strong>{0}</strong> has been created."
+msgstr ""
+
+#: Controller/LanguagesController.php:90
+msgid "The language <strong>{0}</strong> has been saved."
+msgstr ""
+
+#: Controller/LanguagesController.php:119
+msgid "The language <strong>{0}</strong> has been deleted."
+msgstr ""
+
+#: Controller/LanguagesController.php:157
+msgid "The language position has been updated."
+msgstr ""
+
+#: Controller/MenusController.php:88
+msgid "The menu <strong>{0}</strong> has been created."
+msgstr ""
+
+#: Controller/MenusController.php:118
+msgid "The menu <strong>{0}</strong> has been saved."
+msgstr ""
+
+#: Controller/MenusController.php:149
+msgid "The menu <strong>{0}</strong> has been deleted."
+msgstr ""
+
+#: Controller/MenusController.php:171
+msgid "A menu item with id <strong>{0}</strong> does not exist."
+msgstr ""
+
+#: Controller/MenusController.php:188
+msgid "Menu Item <strong>{0}</strong> has been created."
+msgstr ""
+
+#: Controller/MenusController.php:221
+msgid "Menu Item <strong>{0}</strong> has been updated."
+msgstr ""
+
+#: Controller/MenusController.php:253
+msgid "The menu item <strong>{0}</strong> has been deleted."
+msgstr ""
+
+#: Controller/MenusController.php:299
+msgid "The menu item positions have been updated."
+msgstr ""
+
+#: Controller/SettingsController.php:47
+msgid "The general settings have been updated."
+msgstr ""
+
+#: Controller/SettingsController.php:72
+msgid "The cache settings have been updated."
+msgstr ""
+
+#: Controller/UsersController.php:130
+msgid ""
+"Please verify your email address. You can request a new verification email "
+"{0}."
+msgstr ""
+
+#: Controller/UsersController.php:133
+msgid "here"
+msgstr ""
+
+#: Controller/UsersController.php:138
+msgid ""
+"Your account has not yet been activated. Once your account has been checked "
+"by an administrator, you will receive a notification email."
+msgstr ""
+
+#: Controller/UsersController.php:146
+msgid "Welcome back <strong>{0}</strong>."
+msgstr ""
+
+#: Controller/UsersController.php:152
+msgid "Username or password is incorrect."
+msgstr ""
+
+#: Controller/UsersController.php:178
+msgid "The user has been saved."
+msgstr ""
+
+#: Controller/UsersController.php:182
+msgid "Unable to add the user."
+msgstr ""
+
+#: Controller/UsersController.php:210
+msgid "The user <strong>{0}</strong> has been created."
+msgstr ""
+
+#: Controller/UsersController.php:249
+msgid "The user <strong>{0}</strong> has been saved."
+msgstr ""
+
+#: Controller/UsersController.php:280
+msgid "The user <strong>{0}</strong> has been deleted."
+msgstr ""
+
+#: Event/MenuListener.php:53
+msgid "Dashboard"
+msgstr ""
+
+#: Event/MenuListener.php:64
+msgid "Content"
+msgstr ""
+
+#: Event/MenuListener.php:70 Template/Menus/index.ctp:7
+msgid "Menus"
+msgstr ""
+
+#: Event/MenuListener.php81;183
+msgid "Media"
+msgstr ""
+
+#: Event/MenuListener.php:92
+msgid "Administration"
+msgstr ""
+
+#: Event/MenuListener.php:98 Template/Users/index.ctp:33
+msgid "Users"
+msgstr ""
+
+#: Event/MenuListener.php:109 Template/Groups/index.ctp:7
+msgid "Groups"
+msgstr ""
+
+#: Event/MenuListener.php:120 Template/Languages/index.ctp:8
+msgid "Languages"
+msgstr ""
+
+#: Event/MenuListener.php:131
+msgid "Plugins"
+msgstr ""
+
+#: Event/MenuListener.php:142 Template/GroupPermissions/index.ctp8;38
+msgid "Permissions"
+msgstr ""
+
+#: Event/MenuListener.php:153
+msgid "Settings"
+msgstr ""
+
+#: Event/MenuListener.php:159
+msgid "General"
+msgstr ""
+
+#: Event/MenuListener.php:171
+msgid "Cache"
+msgstr ""
+
+#: Model/Table/CacheSettingsTable.php:49
+msgid "1 hour"
+msgstr ""
+
+#: Model/Table/CacheSettingsTable.php50;51;52;53
+msgid "{0} hours"
+msgstr ""
+
+#: Model/Table/CacheSettingsTable.php:54
+msgid "1 day"
+msgstr ""
+
+#: Model/Table/CacheSettingsTable.php55;56;57;58;59;60;61;62;63;64
+msgid "{0} days"
+msgstr ""
+
+#: Model/Table/CacheSettingsTable.php:79
+msgid "Please select a cache status."
+msgstr ""
+
+#: Model/Table/CacheSettingsTable.php:82
+msgid "Please select a valid cache status."
+msgstr ""
+
+#: Model/Table/CacheSettingsTable.php:84
+msgid "Please select a cache duration."
+msgstr ""
+
+#: Model/Table/CacheSettingsTable.php:89
+msgid "Please select a valid cache duration."
+msgstr ""
+
+#: Model/Table/GeneralSettingsTable.php:55
+msgid "Please enter a name for your CMS instance."
+msgstr ""
+
+#: Model/Table/GroupsTable.php:54
+msgid "Please enter a name for the group."
+msgstr ""
+
+#: Model/Table/GroupsTable.php:66
+msgid "Another group with this name already exists."
+msgstr ""
+
+#: Model/Table/LanguagesTable.php:45
+msgid "Please enter the name of the language."
+msgstr ""
+
+#: Model/Table/LanguagesTable.php:46
+msgid "Please enter the ISO 639-1 code of the language (e.g. \"en\")"
+msgstr ""
+
+#: Model/Table/LanguagesTable.php:49
+msgid "The ISO 639-1 code must consist of exactly 2 characters."
+msgstr ""
+
+#: Model/Table/LanguagesTable.php:51
+msgid "Please enter the ISO 639-2/T code of the language (e.g. \"eng\")"
+msgstr ""
+
+#: Model/Table/LanguagesTable.php:54
+msgid "The ISO 639-2/T code must consist of exactly 3 characters."
+msgstr ""
+
+#: Model/Table/LanguagesTable.php:56
+msgid "Please enter the HTML lang code of the language (e.g. \"en_US\")"
+msgstr ""
+
+#: Model/Table/LanguagesTable.php:59
+msgid "The HTML lang code must consist of 2 to 5 characters."
+msgstr ""
+
+#: Model/Table/MenuItemsTable.php:53
+msgid "Please enter a name for the menu item."
+msgstr ""
+
+#: Model/Table/MenusTable.php:48
+msgid "Please enter a name for the menu."
+msgstr ""
+
+#: Model/Table/UsersTable.php:53
+msgid "Please enter a username."
+msgstr ""
+
+#: Model/Table/UsersTable.php:54
+msgid "Please enter an email address."
+msgstr ""
+
+#: Model/Table/UsersTable.php:58
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: Model/Table/UsersTable.php:61
+msgid "Please select a group this user belongs to."
+msgstr ""
+
+#: Model/Table/UsersTable.php:62
+msgid "Please enter a password."
+msgstr ""
+
+#: Model/Table/UsersTable.php:66
+msgid "Ensure your password consists of at least 6 characters."
+msgstr ""
+
+#: Model/Table/UsersTable.php:69
+msgid "Please repeat your Password."
+msgstr ""
+
+#: Model/Table/UsersTable.php:81
+msgid "The Password Confirmation does not match the Password field."
+msgstr ""
+
+#: Routing/RouteTypes.php:30
+msgid "Default Route"
+msgstr ""
+
+#: Routing/RouteTypes.php:31
+msgid "Redirect Route"
+msgstr ""
+
+#: Template/Element/Filter/pagination.ctp:21
+msgid "of"
+msgstr ""
+
+#: Template/Element/Filter/pagination.ctp:28
+msgid "go to first page"
+msgstr ""
+
+#: Template/Element/Filter/pagination.ctp:40
+msgid "go to previous page"
+msgstr ""
+
+#: Template/Element/Filter/pagination.ctp:51
+msgid "go to page {0}"
+msgstr ""
+
+#: Template/Element/Filter/pagination.ctp:59
+msgid "go to next page"
+msgstr ""
+
+#: Template/Element/Filter/pagination.ctp:71
+msgid "go to last page"
+msgstr ""
+
+#: Template/Element/Flash/default.ctp:9
+msgid "Dismiss this Message"
+msgstr ""
+
+#: Template/Element/JavaScript/setup.ctp:27 Template/Settings/cache.ctp:17
+#: Template/Settings/general.ctp:25
+msgid "Yes"
+msgstr ""
+
+#: Template/Element/JavaScript/setup.ctp:28 Template/Settings/cache.ctp:16
+#: Template/Settings/general.ctp:24
+msgid "No"
+msgstr ""
+
+#: Template/Element/Menu/user.ctp:10
+msgid "Edit Profile"
+msgstr ""
+
+#: Template/Element/Menu/user.ctp:18
+msgid "Logout"
+msgstr ""
+
+#: Template/GroupPermissions/__groupPermission-row.ctp:42
+#: Template/GroupPermissions/index.ctp:39
+msgid "Update"
+msgstr ""
+
+#: Template/GroupPermissions/index.ctp:9 Template/Groups/index.ctp:8
+#: Template/Menus/index.ctp:8 Template/Users/index.ctp:9
+msgid "Management"
+msgstr ""
+
+#: Template/GroupPermissions/index.ctp:19
+msgid "Synchronize Permissions"
+msgstr ""
+
+#: Template/GroupPermissions/index.ctp:36
+msgid "Controller"
+msgstr ""
+
+#: Template/GroupPermissions/index.ctp:37
+msgid "Action"
+msgstr ""
+
+#: Template/GroupPermissions/index.ctp:55
+msgid "Update all"
+msgstr ""
+
+#: Template/GroupPermissions/index.ctp:56 Template/Groups/add.ctp:29
+#: Template/Groups/delete.ctp:19 Template/Languages/add.ctp:34
+#: Template/Menus/add.ctp:73 Template/Menus/add_item.ctp:42
+#: Template/Settings/cache.ctp:29 Template/Settings/general.ctp:46
+#: Template/Users/add.ctp:54
+msgid "Cancel"
+msgstr ""
+
+#: Template/Groups/__group-row.ctp:16
+msgid "Edit Group \"{0}\""
+msgstr ""
+
+#: Template/Groups/__group-row.ctp:35
+msgid "Delete Group"
+msgstr ""
+
+#: Template/Groups/__group-row.ctp:36
+msgid "Do you really want to delete group <strong>{0}</strong>?"
+msgstr ""
+
+#: Template/Groups/__group-row.ctp:37 Template/Menus/__menu-item-row.ctp:59
+#: Template/Menus/__menu-row.ctp:37 Template/Users/__user-row.ctp:92
+msgid "Confirm Deletion"
+msgstr ""
+
+#: Template/Groups/add.ctp:8 Template/Groups/index.ctp:18
+msgid "Create a new Group"
+msgstr ""
+
+#: Template/Groups/add.ctp:10
+msgid "Edit Group"
+msgstr ""
+
+#: Template/Groups/add.ctp:16
+msgid "Group Name"
+msgstr ""
+
+#: Template/Groups/add.ctp:28 Template/Languages/add.ctp:33
+#: Template/Menus/add.ctp:71 Template/Menus/add_item.ctp:41
+#: Template/Settings/cache.ctp:28 Template/Settings/general.ctp:45
+#: Template/Users/add.ctp:53
+msgid "Save"
+msgstr ""
+
+#: Template/Groups/delete.ctp:8
+msgid "Move existing Member(s)"
+msgstr ""
+
+#: Template/Groups/delete.ctp:13
+msgid "Alternative Group"
+msgstr ""
+
+#: Template/Groups/delete.ctp:15
+msgid "Please select a group where the existing member(s) should be moved to."
+msgstr ""
+
+#: Template/Groups/delete.ctp:18
+msgid "Move Members & Delete Group"
+msgstr ""
+
+#: Template/Groups/index.ctp:28 Template/Users/add.ctp:32
+#: Template/Users/index.ctp:48
+msgid "Group"
+msgstr ""
+
+#: Template/Groups/index.ctp:29
+msgid "# Users"
+msgstr ""
+
+#: Template/Groups/index.ctp:30 Template/Languages/index.ctp:36
+#: Template/Menus/add.ctp:41 Template/Menus/index.ctp:29
+#: Template/Users/index.ctp:50
+msgid "Actions"
+msgstr ""
+
+#: Template/Languages/__language-row.ctp:13
+msgid "Change the position of this Language"
+msgstr ""
+
+#: Template/Languages/__language-row.ctp:22
+msgid "Edit language \"{0}\""
+msgstr ""
+
+#: Template/Languages/__language-row.ctp:57
+msgid "Delete language \"{0}\""
+msgstr ""
+
+#: Template/Languages/__language-row.ctp:58
+msgid "Delete language <strong>{0}</strong> ?"
+msgstr ""
+
+#: Template/Languages/__language-row.ctp:59
+msgid "Deletion Confirmation"
+msgstr ""
+
+#: Template/Languages/add.ctp:8 Template/Languages/index.ctp:19
+msgid "Create a new Language"
+msgstr ""
+
+#: Template/Languages/add.ctp:10
+msgid "Edit Language"
+msgstr ""
+
+#: Template/Languages/add.ctp:16
+msgid "Language Name"
+msgstr ""
+
+#: Template/Languages/add.ctp:27 Template/Languages/index.ctp:32
+msgid "ISO 639-1"
+msgstr ""
+
+#: Template/Languages/add.ctp:28 Template/Languages/index.ctp:33
+msgid "ISO 639-2/T"
+msgstr ""
+
+#: Template/Languages/add.ctp:29 Template/Languages/index.ctp:34
+msgid "HTML lang"
+msgstr ""
+
+#: Template/Languages/add.ctp:30
+msgid "available at Frontend"
+msgstr ""
+
+#: Template/Languages/add.ctp:31
+msgid "available at Backend"
+msgstr ""
+
+#: Template/Languages/index.ctp:9
+msgid "for Frontend & Backend"
+msgstr ""
+
+#: Template/Languages/index.ctp:31
+msgid "Language"
+msgstr ""
+
+#: Template/Languages/index.ctp:35
+msgid "Availability"
+msgstr ""
+
+#: Template/Languages/index.ctp:53
+msgid ""
+"More ISO codes can be found <a "
+"href=\"http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">here</a>."
+msgstr ""
+
+#: Template/Menus/__menu-item-row.ctp:26
+msgid "Change the position of this Menu Item"
+msgstr ""
+
+#: Template/Menus/__menu-item-row.ctp:31
+msgid "Add a child to this Menu Item"
+msgstr ""
+
+#: Template/Menus/__menu-item-row.ctp:57
+msgid "Delete this Menu Item"
+msgstr ""
+
+#: Template/Menus/__menu-item-row.ctp:58
+msgid "Do you really want to delete the menu item <strong>{0}</strong>?"
+msgstr ""
+
+#: Template/Menus/__menu-row.ctp:17
+msgid "Edit Menu \"{0}\""
+msgstr ""
+
+#: Template/Menus/__menu-row.ctp:35
+msgid "Delete Menu"
+msgstr ""
+
+#: Template/Menus/__menu-row.ctp:36
+msgid "Do you really want to delete menu <strong>{0}</strong>?"
+msgstr ""
+
+#: Template/Menus/add.ctp:13 Template/Menus/index.ctp:18
+msgid "Create a new Menu"
+msgstr ""
+
+#: Template/Menus/add.ctp:15
+msgid "Edit Menu"
+msgstr ""
+
+#: Template/Menus/add.ctp:20 Template/Menus/index.ctp:27
+msgid "Menu Name"
+msgstr ""
+
+#: Template/Menus/add.ctp:33
+msgid "Menu Items"
+msgstr ""
+
+#: Template/Menus/add.ctp:36
+msgid "Tip: The maximum nesting level is <strong>{0}</strong>."
+msgstr ""
+
+#: Template/Menus/add.ctp:38
+msgid "Menu Item"
+msgstr ""
+
+#: Template/Menus/add.ctp:39 Template/Users/index.ctp:49
+msgid "Status"
+msgstr ""
+
+#: Template/Menus/add.ctp:40
+msgid "Sort"
+msgstr ""
+
+#: Template/Menus/add.ctp:51
+msgid "This Menu has no items yet."
+msgstr ""
+
+#: Template/Menus/add.ctp:56 Template/Menus/add_item.ctp:10
+msgid "Add a new Menu Item"
+msgstr ""
+
+#: Template/Menus/add.ctp:66
+msgid "You can start adding Menu Items after you created the Menu."
+msgstr ""
+
+#: Template/Menus/add_item.ctp:12
+msgid "Edit Menu Item"
+msgstr ""
+
+#: Template/Menus/add_item.ctp:17
+msgid "Back to {0} Menu"
+msgstr ""
+
+#: Template/Menus/add_item.ctp:29
+msgid "Menu Item Name"
+msgstr ""
+
+#: Template/Menus/index.ctp:28
+msgid "# Menu Items"
+msgstr ""
+
+#: Template/Settings/cache.ctp:8
+msgid "Cache Settings"
+msgstr ""
+
+#: Template/Settings/cache.ctp:12
+msgid "Enable Caching"
+msgstr ""
+
+#: Template/Settings/cache.ctp:13
+msgid "Enable or disable View caching for the entire CMS instance."
+msgstr ""
+
+#: Template/Settings/cache.ctp:22
+msgid "Cache Duration"
+msgstr ""
+
+#: Template/Settings/cache.ctp:23
+msgid ""
+"This is used as a default setting and can be overriden by individual "
+"plugins."
+msgstr ""
+
+#: Template/Settings/general.ctp:7
+msgid "General Settings"
+msgstr ""
+
+#: Template/Settings/general.ctp:10
+msgid "Instance"
+msgstr ""
+
+#: Template/Settings/general.ctp:11
+msgid "General instance settings"
+msgstr ""
+
+#: Template/Settings/general.ctp:14
+msgid "Instance Name"
+msgstr ""
+
+#: Template/Settings/general.ctp:15
+msgid "The name of your CMS instance."
+msgstr ""
+
+#: Template/Settings/general.ctp:18
+msgid "Login Message"
+msgstr ""
+
+#: Template/Settings/general.ctp:19
+msgid "An optional message that is displayed on top of the login page."
+msgstr ""
+
+#: Template/Settings/general.ctp:22
+msgid "Display Login Message?"
+msgstr ""
+
+#: Template/Settings/general.ctp:29
+msgid "Login Message Text"
+msgstr ""
+
+#: Template/Settings/general.ctp:30
+msgid "The text of the login message."
+msgstr ""
+
+#: Template/Settings/general.ctp:31
+msgid ""
+"allowed Html tags: &lt;b&gt;&lt;strong&gt;&lt;a&gt;&lt;br&gt;&lt;br/&gt;"
+msgstr ""
+
+#: Template/Settings/general.ctp:36
+msgid "Login Message Class"
+msgstr ""
+
+#: Template/Settings/general.ctp:37
+msgid "The CSS class that is applied to the message box."
+msgstr ""
+
+#: Template/Users/__user-row.ctp:8 Template/Users/add.ctp:11
+msgid "Edit User"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:15
+msgid "not verified"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:24
+msgid "Verify user <strong>{0}</strong>?"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:25
+msgid "Verify User"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:26
+msgid "Manually verify the user's email address."
+msgstr ""
+
+#: Template/Users/__user-row.ctp:35
+msgid "The user has verified his email address."
+msgstr ""
+
+#: Template/Users/__user-row.ctp:35
+msgid "verified"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:40
+msgid "inactive"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:49
+msgid "Activate user <strong>{0}</strong>?"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:50
+msgid "Activate User"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:51
+msgid "Activate user &quot;{0}&quot;"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:61
+msgid "You cannot deactivate your own account."
+msgstr ""
+
+#: Template/Users/__user-row.ctp61;64
+msgid "active"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:73
+msgid "Deactivate user <strong>{0}</strong>?"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:74
+msgid "Deactivate User"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:75
+msgid "Deactivate user &quot;{0}&quot;"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:90
+msgid "Delete User"
+msgstr ""
+
+#: Template/Users/__user-row.ctp:91
+msgid "Do you really want to delete user <strong>{0}</strong>?"
+msgstr ""
+
+#: Template/Users/add.ctp:9 Template/Users/index.ctp:19
+msgid "Create a new User"
+msgstr ""
+
+#: Template/Users/add.ctp:26 Template/Users/login.ctp:23
+msgid "Username"
+msgstr ""
+
+#: Template/Users/add.ctp:29 Template/Users/index.ctp:47
+msgid "Email"
+msgstr ""
+
+#: Template/Users/add.ctp:34
+msgid "Please choose..."
+msgstr ""
+
+#: Template/Users/add.ctp:38
+msgid "Change Password"
+msgstr ""
+
+#: Template/Users/add.ctp:39
+msgid ""
+"To change the user's password fill in both password fields. Otherwise leave "
+"those fields empty."
+msgstr ""
+
+#: Template/Users/add.ctp:43 Template/Users/login.ctp:24
+msgid "Password"
+msgstr ""
+
+#: Template/Users/add.ctp:44
+msgid ""
+"Should consist of 6 to 50 characters. All numbers, letters and special "
+"characters are allowed."
+msgstr ""
+
+#: Template/Users/add.ctp:48
+msgid "Password Confirmation"
+msgstr ""
+
+#: Template/Users/index.ctp8;46
+msgid "User"
+msgstr ""
+
+#: Template/Users/index.ctp:37
+msgid "ID"
+msgstr ""
+
+#: Template/Users/index.ctp:38
+msgid "Search for username"
+msgstr ""
+
+#: Template/Users/index.ctp:39
+msgid "Search for email"
+msgstr ""
+
+#: Template/Users/index.ctp:40
+msgid "Filter by group"
+msgstr ""
+
+#: Template/Users/index.ctp:42
+msgid "Search"
+msgstr ""
+
+#: Template/Users/login.ctp:26
+msgid "Remember me for 2 weeks"
+msgstr ""
+
+#: Template/Users/login.ctp:31
+msgid "Login"
+msgstr ""
+
+#: Template/Users/register.ctp:9
+msgid "Add User"
+msgstr ""
+
+#: Template/Users/register.ctp:14
+msgid "Submit"
+msgstr ""
