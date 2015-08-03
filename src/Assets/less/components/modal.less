@@ -1,0 +1,71 @@
+@import (reference) "../__config";
+@import (reference) "../__colors";
+@import (reference) "../__mixins";
+
+.modal-backdrop, .modal-scrollable {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.modal-backdrop {
+  background-color: #000;
+}
+
+.modal-scrollable {
+  overflow: auto;
+}
+
+.modal-open {
+  overflow: hidden;
+
+  &.page-overflow {
+
+    #wrapper, .modal-scrollable {
+      overflow-y: scroll;
+    }
+
+    header {
+      padding-right: 37px;
+    }
+  }
+}
+
+.modal-container {
+  background-color: #fff;
+  .box-shadow(0 0 8px rgba(0, 0, 0, 0.3));
+
+  h2, p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.modal-header {
+  padding: 10px 20px;
+  background-color: @modal-header-bg-color;
+
+  span {
+    font-family: @font-os-semibold;
+    font-size: 20px;
+    color: #fff;
+  }
+}
+
+.modal-body {
+  padding: 20px 0 0;
+
+  p {
+    padding: 0 20px 20px;
+    line-height: 1.5em;
+  }
+}
+
+.modal-confirm {
+  padding: 10px 20px;
+  border-top: 1px solid @modal-form-controls-border-top-color;
+  background-color: @modal-form-controls-bg-color;
+  text-align: right;
+}

@@ -13,16 +13,16 @@
       display: inline-block;
       line-height: @header-height;
       padding: 0 @computed-height--half;
-      color: #fff;
+      color: @lang-switch-link-color;
 
       &:hover {
-        background-color: lighten(@navToggle, 7%);
+        background-color: @lang-switch-link-bg-color--hover;
       }
     }
 
     &.active a, &.active a:hover {
-      color: @blue;
-      background-color: #fff;
+      color: @lang-switch-link-color--active;
+      background-color: @lang-switch-link-bg-color--active;
     }
   }
 }

@@ -2,7 +2,7 @@
 @import (reference) '../__mixins';
 
 .button {
-  @buttonBg: #9cb800;
+  @buttonBg: @brand-success-color;
 
   padding: 7px 16px 6px;
   display: inline-block;
@@ -20,7 +20,6 @@
   }
 
   &:active {
-    color: #f8f8f8;
     .box-shadow(0 2px 1px fade(darken(@buttonBg, 20%), 40%) inset);
   }
 
@@ -33,7 +32,7 @@
 }
 
 .button.blue {
-  @buttonBg: #368EE0;//#448AC4;
+  @buttonBg: @brand-link;
 
   background-color: @buttonBg;
   box-shadow: 0 -2px 0 fade(darken(@buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);

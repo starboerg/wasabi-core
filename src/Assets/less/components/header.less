@@ -7,9 +7,8 @@ header {
   top: 0;
   left: 0;
   padding: 0 @computed-height 0 0;
-  background-color: @headerBg;
+  background-color: @header-bg-color;
   z-index: 9999;
-  min-width: @min-width;
   width: 100%;
 
   ul {
@@ -30,32 +29,15 @@ header {
     display: inline-block;
     line-height: @header-height;
     font-size: @computed-height;
-    color: #fff;
+    color: @header-brand-color;
   }
 
-  .back-to-frontend {
-    float: right;
-    margin-right: 20px;
-
-    a {
-      display: inline-block;
-      line-height: @header-height;
-      color: #fff;
-      padding: 0 14px;
-
-      &:hover,
-      &:focus {
-        background-color: @navToggle;
-      }
-    }
-  }
-
-  .toggle-nav {
+  .nav-toggle {
     display: inline-block;
     line-height: @header-height;
-    color: #fff;
+    color: @header-nav-toggle-color;
     text-decoration: none;
-    background-color: @navToggle;
+    background-color: @header-nav-toggle-bg-color;
     outline: none;
 
     i {
@@ -70,6 +52,10 @@ header {
     }
 
     body.nav-closed & {
+      background-color: transparent;
+    }
+
+    @media only screen and (max-width: @menuBreakPoint) {
       background-color: transparent;
     }
   }

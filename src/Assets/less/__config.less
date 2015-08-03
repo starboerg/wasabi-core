@@ -1,26 +1,169 @@
-//----------------------------------------------- FONT-SIZE ----------------------------------------------------------//
-@font-os: 'open_sans_webfont', sans-serif;
-@font-os-light: 'open_sans_webfont_light', sans-serif;
-@font-os-semibold: 'open_sans_webfont_semibold', sans-serif;
+@import (reference) '__colors';
 
-@font-size: 14px;
-@line-height: 1.5;
-@computed-height: (@font-size * @line-height);
-@computed-height--half: floor(@computed-height / 2);
+//------------------------------------------------ MAIN COLORS -------------------------------------------------------//
+@brand-primary:       #223648;
+@brand-link:          #368ee0;
+@brand-link--hover:   #005580;
+@brand-error-color:   #c90000;
+@brand-success-color: #9cb800;
 
-//------------------------------------------------- SIZE -------------------------------------------------------------//
-@min-width: (34 * @computed-height);  // 714px
-@aside-width: (9 * @computed-height); // 189px 200px;
-@aside-width--collapsed: 37px;
-@header-height: 2 * @computed-height;
+@gray-base:       #000;
+@gray-darker:     lighten(@gray-base, 20%); // #333
+@gray-dark:       lighten(@gray-base, 26%); // #444
+@gray-light:      lighten(@gray-base, 53%); // #888
+@gray-lighter:    lighten(@gray-base, 60%); // #999
+
+@border-light:  #e3e5e6;
+@border-dark:   #d5d7d7;
+
+@state-error-bg-color:        #f2dede;
+@state-error-border-color:    #d49494;
+@state-error-font-color:      #990000;
+@state-error-link-color:      #8a1f11;
+
+@state-success-bg-color:      #e6efc2;
+@state-success-border-color:  #c6d880;
+@state-success-font-color:    #264409;
+@state-success-link-color:    #000;
+
+@state-warning-bg-color:      #fff6bf;
+@state-warning-border-color:  #ffd324;
+@state-warning-font-color:    #514721;
+@state-warning-link-color:    #000;
+
+@state-info-bg-color:         #d5edf8;
+@state-info-border-color:     #92cae4;
+@state-info-font-color:       #205791;
+@state-info-link-color:       #000;
+
+@sortable-placeholder-bg-color: #fff6bf;
 
 //----------------------------------------------- BREAK POINTS -------------------------------------------------------//
 @menuBreakPoint: 900px;
 
+//------------------------------------------------- Z-INDEX ----------------------------------------------------------//
 @zindex-navbar:            1000;
 @zindex-dropdown:          1000;
-@zindex-popover:           1060;
-@zindex-tooltip:           1070;
 @zindex-navbar-fixed:      1030;
 @zindex-modal-background:  1040;
 @zindex-modal:             1050;
+@zindex-popover:           1060;
+@zindex-tooltip:           1070;
+
+//----------------------------------------- BODY AND GENERIC ELEMENTS ------------------------------------------------//
+@body-bg-color:       #fff;
+
+@font-os:             'open_sans_webfont', sans-serif;
+@font-os-light:       'open_sans_webfont_light', sans-serif;
+@font-os-semibold:    'open_sans_webfont_semibold', sans-serif;
+
+@font-size:           14px;
+@line-height:         1.5;
+@font-color:          @gray-darker;
+@link-color:          @brand-link;
+@link-color--hover:   @brand-link--hover;
+
+@computed-height:         (@font-size * @line-height); // 21px
+@computed-height--half:   floor(@computed-height / 2); // 10px
+
+//------------------------------------------------ HEADER ------------------------------------------------------------//
+@header-height:               2 * @computed-height;
+@header-bg-color:             @brand-primary;
+@header-brand-color:          #fff;
+@header-nav-toggle-color:     #fff;
+@header-nav-toggle-bg-color:  lighten(@brand-primary, 10%);
+
+@lang-switch-link-color:              #fff;
+@lang-switch-link-color--active:      @brand-primary;
+@lang-switch-link-bg-color--hover:    lighten(@brand-primary, 10%);
+@lang-switch-link-bg-color--active:   #fff;
+
+@user-menu-link-color:                  #fff;
+@user-menu-link-color--hover:           lighten(@brand-primary, 10%);
+@user-menu-dropdown-bg-color:           lighten(@brand-primary, 10%);
+@user-menu-dropdown-link-color:         #fff;
+@user-menu-dropdown-link-color--hover:  lighten(@brand-primary, 20%);
+
+//------------------------------------------------ ASIDE -------------------------------------------------------------//
+@aside-width:         (9 * @computed-height); // 189px;
+@aside-bg-color:      #f2f3f4;
+@aside-border-color:  #d5d7d7;
+
+@aside-link-color:             @brand-primary;
+@aside-link-color--active:     @brand-link;
+@aside-link-bg-color--hover:   darken(@aside-bg-color, 5%);
+@aside-link-bg-color--active:  #fff;
+
+@aside-submenu-link-color:            spin(lighten(desaturate(@brand-primary, 30%), 20%), -3);
+@aside-submenu-link-bg-color--hover:  @aside-bg-color;
+
+//-------------------------------------------- TITLE PAD -------------------------------------------------------------//
+@titlepad-title-font-size:       2 * @font-size;
+@titlepad-title-font-color:      @gray-dark;
+@titlepad-title-letter-spacing:  -1px;
+
+@titlepad-small-font-size:       14px;
+@titlepad-small-font-color:      @gray-light;
+@titlepad-small-letter-spacing:  0;
+
+@titlepad-lang-font-size:   16px;
+@titlepad-lang-font-color:  #fff;
+@titlepad-lang-bg-color:    @gray-light;
+
+//--------------------------------------------- FORMS ----------------------------------------------------------------//
+@form-input-color:                @gray-darker;
+@form-input-bg-color:             #fff;
+@form-input-border-color:         #e2e2e2;
+@form-input-border-color--focus:  @gray-lighter;
+@form-input-disabled-color:       #6d6d6d;
+@form-input-disabled-bg-color:    #f0f0f0;
+@form-input-info-color:           @gray-lighter;
+
+@form-row-bg-color:       #fcfcfc;
+@form-row-border-color:   @border-light;
+
+@form-section-bg-color:           @aside-bg-color;
+@form-section-border-color:       @border-dark;
+@form-section-description-color:  @gray-light;
+
+@form-placeholder-color: #8c8c8c;
+
+//-------------------------------------------- BADGES ----------------------------------------------------------------//
+@badge-base-color:      @gray-lighter;
+@badge-important-color: #c09853;
+@badge-info-color:      @brand-link;
+@badge-warning-color:   #f89406;
+@badge-error-color:     @brand-error-color;
+@badge-success-color:   @brand-success-color;
+
+//-------------------------------------------- TABLES ----------------------------------------------------------------//
+@table-th-border-color: @border-dark;
+@table-th-font-family: @font-os-semibold;
+@table-th-bg-color: @aside-bg-color;
+@table-th-link-color: @gray-darker;
+
+@table-td-border-color: #e6e6e3;
+
+@table-filters-bg-color: #f0f1f2;
+
+@table-row--hover: #f8f8f8;
+@table-row--selected: #fff5c4;
+@table-row--selected--hover: #ffefa0;
+
+@icon-sortable-color:          #ccc;
+@icon-sortable-color--active:  @gray-light;
+
+//----------------------------------------- PAGINATION ---------------------------------------------------------------//
+@pagination-bg-color: lighten(@aside-bg-color, 2%);
+@pagination-link-color--active: #fff;
+@pagination-link-color--disabled: @border-dark;
+@pagination-link-bg-color--active: lighten(@brand-primary, 10%);
+@pagination-item-count-color: @gray-dark;
+
+//------------------------------------------- MODAL ------------------------------------------------------------------//
+@modal-header-bg-color: lighten(@brand-primary, 10%);
+@modal-form-controls-bg-color: @form-section-bg-color;
+@modal-form-controls-border-top-color: @form-section-border-color;
+
+//-------------------------------- SUPPORT LAYOUTS (Login, etc.) -----------------------------------------------------//
+@support-body-bg-color: #efefef;

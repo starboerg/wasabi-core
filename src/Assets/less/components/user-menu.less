@@ -9,7 +9,7 @@
     padding: 0 @computed-height--half 0 @font-size;
     display: inline-block;
     line-height: @header-height;
-    color: #fff;
+    color: @user-menu-link-color;
 
     i {
       display: inline-block;
@@ -19,22 +19,21 @@
       font-size: @font-size + 2px;
       top: 3px;
     }
+  }
 
-    &:hover,
-    &:focus {
-      background-color: @navToggle;
-    }
+  & > a:hover, & > a:focus, &.open > a {
+    background-color: @user-menu-link-color--hover;
   }
 
   .dropdown-menu {
-    background-color: @navToggle;
+    background-color: @user-menu-dropdown-bg-color;
 
     a {
       display: block;
-      color: #fff;
+      color: @user-menu-dropdown-link-color;
 
       &:hover {
-        background-color: lighten(@navToggle, 7%);
+        background-color: @user-menu-dropdown-link-color--hover;
       }
     }
   }

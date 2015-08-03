@@ -4,16 +4,16 @@
 
 .pagination {
   margin: 15px 0;
-  background: #fbfbfb;
-  border: 1px solid #e3e6e5;
+  background: @pagination-bg-color;
+  border: 1px solid darken(@pagination-bg-color, 6%);
   line-height: 40px;
 
   li {
     display: inline-block;
 
     &.active a {
-      background-color: #828282;
-      color: #fff;
+      background-color: @pagination-link-bg-color--active;
+      color: @pagination-link-color--active;
     }
   }
 
@@ -21,12 +21,17 @@
     display: inline-block;
     min-width: 35px;
     text-align: center;
+
+    &.disabled {
+      color: #ddd;
+      cursor: default;
+    }
   }
 
   .item-count {
     float: left;
     font-size: 12px;
-    color: #666;
+    color: @pagination-item-count-color;
     padding: 0 20px;
   }
 
@@ -37,10 +42,5 @@
   .limit {
     float: right;
     margin: 4px 3px 0 0;
-  }
-
-  a.disabled {
-    color: #ddd;
-    cursor: default;
   }
 }

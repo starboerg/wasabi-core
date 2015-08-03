@@ -8,9 +8,9 @@ label {
   cursor: pointer;
 
   .form-row.required &:before {
-    color: #cc0000;
+    color: @brand-error-color;
     content: "*";
-    font-size: 13px;
+    font-size: (@font-size - 1px);
     left: -10px;
     margin-right: -7px;
     position: relative;
@@ -18,7 +18,7 @@ label {
   }
 
   small {
-    color: #888;
+    color: @gray-light;
     display: block;
     font-family: @font-os;
     font-weight: normal;
@@ -29,32 +29,32 @@ label {
 input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea {
   background-attachment: scroll;
   background-clip: border-box;
-  background-color: #fff;
+  background-color: @form-input-bg-color;
   background-image: none !important;
   background-origin: padding-box;
   background-position: 0 0;
   background-repeat: repeat;
   background-size: auto auto;
   box-shadow: none !important;
-  color: #333;
+  color: @form-input-color;
   filter: none !important;
   font-weight: normal;
   outline: 0 none;
   padding: 6px 6px 5px;
   vertical-align: top;
-  border: 1px solid #e2e2e2;
+  border: 1px solid @form-input-border-color;
   width: 100%;
-  max-width: 900px;
 
   &:focus {
-    border-color: #999;
+    border-color: @form-input-border-color--focus;
+    outline: none;
     .box-shadow(none);
   }
 
   &:disabled {
     cursor: not-allowed;
-    color: #6d6d6d;
-    background-color: #f0f0f0;
+    color: @form-input-disabled-color;
+    background-color: @form-input-disabled-bg-color;
   }
 }
 
@@ -85,34 +85,23 @@ input[type="number"].without-spinner {
 span.error-message, div.error-message {
   display: block;
   padding-top: 2px;
-  color: #990000;
+  color: @state-error-font-color;
 }
 
 .input-group {
   border-collapse: separate;
 
   & > input.form-error {
-    border: 1px solid @errorBorderColor;
-  }
-
-  & > .input-group-addon {
-    padding: 5px 7px 6px 5px;
-    line-height: 31px;
-    background-color: #eee;
-    border: 1px solid @borderLight;
-    text-align: center;
-    .border-radius(5px);
-    cursor: default;
+    border: 1px solid @brand-error-color;
   }
 }
 
 .form-row {
   display: table;
-  background-color: #fcfcfc;
+  background-color: @form-row-bg-color;
   border-style: solid;
-  border-color: @borderLight;
+  border-color: @form-row-border-color;
   border-width: 0 1px;
-  //  border-bottom: 1px solid #ddd;
 
   & > label {
     padding: 27px 20px 20px;
@@ -159,12 +148,12 @@ span.error-message, div.error-message {
   }
 
   & > label + .field {
-    border-left: 1px solid @borderLight;
+    border-left: 1px solid @form-row-border-color;
   }
 
   & table.list {
     max-width: 900px;
-    border: 1px solid #ddd;
+    border: 1px solid @form-row-border-color;
   }
 
   &.form-row-checkbox {
@@ -184,30 +173,30 @@ span.error-message, div.error-message {
   }
 
   &.last-of-section {
-    border-bottom: 1px solid @borderMain;
+    border-bottom: 1px solid @form-section-border-color;
   }
 }
 
 .form-row.error, div.input.error {
 
   input[type="text"], input[type="email"], input[type="password"], textarea, select {
-    border-color: @errorColor;
+    border-color: @state-error-font-color;
   }
 
   & > label {
-    color: @errorColor;
+    color: @state-error-font-color;
   }
 }
 
 form.no-top-section {
-  border-top: 1px solid @borderLight;
+  border-top: 1px solid @form-row-border-color;
 }
 
 .form-section {
   padding: 15px 20px;
-  background-color: @darkerGreyBg;
+  background-color: @form-section-bg-color;
   border-style: solid;
-  border-color: @borderMain;
+  border-color: @form-section-border-color;
   border-width: 1px;
 }
 
@@ -217,7 +206,7 @@ form.no-top-section {
 
 .form-section-description {
   font-size: 80%;
-  color: #888;
+  color: @form-section-description-color;
 }
 
 textarea {
@@ -226,8 +215,8 @@ textarea {
 
 .form-controls {
   padding: 20px;
-  background-color: @asideBg;
-  border: 1px solid @borderMain;
+  background-color: @form-section-bg-color;
+  border: 1px solid @form-section-border-color;
 }
 
 .form-controls, .modal-confirm {
@@ -238,7 +227,7 @@ textarea {
 
 .form-row .field small {
   display: block;
-  color: #999;
+  color: @form-input-info-color;
   padding-top: 2px;
 
   & + .multi-fileupload {
@@ -248,10 +237,12 @@ textarea {
 
 select {
   padding: 5px 5px 4px;
-  border: 1px solid #e2e2e2;
+  border: 1px solid @form-input-border-color;
+  font-family: @font-os;
+  font-weight: normal;
 
   &:focus {
-    border-color: #999;
+    border-color: @form-input-border-color--focus;
     outline: none;
   }
 
@@ -260,9 +251,9 @@ select {
   }
 
   optgroup {
-    font-weight: 600;
+    font-family: @font-os-semibold;
+    font-weight: 400;
     font-style: normal;
-    font-family: "Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;
   }
 
   &.select-small {
@@ -271,11 +262,11 @@ select {
   }
 
   option {
-    color: #000;
+    color: @gray-darker;
   }
 
   &.empty {
-    color: #8c8c8c;
+    color: @form-placeholder-color;
   }
 }
 

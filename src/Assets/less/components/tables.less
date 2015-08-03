@@ -1,24 +1,11 @@
+@import (reference) '../__config';
+
 table.list {
   width: 100%;
-  border-bottom: 1px solid @borderLight;
-  //  border: 1px solid #d7d7d7;
-  //  border-bottom: 1px solid #e6e6e3;
+  border-bottom: 1px solid @table-td-border-color;
 
-  th {
-    color: #333;
-    //    background-color: #eee;
-    background-color: @darkerGreyBg;//#ededee;
-    font-family: 'open_sans_webfont_semibold';
-    font-weight: normal;
-    text-align: left;
-
-    &.center {
-      text-align: center;
-    }
-  }
-
-  thead tr:first-child th {
-    border-top: none;
+  &.valign-middle td {
+    vertical-align: middle;
   }
 
   thead, tfoot {
@@ -26,36 +13,44 @@ table.list {
     tr {
 
       th {
+        font-family: @table-th-font-family;
+        font-weight: normal;
+        text-align: left;
+        background-color: @table-th-bg-color;
         padding: 0 @computed-height--half;
         line-height: (2 * @computed-height) - 2;
 
         &:first-child {
-          border-left: 1px solid @borderMain;
+          border-left: 1px solid @table-th-border-color;
         }
 
         &:last-child {
-          border-right: 1px solid @borderMain;
+          border-right: 1px solid @table-th-border-color;
+        }
+
+        &.center {
+          text-align: center;
         }
 
         a {
-          color: #333;
+          color: @table-th-link-color;
 
           span {
-            border-bottom: 1px dotted darken(@borderMain, 15%);
+            border-bottom: 1px dotted darken(@table-th-border-color, 15%);
           }
 
           &:hover span {
-            border-color: #333;
+            border-color: @table-th-link-color;
           }
         }
       }
 
       &:first-child th {
-        border-top: 1px solid @borderMain;
+        border-top: 1px solid @table-th-border-color;
       }
 
       &:last-child th {
-        border-bottom: 1px solid @borderMain;
+        border-bottom: 1px solid @table-th-border-color;
       }
 
       &.filters {
@@ -63,8 +58,8 @@ table.list {
         th {
           padding: 8px 8px 2px;
           line-height: 34px;
-          border-bottom: 1px solid #d7d7d7;
-          background-color: #eeeeef;
+          border-bottom: 1px solid @table-th-border-color;
+          background-color: @table-filters-bg-color;
         }
 
         input[type="text"], select {
@@ -81,58 +76,55 @@ table.list {
     }
   }
 
+  tfoot tr th {
+    border-top: 1px solid #d7d7d7;
+  }
+
   tbody {
 
     tr {
 
       td {
+        border-top: 1px solid @table-td-border-color;
+        padding: (@computed-height--half);
 
         &:first-child {
-          border-left: 1px solid @borderLight;
+          border-left: 1px solid @table-td-border-color;
         }
 
         &:last-child {
-          border-right: 1px solid @borderLight;
+          border-right: 1px solid @table-td-border-color;
         }
       }
 
       &.sortable-placeholder td {
-        background-color: #fff6bf;
+        background-color: @sortable-placeholder-bg-color;
+      }
+
+      &:first-child td {
+        border-top: none;
+      }
+
+      &.new {
+        display: none;
+      }
+
+      &:hover td {
+        background-color: @table-row--hover;
+      }
+
+      &.selected td {
+        background-color: @table-row--selected;
+      }
+
+      &.selected:hover td {
+        background-color: @table-row--selected--hover;
+      }
+
+      &.valign-top td {
+        vertical-align: top;
       }
     }
-  }
-
-  tbody tr:first-child td {
-    border-top: none;
-  }
-
-  td {
-    border-top: 1px solid #e6e6e3;
-    padding: (@computed-height--half);
-  }
-
-  tr.new {
-    display: none;
-  }
-
-  tbody tr:hover td {
-    background-color: @rowHover;
-  }
-
-  tr.selected td {
-    background-color: @rowSelected;
-  }
-
-  tbody tr.selected:hover td {
-    background-color: @rowSelectedHover;
-  }
-
-  &.valign-middle td {
-    vertical-align: middle;
-  }
-
-  tr.valign-top td {
-    vertical-align: top;
   }
 
   .tselect input[type="checkbox"] {
@@ -144,10 +136,6 @@ table.list {
     border-bottom: none;
   }
 
-  tfoot tr th {
-    border-top: 1px solid #d7d7d7;
-  }
-
   & + .form-controls {
     border-top: none;
   }
@@ -155,7 +143,6 @@ table.list {
   .col-actions {
     line-height: 0;
   }
-
 }
 
 .field > table.list {
@@ -169,10 +156,12 @@ table.list {
 }
 
 .field > table.list, .field > .list-content {
+
   label {
-    font-size: 12px;
-    font-weight: 600;
     display: block;
+    font-family: @font-os-semibold;
+    font-size: 12px;
+    font-weight: 400;
   }
 
   input[type="text"], input[type="password"], textarea {
@@ -191,13 +180,12 @@ table.list {
 }
 
 .table-head {
-  color: #333;
-  background-color: @darkerGreyBg;
+  background-color: @table-th-bg-color;
   font-size: 14px;
   font-family: @font-os-semibold;
   text-align: left;
   border-style: solid;
-  border-color: @borderMain;
+  border-color: @table-th-border-color;
   border-width: 1px 1px 0 1px;
 
   & > div {
@@ -212,13 +200,13 @@ table.list {
   list-style: none;
   border-style: solid;
   border-width: 1px 1px 0;
-  border-color: @borderMain @borderLight @borderLight @borderLight;
+  border-color: @table-th-border-color @table-td-border-color @table-td-border-color @table-td-border-color;
 
   li > .row {
-    border-bottom: 1px solid @borderLight;
+    border-bottom: 1px solid @table-td-border-color;
 
     &:hover {
-      background-color: #f8f8f8;
+      background-color: @table-row--hover;
     }
   }
 }

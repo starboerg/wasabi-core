@@ -4,7 +4,7 @@
 
 [class*="flash-message--"], [class*="message--"] {
   position: relative;
-  border: 1px solid #ddd;
+  border: 1px solid transparent;
   margin-bottom: 20px;
   padding: 10px 35px 10px 15px;
 }
@@ -28,41 +28,41 @@
 }
 
 .flash-message--error, .message--error {
-  background-color: @errorBgColor;
-  border: 1px solid @errorBorderColor;
-  color: @errorColor;
+  background-color: @state-error-bg-color;
+  border: 1px solid @state-error-border-color;
+  color: @state-error-font-color;
 
   a {
-    color: @errorLinkColor;
+    color: @state-error-link-color;
   }
 }
 
 .flash-message--warning, .message--warning {
-  background-color: #fff6bf;
-  border-color: #ffd324;
-  color: #514721;
+  background-color: @state-warning-bg-color;
+  border-color: @state-warning-border-color;
+  color: @state-warning-font-color;
 
   a {
-    color: #000;
+    color: @state-warning-link-color;
   }
 }
 
 .flash-message--success, .message--success {
-  background-color: #e6efc2;
-  border-color: #c6d880;
-  color: #264409;
+  background-color: @state-success-bg-color;
+  border-color: @state-success-border-color;
+  color: @state-success-font-color;
 
   a {
-    color: #000;
+    color: @state-success-link-color;
   }
 }
 
 .flash-message--info, .message--info {
-  background-color: #d5edf8;
-  border-color: #92cae4;
-  color: #205791;
+  background-color: @state-info-bg-color;
+  border-color: @state-info-border-color;
+  color: @state-info-font-color;
 
   a {
-    color: #000;
+    color: @state-info-link-color;
   }
 }

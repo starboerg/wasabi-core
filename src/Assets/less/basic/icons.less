@@ -1,3 +1,4 @@
+@import (reference) "../__colors";
 @import (reference) "../__config";
 @import (reference) "../__mixins";
 
@@ -86,7 +87,7 @@
   position: relative;
   top: -9px;
   padding-left: 2px;
-  color: #ccc;
+  color: @icon-sortable-color;
 
   &:before {
     position: absolute;
@@ -103,14 +104,14 @@
 .icon-sortable-asc {
 
   &:after {
-    color: #888;
+    color: @icon-sortable-color--active;
   }
 }
 
 .icon-sortable-desc {
 
   &:before {
-    color: #888;
+    color: @icon-sortable-color--active;
   }
 }
 

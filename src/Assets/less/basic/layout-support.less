@@ -3,7 +3,7 @@
 @import (reference) "../__mixins";
 
 .support {
-  background-color: #efefef;
+  background-color: @support-body-bg-color;
 
   .support-wrapper {
     margin: 0 auto;
@@ -29,8 +29,6 @@
 
   .form-controls {
     border-width: 1px 0 0;
-    border-style: solid;
-    border-color: @borderLight;
     padding: 15px 20px;
   }
 }
@@ -52,18 +50,9 @@
   }
 
   form {
-    border-left: 1px solid @borderMain;
-    border-top: 1px solid @borderMain;
+    border-left: 1px solid @border-dark;
+    border-top: 1px solid @border-dark;
     .box-shadow(3px 3px 4px #bbb);
-
-    .lt-ie9 & {
-      border: 1px solid #ddd;
-    }
-  }
-
-  label {
-    font-family: 'open_sans_webfont_semibold';
-    font-weight: normal;
   }
 
   .input {
@@ -72,13 +61,6 @@
     &.checkbox {
       margin: 20px 0 0;
       padding-bottom: 20px;
-    }
-  }
-
-  .lt-ie9 & {
-
-    input[type="password"] {
-      font-family: Arial;
     }
   }
 
@@ -92,64 +74,5 @@
 
   .bottom-links {
     padding: 20px;
-  }
-}
-
-.support.browser {
-
-  h1, p, .browsers li {
-    text-align: center;
-  }
-
-  .browsers {
-    padding-bottom: 20px;
-
-    a {
-      display: block;
-      padding: 8px;
-      border: 1px solid transparent;
-
-      &:hover {
-        border-color: #ddd;
-        background-color: #efefef;
-      }
-    }
-
-    i {
-      display: inline-block;
-      width: 128px;
-      height: 128px;
-      cursor: pointer;
-
-      &.ie {
-        margin-left: -20px;
-        //noinspection CssUnknownTarget
-        background-image: url("../img/browsers/ie9-10_128x128.png");
-      }
-
-      &.firefox {
-        //noinspection CssUnknownTarget
-        background-image: url(../img/browsers/firefox_128x128.png);
-      }
-
-      &.chrome {
-        //noinspection CssUnknownTarget
-        background-image: url(../img/browsers/chrome_128x128.png);
-      }
-    }
-  }
-}
-
-.support.error {
-
-  .support-wrapper {
-    max-width: 1000px;
-    margin-top: 100px;
-    padding: 20px;
-    background-color: #fff;
-  }
-
-  h2 {
-    margin-top: 0;
   }
 }

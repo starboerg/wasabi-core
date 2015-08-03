@@ -12,8 +12,8 @@ html, body {
 
 body {
   font: @font-size~'/'@line-height @font-os;
-  color: #333;
-  background-color: @bodyBg;
+  color: @font-color;
+  background-color: @body-bg-color;
 }
 
 nav {
@@ -26,11 +26,11 @@ nav {
 }
 
 a {
-  color: @link;
+  color: @link-color;
   text-decoration: none;
 
   &:hover {
-    color: @linkHover;
+    color: @link-color--hover;
   }
 }
 
@@ -65,6 +65,7 @@ b, strong {
   }
 
   @media only screen and (max-width: @menuBreakPoint) {
-    margin-left: @aside-width--collapsed;
+    margin-left: 0;
+    //margin-left: @aside-width--collapsed;
   }
 }

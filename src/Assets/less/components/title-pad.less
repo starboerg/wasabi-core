@@ -9,27 +9,25 @@
 
 .titlepad-title {
   margin: 0;
-  font-size: (@font-size * 2);
+  font-size: @titlepad-title-font-size;
   font-weight: normal;
-  color: #444;
-  letter-spacing: -1px;
+  color: @titlepad-title-font-color;
+  letter-spacing: @titlepad-title-letter-spacing;
 
   small {
-    color: #888;
-    font-size: 14px;
-    font-weight: 300;
-    letter-spacing: 0;
+    font-size: @titlepad-small-font-size;
+    color: @titlepad-small-font-color;
+    letter-spacing: @titlepad-small-letter-spacing;
   }
 
   .lang {
     display: inline-block;
     margin-left: 10px;
     margin-top: 8px;
-    padding: 0 5px 2px;
-    font-size: 65%;
-    font-weight: 400;
-    background-color: #999;
-    color: #fff;
+    padding: 0 5px 3px 4px;
+    font-size: @titlepad-lang-font-size;
+    color: @titlepad-lang-font-color;
+    background-color: @titlepad-lang-bg-color;
     vertical-align: top;
   }
 }
@@ -42,48 +40,48 @@
   padding: 0;
   list-style: none;
 
-  a.add, a.sync {
-    display: block;
-    width: 61px;
-    height: (2 * @computed-height);
-    line-height: (2 * @computed-height);
-    color: #fff;
-    font-size: 20px;
-    text-align: center;
-    .transition(background-color .1s linear .0s);
-  }
-
-  a.add {
-    background-color: #9cb800;
-
-    &:hover {
-      background-color: #aac600;
-    }
-
-    i {
-      font-size: 16px;
-    }
-  }
-
-  a.sync {
-    background-color: #368EE0;
-
-    &:hover {
-      background-color: #39b1ff;
-    }
-
-    i {
-      font-size: 23px;
-      .transform(translate(1px, 1px));
-    }
-  }
-
-  a.no-icon {
-    line-height: 60px;
-  }
-
-  [class^="icon-"] {
-    display: inline-block;
-    .transform(translate(0, -1px));
-  }
+  //a.add, a.sync {
+  //  display: block;
+  //  width: 61px;
+  //  height: (2 * @computed-height);
+  //  line-height: (2 * @computed-height);
+  //  color: #fff;
+  //  font-size: 20px;
+  //  text-align: center;
+  //  .transition(background-color .1s linear .0s);
+  //}
+  //
+  //a.add {
+  //  background-color: #9cb800;
+  //
+  //  &:hover {
+  //    background-color: #aac600;
+  //  }
+  //
+  //  i {
+  //    font-size: 16px;
+  //  }
+  //}
+  //
+  //a.sync {
+  //  background-color: #368EE0;
+  //
+  //  &:hover {
+  //    background-color: #39b1ff;
+  //  }
+  //
+  //  i {
+  //    font-size: 23px;
+  //    .transform(translate(1px, 1px));
+  //  }
+  //}
+  //
+  //a.no-icon {
+  //  line-height: 60px;
+  //}
+  //
+  //[class^="icon-"] {
+  //  display: inline-block;
+  //  .transform(translate(0, -1px));
+  //}
 }
