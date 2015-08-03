@@ -18,6 +18,8 @@ use Cake\Cache\Cache;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\I18n\I18n;
+use Cake\Network\Session;
 use Cake\Utility\Inflector;
 use Wasabi\Core\Model\Table\LanguagesTable;
 use Wasabi\Core\Nav;
@@ -154,6 +156,7 @@ class BackendAppController extends AppController
      */
     protected function _setupLanguages()
     {
+        // Configure all available frontend and backend languages.
         $languages = Cache::remember('languages', function() {
             /** @var LanguagesTable $Languages */
             $Languages = $this->loadModel('Wasabi/Core.Languages');
@@ -164,8 +167,34 @@ class BackendAppController extends AppController
                 'backend' => $Languages->filterBackend($langs)->toArray()
             ];
         }, 'wasabi/core/longterm');
-
         Configure::write('languages', $languages);
+
+        // Setup the users content language.
+        $contentLanguage = $languages['frontend'][0];
+        if ($this->request->session()->check('contentLanguageId')) {
+            $contentLanguageId = $this->request->session()->read('contentLanguageId');
+            foreach ($languages['frontend'] as $lang) {
+                if ($lang->id === $contentLanguageId) {
+                    $contentLanguage = $lang;
+                    break;
+                }
+            }
+        }
+        Configure::write('contentLanguage', $contentLanguage);
+
+        // Setup the users backend language.
+        $backendLanguage = $languages['backend'][0];
+        $backendLanguageId = $this->Auth->user('language_id');
+        if ($backendLanguageId !== null) {
+            foreach ($languages['backend'] as $lang) {
+                if ($lang->id === $backendLanguageId) {
+                    $backendLanguage = $lang;
+                    break;
+                }
+            }
+        }
+        Configure::write('backendLanguage', $backendLanguage);
+        I18n::locale(/*$backendLanguage->locale*/'de');
     }
 
     protected function _setSectionCssClass() {

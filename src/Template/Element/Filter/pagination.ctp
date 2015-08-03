@@ -48,7 +48,7 @@
         <li class="pages">
             <ul>
                 <?php foreach ($pages as $p): ?>
-                    <li<?php echo $p['active'] ? ' class="active"' : '' ?>><?php echo $this->Html->link($p['page'], $p['url'], array('title' => __d('wasabi_core', 'go to page {0}', $p['page']))) ?></li>
+                    <li<?= $p['active'] ? ' class="active"' : '' ?>><?= $this->Html->link($p['page'], $p['url'], ['title' => __d('wasabi_core', 'go to page {0}', $p['page'])]) ?></li>
                 <?php endforeach; ?>
             </ul>
         </li>
@@ -62,7 +62,7 @@
                 $class = 'disabled';
                 $title = '';
             }
-            echo $this->Html->link('<i class="icon-next"></i>', $url, array('title' => $title, 'escapeTitle' => false, 'class' => $class));
+            echo $this->Html->link('<i class="icon-next"></i>', $url, ['title' => $title, 'escapeTitle' => false, 'class' => $class]);
         ?></li>
         <li class="last"><?php
             if ($last !== false) {
@@ -74,11 +74,11 @@
                 $class = 'disabled';
                 $title = '';
             }
-            echo $this->Html->link('<i class="icon-last"></i>', $url, array('title' => $title, 'escapeTitle' => false, 'class' => $class));
+            echo $this->Html->link('<i class="icon-last"></i>', $url, ['title' => $title, 'escapeTitle' => false, 'class' => $class]);
         ?></li>
     </ul>
 </nav>
-<?= $this->Form->input('l', array(
+<?= $this->Form->input('l', [
     'id' => false,
     'label' => false,
     'options' => $this->paginationParams['limits'],
@@ -86,4 +86,4 @@
     'data-page' => $this->paginationParams['page'],
     'data-url' => $baseUrl,
     'templates' => 'Wasabi/Core.form_templates_filter'
-)) ?>
+]) ?>

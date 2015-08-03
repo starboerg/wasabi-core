@@ -143,7 +143,7 @@ module.exports = function(grunt) {
       },
       appjs: {
         files: ['src/Assets/js/**/*.js'],
-        tasks: ['jshint:core', 'browserifyResolve:core']
+        tasks: ['jshint:core', 'requirejs:compile']
       }
     }
 
@@ -158,13 +158,5 @@ module.exports = function(grunt) {
     'copy:js'
   ]);
 
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-requirejs');
-  grunt.loadNpmTasks('grunt-bower-requirejs');
-  grunt.loadNpmTasks('grunt-bytesize');
+  require('jit-grunt')(grunt);
 };

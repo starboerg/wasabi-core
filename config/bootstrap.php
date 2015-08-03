@@ -16,6 +16,8 @@
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\EventManager;
+use Cake\I18n\I18n;
+use Cake\I18n\MessagesFileLoader;
 use Cake\Routing\DispatcherFactory;
 use Wasabi\Core\Event\GuardianListener;
 use Wasabi\Core\Event\LanguagesListener;
@@ -31,6 +33,14 @@ try {
 } catch (\Exception $e) {
     die($e->getMessage() . "\n");
 }
+
+// Load messages from src/Locale/folder/sub_folder/filename.po
+
+//I18n::translator(
+//    'wasabi_core',
+//    null,
+//    new MessagesFileLoader('wasabi_core', 'folder/sub_folder', 'po')
+//);
 
 EventManager::instance()->on(new GuardianListener());
 EventManager::instance()->on(new MenuListener());

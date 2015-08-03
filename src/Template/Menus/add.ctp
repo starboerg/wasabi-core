@@ -23,10 +23,10 @@ if (!$isEdit) {
     $nameOpts['autofocus'] = '';
 }
 
-echo $this->Form->create($menu, array('class' => 'no-top-section'));
+echo $this->Form->create($menu, ['class' => 'no-top-section']);
 
 if ($isEdit) {
-    echo $this->Form->input('id', array('type' => 'hidden'));
+    echo $this->Form->input('id', ['type' => 'hidden']);
 }
 echo $this->Form->input('name', $nameOpts); ?>
 <div class="form-row row">

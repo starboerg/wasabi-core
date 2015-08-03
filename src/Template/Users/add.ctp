@@ -18,9 +18,9 @@ if (!$isEdit) {
     $usernameOpts['class'] = 'get-focus';
 }
 
-echo $this->Form->create($user, array('class' => 'no-top-section'));
+echo $this->Form->create($user, ['class' => 'no-top-section']);
     if ($isEdit) {
-        echo $this->Form->input('id', array('type' => 'hidden'));
+        echo $this->Form->input('id', ['type' => 'hidden']);
     }
     echo $this->Form->input('username', [
         'label' => __d('wasabi_core', 'Username')
@@ -50,7 +50,7 @@ echo $this->Form->create($user, array('class' => 'no-top-section'));
         'autocomplete' => 'off'
     ]);
     echo $this->Html->div('form-controls');
-        echo $this->Form->button(__d('wasabi_core', 'Save'), array('div' => false, 'class' => 'button'));
+        echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
         echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), $this->Filter->getBacklink([
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',

@@ -34,12 +34,12 @@ $this->Html->addAction(
 <table class="list users valign-middle">
     <thead>
     <tr class="filters">
-        <th><?= $this->Form->input('user_id', array('type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'ID'), 'templates' => 'Wasabi/Core.form_templates_filter')) ?></th>
-        <th><?= $this->Form->input('username', array('type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for username'), 'templates' => 'Wasabi/Core.form_templates_filter')) ?></th>
-        <th><?= $this->Form->input('email', array('type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for email'), 'templates' => 'Wasabi/Core.form_templates_filter')) ?></th>
-        <th><?= $this->Form->input('group_id', array('options' => $groups, 'label' => false, 'id' => false, 'empty' => __d('wasabi_core', 'Filter by group'), 'templates' => 'Wasabi/Core.form_templates_filter')) ?></th>
+        <th><?= $this->Form->input('user_id', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'ID'), 'templates' => 'Wasabi/Core.form_templates_filter']) ?></th>
+        <th><?= $this->Form->input('username', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for username'), 'templates' => 'Wasabi/Core.form_templates_filter']) ?></th>
+        <th><?= $this->Form->input('email', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for email'), 'templates' => 'Wasabi/Core.form_templates_filter']) ?></th>
+        <th><?= $this->Form->input('group_id', ['options' => $groups, 'label' => false, 'id' => false, 'empty' => __d('wasabi_core', 'Filter by group'), 'templates' => 'Wasabi/Core.form_templates_filter']) ?></th>
         <th></th>
-        <th><?= $this->Form->button(__d('wasabi_core', 'Search'), array('class' => 'button blue', 'type' => 'submit')); ?></th>
+        <th><?= $this->Form->button(__d('wasabi_core', 'Search'), ['class' => 'button blue', 'type' => 'submit']); ?></th>
     </tr>
     <tr>
         <th class="t-1-12 center">ID</th>

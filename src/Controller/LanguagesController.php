@@ -15,6 +15,7 @@ use Cake\Collection\Collection;
 use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\Network\Session;
 use Cake\ORM\ResultSet;
 use Wasabi\Core\Model\Entity\Language;
 
@@ -173,5 +174,22 @@ class LanguagesController extends BackendAppController
         $this->set('_serialize', ['status', 'flashMessage', 'frontendLanguages', 'backendLanguages']);
 
         $this->RequestHandler->renderAs($this, 'json');
+    }
+
+    /**
+     * Change the content language to $id and update the session.
+     *
+     * @param integer $id
+     * @return void
+     */
+    public function change($id = null)
+    {
+        if ($id === null || !$this->Languages->exists(['id' => $id])) {
+            $this->Flash->error($this->invalidRequestMessage);
+            $this->redirect($this->referer());
+            return;
+        }
+        $this->request->session()->write('contentLanguageId', (int) $id);
+        $this->redirect($this->referer());
     }
 }

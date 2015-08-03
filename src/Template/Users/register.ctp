@@ -6,11 +6,11 @@
 <div class="users form">
     <?= $this->Form->create($user) ?>
     <fieldset>
-        <legend><?= __('Add User') ?></legend>
+        <legend><?= __d('wasabi_core', 'Add User') ?></legend>
         <?= $this->Form->input('username') ?>
         <?= $this->Form->input('password') ?>
         <?= $this->Form->input('email') ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')); ?>
+    <?= $this->Form->button(__d('wasabi_core', 'Submit')); ?>
     <?= $this->Form->end() ?>
 </div>

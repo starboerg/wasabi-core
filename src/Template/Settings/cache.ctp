@@ -12,10 +12,10 @@ echo $this->Form->input('enable_caching', [
         'text' => __d('wasabi_core', 'Enable Caching'),
         'info' => __d('wasabi_core', 'Enable or disable View caching for the entire CMS instance.')
     ],
-    'options' => array(
-        '0' => __d('core', 'No'),
-        '1' => __d('core', 'Yes')
-    )
+    'options' => [
+        '0' => __d('wasabi_core', 'No'),
+        '1' => __d('wasabi_core', 'Yes')
+    ]
 ]);
 echo $this->Form->input('cache_duration', [
     'label' => [
@@ -25,7 +25,7 @@ echo $this->Form->input('cache_duration', [
     'options' => $cacheDurations
 ]);
 echo $this->Html->div('form-controls');
-echo $this->Form->button(__d('wasabi_core', 'Save'), array('div' => false, 'class' => 'button'));
+echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
 echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
     'plugin' => 'Wasabi/Core',
     'controller' => 'Settings',

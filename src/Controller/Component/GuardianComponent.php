@@ -321,10 +321,10 @@ class GuardianComponent extends Component
 					continue;
 				}
 				$ctrlName = substr($filename, 0, strlen($filename) - $subLength);
-				$controllers[] = array(
+				$controllers[] = [
 					'name' => $ctrlName,
 					'path' => $Folder->path . DS . $f
-				);
+				];
 			}
 		}
 

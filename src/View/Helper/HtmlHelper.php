@@ -115,13 +115,13 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
                 if (!isset($params['language_id'])) {
                     $params['language_id'] = Configure::read('Wasabi.content_language_id');
                 }
-                $url = array(
+                $url = [
                     'plugin' => 'cms',
                     'controller' => 'cms_pages_frontend',
                     'action' => 'view',
                     $params['page_id'],
                     $params['language_id']
-                );
+                ];
                 $link = $this->link($title, $url, $options);
                 break;
             case 'collection_item':

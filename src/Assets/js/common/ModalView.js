@@ -1,8 +1,10 @@
 define(function(require) {
   var $ = require('jquery');
+  var _ = require('underscore');
   var BaseView = require('common/BaseView');
   var eventify = require('common/util/eventify');
-  var ModalTemplate = require('hbs!common/templates/modal');
+  var modalTemplate = require('hbs!common/templates/modal');
+  var wasabi = require('wasabi');
 
   /**
    * Holds a reference to the body.
@@ -190,7 +192,7 @@ define(function(require) {
 
     /**
      * Configure the template options that are used to
-     * render the ModalTemplate (hbs).
+     * render the modalTemplate (hbs).
      *
      * @returns {Object}
      */
@@ -236,7 +238,7 @@ define(function(require) {
      * Initialize all modal elements.
      */
     initModalElements: function() {
-      this.$modal = $(ModalTemplate(this.createTemplateOptions()));
+      this.$modal = $(modalTemplate(this.createTemplateOptions()));
 
       this.$backdrop = this.$modal.find('.' + this.options.cssClasses.backdrop);
       this.$backdrop.css({
@@ -358,7 +360,7 @@ define(function(require) {
         });
       } else {
         if (this.modalName) {
-          mgu.eventBus.trigger('modal-submitted-' + this.modalName, this, event);
+          wasabi.eventBus.trigger('modal-submitted-' + this.modalName, this, event);
         }
         if (this.options.closeOnSubmit) {
           this.closeModal();
@@ -376,7 +378,9 @@ define(function(require) {
         event.preventDefault();
       }
 
-      if (this.isOpened) return;
+      if (this.isOpened) {
+        return;
+      }
       this.isOpened = true;
 
       this.initModalOptions();
@@ -407,7 +411,7 @@ define(function(require) {
       this.modalName = this.$el.attr('data-modal-name');
       if (this.modalName) {
         this.$modal.attr('data-modal-name', this.modalName);
-        mgu.eventBus.trigger('modal-opened-' + this.modalName, this);
+        wasabi.eventBus.trigger('modal-opened-' + this.modalName, this);
       }
     },
 

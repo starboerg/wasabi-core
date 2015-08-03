@@ -15,7 +15,7 @@ define(function(require) {
    * @type {{navClosedClass: string}}
    */
   var defaults = {
-    navClosedClass: 'nav-closed'
+    forceOpenClass: 'nav-open'
   };
 
   return BaseView.extend({
@@ -25,7 +25,7 @@ define(function(require) {
      *
      * @type {string} CSS selector
      */
-    el: 'body > header .toggle-nav',
+    el: 'body > header .nav-toggle',
 
     /**
      * Registered events of this view.
@@ -36,12 +36,16 @@ define(function(require) {
       'click': 'toggleNav'
     },
 
+    globalEvents: {
+      'window.resize': 'onResize'
+    },
+
     /**
-     * Determines if the navigation bar is collapsed to the small size (true) or not (false).
+     * Determines if the navigation bar is forced open.
      *
      * @type {boolean}
      */
-    isClosed: false,
+    isOpened: false,
 
     /**
      * Options
@@ -57,7 +61,6 @@ define(function(require) {
      */
     initialize: function(options) {
       this.options = $.extend({}, defaults, options);
-      this.isClosed = $body.hasClass(this.options.navClosedClass);
     },
 
     /**
@@ -65,13 +68,20 @@ define(function(require) {
      * Toggles navClosedClass on the body to show/hide the navigation.
      */
     toggleNav: function() {
-      if (!this.closed) {
-        $body.addClass(this.options.navClosedClass);
-        this.closed = true;
+      if (!this.isOpened && $('#asidebg').css('display') === 'none') {
+        $body.addClass(this.options.forceOpenClass);
+        this.isOpened = true;
       } else {
-        $body.removeClass(this.options.navClosedClass);
-        this.closed = false;
+        $body.removeClass(this.options.forceOpenClass);
+        this.isOpened = false;
       }
+    },
+
+    onResize: function() {
+      //if (!this.isClosed && $('#asidebg').css('display') === 'none') {
+      //  $body.addClass(this.options.navClosedClass);
+      //  this.isClosed = true;
+      //}
     }
   });
 });

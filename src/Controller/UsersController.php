@@ -130,7 +130,7 @@ class UsersController extends BackendAppController
                     $message = __d(
                         'wasabi_core',
                         'Please verify your email address. You can request a new verification email {0}.',
-                        '<a href="' . Router::url(array('plugin' => 'Wasabi/Core', 'controller' => 'Users', 'action' => 'requestNewVerificationEmail')) . '">' . __d('wasabi_core', 'here') .'</a>'
+                        '<a href="' . Router::url(['plugin' => 'Wasabi/Core', 'controller' => 'Users', 'action' => 'requestNewVerificationEmail']) . '">' . __d('wasabi_core', 'here') .'</a>'
                     );
                     unset($this->request->data['password']);
                     $this->Flash->warning($message, 'auth', false);

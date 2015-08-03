@@ -11,7 +11,7 @@ use Cake\Core\Configure;
     <?= $this->element('Wasabi/Core.Layout/head') ?>
 </head>
 <body class="<?= $this->get('sectionCssClass', '') ?>">
-<?= $this->element('Wasabi/Core.Layout/header') ?>
+<?= $this->element('Wasabi/Core.header') ?>
 <div id="wrapper">
     <div id="asidebg"></div>
     <aside>

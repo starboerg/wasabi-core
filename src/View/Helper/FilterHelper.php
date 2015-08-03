@@ -30,9 +30,9 @@ class FilterHelper extends Helper
      *
      * @var array
      */
-    public $helpers = array(
+    public $helpers = [
         'Html'
-    );
+    ];
 
     public function sortLink($name, $field, $options = [])
     {
@@ -87,18 +87,18 @@ class FilterHelper extends Helper
             $minPage = 1;
         }
         foreach (range($minPage, $maxPage) as $p) {
-            $link = array(
+            $link = [
                 'page' => (int)$p,
                 'url' => $this->_getPaginatedUrl($p),
                 'active' => ((int)$p === $page)
-            );
+            ];
             $pageLinks[] = $link;
         }
         if ($page < $pages) {
             $nextUrl = $this->_getPaginatedUrl($page + 1);
             $lastUrl = $this->_getPaginatedUrl($pages);
         }
-        return $this->_View->element($element, array(
+        return $this->_View->element($element, [
             'total' => $this->_View->paginationParams['total'],
             'itemType' => $itemType,
             'first' => $firstUrl,
@@ -110,7 +110,7 @@ class FilterHelper extends Helper
             'baseUrl' => Router::url($this->_getFilterUrl(false)),
             'from' => $this->_View->paginationParams['from'],
             'to' => $this->_View->paginationParams['to']
-        ));
+        ]);
     }
 
     /**
@@ -195,11 +195,11 @@ class FilterHelper extends Helper
      */
     protected function _getFilterUrl($withLimit = true)
     {
-        $url = array(
+        $url = [
             'plugin' => $this->request->params['plugin'],
             'controller' => $this->request->params['controller'],
             'action' => $this->request->params['action'],
-        );
+        ];
 
         if (isset($this->request->params['sluggedFilter'])) {
             $url['sluggedFilter'] = $this->request->params['sluggedFilter'];

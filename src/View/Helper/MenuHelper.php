@@ -27,11 +27,11 @@ class MenuHelper extends Helper
      *
      * @var array
      */
-    public $helpers = array(
-        'Guardian' => array(
+    public $helpers = [
+        'Guardian' => [
             'className' => 'Wasabi/Core.Guardian'
-        )
-    );
+        ]
+    ];
 
     /**
      * Render provided $items as <li> elements

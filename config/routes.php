@@ -58,6 +58,7 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
         $routes->connect('/edit/:id', ['action' => 'edit'], ['pass' => ['id'], 'id' => '[0-9]+']);
         $routes->connect('/delete/:id', ['action' => 'delete'], ['pass' => ['id'], 'id' => '[0-9]+']);
         $routes->connect('/sort', ['action' => 'sort']);
+        $routes->connect('/change/:id', ['action' => 'change'], ['pass' => ['id'], 'id' => '[0-9]+']);
     });
 
     $routes->scope('/permissions', ['controller' => 'GroupPermissions'], function (RouteBuilder $routes) {

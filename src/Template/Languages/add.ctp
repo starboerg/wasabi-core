@@ -30,7 +30,7 @@ echo $this->Form->input('lang', ['label' => __d('wasabi_core', 'HTML lang')]);
 echo $this->Form->input('available_at_frontend', ['label' => __d('wasabi_core', 'available at Frontend'), 'type' => 'checkbox', 'formRowLabel' => 'Frontend']);
 echo $this->Form->input('available_at_backend', ['label' => __d('wasabi_core', 'available at Backend'), 'type' => 'checkbox', 'formRowLabel' => 'Backend']);
 echo $this->Html->div('form-controls');
-    echo $this->Form->button(__d('wasabi_core', 'Save'), array('div' => false, 'class' => 'button'));
+    echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
     echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
         'plugin' => 'Wasabi/Core',
         'controller' => 'Languages',

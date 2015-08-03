@@ -45,7 +45,7 @@ class CacheSettingsTable extends SettingsTable
             'scope' => 'Core'
         ]);
 
-        $this->cacheDurations = array(
+        $this->cacheDurations = [
             '1 hour' => __d('wasabi_core', '1 hour'),
             '2 hours' => __d('wasabi_core', '{0} hours', 2),
             '4 hours' => __d('wasabi_core', '{0} hours', 4),
@@ -62,7 +62,7 @@ class CacheSettingsTable extends SettingsTable
             '180 days' => __d('wasabi_core', '{0} days', 180),
             '365 days' => __d('wasabi_core', '{0} days', 365),
             '999 days' => __d('wasabi_core', '{0} days', 999)
-        );
+        ];
 
         parent::initialize($config);
     }

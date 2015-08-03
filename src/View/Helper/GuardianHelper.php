@@ -88,12 +88,12 @@ class GuardianHelper extends HtmlHelper
             return '';
         }
 
-        $linkOptions = array(
+        $linkOptions = [
             'data-modal-header' => $options['confirm-title'],
             'data-modal-body' => '<p>' . $options['confirm-message'] . '</p>',
             'data-method' => 'post',
             'data-toggle' => 'confirm'
-        );
+        ];
         unset($options['confirm-title'], $options['confirm-message']);
 
         if (isset($options['ajax']) && $options['ajax'] === true) {

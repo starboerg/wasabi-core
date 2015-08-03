@@ -13,7 +13,7 @@ $rowCount = $i = 1;
 foreach ($controllers as $controller => $actions):
     $actionCount = 1;
     foreach ($actions as $action => $groups):
-        $classes = array();
+        $classes = [];
         if (($rowCount % 2) == 0) {
             $classes[] = 'even';
         }
@@ -39,7 +39,7 @@ foreach ($controllers as $controller => $actions):
             </td>
             <td class="center valign-middle">
                 <button class="single-submit button small blue" type="submit">
-                    <span><?= __d('core', 'Update') ?></span></button>
+                    <span><?= __d('wasabi_core', 'Update') ?></span></button>
             </td>
         </tr>
         <?php

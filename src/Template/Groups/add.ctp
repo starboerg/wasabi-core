@@ -19,13 +19,13 @@ if (!$isEdit) {
     $nameOpts['class'] = 'get-focus';
 }
 
-echo $this->Form->create($group, array('class' => 'no-top-section'));
+echo $this->Form->create($group, ['class' => 'no-top-section']);
     if ($isEdit) {
-        echo $this->Form->input('id', array('type' => 'hidden'));
+        echo $this->Form->input('id', ['type' => 'hidden']);
     }
     echo $this->Form->input('name', $nameOpts);
     echo $this->Html->div('form-controls');
-        echo $this->Form->button(__d('wasabi_core', 'Save'), array('div' => false, 'class' => 'button'));
+        echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
         echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Groups',
