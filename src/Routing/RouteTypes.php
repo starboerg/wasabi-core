@@ -54,4 +54,18 @@ class RouteTypes {
 
         return false;
     }
+
+    /**
+     * Get all route types for a select.
+     *
+     * @return array
+     */
+    public static function getForSelect()
+    {
+        if (!self::$_initialized) {
+            self::_init();
+        }
+
+        return self::$_routeTypes;
+    }
 }
