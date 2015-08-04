@@ -842,6 +842,16 @@ strong {
 .hidden {
   display: none;
 }
+.visuallyhidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
 #wrapper {
   width: 100%;
   min-height: 100%;
@@ -1632,6 +1642,9 @@ table.list .col-actions {
 .field > table.list th,
 .field > table.list td {
   font-size: 13px;
+}
+.field > table.list th {
+  line-height: 30px;
 }
 .field > table.list td {
   padding: 8px;
