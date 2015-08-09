@@ -6,6 +6,7 @@ define(function(require) {
   var LangSwitchView = require('core/views/LangSwitch');
   var PaginationView = require('core/views/Pagination');
   var ModalView = require('common/ModalView');
+  var TabView = require('common/TabView');
   var WS = require('wasabi');
   require('jquery.livequery');
 
@@ -166,6 +167,14 @@ define(function(require) {
     });
   }
 
+  function _initTabs() {
+    $('.tabs[data-tabify-id]').livequery(function() {
+      WS.views.push(WS.createView(TabView, {
+        el: $(this)
+      }));
+    });
+  }
+
   function _initSections() {
     if (this.$body.hasClass('wasabi-core--languages-index')) {
       WS.createView(require('core/sections/LanguagesIndex'));
@@ -272,6 +281,7 @@ define(function(require) {
       _initializeBackendViews.call(this);
       _toggleEmptySelects.call(this);
       _initModals.call(this);
+      _initTabs.call(this);
       _initSections.call(this);
     }
   };

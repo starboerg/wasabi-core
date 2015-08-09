@@ -274,3 +274,31 @@
 .subtractFrom100Percent(@value) {
   @subtractFrom100Percent: 100% ~"-" @value;
 }
+
+.user-select(@select) {
+  -webkit-user-select: @select;
+  -moz-user-select: @select;
+  -ms-user-select: @select; // IE10+
+  user-select: @select;
+}
+
+.keyframes(@name; @arguments) {
+  @-webkit-keyframes @name { @arguments(); }
+  @-moz-keyframes @name { @arguments(); }
+  @-ms-keyframes @name { @arguments(); }
+  @keyframes @name { @arguments(); }
+}
+
+.animation(@content) {
+  -webkit-animation: @content;
+  -moz-animation: @content;
+  -o-animation: @content;
+  animation: @content;
+}
+
+.animation-delay(@content) {
+  -webkit-animation-delay: @content;
+  -moz-animation-delay: @content;
+  -o-animation-delay: @content;
+  animation-delay: @content;
+}

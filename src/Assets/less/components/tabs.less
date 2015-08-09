@@ -1,0 +1,42 @@
+@import (reference) '../__config';
+
+.tabs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 3px solid @border-light;
+
+  & > li {
+    float: left;
+
+    & > a {
+      display: inline-block;
+      padding: 10px 15px;
+      color: #333;
+      cursor: pointer;
+      outline: none;
+
+      &:hover {
+        background-color: @aside-bg-color;
+      }
+    }
+
+    &.active > a {
+      cursor: default;
+      background-color: @border-light;
+    }
+
+    &[data-tabify-disabled="1"] > a {
+      color: #999;
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    &.has-error > a {
+      color: @state-error-font-color;
+    }
+  }
+}

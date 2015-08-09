@@ -12,6 +12,7 @@ require.config({
     purl: 'vendor/purl/purl',
     spin: 'vendor/spin.js/spin',
     underscore: 'vendor/underscore/underscore',
+    handlebars: 'vendor/handlebars/handlebars',
     'wasabi.core': 'core/main',
     'jquery.color': 'vendor/jquery-color/jquery.color',
     'jquery.eventMagic': 'common/jquery-plugins/jquery.eventMagic',

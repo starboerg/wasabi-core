@@ -27,8 +27,8 @@ class RouteTypes {
     protected static function _init()
     {
         self::$_routeTypes = [
-            self::TYPE_DEFAULT_ROUTE => __d('wasabi_core', 'Default Route'),
-            self::TYPE_REDIRECT_ROUTE => __d('wasabi_core', 'Redirect Route')
+            self::TYPE_DEFAULT_ROUTE => __d('wasabi_core', 'Default'),
+            self::TYPE_REDIRECT_ROUTE => __d('wasabi_core', 'Redirect')
         ];
 
         self::$_initialized = true;

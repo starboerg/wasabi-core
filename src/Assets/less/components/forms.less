@@ -26,7 +26,11 @@ label {
   }
 }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea {
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
   background-attachment: scroll;
   background-clip: border-box;
   background-color: @form-input-bg-color;
@@ -80,6 +84,10 @@ input[type="number"].without-spinner {
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
+}
+
+textarea {
+  max-width: 600px;
 }
 
 span.error-message, div.error-message {
@@ -137,6 +145,10 @@ span.error-message, div.error-message {
       input {
         max-width: 100px;
       }
+    }
+
+    .form-row {
+      display: block;
     }
   }
 

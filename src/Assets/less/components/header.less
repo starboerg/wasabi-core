@@ -2,7 +2,7 @@
 @import (reference) "../__colors";
 @import (reference) "../__mixins";
 
-header {
+#page-header {
   position: fixed;
   top: 0;
   left: 0;
@@ -57,6 +57,68 @@ header {
 
     @media only screen and (max-width: @menuBreakPoint) {
       background-color: transparent;
+    }
+  }
+
+  .lang-switch {
+    float: right;
+    margin-right: 10px;
+
+    li {
+      display: inline-block;
+
+      a {
+        display: inline-block;
+        line-height: @header-height;
+        padding: 0 @computed-height--half;
+        color: @lang-switch-link-color;
+
+        &:hover {
+          background-color: @lang-switch-link-bg-color--hover;
+        }
+      }
+
+      &.active a, &.active a:hover {
+        color: @lang-switch-link-color--active;
+        background-color: @lang-switch-link-bg-color--active;
+      }
+    }
+  }
+
+  .user-menu {
+    float: right;
+
+    & > a {
+      padding: 0 @computed-height--half 0 @font-size;
+      display: inline-block;
+      line-height: @header-height;
+      color: @user-menu-link-color;
+
+      i {
+        display: inline-block;
+        position: relative;
+        margin-left: 5px;
+        width: 12px;
+        font-size: @font-size + 2px;
+        top: 3px;
+      }
+    }
+
+    & > a:hover, & > a:focus, &.open > a {
+      background-color: @user-menu-link-color--hover;
+    }
+
+    .dropdown-menu {
+      background-color: @user-menu-dropdown-bg-color;
+
+      a {
+        display: block;
+        color: @user-menu-dropdown-link-color;
+
+        &:hover {
+          background-color: @user-menu-dropdown-link-color--hover;
+        }
+      }
     }
   }
 }
