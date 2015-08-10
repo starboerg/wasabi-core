@@ -21,6 +21,7 @@ require.config({
     'jquery.nSortable': 'common/jquery-plugins/jquery.nSortable',
     'jquery.spin': 'vendor/spin.js/jquery.spin',
     'jquery.tSortable': 'common/jquery-plugins/jquery.tSortable',
+    'jquery.position': 'common/jquery-plugins/jquery.position',
     'bootstrap.dropdown': 'vendor/bootstrap/js/dropdown'
   },
   hbs: { // optional
@@ -65,6 +66,9 @@ require.config({
       'jquery'
     ],
     'jquery.tSortable': [
+      'jquery'
+    ],
+    'jquery.position': [
       'jquery'
     ]
   }
