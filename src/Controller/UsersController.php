@@ -115,6 +115,7 @@ class UsersController extends BackendAppController
     {
         parent::initialize();
         $this->loadComponent('Wasabi/Core.Filter');
+        $this->loadComponent('RequestHandler');
     }
 
     /**
@@ -297,7 +298,7 @@ class UsersController extends BackendAppController
         if (!$id || !$this->Users->exists(['id' => $id])) {
             throw new NotFoundException();
         }
-        if (!$this->request->isAll(['ajax', 'post']) || !$this->request->is('get')) {
+        if (!$this->request->isAll(['ajax', 'post'])) {
             throw new MethodNotAllowedException();
         }
 
@@ -305,17 +306,15 @@ class UsersController extends BackendAppController
 
         $user = $this->Users->get($id);
         if ($this->Users->verify($user)) {
-
+            $this->set([
+                'status' => 'success',
+                'user' => $user,
+                '_serialize' => $serialize
+            ]);
         } else {
             $this->set('error', $this->dbErrorMessage);
             $serialize[] = 'error';
         }
-
-        $this->set([
-            'status' => 'success',
-            'user' => $user,
-            '_serialize' => $serialize
-        ]);
     }
 
     /**

@@ -43,6 +43,7 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
         $routes->connect('/delete/:id', ['action' => 'delete'], ['pass' => ['id'], 'id' => '[0-9]+']);
         $routes->connect('/activate/:id', ['action' => 'activate'], ['pass' => ['id'], 'id' => '[0-9]+']);
         $routes->connect('/deactivate/:id', ['action' => 'deactivate'], ['pass' => ['id'], 'id' => '[0-9]+']);
+        $routes->connect('/verify/:id', ['action' => 'verify'], ['pass' => ['id'], 'id' => '[0-9]+']);
     });
 
     $routes->scope('/groups', ['controller' => 'Groups'], function (RouteBuilder $routes) {
