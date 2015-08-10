@@ -13,6 +13,7 @@ require.config({
     spin: 'vendor/spin.js/spin',
     underscore: 'vendor/underscore/underscore',
     handlebars: 'vendor/handlebars/handlebars',
+    cocktail: 'vendor/cocktail/Cocktail',
     'wasabi.core': 'core/main',
     'jquery.color': 'vendor/jquery-color/jquery.color',
     'jquery.eventMagic': 'common/jquery-plugins/jquery.eventMagic',
