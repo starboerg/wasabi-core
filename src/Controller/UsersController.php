@@ -302,18 +302,18 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        $serialize = ['status', 'user'];
-
         $user = $this->Users->get($id);
         if ($this->Users->verify($user)) {
             $this->set([
                 'status' => 'success',
                 'user' => $user,
-                '_serialize' => $serialize
+                '_serialize' => ['status', 'user']
             ]);
         } else {
-            $this->set('error', $this->dbErrorMessage);
-            $serialize[] = 'error';
+            $this->set([
+                'error' => $this->dbErrorMessage,
+                '_serialize' => ['error']
+            ]);
         }
     }
 
