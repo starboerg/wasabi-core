@@ -465,6 +465,9 @@ th {
 .icon-remove:before {
   content: "\e60c";
 }
+.icon-close:before {
+  content: "\e611";
+}
 [class*="icon-sortable"] {
   display: inline-block;
   font-size: 16px;
@@ -1521,6 +1524,109 @@ body.nav-closed #page-header .nav-toggle {
   border-top: 1px solid #d5d7d7;
   background-color: #f2f3f4;
   text-align: right;
+}
+.dialog-open {
+  overflow: hidden;
+}
+.dialog-wrapper {
+  background-color: rgba(0, 0, 0, 0.35);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+}
+.dialog-inner {
+  position: absolute;
+  top: 50px;
+  left: 36px;
+  right: 21px;
+  bottom: 50px;
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
+}
+.dialog-header {
+  position: relative;
+}
+.dialog-header h3 {
+  padding: 10px 20px;
+  font-family: 'open_sans_webfont_semibold', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  color: #fff;
+  background-color: #32506b;
+  margin: 0;
+}
+.dialog-header [data-toggle="close"] {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 49px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  color: #fff;
+  border-left: 1px solid #2a4359;
+}
+.dialog-header [data-toggle="close"]:hover,
+.dialog-header [data-toggle="close"]:focus {
+  background-color: #436a8d;
+}
+.dialog-header [data-toggle="close"] i:before {
+  position: relative;
+  top: 1px;
+}
+.dialog-sidebar {
+  position: absolute;
+  width: 320px;
+  top: 50px;
+  bottom: 0;
+  background-color: #f1f2f4;
+  border: 0 solid #d5d7d7;
+}
+.dialog-sidebar-left {
+  left: 0;
+  border-right-width: 1px;
+}
+.dialog-sidebar-right {
+  right: 0;
+  border-left-width: 1px;
+}
+.dialog-content {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  bottom: 76px;
+  left: 0;
+  padding: 20px 20px 0;
+  background-color: #fff;
+  overflow-x: hidden;
+}
+.dialog-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: right;
+  border-left-width: 0;
+  border-right-width: 0;
+  background-color: #fbfbfc;
+}
+.dialog-controls button {
+  margin-right: 0;
+  margin-left: 15px;
+}
+.dialog-has-sidebar-left .dialog-content,
+.dialog-has-sidebar-left .dialog-controls {
+  left: 320px;
+}
+.dialog-has-sidebar-right .dialog-content,
+.dialog-has-sidebar-right .dialog-controls {
+  right: 320px;
 }
 .pagination {
   margin: 15px 0;
