@@ -30,6 +30,7 @@ use Cake\Core\Configure;
         ?>
     </div>
 </div>
+<?= $this->element('Wasabi/Core.JavaScript/templates.hbs') ?>
 <?= $this->element('Wasabi/Core.JavaScript/setup') ?>
 </body>
 </html>

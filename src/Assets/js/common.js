@@ -7,7 +7,6 @@ require.config({
   paths: {
     backbone: 'vendor/backbone/backbone',
     bootstrap: 'vendor/bootstrap/dist/js/bootstrap',
-    hbs: 'vendor/require-handlebars-plugin/hbs',
     jquery: 'vendor/jquery/dist/jquery',
     purl: 'vendor/purl/purl',
     spin: 'vendor/spin.js/spin',

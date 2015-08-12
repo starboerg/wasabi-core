@@ -1,9 +1,9 @@
 define(function(require) {
   var $ = require('jquery');
   var _ = require('underscore');
+  var Handlebars = require('handlebars');
   var BaseView = require('common/BaseView');
   var eventify = require('common/util/eventify');
-  var modalTemplate = require('hbs!common/templates/modal');
   var wasabi = require('wasabi');
 
   /**
@@ -53,6 +53,11 @@ define(function(require) {
   };
 
   return BaseView.extend({
+
+    /**
+     * The template used to render a modal view.
+     */
+    template: '',
 
     /**
      * Holds a reference to the modal backdrop element.
@@ -157,6 +162,7 @@ define(function(require) {
      */
     initialize: function(options) {
       this.options = $.extend({}, defaults, options);
+      this.template = Handlebars.compile($('#wasabi-core-modal').html());
     },
 
     /**
@@ -238,7 +244,7 @@ define(function(require) {
      * Initialize all modal elements.
      */
     initModalElements: function() {
-      this.$modal = $(modalTemplate(this.createTemplateOptions()));
+      this.$modal = $(this.template(this.createTemplateOptions()));
 
       this.$backdrop = this.$modal.find('.' + this.options.cssClasses.backdrop);
       this.$backdrop.css({
