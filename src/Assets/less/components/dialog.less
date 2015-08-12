@@ -1,0 +1,121 @@
+@import (reference) '../__config';
+@import (reference) '../__mixins';
+
+.dialog-open {
+  overflow: hidden;
+}
+
+.dialog-wrapper {
+  background-color: rgba(0, 0, 0, 0.35);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+}
+
+.dialog-inner {
+  position: absolute;
+  top: @header-height + 8px;
+  left: 36px;
+  right: 21px;
+  bottom: @header-height + 8px;
+  .box-shadow(0 0 8px rgba(0, 0, 0, 0.3));
+}
+
+.dialog-header {
+  position: relative;
+
+  h3 {
+    padding: 10px 20px;
+    font-family: @font-os-semibold;
+    font-weight: 400;
+    font-size: 20px;
+    color: #fff;
+    background-color: @modal-header-bg-color;
+    margin: 0;
+  }
+
+  [data-toggle="close"] {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 49px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    border-left: 1px solid darken(@modal-header-bg-color, 5%);
+
+    &:hover, &:focus {
+      background-color: lighten(@modal-header-bg-color, 10%);
+    }
+
+    i:before {
+      position: relative;
+      top: 1px;
+    }
+  }
+}
+
+.dialog-sidebar {
+  position: absolute;
+  width: 320px;
+  top: 50px;
+  bottom: 0;
+  background-color: #f1f2f4;
+  border: 0 solid @border-dark;
+}
+
+.dialog-sidebar-left {
+  left: 0;
+  border-right-width: 1px;
+}
+
+.dialog-sidebar-right {
+  right: 0;
+  border-left-width: 1px;
+}
+
+.dialog-content {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  bottom: 76px;
+  left: 0;
+  padding: 20px 20px 0;
+  background-color: #fff;
+  overflow-x: hidden;
+}
+
+.dialog-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: right;
+  border-left-width: 0;
+  border-right-width: 0;
+  background-color: #fbfbfc;
+
+  button {
+    margin-right: 0;
+    margin-left: 15px;
+  }
+}
+
+.dialog-has-sidebar-left {
+
+  .dialog-content, .dialog-controls {
+    left: 320px;
+  }
+}
+
+.dialog-has-sidebar-right {
+
+  .dialog-content, .dialog-controls {
+    right: 320px;
+  }
+}
