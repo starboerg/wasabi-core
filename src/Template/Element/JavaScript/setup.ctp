@@ -18,8 +18,8 @@ use Cake\Routing\Router;
         'baseUrl' => Router::url('/wasabi_core/js'),
         'urlArgs' => 't=' . time()
     ]) ?>);
-    <?php endif; ?>
     require(['common'], function() {
+    <?php endif; ?>
         require(['wasabi'], function(WS) {
             WS.registerModule('wasabi.core', {
                 baseUrl: '<?= $this->Url->build('/backend', true) ?>',
@@ -31,5 +31,7 @@ use Cake\Routing\Router;
 <?= $this->fetch('requirejs') ?>
             WS.boot();
         });
+    <?php if (Configure::read('debug')): ?>
     });
+    <?php endif; ?>
 </script>
