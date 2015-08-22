@@ -966,7 +966,8 @@ body.nav-closed #content {
   box-shadow: 0 2px 1px rgba(70, 82, 0, 0.4) inset;
   /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
 }
-.button.disabled {
+.button.disabled,
+.button[disabled="disabled"] {
   background-color: #dddddd !important;
   cursor: not-allowed !important;
   -webkit-box-shadow: 0 -2px 0 rgba(196, 196, 196, 0.4) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);

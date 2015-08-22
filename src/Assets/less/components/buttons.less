@@ -24,7 +24,7 @@
     .box-shadow(0 2px 1px fade(darken(@buttonBg, 20%), 40%) inset);
   }
 
-  &.disabled {
+  &.disabled, &[disabled="disabled"] {
     @buttonBg: #ddd;
     background-color: @buttonBg !important;
     cursor: not-allowed !important;
