@@ -1,9 +1,7 @@
 define(function(require) {
   var $ = require('jquery');
   var _ = require('underscore');
-  var Handlebars = require('handlebars');
   var BaseView = require('common/BaseView');
-  var eventify = require('common/util/eventify');
   var wasabi = require('wasabi');
 
   /**
@@ -117,6 +115,10 @@ define(function(require) {
       'click': 'openModal'
     },
 
+    globalEvents: {
+      'window.resize': 'onResize'
+    },
+
     modalName: null,
 
     /**
@@ -162,7 +164,7 @@ define(function(require) {
      */
     initialize: function(options) {
       this.options = $.extend({}, defaults, options);
-      this.template = Handlebars.compile($('#wasabi-core-modal').html());
+      this.template = _.template($('#wasabi-core-modal').html());
     },
 
     /**
@@ -392,26 +394,24 @@ define(function(require) {
       this.initModalOptions();
       this.initModalElements();
 
-      $body
-        .addClass('modal-open')
-        .append(this.$modal);
+      $body.addClass('modal-open');
+      this.$modal.appendTo($body);
 
       this.updatePosition();
       this.$container.hide().css('opacity', 1).fadeIn();
 
-      this.listenTo(eventify($window), 'resize', _.bind(this.onResize, this));
       if (this.$closeButtons.length > 1) {
         for (var i = 0, len = this.$closeButtons.length; i < len; i++) {
-          this.listenTo(eventify($(this.$closeButtons[i])), 'click', _.bind(this.closeModal, this));
+          $(this.$closeButtons[i]).on('click', _.bind(this.closeModal, this));
         }
       } else {
-        this.listenTo(eventify(this.$closeButtons), 'click', _.bind(this.closeModal, this));
+        this.$closeButtons.on('click', _.bind(this.closeModal, this));
       }
       if (this.options.closeOnScrollable) {
-        this.listenTo(eventify(this.$scrollable), 'click', _.bind(this.closeModal, this));
+        this.$scrollable.on('click', _.bind(this.closeModal, this));
       }
       if (this.$submitButtons.length) {
-        this.listenTo(eventify(this.$submitButtons), 'click', _.bind(this.submit, this));
+        this.$submitButtons.on('click', _.bind(this.submit, this));
       }
 
       this.modalName = this.$el.attr('data-modal-name');
@@ -439,19 +439,18 @@ define(function(require) {
         event.preventDefault();
       }
 
-      this.stopListening(eventify($window), 'resize', _.bind(this.onResize, this));
       if (this.$closeButtons.length > 1) {
         for (var i = 0, len = this.$closeButtons.length; i < len; i++) {
-          this.stopListening(eventify($(this.$closeButtons[i])), 'click', _.bind(this.closeModal, this));
+          $(this.$closeButtons[i]).off('click', _.bind(this.closeModal, this));
         }
       } else {
-        this.stopListening(eventify(this.$closeButtons), 'click', _.bind(this.closeModal, this));
+        this.$closeButtons.off('click', _.bind(this.closeModal, this));
       }
       if (this.options.closeOnScrollable) {
-        this.stopListening(eventify(this.$scrollable), 'click', _.bind(this.closeModal, this));
+        this.$scrollable.off('click', _.bind(this.closeModal, this));
       }
       if (this.$submitButtons.length) {
-        this.stopListening(eventify(this.$submitButtons), 'click', _.bind(this.submit, this));
+        this.$submitButtons.off('click', _.bind(this.submit, this));
       }
 
       this.unblockThis();

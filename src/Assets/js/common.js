@@ -6,13 +6,12 @@ require.config({
   },
   paths: {
     backbone: 'vendor/backbone/backbone',
+    marionette: 'vendor/marionette/lib/backbone.marionette',
     bootstrap: 'vendor/bootstrap/dist/js/bootstrap',
     jquery: 'vendor/jquery/dist/jquery',
     purl: 'vendor/purl/purl',
     spin: 'vendor/spin.js/spin',
     underscore: 'vendor/underscore/underscore',
-    handlebars: 'vendor/handlebars/handlebars',
-    cocktail: 'vendor/cocktail/Cocktail',
     'wasabi.core': 'core/main',
     'jquery.color': 'vendor/jquery-color/jquery.color',
     'jquery.eventMagic': 'common/jquery-plugins/jquery.eventMagic',
@@ -40,6 +39,9 @@ require.config({
     backbone: [
       'underscore',
       'jquery'
+    ],
+    marionette: [
+      'backbone'
     ],
     'bootstrap.dropdown': [
       'jquery'

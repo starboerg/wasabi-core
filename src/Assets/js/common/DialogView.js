@@ -2,7 +2,6 @@ define(function(require) {
 
   var $ = require('jquery');
   var _ = require('underscore');
-  var Handlebars = require('handlebars');
   var BaseView = require('common/BaseView');
 
   return BaseView.extend({
@@ -29,12 +28,18 @@ define(function(require) {
     },
 
     initialize: function() {
-      this.template = Handlebars.compile($('#wasabi-core-dialog').html());
+      this.template = _.template($('#wasabi-core-dialog').html());
     },
 
     render: function() {
       if (typeof this.beforeRender === 'function') {
         this.beforeRender();
+      }
+      if (!this.templateData.sidebarLeft) {
+        this.templateData.sidebarLeft = false;
+      }
+      if (!this.templateData.sidebarRight) {
+        this.templateData.sidebarRight = false;
       }
       this.setElement(this.template(this.templateData));
       $('body').addClass('dialog-open').append(this.$el);
