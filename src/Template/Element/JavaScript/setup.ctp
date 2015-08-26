@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \Wasabi\Core\View\AppView $this
+ * @var int $heartBeatFrequency
  */
 
 use Cake\Core\Configure;
@@ -26,7 +27,9 @@ use Cake\Routing\Router;
                 translations: {
                     confirmYes: '<?= __d('wasabi_core', 'Yes') ?>',
                     confirmNo: '<?= __d('wasabi_core', 'No') ?>'
-                }
+                },
+                heartbeat: <?= $heartBeatFrequency ?>,
+                heartbeatEndpoint: '<?= $this->Url->build('/backend/heartbeat') ?>'
             });
 <?= $this->fetch('requirejs') ?>
             WS.boot();

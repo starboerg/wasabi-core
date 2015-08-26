@@ -331,6 +331,18 @@ class UsersController extends BackendAppController
         }
     }
 
+    public function heartBeat()
+    {
+        if (!$this->request->isAll(['ajax', 'post'])) {
+            throw new NotFoundException();
+        }
+        $this->request->session()->renew();
+        $this->set([
+            'status' => 200,
+            '_serialize' => ['status']
+        ]);
+    }
+
     /**
      * This action is called whenever a user tries to access a controller action
      * without the proper access rights.

@@ -187,6 +187,23 @@ define(function(require) {
     }
   }
 
+  function _initHeartBeat() {
+    clearTimeout(this.heartBeatTimeout);
+    this.heartBeatTimeout = setTimeout(_.bind(function() {
+      $.ajax({
+        url: this.options.heartbeatEndpoint,
+        method: 'post',
+        type: 'json'
+      });
+      _initHeartBeat.call(this);
+    }, this), this.options.heartbeat);
+
+
+    this.heartBeatTimeout = setTimeout(function() {
+
+    }, this.options.heartbeat);
+  }
+
   /**
    * Wasabi Core module
    * Initializes:
@@ -253,6 +270,13 @@ define(function(require) {
     models: [],
 
     /**
+     * HearBeat timeout to keep the session alive.
+     *
+     * @type {number}
+     */
+    heartBeatTimeout: 0,
+
+    /**
      * Resize timeout for window.resize events.
      *
      * @type {number}
@@ -283,6 +307,7 @@ define(function(require) {
       _initModals.call(this);
       _initTabs.call(this);
       _initSections.call(this);
+      _initHeartBeat.call(this);
     }
   };
 });

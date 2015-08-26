@@ -117,6 +117,8 @@ class BackendAppController extends AppController
         $this->_allow();
         $this->_setupLanguages();
         $this->_setSectionCssClass();
+
+        $this->set('heartBeatFrequency', floor(((int) ini_get('session.gc_maxlifetime')) / 5) * 1000);
     }
 
     /**

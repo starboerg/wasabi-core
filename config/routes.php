@@ -22,6 +22,7 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'register']);
     $routes->connect('/forbidden', ['controller' => 'Users', 'action' => 'unauthorized']);
+    $routes->connect('/heartbeat', ['controller' => 'Users', 'action' => 'heartbeat']);
 
     $routes->scope('/menus', ['controller' => 'Menus'], function (RouteBuilder $routes) {
         $routes->connect('/', ['action' => 'index']);
