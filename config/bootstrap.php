@@ -16,6 +16,7 @@
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\EventManager;
+use Cake\Filesystem\Folder;
 use Cake\Routing\DispatcherFactory;
 use Wasabi\Core\Event\GuardianListener;
 use Wasabi\Core\Event\LanguagesListener;
@@ -26,6 +27,7 @@ try {
     // Load and apply the Wasabi Core cache config.
     Configure::load('Wasabi/Core.cache', 'default');
     foreach (Configure::consume('Cache') as $key => $config) {
+        new Folder($config['path'], true, 0775);
         Cache::config($key, $config);
     }
 } catch (\Exception $e) {
