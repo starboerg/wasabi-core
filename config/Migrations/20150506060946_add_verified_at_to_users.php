@@ -13,7 +13,7 @@ class AddVerifiedAtToUsers extends AbstractMigration
     public function change()
     {
         $table = $this->table('users');
-        $table->addColumn('verified_at', 'datetime', ['null' => true, 'default' => null]);
+        $table->addColumn('verified_at', 'datetime', ['null' => true, 'default' => null, 'after' => 'verified']);
         $table->update();
     }
 }

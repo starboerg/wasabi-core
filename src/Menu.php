@@ -67,7 +67,8 @@ class Menu
             'alias' => $options['alias'],
             'name' => $options['name'],
             'priority' => $options['priority'],
-            'matchAction' => false
+            'matchAction' => false,
+            'doNotMatchAction' => []
         ];
 
         if (isset($options['icon'])) {
@@ -90,6 +91,14 @@ class Menu
 
         if (isset($options['matchAction']) && $options['matchAction'] === true) {
             $menuItem['matchAction'] = true;
+        }
+
+        if (isset($options['doNotMatchAction'])) {
+            if (is_array($options['doNotMatchAction']) && count($options['doNotMatchAction']) > 0) {
+                $menuItem['doNotMatchAction'] = $options['doNotMatchAction'];
+            } else {
+                $menuItem['doNotMatchAction'][] = $options['doNotMatchAction'];
+            }
         }
 
         if (isset($options['parent'])) {

@@ -14,12 +14,45 @@
  */
 namespace Wasabi\Core;
 
+use Cake\Core\Configure;
+
 class Config
 {
     /**
-     * The global Event priority for all Wasabi events.
+     * The global Event priority for all Wasabi Core EventListners.
      *
      * @var integer
      */
     public static $priority = 1000;
+
+    /**
+     * Get the instance name of this wasabi instance.
+     *
+     * @return string
+     */
+    public static function getInstanceName()
+    {
+        return Configure::read('Settings.Core.instance_name');
+    }
+
+    /**
+     * Get the email address that is used as sender for
+     * all backend emails.
+     *
+     * @return string
+     */
+    public static function getEmailSender()
+    {
+        return Configure::read('Settings.Core.Email.email_sender');
+    }
+
+    public static function getActivationEmailSubject()
+    {
+        return Configure::read('Settings.Core.Email.Activation.subject');
+    }
+
+    public static function getVerifiedByAdminEmailSubject()
+    {
+        return Configure::read('Settings.Core.Email.Verification.subject_admin');
+    }
 }

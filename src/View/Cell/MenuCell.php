@@ -45,6 +45,18 @@ class MenuCell extends Cell
                 $item['url']['plugin'] === $requestParams['plugin'] &&
                 $item['url']['controller'] === $requestParams['controller']
             ) {
+                if (!empty($item['doNotMatchAction'])) {
+                    $skip = false;
+                    foreach ($item['doNotMatchAction'] as $doNotMatchAction) {
+                        if ($doNotMatchAction === $requestParams['action']) {
+                            $skip = true;
+                            break;
+                        }
+                    }
+                    if ($skip) {
+                        break;
+                    }
+                }
                 if ($item['matchAction'] !== true) {
                     $item['active'] = true;
                     $subActiveFound = true;

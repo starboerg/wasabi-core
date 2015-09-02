@@ -12,11 +12,6 @@
  */
 namespace Wasabi\Core\View;
 
-use Cake\Event\Event;
-use Cake\Network\Request;
-use Cake\Network\Response;
-use Cake\Event\EventManager;
-
 /**
  * Class AppView
  *
@@ -27,6 +22,7 @@ use Cake\Event\EventManager;
  * @property \Wasabi\Core\View\Helper\GuardianHelper $Guardian
  * @property \Wasabi\Core\View\Helper\HtmlHelper $Html
  * @property \Wasabi\Core\View\Helper\MenuHelper $Menu
+ * @property \Wasabi\Core\View\Helper\EmailHelper $Email
  * @property array activeFilters
  * @property array filterFields
  * @property array activeSort
@@ -73,6 +69,9 @@ class AppView extends \App\View\AppView
         ]);
         $this->loadHelper('Filter', [
             'className' => 'Wasabi/Core.Filter'
+        ]);
+        $this->loadHelper('Email', [
+            'className' => 'Wasabi/Core.Email'
         ]);
 
         if (!in_array(join('.', [

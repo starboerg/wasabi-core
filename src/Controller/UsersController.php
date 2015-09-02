@@ -12,9 +12,12 @@
  */
 namespace Wasabi\Core\Controller;
 
+use Cake\Core\Configure;
+use Cake\Mailer\MailerAwareTrait;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
+use Cake\Utility\Hash;
 use Wasabi\Core\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Table\UsersTable;
 
@@ -26,6 +29,8 @@ use Wasabi\Core\Model\Table\UsersTable;
  */
 class UsersController extends BackendAppController
 {
+    use MailerAwareTrait;
+
     /**
      * Filter fields definitions
      *
@@ -217,7 +222,13 @@ class UsersController extends BackendAppController
         }
         $this->set([
             'user' => $user,
-            'groups' => $this->Users->Groups->find('list')
+            'groups' => $this->Users->Groups->find('list'),
+            'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function($language) {
+                return [
+                    'value' => $language->id,
+                    'text' => $language->name
+                ];
+            })
         ]);
     }
 
@@ -241,7 +252,9 @@ class UsersController extends BackendAppController
                 'id',
                 'username',
                 'email',
-                'group_id'
+                'group_id',
+                'language_id',
+                'timezone'
             ]
         ]);
         if ($this->request->is('put')) {
@@ -256,7 +269,13 @@ class UsersController extends BackendAppController
         }
         $this->set([
             'user' => $user,
-            'groups' => $this->Users->Groups->find('list')
+            'groups' => $this->Users->Groups->find('list'),
+            'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function($language) {
+                return [
+                    'value' => $language->id,
+                    'text' => $language->name
+                ];
+            })
         ]);
         $this->render('add');
     }
@@ -295,15 +314,17 @@ class UsersController extends BackendAppController
      */
     public function verify($id)
     {
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if (!$this->request->isAll(['ajax', 'post'])) {
             throw new MethodNotAllowedException();
         }
 
+        if (!$id || !$this->Users->exists(['id' => $id])) {
+            throw new NotFoundException();
+        }
+
         $user = $this->Users->get($id);
         if ($this->Users->verify($user)) {
+            $this->getMailer('Wasabi/Core.User')->send('verifiedByAdminEmail', [$user]);
             $this->set([
                 'status' => 'success',
                 'user' => $user,
@@ -318,6 +339,9 @@ class UsersController extends BackendAppController
     }
 
     /**
+     * VerifyByToken action
+     * GET
+     *
      * @param $token
      * @todo /verify/t/345235245389517581
      */
@@ -331,16 +355,76 @@ class UsersController extends BackendAppController
         }
     }
 
+    /**
+     * HeartBeat action
+     * AJAX POST
+     */
     public function heartBeat()
     {
         if (!$this->request->isAll(['ajax', 'post'])) {
-            throw new NotFoundException();
+            throw new MethodNotAllowedException();
         }
         $this->request->session()->renew();
         $this->set([
             'status' => 200,
             '_serialize' => ['status']
         ]);
+    }
+
+    /**
+     * Profile action
+     * GET | PUT
+     */
+    public function profile()
+    {
+        $user = $this->Users->get($this->Auth->user('id'));
+
+        if ($this->request->is('put') && !empty($this->request->data)) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__d('wasabi_core', 'Your profile has been updated.'));
+                $this->redirect(['action' => 'profile']);
+                return;
+            } else {
+                $this->Flash->error($this->formErrorMessage);
+            }
+        }
+
+        $this->set([
+            'user' => $user,
+            'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function($language) {
+                return [
+                    'value' => $language->id,
+                    'text' => $language->name
+                ];
+            })
+        ]);
+    }
+
+    public function activate($id)
+    {
+        if (!$this->request->isAll(['ajax', 'post'])) {
+            throw new MethodNotAllowedException();
+        }
+
+        if (!$id || !$this->Users->exists(['id' => $id])) {
+            throw new NotFoundException();
+        }
+
+        $user = $this->Users->get($id);
+        if ($this->Users->activate($user)) {
+            $this->getMailer('Wasabi/Core.User')->send('activationEmail', [$user]);
+            $this->set([
+                'status' => 'success',
+                'user' => $user,
+                '_serialize' => ['status', 'user']
+            ]);
+        } else {
+            $this->set([
+                'error' => $this->dbErrorMessage,
+                '_serialize' => ['error']
+            ]);
+        }
     }
 
     /**

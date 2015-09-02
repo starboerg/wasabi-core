@@ -5,6 +5,8 @@
  * @var \Cake\Collection\Collection $groups
  */
 
+use Cake\Core\Configure;
+
 if ($this->request->params['action'] === 'add') {
     $this->Html->setTitle(__d('wasabi_core', 'Create a new User'));
 } else {
@@ -36,7 +38,7 @@ echo $this->Form->create($user, ['class' => 'no-top-section']);
     if ($isEdit) {
         echo $this->Form->widget('section', [
             'title' => __d('wasabi_core', 'Change Password'),
-            'description' => __d('wasabi_core', 'To change the user\'s password fill in both password fields. Otherwise leave those fields empty.')
+            'description' => __d('wasabi_core', 'To change the user’s password fill in both password fields. Otherwise leave those fields empty.')
         ]);
     }
     echo $this->Form->input('password', [
@@ -49,6 +51,16 @@ echo $this->Form->create($user, ['class' => 'no-top-section']);
         'type' => 'password',
         'autocomplete' => 'off'
     ]);
+    echo $this->Form->widget('section', [
+        'title' => __d('wasabi_core', 'Language and Time'),
+        'description' => __d('wasabi_core', 'Adjust these settings for the user’s current location.')
+    ]);
+    echo $this->Form->input('language_id', [
+        'label' => __d('wasabi_core', 'Backend Interface Language'),
+        'options' => $languages,
+        'empty' => __d('wasabi_core', 'Please choose...')
+    ]);
+    echo $this->Form->timeZoneSelect('timezone');
     echo $this->Html->div('form-controls');
         echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
         echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), $this->Filter->getBacklink([

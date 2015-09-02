@@ -41,6 +41,22 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
             'error' => 'error'
         ]
     ]);
+    echo $this->Form->widget('section', [
+        'title' => __d('wasabi_core', 'Email'),
+        'description' => __d('wasabi_core', 'Configure how backend emails are sent to users.')
+    ]);
+    echo $this->Form->input('Email__email_sender', [
+        'label' => __d('wasabi_core', 'Email Sender'),
+        'info' => __d('wasabi_core', 'The email address used as sender for all backend emails.')
+    ]);
+    echo $this->Form->input('Email__Activation__subject', [
+        'label' => __d('wasabi_core', 'Activation Email Subject'),
+        'info' => __d('wasabi_core', 'The subject used for activation emails.')
+    ]);
+    echo $this->Form->input('Email__Verification__subject_admin', [
+        'label' => __d('wasabi_core', '[Admin] Verification Email Subject'),
+        'info' => __d('wasabi_core', 'The subject used for verification emails, whenever a user’s email address is verified manually by an admin.')
+    ]);
     echo $this->Html->div('form-controls');
         echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
         echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [

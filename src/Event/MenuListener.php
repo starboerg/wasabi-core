@@ -102,7 +102,8 @@ class MenuListener implements EventListenerInterface
                     'plugin' => 'Wasabi/Core',
                     'controller' => 'Users',
                     'action' => 'index'
-                ]
+                ],
+                'doNotMatchAction' => 'profile'
             ])
             ->addMenuItem([
                 'alias' => 'groups',

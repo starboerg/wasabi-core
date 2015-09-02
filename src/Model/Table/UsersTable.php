@@ -13,10 +13,13 @@
 namespace Wasabi\Core\Model\Table;
 
 use ArrayObject;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
+use DateTimeZone;
 use Wasabi\Core\Model\Entity\User;
 
 /**
@@ -79,6 +82,25 @@ class UsersTable extends Table
                 'rule' => function ($passwordConfirmation, $provider) {
                     if ($passwordConfirmation !== $provider['data']['password']) {
                         return __d('wasabi_core', 'The Password Confirmation does not match the Password field.');
+                    }
+                    return true;
+                }
+            ])
+            ->add('language_id', 'isValid', [
+                'rule' => function($languageId) {
+                    $languageIds = Hash::map(Configure::read('languages.backend'), '{n}', function($language) {
+                        return $language->id;
+                    });
+                    if (!in_array($languageId, $languageIds)) {
+                        return __d('wasabi_core', 'Invalid language selected.');
+                    }
+                    return true;
+                }
+            ])
+            ->add('timezone', 'isValid', [
+                'rule' => function($timezone) {
+                    if (!in_array($timezone, DateTimeZone::listIdentifiers())) {
+                        return __d('wasabi_core', 'Invalid timezone selected.');
                     }
                     return true;
                 }
@@ -149,11 +171,33 @@ class UsersTable extends Table
      * @param User $user
      * @return bool|\Cake\Datasource\EntityInterface|mixed
      */
-    public function verify(User $user)
+    public function verify(User $user, $byAdmin = false)
     {
         $user->verified_at = date('Y-m-d H:i:s');
         $user->verified = true;
 
-        return $this->save($user);
+        if (($user = $this->save($user))) {
+            $this->_eventManager->dispatch(new Event('Wasabi.User.verified' . (($byAdmin) ? 'ByAdmin' : ''), $user));
+        }
+
+        return $user;
+    }
+
+    /**
+     * Activate the given $user.
+     *
+     * @param User $user
+     * @return bool|\Cake\Datasource\EntityInterface|mixed
+     */
+    public function activate(User $user)
+    {
+//        $user->activated_at = date('Y-m-d H:i:s');
+//        $user->active = true;
+
+        if (($user = $this->save($user))) {
+            $this->_eventManager->dispatch(new Event('Wasabi.User.activated', $user));
+        }
+
+        return $user;
     }
 }
