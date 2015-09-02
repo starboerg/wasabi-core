@@ -52,13 +52,16 @@ class GroupPermissionsTable extends Table
 
         $permissions = Cache::remember($groupId, function () use ($groupId) {
             return $this
-                ->find('all')
-                ->select(['path'])
+                ->find('list', [
+                    'keyField' => 'id',
+                    'valueField' => 'path'
+                ])
                 ->where([
                     'group_id' => $groupId,
                     'allowed' => true
                 ])
-                ->hydrate(false);
+                ->hydrate(false)
+                ->toArray();
         }, 'wasabi/core/group_permissions');
 
         return $permissions;
