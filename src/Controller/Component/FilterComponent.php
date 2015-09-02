@@ -398,13 +398,14 @@ class FilterComponent extends Component
             $this->request->session()->delete($path);
         }
 
-        $view = $this->controller->getView();
-        $view->activeFilters = $this->activeFilters;
-        $view->filterFields = $this->filterFields;
-        $view->activeSort = $this->activeSort;
-        $view->sortFields = $this->sortFields;
-        $view->paginationParams = $this->paginationParams;
-        $view->defaultSort = $this->defaultSort;
+        $this->controller->set('filter', [
+            'activeFilters' => $this->activeFilters,
+            'filterFields' => $this->filterFields,
+            'activeSort' => $this->activeSort,
+            'sortFields' => $this->sortFields,
+            'paginationParams' => $this->paginationParams,
+            'defaultSort' => $this->defaultSort
+        ]);
 
         return true;
     }

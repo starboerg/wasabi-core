@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var Wasabi\Core\View\AppView $this
  *
  * // Set via FilterHelper
  * @var integer $total Total number of available pages
@@ -81,9 +81,9 @@
 <?= $this->Form->input('l', [
     'id' => false,
     'label' => false,
-    'options' => $this->paginationParams['limits'],
+    'options' => $this->Filter->paginationParams['limits'],
     'class' => 'limit',
-    'data-page' => $this->paginationParams['page'],
+    'data-page' => $this->Filter->paginationParams['page'],
     'data-url' => $baseUrl,
     'templates' => 'Wasabi/Core.form_templates_filter'
 ]) ?>
