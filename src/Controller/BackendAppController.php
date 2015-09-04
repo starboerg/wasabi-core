@@ -166,8 +166,8 @@ class BackendAppController extends AppController
             $langs = $Languages->find('allFrontendBackend')->all();
 
             return [
-                'frontend' => $Languages->filterFrontend($langs)->toArray(),
-                'backend' => $Languages->filterBackend($langs)->toArray()
+                'frontend' => array_values($Languages->filterFrontend($langs)->toArray()),
+                'backend' => array_values($Languages->filterBackend($langs)->toArray())
             ];
         }, 'wasabi/core/longterm');
         Configure::write('languages', $languages);
@@ -197,7 +197,7 @@ class BackendAppController extends AppController
             }
         }
         Configure::write('backendLanguage', $backendLanguage);
-        I18n::locale(/*$backendLanguage->locale*/'de');
+        I18n::locale($backendLanguage->iso2);
     }
 
     protected function _setSectionCssClass() {

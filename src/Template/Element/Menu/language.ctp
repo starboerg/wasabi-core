@@ -13,7 +13,7 @@ use \Cake\Core\Configure;
 			/** @var \Wasabi\Core\Model\Entity\Language $lang */
 			foreach ($frontendLanguages as $lang) {
 				$class = '';
-				if ($lang->id == Configure::read('contentLanguage')->id) {
+				if ($lang->id === Configure::read('contentLanguage')->id) {
 					$class = ' class="active"';
 				}
                 echo '<li' . $class . ' data-language-id="' . $lang->id . '">'
