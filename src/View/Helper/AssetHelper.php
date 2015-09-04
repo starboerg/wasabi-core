@@ -44,8 +44,9 @@ class AssetHelper extends Helper
     {
         $absPath = $this->_getBasePath($plugin) . $type . DS . $path;
         $time = $appendTime ? $this->_getModifiedTime($absPath . '.' . $type) : '';
+        $path = ($plugin !== false) ? $plugin . '.' . $path : $path;
 
-        return $this->Url->assetUrl($plugin . '.' . $path . '.' . $type, ['pathPrefix' => $type . '/']) . $time;
+        return $this->Url->assetUrl($path . '.' . $type, ['pathPrefix' => $type . '/']) . $time;
     }
 
     protected function _getBasePath($plugin = false)
