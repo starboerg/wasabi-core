@@ -11,6 +11,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\View;
+use Cake\View\View;
 
 /**
  * Class AppView
@@ -30,7 +31,7 @@ namespace Wasabi\Core\View;
  * @property array paginationParams
  * @property array defaultSort
  */
-class AppView extends \App\View\AppView
+class AppView extends View
 {
     /**
      * All plugin controller actions that use CakePHP's default form templates.
