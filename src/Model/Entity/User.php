@@ -14,7 +14,26 @@ namespace Wasabi\Core\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
+use DateTime;
 
+/**
+ * Class User
+ * @package Wasabi\Core\Model\Entity
+ *
+ * @property int $id
+ * @property int $group_id
+ * @property string $username
+ * @property string $password
+ * @property string $email
+ * @property bool $verified
+ * @property bool $active
+ * @property DateTime $verified_at
+ * @property DateTime $activated_at
+ * @property DateTime $created
+ * @property DateTime $modified
+ *
+ * @property Media[] $media
+ */
 class User extends Entity
 {
     /**
