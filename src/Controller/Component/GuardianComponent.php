@@ -19,7 +19,7 @@ use Cake\Controller\Component;
 use Cake\Core\Exception\Exception;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
-use Cake\Event\EventManagerTrait;
+use Cake\Event\EventDispatcherTrait;
 use Cake\Filesystem\Folder;
 use Cake\Network\Session;
 use Cake\ORM\TableRegistry;
@@ -34,7 +34,7 @@ use Wasabi\Core\Model\Table\GroupPermissionsTable;
  */
 class GuardianComponent extends Component
 {
-    use EventManagerTrait;
+    use EventDispatcherTrait;
 
     /**
      * Other components used by this component.
