@@ -12,7 +12,10 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use Cake\Core\Configure;
+use Cake\ORM\Entity;
 use Cake\ORM\Table;
+use DateTime;
 
 /**
  * Class TokensTable
@@ -47,5 +50,70 @@ class TokensTable extends Table
         ]);
 
         $this->addBehavior('Timestamp');
+    }
+
+
+    /**
+     * Check if a token already exists.
+     *
+     * @param $token
+     * @return Entity The Token Entity or an empty Entity if none is found
+     */
+    public function tokenExists($token)
+    {
+        return $this->find()
+            ->where([
+                $this->alias() . '.token' => $token
+            ])
+            ->first();
+    }
+
+    /**
+     * Generate a new unique token for an existing user.
+     *
+     * @param Entity $user
+     * @param string $tokenType The type of token to be generated. Always make sure to supply this param as a constant
+     *                                                             e.g. Token::TYPE_EMAIL_VERIFICATION
+     * @return string A 32 character long randomized token
+     */
+    public function generateToken(Entity $user, $tokenType)
+    {
+        if (!isset($this->timeToLive[$tokenType])) {
+            user_error('Please specify a timeToLive for the tokenType "' . $tokenType . '" at Token::$timeToLive.', E_USER_ERROR);
+        }
+
+        do {
+            $token = md5(microtime(true) . Configure::read('Security.salt') . $user->get('id') . $user->get('email'));
+        } while ((boolean)$this->tokenExists($token));
+
+        $this->save(
+            new Entity([
+                'user_id' => $user->get('id'),
+                'token' => $token,
+                'token_type' => $tokenType,
+                'expires' => new DateTime($this->timeToLive[$tokenType])
+            ])
+        );
+
+        return $token;
+    }
+
+    /**
+     * Check if the supplied token is valid and exists in the database.
+     *
+     * @param string $token
+     * @return array|Entity The Token Entity if it is valid and exists, an empty array otherwise.
+     */
+    public function isValid($token)
+    {
+        if (strlen($token) !== 32) {
+            return [];
+        }
+        return $this->tokenExists($token);
+    }
+
+    public function expired($token)
+    {
+
     }
 }

@@ -16,6 +16,7 @@ use ArrayObject;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
@@ -38,6 +39,10 @@ class UsersTable extends Table
     {
         $this->belongsTo('Groups', [
             'className' => 'Wasabi/Core.Groups'
+        ]);
+
+        $this->hasMany('Tokens', [
+            'className' => 'Wasabi/Core.Tokens'
         ]);
 
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
@@ -105,6 +110,18 @@ class UsersTable extends Table
                     return true;
                 }
             ]);
+    }
+
+    /**
+     * Pre persistence rules.
+     *
+     * @param RulesChecker $rules
+     * @return RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['email'], __d('wasabi_core', 'This email is already used by another user.')));
+        return $rules;
     }
 
     /**
