@@ -158,6 +158,10 @@ class GuardianComponent extends Component
      */
     public function hasAccess($url)
     {
+        if ($this->isGuestAction($url)) {
+            return true;
+        }
+
         $path = $this->getPathFromUrl($url);
 
         $groupId = $this->Auth->user('group_id');
