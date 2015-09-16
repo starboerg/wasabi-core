@@ -13,9 +13,11 @@
 namespace Wasabi\Core\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\I18n\Time;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Entity;
 use Cake\ORM\Table;
+use DateTime;
+use Wasabi\Core\Model\Entity\Token;
 
 /**
  * Class TokensTable
@@ -57,7 +59,7 @@ class TokensTable extends Table
      * Check if a token already exists.
      *
      * @param $token
-     * @return Entity The Token Entity or an empty Entity if none is found
+     * @return Token The Token Entity or an empty Entity if none is found
      */
     public function tokenExists($token)
     {
@@ -107,19 +109,20 @@ class TokensTable extends Table
     public function isValid($token)
     {
         if (strlen($token) !== 32) {
-            return [];
+            return false;
         }
         return $this->tokenExists($token);
     }
 
     /**
-     * Check if a token expired.
+     * Mark a token as "used".
      *
-     * @param $token
-     * @return bool True if the token has expired, false otherwise.
+     * @property Token $token
+     * @return EntityInterface
      */
-    public function expired($token)
+    public function useToken($token)
     {
-        return (new Time($token))->isPast();
+        $token->used = true;
+        return $this->save($token);
     }
 }
