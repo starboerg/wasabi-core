@@ -186,35 +186,22 @@ class UsersTable extends Table
      * Verify the given $user.
      *
      * @param User $user
-     * @return bool|\Cake\Datasource\EntityInterface|mixed
+     * @param bool $byAdmin
+     * @return bool|\Cake\Datasource\EntityInterface
      */
     public function verify(User $user, $byAdmin = false)
     {
-        $user->verified_at = date('Y-m-d H:i:s');
-        $user->verified = true;
-
-        if (($user = $this->save($user))) {
-            $this->_eventManager->dispatch(new Event('Wasabi.User.verified' . (($byAdmin) ? 'ByAdmin' : ''), $user));
-        }
-
-        return $user;
+        return $this->save($user->verify($byAdmin));
     }
 
     /**
      * Activate the given $user.
      *
      * @param User $user
-     * @return bool|\Cake\Datasource\EntityInterface|mixed
+     * @return bool|\Cake\Datasource\EntityInterface
      */
     public function activate(User $user)
     {
-//        $user->activated_at = date('Y-m-d H:i:s');
-//        $user->active = true;
-
-        if (($user = $this->save($user))) {
-            $this->_eventManager->dispatch(new Event('Wasabi.User.activated', $user));
-        }
-
-        return $user;
+        return $this->save($user->activate());
     }
 }

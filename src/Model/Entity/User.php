@@ -13,6 +13,8 @@
 namespace Wasabi\Core\Model\Entity;
 
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\Event\Event;
+use Cake\Event\EventManager;
 use Cake\ORM\Entity;
 use DateTime;
 
@@ -54,5 +56,36 @@ class User extends Entity
     protected function _setPassword($password)
     {
         return (new DefaultPasswordHasher)->hash($password);
+    }
+
+    /**
+     * Verify user
+     *
+     * @param bool $byAdmin
+     * @return User $this
+     */
+    public function verify($byAdmin = false)
+    {
+        $this->verified_at = date('Y-m-d H:i:s');
+        $this->verified = true;
+
+        EventManager::instance()->dispatch(new Event('Wasabi.User.verified' . (($byAdmin) ? 'ByAdmin' : ''), $this));
+
+        return $this;
+    }
+
+    /**
+     * Activate user
+     *
+     * @return User $this
+     */
+    public function activate()
+    {
+        $this->activated_at = date('Y-m-d H:i:s');
+        $this->active = true;
+
+        EventManager::instance()->dispatch(new Event('Wasabi.User.activated', $this));
+
+        return $this;
     }
 }
