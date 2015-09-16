@@ -13,9 +13,9 @@
 namespace Wasabi\Core\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\I18n\Time;
 use Cake\ORM\Entity;
 use Cake\ORM\Table;
-use DateTime;
 
 /**
  * Class TokensTable
@@ -112,8 +112,14 @@ class TokensTable extends Table
         return $this->tokenExists($token);
     }
 
+    /**
+     * Check if a token expired.
+     *
+     * @param $token
+     * @return bool True if the token has expired, false otherwise.
+     */
     public function expired($token)
     {
-
+        return (new Time($token))->isPast();
     }
 }
