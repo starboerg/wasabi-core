@@ -24,6 +24,7 @@ use DateTime;
  *
  * @property int $id
  * @property int $group_id
+ * @property int $language_id
  * @property string $username
  * @property string $password
  * @property string $email
