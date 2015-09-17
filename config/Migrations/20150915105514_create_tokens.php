@@ -1,5 +1,5 @@
 <?php
-use Migrations\AbstractMigration;
+use Phinx\Migration\AbstractMigration;
 use Phinx\Db\Table\Column;
 
 class CreateTokens extends AbstractMigration
