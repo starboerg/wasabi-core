@@ -15,13 +15,15 @@ namespace Wasabi\Core\Model\Table;
 use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\ORM\Table;
 use Wasabi\Core\Model\Entity\Setting;
 
 /**
  * Class SettingsTable
  *
- * @method getAllKeyValues() KeyValueBehavior::getAllKeyValues()
+ * @method Entity getAllKeyValues() KeyValueBehavior::getAllKeyValues()
+ * @method bool|mixed saveKeyValues(Entity $settings, array $keys) KeyValueBehavior::saveKeyValues()
  */
 class SettingsTable extends Table
 {
