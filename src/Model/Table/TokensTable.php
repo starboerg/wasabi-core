@@ -15,6 +15,7 @@ namespace Wasabi\Core\Model\Table;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Entity;
+use Cake\ORM\Query;
 use Cake\ORM\Table;
 use DateTime;
 use Wasabi\Core\Model\Entity\Token;
@@ -59,15 +60,19 @@ class TokensTable extends Table
      * Check if a token already exists.
      *
      * @param $token
-     * @return Token The Token Entity or an empty Entity if none is found
+     * @param bool $returnQuery
+     * @return Query The Token Query or an empty Entity if none is found
      */
-    public function tokenExists($token)
+    public function tokenExists($token, $returnQuery = false)
     {
-        return $this->find()
+        $query = $this->find()
             ->where([
                 $this->alias() . '.token' => $token
-            ])
-            ->first();
+            ]);
+        if ($returnQuery) {
+            return $query;
+        }
+        return $query->first();
     }
 
     /**
@@ -104,14 +109,28 @@ class TokensTable extends Table
      * Check if the supplied token is valid and exists in the database.
      *
      * @param string $token
-     * @return array|Entity The Token Entity if it is valid and exists, an empty array otherwise.
+     * @param bool $returnQuery
+     * @return bool|Query The Token Query if it is valid and exists, an empty array otherwise.
      */
-    public function isValid($token)
+    public function isValid($token, $returnQuery = false)
     {
         if (strlen($token) !== 32) {
             return false;
         }
-        return $this->tokenExists($token);
+        return $this->tokenExists($token, $returnQuery);
+    }
+
+    /**
+     * Find a token entity by the given token string. (including User entity)
+     *
+     * @param string $token
+     * @return Token|mixed
+     */
+    public function findByToken($token)
+    {
+        /** @var Query $query */
+        $query = $this->isValid($token, true)->contain(['Users']);
+        return $query->first();
     }
 
     /**
@@ -124,5 +143,26 @@ class TokensTable extends Table
     {
         $token->used = true;
         return $this->save($token);
+    }
+
+    /**
+     * Marks every token of type ($tokenType) for a specific user ($userId)
+     * as used (used => true).
+     *
+     * @param $userId
+     * @param $tokenType
+     * @return int Number of updated rows.
+     */
+    public function invalidateExistingTokens($userId, $tokenType)
+    {
+        return $this->updateAll(
+            [
+                'used' => true
+            ],
+            [
+                'user_id' => $userId,
+                'token_type' => $tokenType
+            ]
+        );
     }
 }
