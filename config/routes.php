@@ -25,6 +25,11 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
     $routes->connect('/heartbeat', ['controller' => 'Users', 'action' => 'heartbeat']);
     $routes->connect('/profile', ['controller' => 'Users', 'action' => 'profile']);
 
+    $routes->scope('/password', ['controller' => 'Users'], function(RouteBuilder $route) {
+        $route->connect('/lost', ['action' => 'lostPassword']);
+        $route->connect('/reset/:token', ['action' => 'resetPassword'], ['token' => '[a-zA-Z0-9\-]+', 'pass' => ['token']]);
+    });
+
     $routes->scope('/menus', ['controller' => 'Menus'], function (RouteBuilder $routes) {
         $routes->connect('/', ['action' => 'index']);
         $routes->connect('/add', ['action' => 'add']);
