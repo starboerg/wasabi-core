@@ -19,12 +19,16 @@ use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Wasabi\Core\Controller\Component\FilterComponent;
+use Wasabi\Core\Model\Entity\Token;
+use Wasabi\Core\Model\Entity\User;
+use Wasabi\Core\Model\Table\TokensTable;
 use Wasabi\Core\Model\Table\UsersTable;
 
 /**
  * Class UsersController
  *
  * @property UsersTable $Users
+ * @property TokensTable $Tokens
  * @property FilterComponent Filter
  */
 class UsersController extends BackendAppController
@@ -136,7 +140,7 @@ class UsersController extends BackendAppController
                     $message = __d(
                         'wasabi_core',
                         'Please verify your email address. You can request a new verification email {0}.',
-                        '<a href="' . Router::url(['plugin' => 'Wasabi/Core', 'controller' => 'Users', 'action' => 'requestNewVerificationEmail']) . '">' . __d('wasabi_core', 'here') .'</a>'
+                        '<a href="' . Router::url(['plugin' => 'Wasabi/Core', 'controller' => 'Users', 'action' => 'requestNewVerificationEmail']) . '">' . __d('wasabi_core', 'here') . '</a>'
                     );
                     unset($this->request->data['password']);
                     $this->Flash->warning($message, 'auth', false);
@@ -223,7 +227,7 @@ class UsersController extends BackendAppController
         $this->set([
             'user' => $user,
             'groups' => $this->Users->Groups->find('list'),
-            'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function($language) {
+            'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function ($language) {
                 return [
                     'value' => $language->id,
                     'text' => $language->name
@@ -270,7 +274,7 @@ class UsersController extends BackendAppController
         $this->set([
             'user' => $user,
             'groups' => $this->Users->Groups->find('list'),
-            'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function($language) {
+            'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function ($language) {
                 return [
                     'value' => $language->id,
                     'text' => $language->name
@@ -392,7 +396,7 @@ class UsersController extends BackendAppController
 
         $this->set([
             'user' => $user,
-            'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function($language) {
+            'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function ($language) {
                 return [
                     'value' => $language->id,
                     'text' => $language->name
@@ -433,5 +437,74 @@ class UsersController extends BackendAppController
      */
     public function unauthorized()
     {
+    }
+
+    /**
+     * lostPassword action
+     * GET | POST
+     */
+    public function lostPassword()
+    {
+        if ($this->request->is('post') && !empty($this->request->data)) {
+            /** @var User $user */
+            $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
+            if (!$user->errors()) {
+                if (($user = $this->Users->existsWithEmail($user->email))) {
+                    $this->loadModel('Wasabi/Core.Tokens');
+
+                    $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_LOST_PASSWORD);
+                    $token = $this->Tokens->generateToken($user, TokensTable::TYPE_LOST_PASSWORD);
+                    $this->getMailer('Wasabi/Core.User')->send('lostPasswordEmail', [$user, $token]);
+                }
+                $this->Flash->success(__d('wasabi_core', 'We have sent you an email to reset your password.'));
+                $this->redirect('/');
+                return;
+            }
+        } else {
+            $user = $this->Users->newEntity(null, ['validate' => 'emailOnly']);
+        }
+        $this->set('user', $user);
+        $this->render(null, 'support');
+    }
+
+    /**
+     * resetPassword action
+     * GET | POST
+     *
+     * @param $tokenString
+     */
+    public function resetPassword($tokenString)
+    {
+        $this->loadModel('Wasabi/Core.Tokens');
+        /** @var Token $token */
+        if (!$tokenString || !($token = $this->Tokens->findByToken($tokenString)) ||
+            $token->hasExpired() || $token->used
+        ) {
+            $this->redirect('/');
+            return;
+        }
+
+        /** @var User $user */
+        $user = $this->Users->get($token->user_id, [
+            'fields' => ['id']
+        ]);
+
+        if ($this->request->is('put') && !empty($this->request->data)) {
+            $user = $this->Users->patchEntity($user, $this->request->data, ['validate' => 'passwordOnly']);
+            $this->Users->connection()->begin();
+            if ($this->Users->save($user)) {
+                $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_LOST_PASSWORD);
+                $this->Users->connection()->commit();
+
+                $this->Flash->success(__d('wasabi_core', 'Your password has been changed successfully.'));
+                $this->redirect(['action' => 'login']);
+                return;
+            } else {
+                $this->Users->connection()->rollback();
+                $this->Flash->error(__d('wasabi_core', $this->formErrorMessage));
+            }
+        }
+        $this->set('user', $user);
+        $this->render(null, 'support');
     }
 }
