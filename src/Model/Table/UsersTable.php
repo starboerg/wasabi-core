@@ -70,7 +70,7 @@ class UsersTable extends Table
             ->notEmpty('password', __d('wasabi_core', 'Please enter a password.'), 'create')
             ->add('password', [
                 'length' => [
-                    'rule'=> ['minLength', 6],
+                    'rule' => ['minLength', 6],
                     'message' => __d('wasabi_core', 'Ensure your password consists of at least 6 characters.')
                 ]
             ])
@@ -92,8 +92,8 @@ class UsersTable extends Table
                 }
             ])
             ->add('language_id', 'isValid', [
-                'rule' => function($languageId) {
-                    $languageIds = Hash::map(Configure::read('languages.backend'), '{n}', function($language) {
+                'rule' => function ($languageId) {
+                    $languageIds = Hash::map(Configure::read('languages.backend'), '{n}', function ($language) {
                         return $language->id;
                     });
                     if (!in_array($languageId, $languageIds)) {
@@ -103,13 +103,44 @@ class UsersTable extends Table
                 }
             ])
             ->add('timezone', 'isValid', [
-                'rule' => function($timezone) {
+                'rule' => function ($timezone) {
                     if (!in_array($timezone, DateTimeZone::listIdentifiers())) {
                         return __d('wasabi_core', 'Invalid timezone selected.');
                     }
                     return true;
                 }
             ]);
+    }
+
+    /**
+     * Only validate email.
+     *
+     * @param Validator $validator
+     * @return Validator
+     */
+    public function validationEmailOnly(Validator $validator)
+    {
+        $validator = $this->validationDefault($validator);
+
+        $emailValidator = new Validator();
+        $emailValidator->field('email', $validator->field('email'));
+        return $emailValidator;
+    }
+
+    /**
+     * Only validate password.
+     *
+     * @param Validator $validator
+     * @return Validator
+     */
+    public function validationPasswordOnly(Validator $validator)
+    {
+        $validator = $this->validationDefault($validator);
+
+        $passwordValidator = new Validator();
+        $passwordValidator->field('password', $validator->field('password'));
+        $passwordValidator->field('password_confirmation', $validator->field('password_confirmation'));
+        return $passwordValidator;
     }
 
     /**
@@ -176,7 +207,7 @@ class UsersTable extends Table
                 'active'
             ])
             ->contain([
-                'Groups' => function(Query $q) {
+                'Groups' => function (Query $q) {
                     return $q->select(['name']);
                 }
             ]);
@@ -203,5 +234,20 @@ class UsersTable extends Table
     public function activate(User $user)
     {
         return $this->save($user->activate());
+    }
+
+    /**
+     * Check if user with email exists and return the result
+     *
+     * @param $email
+     * @return User The User Entity or an empty Entity if none is found
+     */
+    public function existsWithEmail($email)
+    {
+        return $this->find()
+            ->where([
+                $this->alias() . '.email' => $email
+            ])
+            ->first();
     }
 }

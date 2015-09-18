@@ -52,6 +52,28 @@ class UserMailer extends Mailer
     }
 
     /**
+     * Send a lost password email, when a user has requested a new one.
+     *
+     * @param User $user
+     * @param $token
+     */
+    public function lostPasswordEmail(User $user, $token)
+    {
+        $this->_prepareEmail($user, __d('wasabi_core', 'Password Reset'));
+        $this->_email->template('Wasabi/Core.User/lost-password');
+        $this->_email->viewVars([
+            'username' => $user->username,
+            'resetPasswordLink' => [
+                'plugin' => 'Wasabi/Core',
+                'controller' => 'Users',
+                'action' => 'resetPassword',
+                'token' => $token
+            ],
+            'instanceName' => Config::getInstanceName()
+        ]);
+    }
+
+    /**
      * Prepare the UserMailer Email instance.
      *
      * @param User $user
