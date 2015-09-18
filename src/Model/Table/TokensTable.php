@@ -19,6 +19,7 @@ use Cake\ORM\Query;
 use Cake\ORM\Table;
 use DateTime;
 use Wasabi\Core\Model\Entity\Token;
+use Wasabi\Core\Model\Entity\User;
 
 /**
  * Class TokensTable
@@ -78,12 +79,12 @@ class TokensTable extends Table
     /**
      * Generate a new unique token for an existing user.
      *
-     * @param Entity $user
+     * @param User $user
      * @param string $tokenType The type of token to be generated. Always make sure to supply this param as a constant
      *                                                             e.g. Token::TYPE_EMAIL_VERIFICATION
      * @return string A 32 character long randomized token
      */
-    public function generateToken(Entity $user, $tokenType)
+    public function generateToken(User $user, $tokenType)
     {
         if (!isset($this->timeToLive[$tokenType])) {
             user_error('Please specify a timeToLive for the tokenType "' . $tokenType . '" at Token::$timeToLive.', E_USER_ERROR);
