@@ -93,6 +93,10 @@ class Menu
             $menuItem['matchAction'] = true;
         }
 
+        if (isset($options['linkOptions'])) {
+            $menuItem['linkOptions'] = $options['linkOptions'];
+        }
+
         if (isset($options['doNotMatchAction'])) {
             if (is_array($options['doNotMatchAction']) && count($options['doNotMatchAction']) > 0) {
                 $menuItem['doNotMatchAction'] = $options['doNotMatchAction'];

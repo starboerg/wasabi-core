@@ -1767,8 +1767,11 @@ body.nav-closed aside {
 #backend-menu .item-name {
   display: inline-block;
   width: 100%;
-  padding: 11px 16px 0 31px;
+  padding-right: 10px;
   line-height: 20px;
+}
+#backend-menu [class*="icon-"] + .item-name {
+  padding: 11px 16px 0 31px;
 }
 #backend-menu .sub-nav {
   display: none;

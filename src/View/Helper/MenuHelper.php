@@ -28,6 +28,9 @@ class MenuHelper extends Helper
      * @var array
      */
     public $helpers = [
+        'Html' => [
+            'className' => 'Wasabi/Core.Html'
+        ],
         'Guardian' => [
             'className' => 'Wasabi/Core.Guardian'
         ]
@@ -76,25 +79,27 @@ class MenuHelper extends Helper
                 $cls[] = $openClass;
             }
             $out .= '<li' . ((count($cls) > 0) ? ' class="' . join(' ', $cls) . '"' : '') . '>';
+
+            $options = isset($item['linkOptions']) ? $item['linkOptions'] : [];
+
+            $item['name'] = '<span class="item-name">' . $item['name'] . '</span>';
+
+            if (isset($item['icon'])) {
+                $item['name'] = '<i class="' . $item['icon'] . '"></i>' . $item['name'];
+            }
+
+            $options['escape'] = false;
+
             if (isset($item['url'])) {
-                $options = [];
-                if (isset($item['icon'])) {
-                    $item['name'] = '<i class="' . $item['icon'] . '"></i><span class="item-name">' . $item['name'] . '</span>';
-                    $options['escape'] = false;
-                }
                 $out .= $this->Guardian->protectedLink($item['name'], $item['url'], $options);
             } else {
-                $out .= '<a href="javascript:void(0)">';
-                if (isset($item['icon'])) {
-                    $out .= '<i class="' . $item['icon'] . '"></i>';
-                }
-                $out .= '<span class="item-name">' . $item['name'] . '</span>';
                 if (isset($item['children']) && !empty($item['children'])) {
-                    $out .= ' <i class="icon-arrow-down"></i>';
-                    $out .= ' <i class="icon-arrow-up"></i>';
+                    $item['name'] .= ' <i class="icon-arrow-down"></i>';
+                    $item['name'] .= ' <i class="icon-arrow-up"></i>';
                 }
-                $out .= '</a>';
+                $out .= $this->Html->link($item['name'], 'javascript:void(0)', $options);
             }
+
             if (isset($item['children']) && !empty($item['children'])) {
                 $out .= '<ul class="' . $subNavClass . '">';
                 $out .= $this->renderNested($item['children']);

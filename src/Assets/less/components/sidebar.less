@@ -99,8 +99,12 @@ aside {
   .item-name {
     display: inline-block;
     width: 100%;
-    padding: 11px 16px 0 31px;
+    padding-right: 10px;
     line-height: 20px;
+  }
+
+  [class*="icon-"] + .item-name {
+    padding: 11px 16px 0 31px;
   }
 
   .sub-nav {
