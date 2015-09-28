@@ -18,7 +18,7 @@ use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
-use Wasabi\Core\Controller\Component\FilterComponent;
+use FrankFoerster\Filter\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Entity\Token;
 use Wasabi\Core\Model\Entity\User;
 use Wasabi\Core\Model\Table\TokensTable;
@@ -123,7 +123,7 @@ class UsersController extends BackendAppController
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('Wasabi/Core.Filter');
+        $this->loadComponent('FrankFoerster/Filter.Filter');
         $this->loadComponent('RequestHandler');
     }
 

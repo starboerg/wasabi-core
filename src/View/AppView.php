@@ -19,7 +19,7 @@ use Cake\View\View;
  * @property \Cake\View\Helper\FlashHelper $Flash
  * @property \Cake\View\Helper\UrlHelper $Url
  * @property \Wasabi\Core\View\Helper\AssetHelper $Asset
- * @property \Wasabi\Core\View\Helper\FilterHelper $Filter
+ * @property \FrankFoerster\Filter\View\Helper\FilterHelper $Filter
  * @property \Wasabi\Core\View\Helper\GuardianHelper $Guardian
  * @property \Wasabi\Core\View\Helper\HtmlHelper $Html
  * @property \Wasabi\Core\View\Helper\MenuHelper $Menu
@@ -69,7 +69,7 @@ class AppView extends View
             'className' => 'Wasabi/Core.Guardian'
         ]);
         $this->loadHelper('Filter', [
-            'className' => 'Wasabi/Core.Filter'
+            'className' => 'FrankFoerster/Filter.Filter'
         ]);
         $this->loadHelper('Email', [
             'className' => 'Wasabi/Core.Email'

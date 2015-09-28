@@ -18,7 +18,7 @@ use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Utility\Hash;
-use Wasabi\Core\Controller\Component\FilterComponent;
+use FrankFoerster\Filter\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Table\MenusTable;
 use Wasabi\Core\Model\Table\MenuItemsTable;
 
@@ -61,7 +61,7 @@ class MenusController extends BackendAppController
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('Wasabi/Core.Filter');
+        $this->loadComponent('FrankFoerster/Filter.Filter');
         $this->loadComponent('RequestHandler');
     }
 

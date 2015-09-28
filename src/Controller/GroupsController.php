@@ -99,7 +99,7 @@ class GroupsController extends BackendAppController
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('Wasabi/Core.Filter');
+        $this->loadComponent('FrankFoerster/Filter.Filter');
     }
 
     /**
