@@ -64,6 +64,17 @@ class Nav
     }
 
     /**
+     * Check if a menu with the given alias already exists.
+     *
+     * @param string $alias
+     * @return bool
+     */
+    public static function menuExists($alias)
+    {
+        return isset(self::$_menus[$alias]);
+    }
+
+    /**
      * Clear all menus.
      *
      * @return void
