@@ -368,6 +368,7 @@ class UsersController extends BackendAppController
         if (!$this->request->isAll(['ajax', 'post'])) {
             throw new MethodNotAllowedException();
         }
+        $this->viewClass = null;
         $this->request->session()->renew();
         $this->set([
             'status' => 200,
