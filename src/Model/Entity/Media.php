@@ -27,6 +27,8 @@ use DateTime;
  * @property string $mime_type
  * @property string $type
  * @property int $size
+ * @property int $width
+ * @property int $height
  * @property string $upload_dir
  * @property string $upload_path
  * @property DateTime $created
