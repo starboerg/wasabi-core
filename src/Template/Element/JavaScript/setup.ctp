@@ -11,6 +11,7 @@ use Cake\Routing\Router;
 <?php if (!Configure::read('debug')): ?>
 <?= $this->Asset->js('common', 'Wasabi/Core') ?>
 <?= $this->Asset->js('wasabi', 'Wasabi/Core') ?>
+<?= $this->fetch('js-files') ?>
 <?php endif; ?>
 <script>
     <?php
