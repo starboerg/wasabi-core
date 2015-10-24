@@ -71,6 +71,34 @@
   transition: @arguments;
 }
 
+.transition-transform(@transition) {
+  -webkit-transition: -webkit-transform @transition;
+  -moz-transition: -moz-transform @transition;
+  -o-transition: -o-transform @transition;
+  transition: transform @transition;
+}
+
+.transition-property(@transition-property) {
+  -webkit-transition-property: @transition-property;
+  -moz-transition-property: @transition-property;
+  -o-transition-property: @transition-property;
+  transition-property: @transition-property;
+}
+
+.transition-duration(@transition-duration) {
+  -webkit-transition-duration: @transition-duration;
+  -moz-transition-duration: @transition-duration;
+  -o-transition-duration: @transition-duration;
+  transition-duration: @transition-duration;
+}
+
+.transition-timing-function(@timing-function) {
+  -webkit-transition-timing-function: @timing-function;
+  -moz-transition-timing-function: @timing-function;
+  -o-transition-timing-function: @timing-function;
+  transition-timing-function: @timing-function;
+}
+
 .transform(@transform) {
   -webkit-transform: @transform;
   -moz-transform: @transform;

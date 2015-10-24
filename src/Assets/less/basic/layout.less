@@ -61,15 +61,24 @@ b, strong {
 }
 
 #content {
-  margin-left: @aside-width;
+  margin-left: @sidebar-width;
   padding: (@header-height + @computed-height) @computed-height (2 * @computed-height);
 
   body.nav-closed & {
     margin-left: 0;
   }
+}
 
-  @media only screen and (max-width: @menuBreakPoint) {
+@media only screen and (max-width: @menuCollapsedBreakPoint) {
+
+  #content {
+    margin-left: @sidebar-width--collapsed;
+  }
+}
+
+@media only screen and (max-width: @menuSlideInBreakpoint) {
+
+  #content {
     margin-left: 0;
-    //margin-left: @aside-width--collapsed;
   }
 }

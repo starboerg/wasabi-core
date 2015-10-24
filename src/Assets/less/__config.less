@@ -39,7 +39,8 @@
 @sortable-placeholder-bg-color: #fff6bf;
 
 //----------------------------------------------- BREAK POINTS -------------------------------------------------------//
-@menuBreakPoint: 900px;
+@menuCollapsedBreakPoint: 1169px;
+@menuSlideInBreakpoint: 767px;
 
 //------------------------------------------------- Z-INDEX ----------------------------------------------------------//
 @zindex-navbar:            1000;
@@ -84,18 +85,19 @@
 @user-menu-dropdown-link-color:         #fff;
 @user-menu-dropdown-link-color--hover:  lighten(@brand-primary, 20%);
 
-//------------------------------------------------ ASIDE -------------------------------------------------------------//
-@aside-width:         (9 * @computed-height); // 189px;
-@aside-bg-color:      #f2f3f4;
-@aside-border-color:  #d5d7d7;
+//------------------------------------------------ SIDEBAR -----------------------------------------------------------//
+@sidebar-width:         (9 * @computed-height); // 189px;
+@sidebar-width--collapsed: 110px;
+@sidebar-bg-color:      #f2f3f4;
+@sidebar-border-color:  #d5d7d7;
 
-@aside-link-color:             @brand-primary;
-@aside-link-color--active:     @brand-link;
-@aside-link-bg-color--hover:   darken(@aside-bg-color, 5%);
-@aside-link-bg-color--active:  #fff;
+@sidebar-link-color:             @brand-primary;
+@sidebar-link-color--active:     @brand-link;
+@sidebar-link-bg-color--hover:   darken(@sidebar-bg-color, 5%);
+@sidebar-link-bg-color--active:  #fff;
 
-@aside-submenu-link-color:            spin(lighten(desaturate(@brand-primary, 30%), 20%), -3);
-@aside-submenu-link-bg-color--hover:  @aside-bg-color;
+@sidebar-submenu-link-color:            spin(lighten(desaturate(@brand-primary, 30%), 20%), -3);
+@sidebar-submenu-link-bg-color--hover: @sidebar-bg-color;
 
 //-------------------------------------------- TITLE PAD -------------------------------------------------------------//
 @titlepad-title-font-size:       2 * @font-size;
@@ -122,7 +124,7 @@
 @form-row-bg-color:       #fcfcfc;
 @form-row-border-color:   @border-light;
 
-@form-section-bg-color:           @aside-bg-color;
+@form-section-bg-color: @sidebar-bg-color;
 @form-section-border-color:       @border-dark;
 @form-section-description-color:  @gray-light;
 
@@ -139,7 +141,7 @@
 //-------------------------------------------- TABLES ----------------------------------------------------------------//
 @table-th-border-color: @border-dark;
 @table-th-font-family: @font-os-semibold;
-@table-th-bg-color: @aside-bg-color;
+@table-th-bg-color: @sidebar-bg-color;
 @table-th-link-color: @gray-darker;
 
 @table-td-border-color: #e6e6e3;
@@ -154,7 +156,7 @@
 @icon-sortable-color--active:  @gray-light;
 
 //----------------------------------------- PAGINATION ---------------------------------------------------------------//
-@pagination-bg-color: lighten(@aside-bg-color, 2%);
+@pagination-bg-color: lighten(@sidebar-bg-color, 2%);
 @pagination-link-color--active: #fff;
 @pagination-link-color--disabled: @border-dark;
 @pagination-link-bg-color--active: lighten(@brand-primary, 10%);

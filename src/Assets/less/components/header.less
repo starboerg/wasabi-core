@@ -25,7 +25,7 @@
   }
 
   .brand {
-    margin-left: @computed-height--half;
+    margin-left: 9px;
     display: inline-block;
     line-height: @header-height;
     font-size: @computed-height;
@@ -33,11 +33,10 @@
   }
 
   .nav-toggle {
-    display: inline-block;
+    display: none;
     line-height: @header-height;
     color: @header-nav-toggle-color;
     text-decoration: none;
-    background-color: @header-nav-toggle-bg-color;
     outline: none;
 
     i {
@@ -52,10 +51,6 @@
     }
 
     body.nav-closed & {
-      background-color: transparent;
-    }
-
-    @media only screen and (max-width: @menuBreakPoint) {
       background-color: transparent;
     }
   }
@@ -118,6 +113,26 @@
         &:hover {
           background-color: @user-menu-dropdown-link-color--hover;
         }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: @menuSlideInBreakpoint) {
+
+  #page-header {
+
+    .nav-toggle {
+      display: inline-block;
+    }
+  }
+
+  .backend-nav--is-visible {
+
+    #page-header {
+
+      .nav-toggle {
+        background-color: @header-nav-toggle-bg-color;
       }
     }
   }

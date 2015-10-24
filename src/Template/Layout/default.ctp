@@ -13,8 +13,8 @@ use Cake\Core\Configure;
 <body class="<?= $this->get('sectionCssClass', '') ?>">
 <?= $this->element('Wasabi/Core.header') ?>
 <div id="wrapper">
-    <div id="asidebg"></div>
-    <aside>
+    <div id="sidebarbg"></div>
+    <aside id="sidebar">
         <nav id="backend-menu">
             <ul>
                 <?= $this->cell('Wasabi/Core.Menu', ['backend.main']) ?>

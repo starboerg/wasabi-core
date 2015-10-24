@@ -7,7 +7,6 @@ require.config({
   paths: {
     backbone: 'vendor/backbone/backbone',
     marionette: 'vendor/marionette/lib/backbone.marionette',
-    bootstrap: 'vendor/bootstrap/dist/js/bootstrap',
     jquery: 'vendor/jquery/dist/jquery',
     purl: 'vendor/purl/purl',
     spin: 'vendor/spin.js/spin',
@@ -21,7 +20,9 @@ require.config({
     'jquery.spin': 'vendor/spin.js/jquery.spin',
     'jquery.tSortable': 'common/jquery-plugins/jquery.tSortable',
     'jquery.position': 'common/jquery-plugins/jquery.position',
-    'bootstrap.dropdown': 'vendor/bootstrap/js/dropdown'
+    'bootstrap.collapse': 'vendor/bootstrap/js/collapse',
+    'bootstrap.dropdown': 'vendor/bootstrap/js/dropdown',
+    'bootstrap.transition': 'vendor/bootstrap/js/transition'
   },
   hbs: { // optional
     helpers: true,            // default: true
@@ -45,6 +46,10 @@ require.config({
     ],
     'bootstrap.dropdown': [
       'jquery'
+    ],
+    'bootstrap.collapse': [
+      'jquery',
+      'bootstrap.transition'
     ],
     'jquery.tooltipster': [
       'jquery'

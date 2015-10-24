@@ -67,7 +67,7 @@ class MenuHelper extends Helper
      * @param string $subNavClass css class applied to any child ul of a parent menu item
      * @return string the rendered items without an outer ul
      */
-    public function renderNested(array $items, $activeClass = 'active', $openClass = 'open', $subNavClass = 'sub-nav')
+    public function renderNested(array $items, $activeClass = 'active', $openClass = 'open', $subNavClass = 'sub-nav collapse')
     {
         $out = '';
         foreach ($items as $item) {
@@ -75,8 +75,10 @@ class MenuHelper extends Helper
             if (isset($item['active']) && $item['active'] === true) {
                 $cls[] = $activeClass;
             }
+            $subNavActiveClass = '';
             if (isset($item['open']) && $item['open'] === true) {
                 $cls[] = $openClass;
+                $subNavActiveClass .= ' in';
             }
             $out .= '<li' . ((count($cls) > 0) ? ' class="' . join(' ', $cls) . '"' : '') . '>';
 
@@ -94,14 +96,14 @@ class MenuHelper extends Helper
                 $out .= $this->Guardian->protectedLink($item['name'], $item['url'], $options);
             } else {
                 if (isset($item['children']) && !empty($item['children'])) {
+                    $item['name'] .= ' <i class="icon-arrow-left"></i>';
                     $item['name'] .= ' <i class="icon-arrow-down"></i>';
-                    $item['name'] .= ' <i class="icon-arrow-up"></i>';
                 }
                 $out .= $this->Html->link($item['name'], 'javascript:void(0)', $options);
             }
 
             if (isset($item['children']) && !empty($item['children'])) {
-                $out .= '<ul class="' . $subNavClass . '">';
+                $out .= '<ul class="' . $subNavClass . $subNavActiveClass . '">';
                 $out .= $this->renderNested($item['children']);
                 $out .= '</ul>';
             }
