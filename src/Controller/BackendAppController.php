@@ -200,10 +200,18 @@ class BackendAppController extends AppController
         I18n::locale($backendLanguage->iso2);
     }
 
+    /**
+     * Set the section css class that is applied to the html body of the action.
+     * Format is "prefix--controller-action" where prefix is either "app" or the name of the plugin.
+     *
+     * return string
+     */
     protected function _setSectionCssClass() {
+        $plugin = $this->request->params['plugin'];
+        $prefix = ($plugin !== null) ? $plugin : 'app';
         $this->set('sectionCssClass',
             strtolower(
-                Inflector::slug($this->request->params['plugin']) . '--' .
+                Inflector::slug($prefix) . '--' .
                 $this->request->params['controller'] . '-' .
                 $this->request->params['action']
             )
