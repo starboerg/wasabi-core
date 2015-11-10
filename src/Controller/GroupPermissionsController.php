@@ -15,6 +15,7 @@ namespace Wasabi\Core\Controller;
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Wasabi\Core\Model\Entity\Group;
 use Wasabi\Core\Model\Table\GroupPermissionsTable;
 
 /**
@@ -77,22 +78,22 @@ class GroupPermissionsController extends BackendAppController
         $actionMap = $this->Guardian->getActionMap();
 
         // check existance of all permission entries for each individual group
+        /** @var Group $groups */
         $groups = $this->GroupPermissions->Groups->find('all')
-            ->where(['Groups.id <>' => 1])// ignore Administrator group
-            ->hydrate(false)
-            ->toArray();
+            ->where(['Groups.id <>' => 1]);// ignore Administrator group
 
         $this->GroupPermissions->connection()->begin();
 
         // delete guest actions
         $this->GroupPermissions->deleteAll([
-            'path' => $this->Guardian->getGuestActions()
+            'path IN' => $this->Guardian->getGuestActions()
         ]);
+
 
         foreach ($groups as $group) {
             try {
-                $this->GroupPermissions->createMissingPermissions($group['id'], $actionMap);
-                $this->GroupPermissions->deleteOrphans($group['id'], $actionMap);
+                $this->GroupPermissions->createMissingPermissions($group->id, $actionMap);
+                $this->GroupPermissions->deleteOrphans($group->id, $actionMap);
             } catch (Exception $e) {
                 $this->GroupPermissions->connection()->rollback();
             }
