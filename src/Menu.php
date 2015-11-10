@@ -106,26 +106,41 @@ class Menu
         }
 
         if (isset($options['parent'])) {
-            $parts = preg_split('/\//', $options['parent']);
-            if (count($parts) === 1) {
-                if (!isset($this->_menuItems[$parts[0]])) {
-                    throw new Exception('No menu item with the alias specified in $options[\'parent\'] exists.');
-                }
-                $menuItem['parent'] = $options['parent'];
-                $this->_menuItems[$parts[0]]['children'][$menuItem['alias']] = $menuItem;
+            if (!isset($this->_menuItems[$options['parent']])) {
+                throw new Exception('No menu item with the alias specified in $options[\'parent\'] exists.');
             }
-            if (count($parts) === 2) {
-                if (!isset($this->_menuItems[$parts[0]]['children'][$parts[1]])) {
-                    throw new Exception('No menu item with the alias specified in $options[\'parent\'] exists.');
-                }
-                $menuItem['parent'] = $options['parent'];
-                $this->_menuItems[$parts[0]]['children'][$parts[1]]['children'][$menuItem['alias']] = $menuItem;
-            }
+            $menuItem['parent'] = $options['parent'];
+            $this->_menuItems[$menuItem['parent']]['children'][$menuItem['alias']] = $menuItem;
         } else {
             $this->_menuItems[$menuItem['alias']] = $menuItem;
         }
 
         return $this;
+    }
+
+    /**
+     * Remove a menu item with the given $alias.
+     *
+     * @param string $alias
+     * @param null|string $parent
+     */
+    public function removeMenuItem($alias, $parent = null)
+    {
+        if ($parent !== null) {
+            if (!isset($this->_menuItems[$parent]) ||
+                !isset($this->_menuItems[$parent]['children']) ||
+                !isset($this->_menuItems[$parent]['children'][$alias])
+            ) {
+                return;
+            }
+            unset($this->_menuItems[$parent]['children'][$alias]);
+            return;
+        }
+
+        if (!isset($this->_menuItems[$alias])) {
+            return;
+        }
+        unset($this->_menuItems[$alias]);
     }
 
     /**
