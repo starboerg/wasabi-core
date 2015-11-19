@@ -15,6 +15,8 @@
 namespace Wasabi\Core\Mailer;
 
 use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
+use Cake\Log\Log;
 use Cake\Mailer\Mailer;
 use Wasabi\Core\Config;
 use Wasabi\Core\Model\Entity\User;
@@ -92,5 +94,28 @@ class UserMailer extends Mailer
                 'className' => 'Wasabi/Core.Email'
             ]
         ]);
+    }
+
+    /**
+     * Wrap the original send to catch erros and log them.
+     *
+     * @param string $action The name of the mailer action to trigger.
+     * @param array $args Arguments to pass to the triggered mailer action.
+     * @param array $headers Headers to set.
+     * @return array
+     * @throws \Cake\Mailer\Exception\MissingActionException
+     * @throws \BadMethodCallException
+     */
+    public function send($action, $args = [], $headers = [])
+    {
+        $results = [];
+
+        try {
+            $results = @parent::send($action, $args, $headers);
+        } catch(\Exception $e) {
+            Log::write(LOG_CRIT, 'Emails cannot be sent: ' . $e->getMessage(), $this->_email);
+        }
+
+        return $results;
     }
 }
