@@ -368,7 +368,6 @@ class UsersController extends BackendAppController
         if (!$this->request->isAll(['ajax', 'post'])) {
             throw new MethodNotAllowedException();
         }
-        $this->viewClass = null;
         $this->request->session()->renew();
         $this->set([
             'status' => 200,
@@ -406,6 +405,12 @@ class UsersController extends BackendAppController
         ]);
     }
 
+    /**
+     * activate action
+     * AJAX POST
+     *
+     * @param int|string $id
+     */
     public function activate($id)
     {
         if (!$this->request->isAll(['ajax', 'post'])) {
@@ -419,6 +424,37 @@ class UsersController extends BackendAppController
         $user = $this->Users->get($id);
         if ($this->Users->activate($user)) {
             $this->getMailer('Wasabi/Core.User')->send('activationEmail', [$user]);
+            $this->set([
+                'status' => 'success',
+                'user' => $user,
+                '_serialize' => ['status', 'user']
+            ]);
+        } else {
+            $this->set([
+                'error' => $this->dbErrorMessage,
+                '_serialize' => ['error']
+            ]);
+        }
+    }
+
+    /**
+     * deactivate action
+     * AJAX POST
+     *
+     * @param int|string $id
+     */
+    public function deactivate($id)
+    {
+        if (!$this->request->isAll(['ajax', 'post'])) {
+            throw new MethodNotAllowedException();
+        }
+
+        if (!$id || !$this->Users->exists(['id' => $id])) {
+            throw new NotFoundException();
+        }
+
+        $user = $this->Users->get($id);
+        if ($this->Users->deactivate($user)) {
             $this->set([
                 'status' => 'success',
                 'user' => $user,
