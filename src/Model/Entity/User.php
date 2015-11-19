@@ -89,4 +89,19 @@ class User extends Entity
 
         return $this;
     }
+
+    /**
+     * Deactivate user
+     *
+     * @return User $this
+     */
+    public function deactivate()
+    {
+        $this->activated_at = null;
+        $this->active = false;
+
+        EventManager::instance()->dispatch(new Event('Wasabi.User.deactivated', $this));
+
+        return $this;
+    }
 }

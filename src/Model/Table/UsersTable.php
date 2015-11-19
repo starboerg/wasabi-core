@@ -237,6 +237,17 @@ class UsersTable extends Table
     }
 
     /**
+     * Deactivate the given $user.
+     *
+     * @param User $user
+     * @return bool|\Cake\Datasource\EntityInterface
+     */
+    public function deactivate(User $user)
+    {
+        return $this->save($user->deactivate());
+    }
+
+    /**
      * Check if user with email exists and return the result
      *
      * @param $email
