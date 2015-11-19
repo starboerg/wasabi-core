@@ -22,8 +22,10 @@ use Cake\I18n\I18n;
 use Cake\I18n\Time;
 use Cake\Network\Session;
 use Cake\Utility\Inflector;
+use Wasabi\Core\Model\Entity\User;
 use Wasabi\Core\Model\Table\LanguagesTable;
 use Wasabi\Core\Nav;
+use Wasabi\Core\Wasabi;
 
 /**
  * Class BackendAppController
@@ -113,6 +115,8 @@ class BackendAppController extends AppController
 
         if (!$this->Auth->user()) {
             $this->Auth->config('authError', false);
+        } else {
+            Wasabi::setUser(new User($this->Auth->user()));
         }
 
         $this->_allow();
@@ -120,6 +124,10 @@ class BackendAppController extends AppController
         $this->_setSectionCssClass();
 
         $this->set('heartBeatFrequency', floor(((int) ini_get('session.gc_maxlifetime')) / 5) * 1000);
+
+        if ($this->request->is('ajax')) {
+            $this->viewClass = null;
+        }
     }
 
     /**
