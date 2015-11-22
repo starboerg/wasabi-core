@@ -2,13 +2,13 @@
 /**
  * @var \Wasabi\Core\View\AppView $this
  */
-use Cake\Core\Configure;
+use Wasabi\Core\Config;
 
 ?><header id="page-header" class="row">
     <ul class="row">
         <li><a class="nav-toggle" href="javascript:void(0)"><i class="icon-nav"></i></a></li>
         <li><?= $this->Html->link(
-            Configure::read('Settings.App.instance_name'),
+            Config::getInstanceName(),
             [
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Dashboard',
