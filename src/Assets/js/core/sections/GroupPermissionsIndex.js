@@ -1,9 +1,7 @@
 define(function(require) {
   var $ = require('jquery');
   var BaseView = require('common/BaseView');
-  var SpinPresets = require('common/SpinPresets');
   require('jquery.color');
-  require('jquery.spin');
 
   return BaseView.extend({
 
@@ -21,7 +19,8 @@ define(function(require) {
     onSingleSubmit: function(event) {
       event.preventDefault();
       var $target = $(event.target);
-      $target.hide().blur().parent().spin(SpinPresets.small);
+      var $spinner = $('<div class="spinner"/>');
+      $target.hide().blur().parent().append($spinner);
       $.ajax({
         type: 'post',
         url: this.$('.permissions-update-form').attr('action'),
@@ -31,7 +30,7 @@ define(function(require) {
         success: function() {
           var tr = $target.parent().parent();
           var bgColor = $target.parent().css('backgroundColor');
-          $target.parent().spin(false);
+          $spinner.remove();
           $target.show();
           tr.find('td:not(.controller)').stop().css({
             backgroundColor: '#fff7d9'

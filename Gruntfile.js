@@ -10,13 +10,11 @@ module.exports = function(grunt) {
     'backbone',
     'marionette',
     'purl',
-    'spin',
     'bootstrap.dropdown',
     'common/BaseView',
     'jquery.eventMagic',
     'jquery.scrollParent',
     'jquery.livequery',
-    'jquery.spin',
     'jquery.nSortable',
     'jquery.tSortable',
     'bootstrap.dropdown'

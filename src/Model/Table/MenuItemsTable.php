@@ -12,6 +12,7 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -63,5 +64,15 @@ class MenuItemsTable extends Table
         $this->behaviors()->Tree->config('scope', [
             'menu_id' => $menuId
         ]);
+    }
+
+    /**
+     * @TODO
+     * @param $menuId
+     * @return array|Query
+     */
+    public function findPublishedThreaded($menuId)
+    {
+        return [];
     }
 }

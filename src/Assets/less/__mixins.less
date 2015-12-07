@@ -107,6 +107,14 @@
   transform: @transform;
 }
 
+.transform-origin(@origin) {
+  -webkit-transform-origin: @origin;
+  -moz-transform-origin: @origin;
+  -ms-transform-origin: @origin;
+  -o-transform-origin: @origin;
+  transform-origin: @origin;
+}
+
 .opacity(@value: .5) {
   opacity: @value; /* Chrome 4+, Firefox 2+, Safari 3.1+, Opera 9+, IE9+, iOS 3.2+, Android 2.1+ */
   filter: e(%("alpha(opacity=%d)", @value * 100));

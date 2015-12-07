@@ -1,0 +1,52 @@
+@import (reference) "../__mixins";
+
+@spinner-main: #5c5c5c;
+@spinner-secondary: darken(@spinner-main, 10);
+@r: 10px;
+@d: @r * 2;
+@t: 3000ms;
+
+.spinner {
+  width: @d;
+  height: @d;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -@r;
+  margin-left: -@r;
+  border: @d/10 solid @spinner-secondary;
+  .border-radius(50%);
+
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: @d/10;
+    background-color: @spinner-secondary;
+    .border-radius(@d/10/2);
+    .transform-origin(50% 0);
+  }
+
+  &:before {
+    height: @r - 2*@d/10;
+    left: @r - 3*@d/10/2;
+    top: 50%;
+    animation: spinner-spin @t linear infinite;
+  }
+
+  &.spinner-white {
+    @spinner-main: #fff;
+    @spinner-secondary: darken(@spinner-main, 10);
+    border-color: @spinner-secondary;
+
+    &:before, &:after {
+      background-color: @spinner-secondary;
+    }
+  }
+}
+
+@keyframes spinner-spin {
+  to {
+    .transform(rotate(360deg));
+  }
+}

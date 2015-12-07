@@ -3,7 +3,6 @@ define(function(require) {
   var $ = require('jquery');
   var _ = require('underscore');
   var Backbone = require('backbone');
-  var Spinner = require('spin');
 
   (function(View){
     'use strict';
@@ -28,7 +27,7 @@ define(function(require) {
 
   return Backbone.View.extend({
 
-    $blockBackdrop: $('<div class="block-backdrop"></div>'),
+    $blockBackdrop: $('<div class="block-backdrop"><div class="spinner"></div></div>'),
     numberOfBlocks: 0,
     spinner: null,
 
@@ -94,14 +93,12 @@ define(function(require) {
         zIndex: options.zIndex || 9997
       }).hide().appendTo($('body'));
 
-      this.$blockBackdrop.fadeIn(100, $.proxy(function() {
+      if (options.whiteSpinner) {
+        this.$blockBackdrop.find('.spinner').addClass('spinner-white');
+      }
+
+      this.$blockBackdrop.fadeIn(100, _.bind(function() {
         this.$blockBackdrop.on('mousedown mouseup keydown keypress keyup touchstart touchend touchmove', _.bind(this.handleBlockedEvent, this));
-        if (options.spinner && options.spinner !== false) {
-          this.spinner = this.spinner || new Spinner(options.spinner || false);
-        }
-        if (this.spinner) {
-          this.spinner.spin(this.$blockBackdrop.get(0));
-        }
       }, this));
     },
 
@@ -119,8 +116,8 @@ define(function(require) {
         if (this.spinner) {
           this.spinner.stop();
         }
-        this.$blockBackdrop.remove();
         this.$blockBackdrop.off('mousedown mouseup keydown keypress keyup touchstart touchend touchmove', _.bind(this.handleBlockedEvent, this));
+        this.$blockBackdrop.remove();
         if (typeof callback === 'function') {
           callback.call(this);
         }

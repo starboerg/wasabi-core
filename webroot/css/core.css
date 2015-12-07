@@ -2234,6 +2234,65 @@ table.list tbody .col-actions > a:first-child,
   padding: 0;
   list-style: none;
 }
+.spinner {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -10px;
+  margin-left: -10px;
+  border: 2px solid #424242;
+  -webkit-border-radius: 50%;
+  /* Safari 3-4, iOS 1-3.2, Android ≤1.6 */
+  border-radius: 50%;
+  /* Opera 10.5, IE9+, Safari 5, Chrome, Firefox 4+, iOS 4, Android 2.1+ */
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+.spinner:before,
+.spinner:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 2px;
+  background-color: #424242;
+  -webkit-border-radius: 1px;
+  /* Safari 3-4, iOS 1-3.2, Android ≤1.6 */
+  border-radius: 1px;
+  /* Opera 10.5, IE9+, Safari 5, Chrome, Firefox 4+, iOS 4, Android 2.1+ */
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  -webkit-transform-origin: 50% 0;
+  -moz-transform-origin: 50% 0;
+  -ms-transform-origin: 50% 0;
+  -o-transform-origin: 50% 0;
+  transform-origin: 50% 0;
+}
+.spinner:before {
+  height: 6px;
+  left: 7px;
+  top: 50%;
+  animation: spinner-spin 3000ms linear infinite;
+}
+.spinner.spinner-white {
+  border-color: #e6e6e6;
+}
+.spinner.spinner-white:before,
+.spinner.spinner-white:after {
+  background-color: #e6e6e6;
+}
+@keyframes spinner-spin {
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
 .support {
   background-color: #efefef;
 }
@@ -2466,6 +2525,7 @@ table.list tbody .col-actions > a:first-child,
 }
 .wasabi-core--grouppermissions-index .permissions .spinner {
   position: relative !important;
+  margin-top: 0;
 }
 .wasabi-core--menus-edit .menu-items > .no-items,
 .wasabi-core--menus-edit .menu-items .menu-item [class*="grid-"] {

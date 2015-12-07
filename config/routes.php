@@ -80,6 +80,12 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
         $routes->connect('/cache', ['action' => 'cache']);
     });
 
+    $routes->scope('/routes', ['controller' => 'Routes'], function (RouteBuilder $routes) {
+        $routes->connect('/add', ['action' => 'add']);
+        $routes->connect('/make-default/:id', ['action' => 'makeDefault'], ['pass' => ['id'], 'id' => '[0-9]+']);
+        $routes->connect('/delete/:id', ['action' => 'delete'], ['pass' => ['id'], 'id' => '[0-9]+']);
+    });
+
     /**
      * Connect a route for the index action of any controller.
      * And a more general catch all route for any action.

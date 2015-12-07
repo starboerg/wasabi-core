@@ -9,7 +9,6 @@ require.config({
     marionette: 'vendor/marionette/lib/backbone.marionette',
     jquery: 'vendor/jquery/dist/jquery',
     purl: 'vendor/purl/purl',
-    spin: 'vendor/spin.js/spin',
     underscore: 'vendor/underscore/underscore',
     'wasabi.core': 'core/main',
     'jquery.color': 'vendor/jquery-color/jquery.color',
@@ -17,7 +16,6 @@ require.config({
     'jquery.scrollParent': 'common/jquery-plugins/jquery.scrollParent',
     'jquery.livequery': 'common/jquery-plugins/jquery.livequery',
     'jquery.nSortable': 'common/jquery-plugins/jquery.nSortable',
-    'jquery.spin': 'vendor/spin.js/jquery.spin',
     'jquery.tSortable': 'common/jquery-plugins/jquery.tSortable',
     'jquery.position': 'common/jquery-plugins/jquery.position',
     'bootstrap.collapse': 'vendor/bootstrap/js/collapse',
@@ -58,9 +56,6 @@ require.config({
       'jquery'
     ],
     'jquery.livequery': [
-      'jquery'
-    ],
-    'jquery.spin': [
       'jquery'
     ],
     'jquery.resize': [

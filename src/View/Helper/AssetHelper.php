@@ -13,8 +13,6 @@
 namespace Wasabi\Core\View\Helper;
 
 use Cake\Core\Plugin;
-use Cake\Routing\Router;
-use Cake\Utility\Inflector;
 use Cake\View\Helper;
 
 /**

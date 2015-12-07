@@ -2,7 +2,6 @@ define(function(require) {
   var _ = require('underscore');
   var $ = require('jquery');
   var BaseView = require('common/BaseView');
-  var SpinPresets = require('common/SpinPresets');
   require('jquery.nSortable');
 
   return BaseView.extend({
@@ -44,7 +43,6 @@ define(function(require) {
     onSort: function(event, nSortable) {
       this.blockThis({
         backgroundColor: '#fff',
-        spinner: SpinPresets.large,
         deltaHeight: -1
       });
       var items = nSortable.toArray();

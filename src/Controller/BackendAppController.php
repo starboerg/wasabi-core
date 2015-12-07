@@ -63,7 +63,7 @@ class BackendAppController extends AppController
     public $viewClass = 'Wasabi/Core.App';
 
     /**
-     * initialization hook method
+     * Initialization hook method
      */
     public function initialize()
     {
@@ -116,11 +116,13 @@ class BackendAppController extends AppController
         if (!$this->Auth->user()) {
             $this->Auth->config('authError', false);
         } else {
-            Wasabi::setUser(new User($this->Auth->user()));
+            Wasabi::user(new User($this->Auth->user()));
         }
 
         $this->_allow();
-        $this->_setupLanguages();
+
+        Wasabi::loadLanguages(null, true);
+
         $this->_setSectionCssClass();
 
         $this->set('heartBeatFrequency', floor(((int) ini_get('session.gc_maxlifetime')) / 5) * 1000);
@@ -160,52 +162,6 @@ class BackendAppController extends AppController
         if ($this->Guardian->isGuestAction($url)) {
             $this->Auth->allow($this->request->params['action']);
         }
-    }
-
-    /**
-     * Load and setup all languages and language related config options.
-     */
-    protected function _setupLanguages()
-    {
-        // Configure all available frontend and backend languages.
-        $languages = Cache::remember('languages', function() {
-            /** @var LanguagesTable $Languages */
-            $Languages = $this->loadModel('Wasabi/Core.Languages');
-            $langs = $Languages->find('allFrontendBackend')->all();
-
-            return [
-                'frontend' => array_values($Languages->filterFrontend($langs)->toArray()),
-                'backend' => array_values($Languages->filterBackend($langs)->toArray())
-            ];
-        }, 'wasabi/core/longterm');
-        Configure::write('languages', $languages);
-
-        // Setup the users content language.
-        $contentLanguage = $languages['frontend'][0];
-        if ($this->request->session()->check('contentLanguageId')) {
-            $contentLanguageId = $this->request->session()->read('contentLanguageId');
-            foreach ($languages['frontend'] as $lang) {
-                if ($lang->id === $contentLanguageId) {
-                    $contentLanguage = $lang;
-                    break;
-                }
-            }
-        }
-        Configure::write('contentLanguage', $contentLanguage);
-
-        // Setup the users backend language.
-        $backendLanguage = $languages['backend'][0];
-        $backendLanguageId = $this->Auth->user('language_id');
-        if ($backendLanguageId !== null) {
-            foreach ($languages['backend'] as $lang) {
-                if ($lang->id === $backendLanguageId) {
-                    $backendLanguage = $lang;
-                    break;
-                }
-            }
-        }
-        Configure::write('backendLanguage', $backendLanguage);
-        I18n::locale($backendLanguage->iso2);
     }
 
     /**

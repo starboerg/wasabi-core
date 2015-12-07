@@ -2,9 +2,15 @@
 
 namespace Wasabi\Core;
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
+use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
+use Wasabi\Cms\Model\Entity\Page;
 use Wasabi\Core\Model\Entity\Language;
 use Wasabi\Core\Model\Entity\User;
+use Wasabi\Core\Model\Table\LanguagesTable;
 
 class Wasabi
 {
@@ -14,6 +20,13 @@ class Wasabi
      * @var User
      */
     protected static $_user;
+
+    /**
+     * Holds the current page entity.
+     *
+     * @var Page
+     */
+    protected static $_page;
 
     /**
      * Get the currently active content language.
@@ -26,22 +39,119 @@ class Wasabi
     }
 
     /**
-     * Set the currently logged in user.
+     * Get or set the currently logged in user.
      *
-     * @param $user
+     * @param User $user
+     * @return User
      */
-    public static function setUser($user)
+    public static function user($user = null)
     {
-        self::$_user = $user;
+        if ($user !== null) {
+            self::$_user = $user;
+        }
+        return self::$_user;
     }
 
     /**
-     * Get the currently logged in user.
+     * Get or set the current page.
      *
-     * @return User
+     * @param null $page
+     * @return null|Page
      */
-    public static function user()
+    public static function page($page = null)
     {
-        return self::$_user;
+        if ($page !== null) {
+            self::$_page = $page;
+        }
+        return self::$_page;
+    }
+
+    /**
+     * Get a setting stored in Wasabi Settings.
+     *
+     * @param string $path the array path to access the setting, using Hash::get() syntax
+     * @param null|mixed $default a default value to return when the setting is not found
+     * @return mixed|null
+     */
+    public static function setting($path, $default = null)
+    {
+        $setting = Configure::read('Settings.' . $path);
+
+        if ($setting === null) {
+            return $default;
+        }
+
+        return $setting;
+    }
+
+    /**
+     * Load and setup all languages.
+     *
+     * @param null $langId If set, then the language with id = $langId will be set as the content language.
+     * @param bool|false $backend If true also initializes all backend languages
+     */
+    public static function loadLanguages($langId = null, $backend = false)
+    {
+        // Configure all available frontend and backend languages.
+        $languages = Cache::remember('languages', function() {
+            /** @var LanguagesTable $Languages */
+            $Languages = TableRegistry::get('Wasabi/Core.Languages');
+            $langs = $Languages->find('allFrontendBackend')->all();
+
+            return [
+                'frontend' => array_values($Languages->filterFrontend($langs)->toArray()),
+                'backend' => array_values($Languages->filterBackend($langs)->toArray())
+            ];
+        }, 'wasabi/core/longterm');
+        Configure::write('languages', $languages);
+
+        if ($backend === true) {
+            // Backend
+            $request = Router::getRequest();
+
+            // Setup the users backend language.
+            $backendLanguage = $languages['backend'][0];
+            if ($request->session()->check('Auth.User.language_id')) {
+                $backendLanguageId = $request->session()->read('Auth.User.language_id');
+
+                if ($backendLanguageId !== null) {
+                    foreach ($languages['backend'] as $lang) {
+                        if ($lang->id === $backendLanguageId) {
+                            $backendLanguage = $lang;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Setup the users content language.
+            $contentLanguage = $languages['frontend'][0];
+            if ($request->session()->check('contentLanguageId')) {
+                $contentLanguageId = $request->session()->read('contentLanguageId');
+                foreach ($languages['frontend'] as $lang) {
+                    if ($lang->id === $contentLanguageId) {
+                        $contentLanguage = $lang;
+                        break;
+                    }
+                }
+            }
+            Configure::write('contentLanguage', $contentLanguage);
+            Configure::write('backendLanguage', $backendLanguage);
+            I18n::locale($backendLanguage->iso2);
+        } else {
+            // Frontend
+            if ($langId !== null) {
+                foreach ($languages['frontend'] as $frontendLanguage) {
+                    if ($frontendLanguage->id === $langId) {
+                        Configure::write('contentLanguage', $frontendLanguage);
+                        I18n::locale($frontendLanguage->iso2);
+                        break;
+                    }
+                }
+            } else {
+                Configure::write('contentLanguage', $languages['frontend'][0]);
+                I18n::locale($languages['frontend'][0]->iso2);
+            }
+        }
     }
 }
