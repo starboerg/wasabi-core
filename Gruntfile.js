@@ -17,7 +17,10 @@ module.exports = function(grunt) {
     'jquery.livequery',
     'jquery.nSortable',
     'jquery.tSortable',
-    'bootstrap.dropdown'
+    'jquery.color',
+    'bootstrap.dropdown',
+    'bootstrap.transition',
+    'bootstrap.collapse'
   ];
 
   grunt.initConfig({

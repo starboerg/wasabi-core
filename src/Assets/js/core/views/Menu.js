@@ -1,3 +1,4 @@
+
 define(function(require) {
   var $ = require('jquery');
   var BaseView = require('common/BaseView');
@@ -141,7 +142,7 @@ define(function(require) {
     hideSubnav: function(event) {
       var $target = _getEventTarget(event);
       if ($target.parents('.'+ this.options.selectedClass).length === 0) {
-        this.$('.' + this.options.selectedClass).removeClass(this.options.selectedClass)
+        this.$('.' + this.options.selectedClass).removeClass(this.options.selectedClass);
       }
     }
 
