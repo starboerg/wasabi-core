@@ -33,7 +33,11 @@ class MenuListener implements EventListenerInterface
             'Wasabi.Backend.Menu.initMain' => [
                 'callable' => 'initBackendMenuMainItems',
                 'priority' => Config::$priority
-            ]
+            ],
+            'Wasabi.Backend.MenuItems.getLinkTypes' => [
+                'callable' => 'getLinkTypesForMenuItem',
+                'priority' => 99999
+            ],
         ];
     }
 
@@ -191,5 +195,18 @@ class MenuListener implements EventListenerInterface
                 ],
                 'matchAction' => true
             ]);
+    }
+
+    /**
+     * Get available link types for menu items (wasabi backend).
+     *
+     * @param Event $event
+     */
+    public function getLinkTypesForMenuItem(Event $event)
+    {
+        $event->result[__d('wasabi_core', 'General')] = [
+            'ExternalLink' => __d('wasabi_core', 'External Link'),
+            'CustomAction' => __d('wasabi_core', 'Custom Controller Action')
+        ];
     }
 }

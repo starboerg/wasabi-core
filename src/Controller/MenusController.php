@@ -194,7 +194,8 @@ class MenusController extends BackendAppController
         }
         $this->set([
             'menu' => $this->Menus->get($menuId),
-            'menuItem' => $menuItem
+            'menuItem' => $menuItem,
+            'linkTypes' => $this->Menus->getLinkTypes()
         ]);
     }
 

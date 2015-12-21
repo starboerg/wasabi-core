@@ -12,6 +12,8 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use Cake\Event\Event;
+use Cake\Event\EventManager;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -61,5 +63,19 @@ class MenusTable extends Table
                 'fieldValue' => 'name',
             ])
             ->order(['name' => 'ASC']);
+    }
+
+    /**
+     * Get available link types via an Event trigger
+     * This fetches avilable Links from all activated Plugins.
+     *
+     * @return array
+     */
+    public function getLinkTypes()
+    {
+        $event = new Event('Wasabi.Backend.MenuItems.getLinkTypes', $this);
+        EventManager::instance()->dispatch($event);
+
+        return $event->result;
     }
 }
