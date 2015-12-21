@@ -7,34 +7,6 @@
  * @copyright Copyright 2013, Frank Förster (http://frankfoerster.com)
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-@font-face {
-  font-family: 'open_sans_webfont_light';
-  src: url('../fonts/opensans/OpenSans-Light-webfont.eot');
-  src: url('../fonts/opensans/OpenSans-Light-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/opensans/OpenSans-Light-webfont.ttf') format('truetype'), url('../fonts/opensans/OpenSans-Light-webfont.woff') format('woff'), url('../fonts/opensans/OpenSans-Light-webfont.svg#open_sans_light') format('svg');
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: 'open_sans_webfont';
-  src: url('../fonts/opensans/OpenSans-Regular-webfont.eot');
-  src: url('../fonts/opensans/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/opensans/OpenSans-Regular-webfont.ttf') format('truetype'), url('../fonts/opensans/OpenSans-Regular-webfont.woff') format('woff'), url('../fonts/opensans/OpenSans-Regular-webfont.svg#open_sans_regular') format('svg');
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: 'open_sans_webfont_semibold';
-  src: url('../fonts/opensans/OpenSans-Semibold-webfont.eot');
-  src: url('../fonts/opensans/OpenSans-Semibold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/opensans/OpenSans-Semibold-webfont.ttf') format('truetype'), url('../fonts/opensans/OpenSans-Semibold-webfont.woff') format('woff'), url('../fonts/opensans/OpenSans-Semibold-webfont.svg#open_sans_semibold') format('svg');
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: 'open_sans_webfont_bold';
-  src: url('../fonts/opensans/OpenSans-Bold-webfont.eot');
-  src: url('../fonts/opensans/OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/opensans/OpenSans-Bold-webfont.ttf') format('truetype'), url('../fonts/opensans/OpenSans-Bold-webfont.woff') format('woff'), url('../fonts/opensans/OpenSans-Bold-webfont.svg#open_sans_bold') format('svg');
-  font-style: normal;
-  font-weight: normal;
-}
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 /**
  * 1. Set default font family to sans-serif.
@@ -899,7 +871,7 @@ body {
   height: 100%;
 }
 body {
-  font: 14px / 1.5 'open_sans_webfont', sans-serif;
+  font: 14px / 1.5 'Open Sans', sans-serif;
   color: #333333;
   background-color: #fff;
 }
@@ -917,8 +889,7 @@ a:hover {
 }
 b,
 strong {
-  font-family: 'open_sans_webfont_semibold', sans-serif;
-  font-weight: normal;
+  font-weight: 600;
 }
 .center {
   text-align: center;
@@ -965,8 +936,7 @@ body.nav-closed #content {
   display: inline-block;
   padding: 0 5px 1px;
   font-size: 84.6%;
-  font-family: 'open_sans_webfont_semibold', sans-serif;
-  font-weight: normal;
+  font-weight: 600;
   color: #fff;
   vertical-align: baseline;
   white-space: nowrap;
@@ -1013,8 +983,7 @@ body.nav-closed #content {
   display: inline-block;
   outline: none;
   color: #fff;
-  font-family: 'open_sans_webfont_semibold', sans-serif;
-  font-weight: normal;
+  font-weight: 600;
   border: none;
   background-color: #9cb800;
   -webkit-border-radius: 3px;
@@ -1086,7 +1055,7 @@ body.nav-closed #content {
 .button.small {
   padding: 4px 8px;
   font-size: 12px;
-  font-family: 'open_sans_webfont_semibold', sans-serif;
+  font-weight: 600;
   -webkit-border-radius: 3px;
   /* Safari 3-4, iOS 1-3.2, Android ≤1.6 */
   border-radius: 3px;
@@ -1157,8 +1126,8 @@ body.nav-closed #content {
   color: #000;
 }
 label {
-  font-family: 'open_sans_webfont_semibold', sans-serif;
-  font-weight: normal;
+  font-weight: 700;
+  color: #444;
   cursor: pointer;
 }
 .form-row.required label:before {
@@ -1173,8 +1142,7 @@ label {
 label small {
   color: #878787;
   display: block;
-  font-family: 'open_sans_webfont', sans-serif;
-  font-weight: normal;
+  font-weight: 400;
   font-size: 80%;
 }
 input[type="text"],
@@ -1313,9 +1281,6 @@ div.error-message {
 .form-row.form-row-checkbox > label {
   padding-top: 20px;
 }
-.form-row.form-row-checkbox .field > label {
-  font-family: 'open_sans_webfont', sans-serif;
-}
 .form-row.form-row-checkbox .field > label input[type="checkbox"] {
   position: relative;
   top: 1px;
@@ -1379,8 +1344,8 @@ textarea {
 select {
   padding: 5px 5px 4px;
   border: 1px solid #e2e2e2;
-  font-family: 'open_sans_webfont', sans-serif;
-  font-weight: normal;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
 }
 select:focus {
   border-color: #999999;
@@ -1390,8 +1355,7 @@ select.full {
   width: 100%;
 }
 select optgroup {
-  font-family: 'open_sans_webfont_semibold', sans-serif;
-  font-weight: 400;
+  font-weight: 600;
   font-style: normal;
 }
 select.select-small {
@@ -1585,7 +1549,7 @@ body.nav-closed #page-header .nav-toggle {
   background-color: #32506b;
 }
 .modal-header span {
-  font-family: 'open_sans_webfont_semibold', sans-serif;
+  font-weight: 600;
   font-size: 20px;
   color: #fff;
 }
@@ -1630,8 +1594,7 @@ body.nav-closed #page-header .nav-toggle {
 }
 .dialog-header h3 {
   padding: 10px 20px;
-  font-family: 'open_sans_webfont_semibold', sans-serif;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 20px;
   color: #fff;
   background-color: #32506b;
@@ -1992,8 +1955,8 @@ table.list.valign-middle td {
 }
 table.list thead tr th,
 table.list tfoot tr th {
-  font-family: 'open_sans_webfont_semibold', sans-serif;
-  font-weight: normal;
+  font-weight: 600;
+  color: #444;
   text-align: left;
   background-color: #f2f3f4;
   padding: 0 10px;
@@ -2013,7 +1976,7 @@ table.list tfoot tr th.center {
 }
 table.list thead tr th a,
 table.list tfoot tr th a {
-  color: #333333;
+  color: #424242;
 }
 table.list thead tr th a span,
 table.list tfoot tr th a span {
@@ -2021,7 +1984,7 @@ table.list tfoot tr th a span {
 }
 table.list thead tr th a:hover span,
 table.list tfoot tr th a:hover span {
-  border-color: #333333;
+  border-color: #424242;
 }
 table.list thead tr:first-child th,
 table.list tfoot tr:first-child th {
@@ -2111,9 +2074,8 @@ table.list .col-actions {
 .field > table.list label,
 .field > .list-content label {
   display: block;
-  font-family: 'open_sans_webfont_semibold', sans-serif;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 600;
 }
 .field > table.list input[type="text"],
 .field > .list-content input[type="text"],
@@ -2135,7 +2097,8 @@ table.list .col-actions {
 .table-head {
   background-color: #f2f3f4;
   font-size: 14px;
-  font-family: 'open_sans_webfont_semibold', sans-serif;
+  font-weight: 600;
+  color: #424242;
   text-align: left;
   border-style: solid;
   border-color: #d5d7d7;
@@ -2219,8 +2182,8 @@ table.list tbody .col-actions > a:first-child,
 .titlepad-title .lang {
   display: inline-block;
   margin-left: 10px;
-  margin-top: 8px;
-  padding: 0 5px 3px 4px;
+  margin-top: 9px;
+  padding: 1px 5px 1px 4px;
   font-size: 16px;
   color: #fff;
   background-color: #878787;
@@ -2233,6 +2196,29 @@ table.list tbody .col-actions > a:first-child,
   margin: 0;
   padding: 0;
   list-style: none;
+}
+.titlepad-actions a.add,
+.titlepad-actions a.sync {
+  display: block;
+  width: 61px;
+  height: 42px;
+  line-height: 42px;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  -webkit-transition: background-color 0.1s linear 0s;
+  -moz-transition: background-color 0.1s linear 0s;
+  -o-transition: background-color 0.1s linear 0s;
+  transition: background-color 0.1s linear 0s;
+}
+.titlepad-actions a.add {
+  background-color: #9cb800;
+}
+.titlepad-actions a.add:hover {
+  background-color: #aac600;
+}
+.titlepad-actions a.add i {
+  font-size: 16px;
 }
 .spinner {
   width: 20px;
@@ -2495,7 +2481,7 @@ table.list tbody .col-actions > a:first-child,
   background-color: #f2f3f4;
   font-size: 20px;
   line-height: 30px;
-  font-family: 'open_sans_webfont_semibold', sans-serif;
+  font-weight: 600;
   color: #bbc0c5;
 }
 .wasabi-core--grouppermissions-index .permissions .plugin td:hover {
@@ -2508,7 +2494,7 @@ table.list tbody .col-actions > a:first-child,
   background-color: #fcfcfc !important;
   border-right: 1px solid #d5d7d7;
   border-bottom: 1px solid #d5d7d7;
-  font-family: 'open_sans_webfont_semibold', sans-serif;
+  font-weight: 600;
 }
 .wasabi-core--grouppermissions-index .permissions .action {
   line-height: 32px;
@@ -2517,7 +2503,6 @@ table.list tbody .col-actions > a:first-child,
   border-bottom: 1px solid #ddd;
 }
 .wasabi-core--grouppermissions-index .permissions label {
-  font-family: 'open_sans_webfont', sans-serif;
   cursor: pointer;
 }
 .wasabi-core--grouppermissions-index .permissions input[type=checkbox] {

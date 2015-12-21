@@ -3,8 +3,8 @@
 @import (reference) '../__mixins';
 
 label {
-  font-family: @font-os-semibold;
-  font-weight: normal;
+  font-weight: 700;
+  color: #444;
   cursor: pointer;
 
   .form-row.required &:before {
@@ -20,8 +20,7 @@ label {
   small {
     color: @gray-light;
     display: block;
-    font-family: @font-os;
-    font-weight: normal;
+    font-weight: 400;
     font-size: 80%;
   }
 }
@@ -175,7 +174,6 @@ span.error-message, div.error-message {
     }
 
     .field > label {
-      font-family: @font-os;
 
       input[type="checkbox"] {
         position: relative;
@@ -251,7 +249,7 @@ select {
   padding: 5px 5px 4px;
   border: 1px solid @form-input-border-color;
   font-family: @font-os;
-  font-weight: normal;
+  font-weight: 400;
 
   &:focus {
     border-color: @form-input-border-color--focus;
@@ -263,8 +261,7 @@ select {
   }
 
   optgroup {
-    font-family: @font-os-semibold;
-    font-weight: 400;
+    font-weight: 600;
     font-style: normal;
   }
 
