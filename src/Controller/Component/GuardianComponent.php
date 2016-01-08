@@ -278,6 +278,27 @@ class GuardianComponent extends Component
 			}
 		}
 
+        $appControllers = $this->getControllersForApp();
+        foreach ($appControllers as $controller) {
+            $actions = $this->introspectController($controller['path']);
+
+            if (empty($actions)) {
+                continue;
+            }
+            foreach ($actions as $action) {
+                $path = "App.{$controller['name']}.{$action}";
+                if (in_array($path, $this->_guestActions)) {
+                    continue;
+                }
+                $actionMap[$path] = [
+                    'plugin' => 'App',
+                    'controller' => $controller['name'],
+                    'action' => $action
+                ];
+            }
+        }
+
+
 		return $actionMap;
     }
 
@@ -333,6 +354,37 @@ class GuardianComponent extends Component
 		}
 
 		return $controllers;
+    }
+
+    /**
+     * Retrieve all controller names + paths for the app src.
+     *
+     * @return array
+     */
+    public function getControllersForApp()
+    {
+        $controllers = [];
+        $Folder = new Folder();
+
+        $ctrlFolder = $Folder->cd(ROOT . DS . 'src' . DS . 'Controller');
+
+        if (!empty($ctrlFolder)) {
+            $files = $Folder->find('.*Controller\.php$');
+            $subLength = strlen('Controller.php');
+            foreach ($files as $f) {
+                $filename = basename($f);
+                if ($filename === 'AppController.php') {
+                    continue;
+                }
+                $ctrlName = substr($filename, 0, strlen($filename) - $subLength);
+                $controllers[] = [
+                    'name' => $ctrlName,
+                    'path' => $Folder->path . DS . $f
+                ];
+            }
+        }
+
+        return $controllers;
     }
 
     /**
