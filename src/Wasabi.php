@@ -49,6 +49,9 @@ class Wasabi
         if ($user !== null) {
             self::$_user = $user;
         }
+        if (!self::$_user) {
+            return null;
+        }
         return self::$_user;
     }
 
