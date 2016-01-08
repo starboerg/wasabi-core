@@ -538,7 +538,7 @@ class UsersController extends BackendAppController
                 return;
             } else {
                 $this->Users->connection()->rollback();
-                $this->Flash->error(__d('wasabi_core', $this->formErrorMessage));
+                $this->Flash->error($this->formErrorMessage);
             }
         }
         $this->set('user', $user);
