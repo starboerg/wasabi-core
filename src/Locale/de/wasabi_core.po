@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
 "POT-Creation-Date: 2016-01-08 09:38+0000\n"
-"PO-Revision-Date: 2016-01-08 11:51+0100\n"
-"Last-Translator: Frank Förster\n"
+"PO-Revision-Date: 2016-01-11 15:44+0100\n"
+"Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.7.5\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,-1,109\n"
 
 #: Nav.php:38
@@ -575,7 +575,7 @@ msgstr ""
 #: Template/Groups/__group-row.ctp:37 Template/Menus/__menu-item-row.ctp:59
 #: Template/Menus/__menu-row.ctp:37 Template/Users/__user-row.ctp:92
 msgid "Confirm Deletion"
-msgstr "Löschung bestätigen"
+msgstr "Löschen bestätigen"
 
 #: Template/Groups/add.ctp:8 Template/Groups/index.ctp:18
 msgid "Create a new Group"
@@ -1077,8 +1077,8 @@ msgid ""
 "To change your password fill in both password fields. Otherwise leave those "
 "fields empty."
 msgstr ""
-"Um Ihr Passwort zu ändern, bitte beide Passwort-Felder befüllen. Andernfalls "
-"die beiden Felder leer lassen."
+"Möchten Sie Ihr Passwort ändern, dann füllen Sie bitte beide Passwort-Felder "
+"aus.<br>Anderenfalls lassen Sie diese leer."
 
 #: Template/Users/profile.ctp:32
 msgid "Adjust these settings for your current location."

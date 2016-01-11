@@ -120,11 +120,16 @@ class UsersTable extends Table
      */
     public function validationEmailOnly(Validator $validator)
     {
-        $validator = $this->validationDefault($validator);
+        $validator
+            ->notEmpty('email', __d('wasabi_core', 'Please enter an email address.'))
+            ->add('email', [
+                'email' => [
+                    'rule' => 'email',
+                    'message' => __d('wasabi_core', 'Please enter a valid email address.')
+                ]
+            ]);
 
-        $emailValidator = new Validator();
-        $emailValidator->field('email', $validator->field('email'));
-        return $emailValidator;
+        return $validator;
     }
 
     /**
@@ -135,12 +140,33 @@ class UsersTable extends Table
      */
     public function validationPasswordOnly(Validator $validator)
     {
-        $validator = $this->validationDefault($validator);
+        $validator
+            ->notEmpty('password', __d('wasabi_core', 'Please enter a password.'), 'create')
+            ->add('password', [
+                'length' => [
+                    'rule' => ['minLength', 6],
+                    'message' => __d('wasabi_core', 'Ensure your password consists of at least 6 characters.')
+                ]
+            ])
+            ->notEmpty('password_confirmation', __d('wasabi_core', 'Please repeat your Password.'), function ($context) {
+                if ($context['newRecord'] === true) {
+                    return true;
+                }
+                if (isset($context['data']['password']) && !empty($context['data']['password'])) {
+                    return true;
+                }
+                return false;
+            })
+            ->add('password_confirmation', 'equalsPassword', [
+                'rule' => function ($passwordConfirmation, $provider) {
+                    if ($passwordConfirmation !== $provider['data']['password']) {
+                        return __d('wasabi_core', 'The Password Confirmation does not match the Password field.');
+                    }
+                    return true;
+                }
+            ]);
 
-        $passwordValidator = new Validator();
-        $passwordValidator->field('password', $validator->field('password'));
-        $passwordValidator->field('password_confirmation', $validator->field('password_confirmation'));
-        return $passwordValidator;
+        return $validator;
     }
 
     /**
