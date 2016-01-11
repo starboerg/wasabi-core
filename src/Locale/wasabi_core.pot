@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-07-07 18:46+0000\n"
+"POT-Creation-Date: 2016-01-08 09:38+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,34 +15,34 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: Nav.php:38
-msgid "A Menu with alias \""
+msgid "A Menu with alias \"{0}\" already exists."
 msgstr ""
 
 #: Nav.php:57
-msgid "No menu with alias \""
+msgid "No menu with alias \"{0}\" does exist."
 msgstr ""
 
-#: Controller/BackendAppController.php:98
+#: Controller/BackendAppController.php:101
 msgid "Please correct the marked errors."
 msgstr ""
 
-#: Controller/BackendAppController.php:99
+#: Controller/BackendAppController.php:102
 msgid "Invalid Request."
 msgstr ""
 
-#: Controller/BackendAppController.php:100
+#: Controller/BackendAppController.php:103
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: Controller/GroupPermissionsController.php:107
+#: Controller/GroupPermissionsController.php:108
 msgid "All permissions have been synchronized."
 msgstr ""
 
-#: Controller/GroupPermissionsController.php:129
+#: Controller/GroupPermissionsController.php:130
 msgid "There are no permissions to update yet."
 msgstr ""
 
-#: Controller/GroupPermissionsController.php:155
+#: Controller/GroupPermissionsController.php:156
 msgid "All permissions have been saved."
 msgstr ""
 
@@ -102,121 +102,171 @@ msgstr ""
 msgid "Menu Item <strong>{0}</strong> has been created."
 msgstr ""
 
-#: Controller/MenusController.php:221
+#: Controller/MenusController.php:222
 msgid "Menu Item <strong>{0}</strong> has been updated."
 msgstr ""
 
-#: Controller/MenusController.php:253
+#: Controller/MenusController.php:254
 msgid "The menu item <strong>{0}</strong> has been deleted."
 msgstr ""
 
-#: Controller/MenusController.php:299
+#: Controller/MenusController.php:300
 msgid "The menu item positions have been updated."
 msgstr ""
 
-#: Controller/SettingsController.php:47
+#: Controller/RoutesController.php:84
+msgid "New default URL <strong>{0}</strong> has been added."
+msgstr ""
+
+#: Controller/RoutesController.php:101
+msgid "New redirect URL <strong>{0}</strong> has been added."
+msgstr ""
+
+#: Controller/RoutesController.php:107
+msgid "Please create a default route first."
+msgstr ""
+
+#: Controller/RoutesController.php:147
+msgid "<strong>{0}</strong> is now the new Default Route."
+msgstr ""
+
+#: Controller/RoutesController.php:200
+msgid "The URL <strong>{0}</strong> has been deleted."
+msgstr ""
+
+#: Controller/RoutesController.php:202
+msgid "The URL <strong>{0}</strong> cannot be deleted. Please create another URL first."
+msgstr ""
+
+#: Controller/SettingsController.php:50
 msgid "The general settings have been updated."
 msgstr ""
 
-#: Controller/SettingsController.php:72
+#: Controller/SettingsController.php:75
 msgid "The cache settings have been updated."
 msgstr ""
 
-#: Controller/UsersController.php:130
+#: Controller/UsersController.php:140
 msgid "Please verify your email address. You can request a new verification email {0}."
 msgstr ""
 
-#: Controller/UsersController.php:133
+#: Controller/UsersController.php:143
 msgid "here"
 msgstr ""
 
-#: Controller/UsersController.php:138
+#: Controller/UsersController.php:148
 msgid "Your account has not yet been activated. Once your account has been checked by an administrator, you will receive a notification email."
 msgstr ""
 
-#: Controller/UsersController.php:146
+#: Controller/UsersController.php:156
 msgid "Welcome back <strong>{0}</strong>."
 msgstr ""
 
-#: Controller/UsersController.php:152
+#: Controller/UsersController.php:162
 msgid "Username or password is incorrect."
 msgstr ""
 
-#: Controller/UsersController.php:178
+#: Controller/UsersController.php:188
 msgid "The user has been saved."
 msgstr ""
 
-#: Controller/UsersController.php:182
+#: Controller/UsersController.php:192
 msgid "Unable to add the user."
 msgstr ""
 
-#: Controller/UsersController.php:210
+#: Controller/UsersController.php:220
 msgid "The user <strong>{0}</strong> has been created."
 msgstr ""
 
-#: Controller/UsersController.php:249
+#: Controller/UsersController.php:267
 msgid "The user <strong>{0}</strong> has been saved."
 msgstr ""
 
-#: Controller/UsersController.php:280
+#: Controller/UsersController.php:304
 msgid "The user <strong>{0}</strong> has been deleted."
 msgstr ""
 
-#: Event/MenuListener.php:53
+#: Controller/UsersController.php:389
+msgid "Your profile has been updated."
+msgstr ""
+
+#: Controller/UsersController.php:496
+msgid "We have sent you an email to reset your password."
+msgstr ""
+
+#: Controller/UsersController.php:536
+msgid "Your password has been changed successfully."
+msgstr ""
+
+#: Event/MenuListener.php:57
 msgid "Dashboard"
 msgstr ""
 
-#: Event/MenuListener.php:64
+#: Event/MenuListener.php:68
 msgid "Content"
 msgstr ""
 
-#: Event/MenuListener.php:70
+#: Event/MenuListener.php:74
 #: Template/Menus/index.ctp:7
 msgid "Menus"
 msgstr ""
 
-#: Event/MenuListener.php:81;183
+#: Event/MenuListener.php:85;188
 msgid "Media"
 msgstr ""
 
-#: Event/MenuListener.php:92
+#: Event/MenuListener.php:96
 msgid "Administration"
 msgstr ""
 
-#: Event/MenuListener.php:98
+#: Event/MenuListener.php:102
 #: Template/Users/index.ctp:33
 msgid "Users"
 msgstr ""
 
-#: Event/MenuListener.php:109
+#: Event/MenuListener.php:114
 #: Template/Groups/index.ctp:7
 msgid "Groups"
 msgstr ""
 
-#: Event/MenuListener.php:120
+#: Event/MenuListener.php:125
 #: Template/Languages/index.ctp:8
 msgid "Languages"
 msgstr ""
 
-#: Event/MenuListener.php:131
+#: Event/MenuListener.php:136
 msgid "Plugins"
 msgstr ""
 
-#: Event/MenuListener.php:142
+#: Event/MenuListener.php:147
 #: Template/GroupPermissions/index.ctp:8;38
 msgid "Permissions"
 msgstr ""
 
-#: Event/MenuListener.php:153
+#: Event/MenuListener.php:158
 msgid "Settings"
 msgstr ""
 
-#: Event/MenuListener.php:159
+#: Event/MenuListener.php:164;207
 msgid "General"
 msgstr ""
 
-#: Event/MenuListener.php:171
+#: Event/MenuListener.php:176
 msgid "Cache"
+msgstr ""
+
+#: Event/MenuListener.php:208
+msgid "External Link"
+msgstr ""
+
+#: Event/MenuListener.php:209
+msgid "Custom Controller Action"
+msgstr ""
+
+#: Mailer/UserMailer.php:64
+#: Template/Email/html/User/lost-password.ctp:8
+#: Template/Email/text/User/lost-password.ctp:8
+msgid "Password Reset"
 msgstr ""
 
 #: Model/Table/CacheSettingsTable.php:49
@@ -255,6 +305,24 @@ msgstr ""
 msgid "Please enter a name for your CMS instance."
 msgstr ""
 
+#: Model/Table/GeneralSettingsTable.php:59
+#: Model/Table/UsersTable.php:62
+msgid "Please enter an email address."
+msgstr ""
+
+#: Model/Table/GeneralSettingsTable.php:63
+#: Model/Table/UsersTable.php:66
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: Model/Table/GeneralSettingsTable.php:67
+msgid "Please enter a subject for the activation email."
+msgstr ""
+
+#: Model/Table/GeneralSettingsTable.php:71
+msgid "Please enter a subject for the verification email."
+msgstr ""
+
 #: Model/Table/GroupsTable.php:54
 msgid "Please enter a name for the group."
 msgstr ""
@@ -268,7 +336,7 @@ msgid "Please enter the name of the language."
 msgstr ""
 
 #: Model/Table/LanguagesTable.php:46
-msgid "Please enter the ISO 639-1 code of the language (e.g. \"en\")"
+msgid "Please enter the ISO 639-1 code of the language (e.g. \"en\")."
 msgstr ""
 
 #: Model/Table/LanguagesTable.php:49
@@ -276,7 +344,7 @@ msgid "The ISO 639-1 code must consist of exactly 2 characters."
 msgstr ""
 
 #: Model/Table/LanguagesTable.php:51
-msgid "Please enter the ISO 639-2/T code of the language (e.g. \"eng\")"
+msgid "Please enter the ISO 639-2/T code of the language (e.g. \"eng\")."
 msgstr ""
 
 #: Model/Table/LanguagesTable.php:54
@@ -284,59 +352,63 @@ msgid "The ISO 639-2/T code must consist of exactly 3 characters."
 msgstr ""
 
 #: Model/Table/LanguagesTable.php:56
-msgid "Please enter the HTML lang code of the language (e.g. \"en_US\")"
+msgid "Please enter the HTML lang code of the language (e.g. \"en_US\")."
 msgstr ""
 
 #: Model/Table/LanguagesTable.php:59
 msgid "The HTML lang code must consist of 2 to 5 characters."
 msgstr ""
 
-#: Model/Table/MenuItemsTable.php:53
+#: Model/Table/MenuItemsTable.php:54
 msgid "Please enter a name for the menu item."
 msgstr ""
 
-#: Model/Table/MenusTable.php:48
+#: Model/Table/MenusTable.php:50
 msgid "Please enter a name for the menu."
 msgstr ""
 
-#: Model/Table/UsersTable.php:53
+#: Model/Table/UsersTable.php:61
 msgid "Please enter a username."
 msgstr ""
 
-#: Model/Table/UsersTable.php:54
-msgid "Please enter an email address."
-msgstr ""
-
-#: Model/Table/UsersTable.php:58
-msgid "Please enter a valid email address."
-msgstr ""
-
-#: Model/Table/UsersTable.php:61
+#: Model/Table/UsersTable.php:69
 msgid "Please select a group this user belongs to."
 msgstr ""
 
-#: Model/Table/UsersTable.php:62
+#: Model/Table/UsersTable.php:70
 msgid "Please enter a password."
 msgstr ""
 
-#: Model/Table/UsersTable.php:66
+#: Model/Table/UsersTable.php:74
 msgid "Ensure your password consists of at least 6 characters."
 msgstr ""
 
-#: Model/Table/UsersTable.php:69
+#: Model/Table/UsersTable.php:77
 msgid "Please repeat your Password."
 msgstr ""
 
-#: Model/Table/UsersTable.php:81
+#: Model/Table/UsersTable.php:89
 msgid "The Password Confirmation does not match the Password field."
 msgstr ""
 
+#: Model/Table/UsersTable.php:100
+msgid "Invalid language selected."
+msgstr ""
+
+#: Model/Table/UsersTable.php:108
+msgid "Invalid timezone selected."
+msgstr ""
+
+#: Model/Table/UsersTable.php:154
+msgid "This email is already used by another user."
+msgstr ""
+
 #: Routing/RouteTypes.php:30
-msgid "Default Route"
+msgid "Default"
 msgstr ""
 
 #: Routing/RouteTypes.php:31
-msgid "Redirect Route"
+msgid "Redirect"
 msgstr ""
 
 #: Template/Element/Filter/pagination.ctp:21
@@ -367,13 +439,13 @@ msgstr ""
 msgid "Dismiss this Message"
 msgstr ""
 
-#: Template/Element/JavaScript/setup.ctp:27
+#: Template/Element/JavaScript/setup.ctp:29
 #: Template/Settings/cache.ctp:17
 #: Template/Settings/general.ctp:25
 msgid "Yes"
 msgstr ""
 
-#: Template/Element/JavaScript/setup.ctp:28
+#: Template/Element/JavaScript/setup.ctp:30
 #: Template/Settings/cache.ctp:16
 #: Template/Settings/general.ctp:24
 msgid "No"
@@ -385,6 +457,39 @@ msgstr ""
 
 #: Template/Element/Menu/user.ctp:18
 msgid "Logout"
+msgstr ""
+
+#: Template/Email/html/User/activated.ctp:8
+#: Template/Email/text/User/activated.ctp:8
+msgid "Account Activation"
+msgstr ""
+
+#: Template/Email/html/User/activated.ctp:10
+#: Template/Email/text/User/activated.ctp:10
+msgid "Hello {username},{nl}your account has been activated.{nl}{nl}You can now login and start creating content.{nl}{nl}{loginLink}"
+msgstr ""
+
+#: Template/Email/html/User/activated.ctp:17
+#: Template/Users/login.ctp:31
+msgid "Login"
+msgstr ""
+
+#: Template/Email/html/User/lost-password.ctp:10
+msgid "Hello {username},{nl}you recently requested a password reset. To change your password click the following link.{nl}{nl}{resetPasswordLink}"
+msgstr ""
+
+#: Template/Email/html/User/lost-password.ctp:16
+msgid "Reset password"
+msgstr ""
+
+#: Template/Email/html/User/verified-by-admin.ctp:8
+#: Template/Email/text/User/verified-by-admin.ctp:8
+msgid "Email Verified"
+msgstr ""
+
+#: Template/Email/html/User/verified-by-admin.ctp:10
+#: Template/Email/text/User/verified-by-admin.ctp:10
+msgid "Hello {username},{nl}your email address has been manually verified by an admin.{nl}{nl}Your account is not active yet.{nl}You will be notified via email as soon as your account has been activated."
 msgstr ""
 
 #: Template/GroupPermissions/__groupPermission-row.ctp:42
@@ -422,8 +527,9 @@ msgstr ""
 #: Template/Menus/add.ctp:73
 #: Template/Menus/add_item.ctp:42
 #: Template/Settings/cache.ctp:29
-#: Template/Settings/general.ctp:46
-#: Template/Users/add.ctp:54
+#: Template/Settings/general.ctp:62
+#: Template/Users/add.ctp:66
+#: Template/Users/profile.ctp:42
 msgid "Cancel"
 msgstr ""
 
@@ -464,8 +570,10 @@ msgstr ""
 #: Template/Menus/add.ctp:71
 #: Template/Menus/add_item.ctp:41
 #: Template/Settings/cache.ctp:28
-#: Template/Settings/general.ctp:45
-#: Template/Users/add.ctp:53
+#: Template/Settings/general.ctp:61
+#: Template/Users/add.ctp:65
+#: Template/Users/profile.ctp:41
+#: Template/Users/reset_password.ctp:25
 msgid "Save"
 msgstr ""
 
@@ -483,6 +591,12 @@ msgstr ""
 
 #: Template/Groups/delete.ctp:18
 msgid "Move Members & Delete Group"
+msgstr ""
+
+#: Template/Groups/index.ctp:28
+#: Template/Users/add.ctp:34
+#: Template/Users/index.ctp:48
+msgid "Group"
 msgstr ""
 
 #: Template/Groups/index.ctp:29
@@ -733,8 +847,44 @@ msgstr ""
 msgid "The CSS class that is applied to the message box."
 msgstr ""
 
+#: Template/Settings/general.ctp:45
+#: Template/Users/add.ctp:31
+#: Template/Users/index.ctp:47
+#: Template/Users/lost_password.ctp:14
+#: Template/Users/profile.ctp:13
+msgid "Email"
+msgstr ""
+
+#: Template/Settings/general.ctp:46
+msgid "Configure how backend emails are sent to users."
+msgstr ""
+
+#: Template/Settings/general.ctp:49
+msgid "Email Sender"
+msgstr ""
+
+#: Template/Settings/general.ctp:50
+msgid "The email address used as sender for all backend emails."
+msgstr ""
+
+#: Template/Settings/general.ctp:53
+msgid "Activation Email Subject"
+msgstr ""
+
+#: Template/Settings/general.ctp:54
+msgid "The subject used for activation emails."
+msgstr ""
+
+#: Template/Settings/general.ctp:57
+msgid "[Admin] Verification Email Subject"
+msgstr ""
+
+#: Template/Settings/general.ctp:58
+msgid "The subject used for verification emails, whenever a user’s email address is verified manually by an admin."
+msgstr ""
+
 #: Template/Users/__user-row.ctp:8
-#: Template/Users/add.ctp:11
+#: Template/Users/add.ctp:13
 msgid "Edit User"
 msgstr ""
 
@@ -806,49 +956,61 @@ msgstr ""
 msgid "Do you really want to delete user <strong>{0}</strong>?"
 msgstr ""
 
-#: Template/Users/add.ctp:9
+#: Template/Users/add.ctp:11
 #: Template/Users/index.ctp:19
 msgid "Create a new User"
 msgstr ""
 
-#: Template/Users/add.ctp:26
+#: Template/Users/add.ctp:28
 #: Template/Users/login.ctp:23
 msgid "Username"
 msgstr ""
 
-#: Template/Users/add.ctp:29
-#: Template/Users/index.ctp:47
-msgid "Email"
-msgstr ""
-
-#: Template/Users/add.ctp:32
-#: Template/Users/index.ctp:48
-msgid "Group"
-msgstr ""
-
-#: Template/Users/add.ctp:34
+#: Template/Users/add.ctp:36;61
+#: Template/Users/profile.ctp:37
 msgid "Please choose..."
 msgstr ""
 
-#: Template/Users/add.ctp:38
+#: Template/Users/add.ctp:40
+#: Template/Users/profile.ctp:16
 msgid "Change Password"
 msgstr ""
 
-#: Template/Users/add.ctp:39
-msgid "To change the user's password fill in both password fields. Otherwise leave those fields empty."
+#: Template/Users/add.ctp:41
+msgid "To change the user’s password fill in both password fields. Otherwise leave those fields empty."
 msgstr ""
 
-#: Template/Users/add.ctp:43
+#: Template/Users/add.ctp:45
 #: Template/Users/login.ctp:24
+#: Template/Users/profile.ctp:20
+#: Template/Users/reset_password.ctp:14
 msgid "Password"
 msgstr ""
 
-#: Template/Users/add.ctp:44
+#: Template/Users/add.ctp:46
+#: Template/Users/profile.ctp:21
+#: Template/Users/reset_password.ctp:15
 msgid "Should consist of 6 to 50 characters. All numbers, letters and special characters are allowed."
 msgstr ""
 
-#: Template/Users/add.ctp:48
+#: Template/Users/add.ctp:50
+#: Template/Users/profile.ctp:26
+#: Template/Users/reset_password.ctp:19
 msgid "Password Confirmation"
+msgstr ""
+
+#: Template/Users/add.ctp:55
+#: Template/Users/profile.ctp:31
+msgid "Language and Time"
+msgstr ""
+
+#: Template/Users/add.ctp:56
+msgid "Adjust these settings for the user’s current location."
+msgstr ""
+
+#: Template/Users/add.ctp:59
+#: Template/Users/profile.ctp:35
+msgid "Backend Interface Language"
 msgstr ""
 
 #: Template/Users/index.ctp:8;46
@@ -879,8 +1041,20 @@ msgstr ""
 msgid "Remember me for 2 weeks"
 msgstr ""
 
-#: Template/Users/login.ctp:31
-msgid "Login"
+#: Template/Users/lost_password.ctp:18
+msgid "Send"
+msgstr ""
+
+#: Template/Users/profile.ctp:7
+msgid "Edit Profle"
+msgstr ""
+
+#: Template/Users/profile.ctp:17
+msgid "To change your password fill in both password fields. Otherwise leave those fields empty."
+msgstr ""
+
+#: Template/Users/profile.ctp:32
+msgid "Adjust these settings for your current location."
 msgstr ""
 
 #: Template/Users/register.ctp:9

@@ -381,11 +381,13 @@ class UsersController extends BackendAppController
      */
     public function profile()
     {
+        /** @var User $user */
         $user = $this->Users->get($this->Auth->user('id'));
 
         if ($this->request->is('put') && !empty($this->request->data)) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
+                $this->request->session()->write('Auth.User.language_id', $user->language_id);
                 $this->Flash->success(__d('wasabi_core', 'Your profile has been updated.'));
                 $this->redirect(['action' => 'profile']);
                 return;
@@ -538,7 +540,7 @@ class UsersController extends BackendAppController
                 return;
             } else {
                 $this->Users->connection()->rollback();
-                $this->Flash->error(__d('wasabi_core', $this->formErrorMessage));
+                $this->Flash->error($this->formErrorMessage);
             }
         }
         $this->set('user', $user);
