@@ -8,6 +8,8 @@ use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Wasabi\Cms\Model\Entity\Page;
+use Wasabi\Cms\View\Theme\Theme;
+use Wasabi\Cms\View\Theme\ThemeManager;
 use Wasabi\Core\Model\Entity\Language;
 use Wasabi\Core\Model\Entity\User;
 use Wasabi\Core\Model\Table\LanguagesTable;
@@ -67,6 +69,16 @@ class Wasabi
             self::$_page = $page;
         }
         return self::$_page;
+    }
+
+    /**
+     * Get the theme instance.
+     *
+     * @return Theme
+     */
+    public static function getTheme()
+    {
+        return ThemeManager::theme(Wasabi::setting('Cms.Theme.id'));
     }
 
     /**
