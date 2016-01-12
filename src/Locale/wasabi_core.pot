@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-01-12 08:59+0000\n"
+"POT-Creation-Date: 2016-01-12 12:54+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -263,6 +263,32 @@ msgstr ""
 msgid "Custom Controller Action"
 msgstr ""
 
+#: Form/ContactForm.php:38
+msgid "Please enter your name."
+msgstr ""
+
+#: Form/ContactForm.php:39
+msgid "Please enter your email address."
+msgstr ""
+
+#: Form/ContactForm.php:40
+#: Model/Table/GeneralSettingsTable.php:63
+#: Model/Table/UsersTable.php:66;128
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: Form/ContactForm.php:41
+msgid "Please enter a subject for your contact request."
+msgstr ""
+
+#: Form/ContactForm.php:42
+msgid "Please provide a message for your contact request."
+msgstr ""
+
+#: Form/ContactForm.php:43;46
+msgid "Please confirm you are human."
+msgstr ""
+
 #: Mailer/UserMailer.php:64
 #: Template/Email/html/User/lost-password.ctp:8
 #: Template/Email/text/User/lost-password.ctp:8
@@ -308,11 +334,6 @@ msgstr ""
 #: Model/Table/GeneralSettingsTable.php:59
 #: Model/Table/UsersTable.php:62;124
 msgid "Please enter an email address."
-msgstr ""
-
-#: Model/Table/GeneralSettingsTable.php:63
-#: Model/Table/UsersTable.php:66;128
-msgid "Please enter a valid email address."
 msgstr ""
 
 #: Model/Table/GeneralSettingsTable.php:67
@@ -451,6 +472,10 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+#: Template/Element/JavaScript/templates.hbs.ctp:41
+msgid "Close Dialog"
+msgstr ""
+
 #: Template/Element/Menu/user.ctp:10
 msgid "Edit Profile"
 msgstr ""
@@ -475,6 +500,7 @@ msgid "Login"
 msgstr ""
 
 #: Template/Email/html/User/lost-password.ctp:10
+#: Template/Email/text/User/lost-password.ctp:10
 msgid "Hello {username},{nl}you recently requested a password reset. To change your password click the following link.{nl}{nl}{resetPasswordLink}"
 msgstr ""
 

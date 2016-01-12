@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
-"POT-Creation-Date: 2016-01-12 08:59+0000\n"
-"PO-Revision-Date: 2016-01-12 10:02+0100\n"
+"POT-Creation-Date: 2016-01-12 12:52+0000\n"
+"PO-Revision-Date: 2016-01-12 13:53+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.7.5\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,-1,109\n"
 
 #: Nav.php:38
@@ -284,6 +284,32 @@ msgstr "Externer Link"
 msgid "Custom Controller Action"
 msgstr "Benutzerdefinierte Controller Action"
 
+#: Form/ContactForm.php:38
+msgid "Please enter your name."
+msgstr "Bitte geben Sie Ihren Namen ein."
+
+#: Form/ContactForm.php:39
+msgid "Please enter your email address."
+msgstr "Bitte geben Sie Ihre E-Mail-Adresse an."
+
+#: Form/ContactForm.php:40 Model/Table/GeneralSettingsTable.php:63
+#: Model/Table/UsersTable.php:66;128
+msgid "Please enter a valid email address."
+msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+
+#: Form/ContactForm.php:41
+msgid "Please enter a subject for your contact request."
+msgstr "Bitte geben Sie den Betreff Ihre Kontaktaufnahme an."
+
+#: Form/ContactForm.php:42
+msgid "Please provide a message for your contact request."
+msgstr ""
+"Bitte erläutern Sie kurz, weshalb Sie mit uns Kontakt aufnehmen wollen."
+
+#: Form/ContactForm.php:43;46
+msgid "Please confirm you are human."
+msgstr "Bitte bestätigen Sie, dass Sie ein Mensch und kein Computer sind."
+
 #: Mailer/UserMailer.php:64 Template/Email/html/User/lost-password.ctp:8
 #: Template/Email/text/User/lost-password.ctp:8
 msgid "Password Reset"
@@ -328,10 +354,6 @@ msgstr "Bitte geben Sie einen Namen für Ihre CMS-Instanz ein."
 #: Model/Table/GeneralSettingsTable.php:59 Model/Table/UsersTable.php:62;124
 msgid "Please enter an email address."
 msgstr "Bitte geben Sie eine E-Mail-Adresse ein."
-
-#: Model/Table/GeneralSettingsTable.php:63 Model/Table/UsersTable.php:66;128
-msgid "Please enter a valid email address."
-msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein."
 
 #: Model/Table/GeneralSettingsTable.php:67
 msgid "Please enter a subject for the activation email."
@@ -468,6 +490,10 @@ msgstr "Ja"
 #: Template/Settings/general.ctp:28
 msgid "No"
 msgstr "Nein"
+
+#: Template/Element/JavaScript/templates.hbs.ctp:41
+msgid "Close Dialog"
+msgstr "Dialog schließen"
 
 #: Template/Element/Menu/user.ctp:10
 msgid "Edit Profile"

@@ -38,7 +38,7 @@
         <div class="dialog-inner<% if (sidebarLeft) { %> dialog-has-sidebar-left<% } %><% if (sidebarRight) { %> dialog-has-sidebar-right<% } %>">
             <header class="dialog-header">
                 <h3><%= title %></h3>
-                <a href="javascript:void(0)" data-toggle="close" title="<?= __d('wasabi_cms', 'Close Dialog') ?>"><i class="icon-close"></i></a>
+                <a href="javascript:void(0)" data-toggle="close" title="<?= __d('wasabi_core', 'Close Dialog') ?>"><i class="icon-close"></i></a>
             </header>
             <% if (sidebarLeft) { %>
                 <div class="dialog-sidebar dialog-sidebar-left"></div>
