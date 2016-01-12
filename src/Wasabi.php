@@ -169,4 +169,13 @@ class Wasabi
             }
         }
     }
+
+    /**
+     * Get the html title suffix of this wasabi instance.
+     * @return string
+     */
+    public static function getHtmlTitleSuffix()
+    {
+        return self::setting('Core.html_title_suffix');
+    }
 }
