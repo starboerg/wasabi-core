@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
-"POT-Creation-Date: 2016-01-08 09:38+0000\n"
-"PO-Revision-Date: 2016-01-11 15:44+0100\n"
+"POT-Creation-Date: 2016-01-12 08:59+0000\n"
+"PO-Revision-Date: 2016-01-12 10:02+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.7.4\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,-1,109\n"
 
 #: Nav.php:38
@@ -27,15 +27,15 @@ msgstr "Ein Menü mit dem Namen \"{0}\" existiert bereits."
 msgid "No menu with alias \"{0}\" does exist."
 msgstr "Es existiert kein Menü mit dem Namen \"{0}\"."
 
-#: Controller/BackendAppController.php:101
+#: Controller/BackendAppController.php:98
 msgid "Please correct the marked errors."
 msgstr "Bitte korrigieren Sie die markierten Fehler."
 
-#: Controller/BackendAppController.php:102
+#: Controller/BackendAppController.php:99
 msgid "Invalid Request."
 msgstr "Ungültige Anfrage"
 
-#: Controller/BackendAppController.php:103
+#: Controller/BackendAppController.php:100
 msgid "Something went wrong. Please try again."
 msgstr "Irgendwas ging schief. Bitte versuchen Sie es erneut."
 
@@ -156,11 +156,11 @@ msgstr ""
 "Die URL <strong>{0}</strong> kann nicht gelöscht werden. Bitte erstellen Sie "
 "zunächste eine neue URL."
 
-#: Controller/SettingsController.php:50
+#: Controller/SettingsController.php:51
 msgid "The general settings have been updated."
 msgstr "Die allgemeinen Einstellungen wurden aktualisiert."
 
-#: Controller/SettingsController.php:75
+#: Controller/SettingsController.php:76
 msgid "The cache settings have been updated."
 msgstr "Die Cache Einstellungen wurden aktualisiert."
 
@@ -212,15 +212,15 @@ msgstr "Der Nutzer <strong>{0}</strong> wurde gespeichert."
 msgid "The user <strong>{0}</strong> has been deleted."
 msgstr "Der Nutzer <strong>{0}</strong> wurde gelöscht."
 
-#: Controller/UsersController.php:389
+#: Controller/UsersController.php:391
 msgid "Your profile has been updated."
 msgstr "Ihr Profil wurde aktualisiert."
 
-#: Controller/UsersController.php:496
+#: Controller/UsersController.php:498
 msgid "We have sent you an email to reset your password."
 msgstr "Wir haben Ihnen eine E-Mail zum Zurücksetzen Ihres Passworts gesendet."
 
-#: Controller/UsersController.php:536
+#: Controller/UsersController.php:538
 msgid "Your password has been changed successfully."
 msgstr "Ihr Passwort wurde erfolgreich geändert."
 
@@ -325,11 +325,11 @@ msgstr "Bitte wählen Sie eine gültige Cache-Dauer aus."
 msgid "Please enter a name for your CMS instance."
 msgstr "Bitte geben Sie einen Namen für Ihre CMS-Instanz ein."
 
-#: Model/Table/GeneralSettingsTable.php:59 Model/Table/UsersTable.php:62
+#: Model/Table/GeneralSettingsTable.php:59 Model/Table/UsersTable.php:62;124
 msgid "Please enter an email address."
 msgstr "Bitte geben Sie eine E-Mail-Adresse ein."
 
-#: Model/Table/GeneralSettingsTable.php:63 Model/Table/UsersTable.php:66
+#: Model/Table/GeneralSettingsTable.php:63 Model/Table/UsersTable.php:66;128
 msgid "Please enter a valid email address."
 msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein."
 
@@ -394,20 +394,20 @@ msgstr "Bitte geben Sie einen Nutzernamen ein."
 msgid "Please select a group this user belongs to."
 msgstr "Bitte wählen Sie für den Nutzer eine Gruppe aus."
 
-#: Model/Table/UsersTable.php:70
+#: Model/Table/UsersTable.php:70;144
 msgid "Please enter a password."
 msgstr "Bitte geben Sie ein Passwort ein."
 
-#: Model/Table/UsersTable.php:74
+#: Model/Table/UsersTable.php:74;148
 msgid "Ensure your password consists of at least 6 characters."
 msgstr ""
 "Bitte achten Sie darauf, dass Ihr Passwort aus mindestens 6 Zeichen besteht."
 
-#: Model/Table/UsersTable.php:77
+#: Model/Table/UsersTable.php:77;151
 msgid "Please repeat your Password."
 msgstr "Bitte wiederholen Sie Ihr Passwort."
 
-#: Model/Table/UsersTable.php:89
+#: Model/Table/UsersTable.php:89;163
 msgid "The Password Confirmation does not match the Password field."
 msgstr "Die Passwort-Wiederholung stimmt nicht mit dem Passwort überein."
 
@@ -419,7 +419,7 @@ msgstr "Ungültige Sprache ausgewählt."
 msgid "Invalid timezone selected."
 msgstr "Ungültige Zeitzone ausgewählt."
 
-#: Model/Table/UsersTable.php:154
+#: Model/Table/UsersTable.php:180
 msgid "This email is already used by another user."
 msgstr "Es existiert bereits ein Nutzer mit dieser E-Mail-Adresse."
 
@@ -460,12 +460,12 @@ msgid "Dismiss this Message"
 msgstr "Nachricht ausblenden"
 
 #: Template/Element/JavaScript/setup.ctp:29 Template/Settings/cache.ctp:17
-#: Template/Settings/general.ctp:25
+#: Template/Settings/general.ctp:29
 msgid "Yes"
 msgstr "Ja"
 
 #: Template/Element/JavaScript/setup.ctp:30 Template/Settings/cache.ctp:16
-#: Template/Settings/general.ctp:24
+#: Template/Settings/general.ctp:28
 msgid "No"
 msgstr "Nein"
 
@@ -554,7 +554,7 @@ msgstr "Alle aktualisieren"
 #: Template/GroupPermissions/index.ctp:56 Template/Groups/add.ctp:29
 #: Template/Groups/delete.ctp:19 Template/Languages/add.ctp:34
 #: Template/Menus/add.ctp:73 Template/Menus/add_item.ctp:42
-#: Template/Settings/cache.ctp:29 Template/Settings/general.ctp:62
+#: Template/Settings/cache.ctp:29 Template/Settings/general.ctp:66
 #: Template/Users/add.ctp:66 Template/Users/profile.ctp:42
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -591,7 +591,7 @@ msgstr "Gruppen-Name"
 
 #: Template/Groups/add.ctp:28 Template/Languages/add.ctp:33
 #: Template/Menus/add.ctp:71 Template/Menus/add_item.ctp:41
-#: Template/Settings/cache.ctp:28 Template/Settings/general.ctp:61
+#: Template/Settings/cache.ctp:28 Template/Settings/general.ctp:65
 #: Template/Users/add.ctp:65 Template/Users/profile.ctp:41
 #: Template/Users/reset_password.ctp:25
 msgid "Save"
@@ -837,70 +837,78 @@ msgid "The name of your CMS instance."
 msgstr "Der Name Ihrer CMS-Instanz."
 
 #: Template/Settings/general.ctp:18
+msgid "Html Title Suffix"
+msgstr "Html-Title Suffix"
+
+#: Template/Settings/general.ctp:19
+msgid "The Html title suffix of your CMS instance."
+msgstr "Der Html Titel Suffix Ihrer CMS-Instanz."
+
+#: Template/Settings/general.ctp:22
 msgid "Login Message"
 msgstr "Login-Nachricht"
 
-#: Template/Settings/general.ctp:19
+#: Template/Settings/general.ctp:23
 msgid "An optional message that is displayed on top of the login page."
 msgstr "Eine optionale Nachricht die oberhalb der Login-Seite angezeigt wird."
 
-#: Template/Settings/general.ctp:22
+#: Template/Settings/general.ctp:26
 msgid "Display Login Message?"
 msgstr "Login-Nachricht anzeigen?"
 
-#: Template/Settings/general.ctp:29
+#: Template/Settings/general.ctp:33
 msgid "Login Message Text"
 msgstr "Login-Nachricht Inhalt"
 
-#: Template/Settings/general.ctp:30
+#: Template/Settings/general.ctp:34
 msgid "The text of the login message."
 msgstr "Der Inhalt der Login-Nachricht."
 
-#: Template/Settings/general.ctp:31
+#: Template/Settings/general.ctp:35
 msgid ""
 "allowed Html tags: &lt;b&gt;&lt;strong&gt;&lt;a&gt;&lt;br&gt;&lt;br/&gt;"
 msgstr ""
 "erlaubte HTML-Tags: &lt;b&gt;&lt;strong&gt;&lt;a&gt;&lt;br&gt;&lt;br/&gt;"
 
-#: Template/Settings/general.ctp:36
+#: Template/Settings/general.ctp:40
 msgid "Login Message Class"
 msgstr "Login-Nachricht Klasse"
 
-#: Template/Settings/general.ctp:37
+#: Template/Settings/general.ctp:41
 msgid "The CSS class that is applied to the message box."
 msgstr "Die CSS-Klasse die an der Nachrichten-Box hinzugefügt wird."
 
-#: Template/Settings/general.ctp:45 Template/Users/add.ctp:31
+#: Template/Settings/general.ctp:49 Template/Users/add.ctp:31
 #: Template/Users/index.ctp:47 Template/Users/lost_password.ctp:14
 #: Template/Users/profile.ctp:13
 msgid "Email"
 msgstr "E-Mail-Adresse"
 
-#: Template/Settings/general.ctp:46
+#: Template/Settings/general.ctp:50
 msgid "Configure how backend emails are sent to users."
 msgstr "Konfigurieren wie Backend E-Mails an den Nutzer gesendet werden."
 
-#: Template/Settings/general.ctp:49
+#: Template/Settings/general.ctp:53
 msgid "Email Sender"
 msgstr "E-Mail Absender"
 
-#: Template/Settings/general.ctp:50
+#: Template/Settings/general.ctp:54
 msgid "The email address used as sender for all backend emails."
 msgstr "Die Absender E-Mail-Adresse die für Backend E-Mails genutzt wird."
 
-#: Template/Settings/general.ctp:53
+#: Template/Settings/general.ctp:57
 msgid "Activation Email Subject"
 msgstr "Aktivierungs-E-Mail Überschrift"
 
-#: Template/Settings/general.ctp:54
+#: Template/Settings/general.ctp:58
 msgid "The subject used for activation emails."
 msgstr "Die Überschrift für die Aktivierungs-E-Mail."
 
-#: Template/Settings/general.ctp:57
+#: Template/Settings/general.ctp:61
 msgid "[Admin] Verification Email Subject"
 msgstr "[Admin] Verifikations-E-Mail Überschrift"
 
-#: Template/Settings/general.ctp:58
+#: Template/Settings/general.ctp:62
 msgid ""
 "The subject used for verification emails, whenever a user’s email address is "
 "verified manually by an admin."
