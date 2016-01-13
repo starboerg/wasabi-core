@@ -136,7 +136,11 @@ define(function(require) {
       event.preventDefault();
       event.stopPropagation();
 
-      this.$('.' + this.options.selectedClass).removeClass(this.options.selectedClass);
+      var $otherOpened = this.$('.' + this.options.selectedClass).filter(function() {
+        return $(this)[0] !== $target[0];
+      });
+
+      $otherOpened.removeClass(this.options.selectedClass);
 
       if (this.isCollapsed) {
         var $subnav = $target.find('.sub-nav');
