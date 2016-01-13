@@ -19,13 +19,8 @@
 
 #sidebar {
   position: fixed;
-  top: @header-height;
+  margin-top: @header-height;
   width: @sidebar-width;
-  .subtractFrom100Percent(@header-height);
-  height: calc(@subtractFrom100Percent);
-  height: -moz-calc(@subtractFrom100Percent);
-  height: -webkit-calc(@subtractFrom100Percent);
-  height: -o-calc(@subtractFrom100Percent);
 
   body.nav-closed & {
     display: none;
@@ -288,16 +283,13 @@
     position: absolute;
     left: 0;
     top: @header-height;
+    margin-top: 0;
     width: 100%;
-    .subtractFrom100Percent(@header-height);
-    min-height: calc(@subtractFrom100Percent);
-    min-height: -moz-calc(@subtractFrom100Percent);
-    min-height: -webkit-calc(@subtractFrom100Percent);
-    min-height: -o-calc(@subtractFrom100Percent);
     opacity: 0;
     visibility: hidden;
     background-color: @sidebar-bg-color;
     z-index: @zindex-navbar;
+    border-bottom: 1px solid #ccc;
 
     .backend-nav--is-visible & {
       opacity: 1;
