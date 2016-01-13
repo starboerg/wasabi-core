@@ -22,6 +22,10 @@
   margin-top: @header-height;
   width: @sidebar-width;
 
+  .ios &, .safari & {
+    .transform(translate3d(0, 0, 1px));
+  }
+
   body.nav-closed & {
     display: none;
   }
@@ -154,10 +158,6 @@
     left: 0;
     width: 5px;
   }
-
-  .ps-scrollbar-y {
-    width: 5px;
-  }
 }
 
 @media only screen and (max-width: @menuCollapsedBreakPoint) {
@@ -259,6 +259,10 @@
           a {
             border-right-color: @link-color;
           }
+        }
+
+        li, a {
+          z-index: @zindex-navbar + 1;
         }
       }
 

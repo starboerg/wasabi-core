@@ -6,7 +6,7 @@
 use Cake\Core\Configure;
 
 ?><!DOCTYPE html>
-<html class="no-js" lang="en-US">
+<html class="no-js<?= ($detect->is('iOS') !== false) ? ' ios' : '' ?><?= ($detect->version('Safari') !== false) ? ' safari' : '' ?>" lang="<?= Configure::read('backendLanguage')->iso2 ?>">
 <head>
     <?= $this->element('Wasabi/Core.Layout/head') ?>
 </head>

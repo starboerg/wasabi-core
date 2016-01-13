@@ -63,6 +63,11 @@ class BackendAppController extends AppController
     public $viewClass = 'Wasabi/Core.App';
 
     /**
+     * @var \Mobile_Detect
+     */
+    public $detect;
+
+    /**
      * Initialization hook method
      */
     public function initialize()
@@ -98,6 +103,8 @@ class BackendAppController extends AppController
         $this->formErrorMessage = __d('wasabi_core', 'Please correct the marked errors.');
         $this->invalidRequestMessage = __d('wasabi_core', 'Invalid Request.');
         $this->dbErrorMessage = __d('wasabi_core', 'Something went wrong. Please try again.');
+
+        $this->detect = new \Mobile_Detect();
     }
 
     /**
@@ -130,6 +137,21 @@ class BackendAppController extends AppController
         if ($this->request->is('ajax')) {
             $this->viewClass = null;
         }
+    }
+
+    /**
+     * beforeRender callback
+     *
+     * - setup global view/layout variables
+     *
+     * @param Event $event
+     * @return \Cake\Network\Response|null|void
+     */
+    public function beforeRender(Event $event)
+    {
+        parent::beforeRender($event);
+
+        $this->set('detect', $this->detect);
     }
 
     /**
