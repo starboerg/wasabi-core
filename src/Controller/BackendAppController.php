@@ -94,9 +94,6 @@ class BackendAppController extends AppController
         $this->loadComponent('Wasabi/Core.Guardian');
         $this->loadComponent('Wasabi/Core.Flash');
 
-        // Load all menu items from all plugins.
-        $this->eventManager()->dispatch(new Event('Wasabi.Backend.Menu.initMain', Nav::createMenu('backend.main')));
-
         // Setup default flash messages.
         $this->formErrorMessage = __d('wasabi_core', 'Please correct the marked errors.');
         $this->invalidRequestMessage = __d('wasabi_core', 'Invalid Request.');
@@ -122,6 +119,9 @@ class BackendAppController extends AppController
         $this->_allow();
 
         Wasabi::loadLanguages(null, true);
+
+        // Load all menu items from all plugins.
+        $this->eventManager()->dispatch(new Event('Wasabi.Backend.Menu.initMain', Nav::createMenu('backend.main')));
 
         $this->_setSectionCssClass();
 

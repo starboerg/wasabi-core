@@ -14,6 +14,10 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         'label' => __d('wasabi_core', 'Instance Name'),
         'info' => __d('wasabi_core', 'The name of your CMS instance.')
     ]);
+    echo $this->Form->input('html_title_suffix', [
+        'label' => __d('wasabi_core', 'Html Title Suffix'),
+        'info' => __d('wasabi_core', 'The Html title suffix of your CMS instance.')
+    ]);
     echo $this->Form->widget('section', [
         'title' => __d('wasabi_core', 'Login Message'),
         'description' => __d('wasabi_core', 'An optional message that is displayed on top of the login page.')

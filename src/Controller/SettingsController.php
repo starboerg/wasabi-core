@@ -39,7 +39,8 @@ class SettingsController extends BackendAppController
             'Login__Message__class',
             'Email__email_sender',
             'Email__Activation__subject',
-            'Email__Verification__subject_admin'
+            'Email__Verification__subject_admin',
+            'html_title_suffix'
         ];
         $this->GeneralSettings = $this->loadModel('Wasabi/Core.GeneralSettings');
         $settings = $this->GeneralSettings->getKeyValues(new GeneralSetting(), $keys);

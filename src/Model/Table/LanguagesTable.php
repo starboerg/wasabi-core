@@ -43,17 +43,17 @@ class LanguagesTable extends Table
     {
         return $validator
             ->notEmpty('name', __d('wasabi_core', 'Please enter the name of the language.'))
-            ->notEmpty('iso2', __d('wasabi_core', 'Please enter the ISO 639-1 code of the language (e.g. "en")'))
+            ->notEmpty('iso2', __d('wasabi_core', 'Please enter the ISO 639-1 code of the language (e.g. "en").'))
             ->add('iso2', 'lengthBetween', [
                 'rule' => ['lengthBetween', 2, 2],
                 'message' => __d('wasabi_core', 'The ISO 639-1 code must consist of exactly 2 characters.')
             ])
-            ->notEmpty('iso3', __d('wasabi_core', 'Please enter the ISO 639-2/T code of the language (e.g. "eng")'))
+            ->notEmpty('iso3', __d('wasabi_core', 'Please enter the ISO 639-2/T code of the language (e.g. "eng").'))
             ->add('iso3', 'lengthBetween', [
                 'rule' => ['lengthBetween', 3, 3],
                 'message' => __d('wasabi_core', 'The ISO 639-2/T code must consist of exactly 3 characters.')
             ])
-            ->notEmpty('lang', __d('wasabi_core', 'Please enter the HTML lang code of the language (e.g. "en_US")'))
+            ->notEmpty('lang', __d('wasabi_core', 'Please enter the HTML lang code of the language (e.g. "en_US").'))
             ->add('lang', 'lengthBetween', [
                 'rule' => ['lengthBetween', 2, 5],
                 'message' => __d('wasabi_core', 'The HTML lang code must consist of 2 to 5 characters.')

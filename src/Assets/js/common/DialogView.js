@@ -46,8 +46,8 @@ define(function(require) {
 
       $(window).on('keyup', _.bind(this.onKeyup, this));
 
-      this.$sidebarLeft = this.$('dialog-sidebar-left');
-      this.$sidebarRight = this.$('dialog-sidebar-right');
+      this.$sidebarLeft = this.$('.dialog-sidebar-left');
+      this.$sidebarRight = this.$('.dialog-sidebar-right');
       this.$content = this.$('.dialog-content');
 
       if (typeof this.initDialogContent === 'function') {

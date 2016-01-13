@@ -8,7 +8,7 @@
 $this->set('title', __d('wasabi_core', 'Password Reset'));
 
 echo __d(
-    'dialog',
+    'wasabi_core',
     'Hello {username},{nl}you recently requested a password reset. To change your password click the following link.{nl}{nl}{resetPasswordLink}',
     [
         'username' => $username,

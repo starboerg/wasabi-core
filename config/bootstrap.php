@@ -15,6 +15,7 @@
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Event\EventManager;
 use Cake\Filesystem\Folder;
 use Cake\Routing\DispatcherFactory;
@@ -34,13 +35,8 @@ try {
     die($e->getMessage() . "\n");
 }
 
-// Load messages from src/Locale/folder/sub_folder/filename.po
-
-//I18n::translator(
-//    'wasabi_core',
-//    null,
-//    new MessagesFileLoader('wasabi_core', 'folder/sub_folder', 'po')
-//);
+// Configure plugin translation paths.
+Configure::write('App.paths.locales', array_merge(Configure::read('App.paths.locales'), [Plugin::path('Wasabi/Core') . 'src' . DS . 'Locale' . DS]));
 
 EventManager::instance()->on(new GuardianListener());
 EventManager::instance()->on(new MenuListener());
