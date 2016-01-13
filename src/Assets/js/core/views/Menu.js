@@ -55,7 +55,7 @@ define(function(require) {
      * Registered global event handlers.
      */
     globalEvents: {
-      'window.resize': 'collapseMenu'
+      'window.resize': 'onWindowResize'
     },
 
     /**
@@ -72,6 +72,17 @@ define(function(require) {
      */
     options: {},
 
+    $window: null,
+    $document: null,
+    $wrap: null,
+
+    isIOS: /iPhone|iPad|iPod/.test(navigator.userAgent),
+
+    menuIsPinned: false,
+    pinnedMenuTop: false,
+    pinnedMenuBottom: false,
+    lastScrollPosition: 0,
+
     /**
      * Initialization of the view.
      *
@@ -80,11 +91,15 @@ define(function(require) {
     initialize: function(options) {
       this.options = $.extend({}, defaults, options);
       this.$('> li').filter('.active').prev().addClass('prev-active');
+      this.$window = $(window);
+      this.$document = $(document);
+      this.$wrap = this.$el.parent().parent();
+      this.$window.on('scroll', _.bind(this.pinMenu, this));
       this.collapseMenu();
-      //if (!WS.features.hasTouch) {
-      //  this.$el.parent().perfectScrollbar();
-      //}
-      //this.listenTo(eventify(window), 'resize', _.bind(this.onResize, this));
+    },
+
+    onWindowResize: function() {
+      this.collapseMenu();
     },
 
     /**
@@ -144,6 +159,236 @@ define(function(require) {
       if ($target.parents('.'+ this.options.selectedClass).length === 0) {
         this.$('.' + this.options.selectedClass).removeClass(this.options.selectedClass);
       }
+    },
+
+    pinMenu: function(event) {
+      var windowPos = this.$window.scrollTop();
+      var resizing = !event || (event.type !== 'scroll');
+      var menuTop;
+
+      if (this.isIOS) {
+        return;
+      }
+
+      var headerHeight = $('#page-header').outerHeight();
+      var menuHeight = this.$el.outerHeight();
+      var windowHeight = this.$window.height();
+      var documentHeight = this.$document.height();
+
+      if (headerHeight + menuHeight < windowHeight) {
+        this.unpinMenu();
+        return;
+      }
+
+      this.menuIsPinned = true;
+
+      // Check for overscrolling
+      //if (windowPos < 0) {
+      //  if (!this.pinnedMenuTop) {
+      //    this.pinnedMenuTop = true;
+      //    this.pinnedMenuBottom = false;
+      //
+      //    this.$wrap.css({
+      //      position: 'absolute',
+      //      top: headerHeight + 'px',
+      //      bottom: ''
+      //    });
+      //  }
+      //  return;
+      //} else if (windowPos + windowHeight > documentHeight - 1) {
+      //  if (!this.pinnedMenuBottom) {
+      //    this.pinnedMenuBottom = true;
+      //    this.pinnedMenuTop = false;
+      //
+      //    this.$wrap.css({
+      //      position: '',
+      //      top: 'auto',
+      //      bottom: 0
+      //    });
+      //  }
+      //  return;
+      //}
+
+      var scrollingDown = windowPos > this.lastScrollPosition;
+      var scrollingUp = windowPos < this.lastScrollPosition;
+      var overlap = headerHeight + menuHeight - windowHeight;
+
+      if (scrollingDown) {
+
+        if (menuHeight + headerHeight > windowHeight) {
+          if (overlap > windowPos) {
+            // scroll the menu
+            this.$wrap.css({
+              position: 'absolute',
+              top: ''
+            });
+          } else {
+
+            //this.menuTop = this.$wrap.css('top').split('px')[0];
+            //this.menuTop -= windowPos - this.lastScrollPosition;
+            //
+            //if (this.menuTop <<> -(headerHeight - overlap)) {
+            //  this.menuTop = headerHeight - overlap;
+            //}
+            //console.log(this.menuTop);
+            if (this.$wrap.css('top').split('px')[0] - headerHeight - (windowPos - this.lastScrollPosition) < overlap) {
+              this.$wrap.css({
+                position: '',
+                top: this.$wrap.css('top').split('px')[0] - (windowPos - this.lastScrollPosition)
+              });
+            } else {
+              // fixed bottom
+              this.pinnedMenuBottom = true;
+              this.$wrap.css({
+                position: '',
+                top: headerHeight - overlap
+              });
+            }
+          }
+        }
+
+      } else if (scrollingUp) {
+
+        //console.log(overlap, windowPos);
+
+        if (overlap > windowPos) {
+          // scroll the menu
+          this.$wrap.css({
+            position: 'absolute',
+            top: ''
+          });
+        } else {
+          //console.log(windowPos - this.lastScrollPosition, this.$wrap.offset().top, this.$wrap.css('top'));
+          if (!this.menuTop) {
+            this.menuTop = headerHeight - overlap;
+          }
+          this.menuTop -=  windowPos - this.lastScrollPosition;
+
+          if (this.menuTop < headerHeight) {
+            this.$wrap.css({
+              position: '',
+              top: this.menuTop
+            });
+          } else {
+            // fixed top
+            this.$wrap.css({
+              position: '',
+              top: headerHeight + 'px'
+            });
+          }
+
+
+        }/* else {
+
+        }*/
+
+
+
+
+          //if (overlap + headerHeight > windowPos) {
+          //  this.$wrap.css({
+          //    position: 'absolute',
+          //    marginTop: headerHeight - windowPos + 'px',
+          //    top: ''
+          //  });
+          //} else {
+          //  this.$wrap.css({
+          //    position: '',
+          //    marginTop: '',
+          //    top: headerHeight - overlap + 'px'
+          //  });
+          //}
+          //this.$wrap.css({
+          //  position: 'absolute',
+          //  marginTop: headerHeight + 'px',
+          //  top: 0,
+          //  bottom: ''
+          //});
+
+      }
+
+      //if (windowPos > this.lastScrollPosition) {
+      //  // Scrolling down
+      //  if (this.pinnedMenuTop) {
+      //    // let it scroll
+      //    this.pinnedMenuTop = false;
+      //    menuTop = this.$wrap.offset().top - headerHeight - (windowPos - this.lastScrollPosition);
+      //
+      //    if (menuTop + menuHeight + headerHeight < windowPos + windowHeight) {
+      //      menuTop = windowPos + windowHeight - menuHeight - headerHeight;
+      //    }
+      //
+      //    this.$wrap.css({
+      //      position: 'absolute',
+      //      top: menuTop,
+      //      bottom: ''
+      //    });
+      //  } else if (!this.pinnedMenuBottom && this.$wrap.offset().top + menuHeight < windowPos + windowHeight) {
+      //    // pin the bottom
+      //    this.pinnedMenuBottom = true;
+      //
+      //    this.$wrap.css({
+      //      position: 'fixed',
+      //      top: '',
+      //      bottom: 0
+      //    });
+      //  }
+      //} else if (windowPos < this.lastScrollPosition) {
+      //  // Scrolling up
+      //  if (this.pinnedMenuBottom) {
+      //    // let it scroll
+      //    this.pinnedMenuBottom = false;
+      //    menuTop = this.$wrap.offset().top - headerHeight + (this.lastScrollPosition - windowPos);
+      //
+      //    if (menuTop + menuHeight > windowPos + windowHeight) {
+      //      menuTop = windowPos;
+      //    }
+      //
+      //    this.$wrap.css({
+      //      position: 'absolute',
+      //      top: menuTop,
+      //      bottom: ''
+      //    });
+      //  } else if (!this.pinnedMenuTop && this.$wrap.offset().top >= windowPos + headerHeight) {
+      //    // pin the top
+      //    this.pinnedMenuTop = true;
+      //
+      //    this.$wrap.css({
+      //      position: 'fixed',
+      //      top: '',
+      //      bottom: ''
+      //    });
+      //  }
+      //} else if (resizing) {
+      //  // Resizing
+      //  this.pinnedMenuTop = this.pinnedMenuBottom = false;
+      //  menuTop = windowPos + windowHeight - menuHeight - headerHeight - 1;
+      //
+      //  if (menuTop > 0) {
+      //    this.$wrap.css({
+      //      position: 'absolute',
+      //      top: menuTop,
+      //      bottom: ''
+      //    });
+      //  } else {
+      //    this.unpinMenu();
+      //  }
+      //}
+
+      this.lastScrollPosition = windowPos;
+    },
+
+    unpinMenu: function() {
+      if (this.isIOS || !this.menuIsPinned) {
+        return;
+      }
+
+      this.pinnedMenuTop = this.pinnedMenuBottom = this.menuIsPinned = false;
+      this.$wrap.css({
+        position: '',
+        top: '',
+        bottom: ''
+      });
     }
 
   });
