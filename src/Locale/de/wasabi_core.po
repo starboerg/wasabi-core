@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
 "POT-Creation-Date: 2016-01-12 12:54+0000\n"
-"PO-Revision-Date: 2016-01-12 14:44+0100\n"
+"PO-Revision-Date: 2016-01-13 15:12+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -299,7 +299,7 @@ msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein."
 
 #: Form/ContactForm.php:41
 msgid "Please enter a subject for your contact request."
-msgstr "Bitte geben Sie den Betreff Ihre Kontaktaufnahme an."
+msgstr "Bitte geben Sie den Betreff Ihrer Kontaktaufnahme an."
 
 #: Form/ContactForm.php:42
 msgid "Please provide a message for your contact request."
