@@ -17,7 +17,7 @@
     "source": "https://github.com/wasabi-cms/core"
   },
   "require": {
-    "cakephp/cakephp": "3.1.*",
+    "cakephp/cakephp": "3.*",
     "frankfoerster/cakephp-filter": "dev-cake3"
   },
   "require-dev": {
