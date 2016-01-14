@@ -22,6 +22,7 @@ use Cake\ORM\Entity;
  * @property string $iso2
  * @property string $iso3
  * @property string $lang
+ * @property int $position
  * @property bool $available_at_backend
  * @property bool $available_at_frontend
  */
