@@ -46,7 +46,7 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         ]
     ]);
     echo $this->Form->widget('section', [
-        'title' => __d('wasabi_core', 'Email'),
+        'title' => __d('wasabi_core', 'Email Configuration'),
         'description' => __d('wasabi_core', 'Configure how backend emails are sent to users.')
     ]);
     echo $this->Form->input('Email__email_sender', [

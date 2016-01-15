@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-01-12 12:54+0000\n"
+"POT-Creation-Date: 2016-01-15 11:35+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "No menu with alias \"{0}\" does exist."
 msgstr ""
 
-#: Controller/BackendAppController.php:98
+#: Controller/BackendAppController.php:103
 msgid "Please correct the marked errors."
 msgstr ""
 
-#: Controller/BackendAppController.php:99
+#: Controller/BackendAppController.php:104
 msgid "Invalid Request."
 msgstr ""
 
-#: Controller/BackendAppController.php:100
+#: Controller/BackendAppController.php:105
 msgid "Something went wrong. Please try again."
 msgstr ""
 
@@ -882,11 +882,7 @@ msgid "The CSS class that is applied to the message box."
 msgstr ""
 
 #: Template/Settings/general.ctp:49
-#: Template/Users/add.ctp:31
-#: Template/Users/index.ctp:47
-#: Template/Users/lost_password.ctp:14
-#: Template/Users/profile.ctp:13
-msgid "Email"
+msgid "Email Configuration"
 msgstr ""
 
 #: Template/Settings/general.ctp:50
@@ -998,6 +994,13 @@ msgstr ""
 #: Template/Users/add.ctp:28
 #: Template/Users/login.ctp:23
 msgid "Username"
+msgstr ""
+
+#: Template/Users/add.ctp:31
+#: Template/Users/index.ctp:47
+#: Template/Users/lost_password.ctp:14
+#: Template/Users/profile.ctp:13
+msgid "Email"
 msgstr ""
 
 #: Template/Users/add.ctp:36;61

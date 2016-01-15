@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
-"POT-Creation-Date: 2016-01-12 12:54+0000\n"
-"PO-Revision-Date: 2016-01-13 15:12+0100\n"
+"POT-Creation-Date: 2016-01-15 11:37+0100\n"
+"PO-Revision-Date: 2016-01-15 11:38+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,-1,109\n"
 
 #: Nav.php:38
@@ -27,15 +27,15 @@ msgstr "Ein Menü mit dem Namen \"{0}\" existiert bereits."
 msgid "No menu with alias \"{0}\" does exist."
 msgstr "Es existiert kein Menü mit dem Namen \"{0}\"."
 
-#: Controller/BackendAppController.php:98
+#: Controller/BackendAppController.php:103
 msgid "Please correct the marked errors."
 msgstr "Bitte korrigieren Sie die markierten Fehler."
 
-#: Controller/BackendAppController.php:99
+#: Controller/BackendAppController.php:104
 msgid "Invalid Request."
 msgstr "Ungültige Anfrage"
 
-#: Controller/BackendAppController.php:100
+#: Controller/BackendAppController.php:105
 msgid "Something went wrong. Please try again."
 msgstr "Irgendwas ging schief. Bitte versuchen Sie es erneut."
 
@@ -905,11 +905,9 @@ msgstr "Login-Nachricht Klasse"
 msgid "The CSS class that is applied to the message box."
 msgstr "Die CSS-Klasse die an der Nachrichten-Box hinzugefügt wird."
 
-#: Template/Settings/general.ctp:49 Template/Users/add.ctp:31
-#: Template/Users/index.ctp:47 Template/Users/lost_password.ctp:14
-#: Template/Users/profile.ctp:13
-msgid "Email"
-msgstr "E-Mail-Adresse"
+#: Template/Settings/general.ctp:49
+msgid "Email Configuration"
+msgstr "E-Mail-Konfiguration"
 
 #: Template/Settings/general.ctp:50
 msgid "Configure how backend emails are sent to users."
@@ -1023,6 +1021,11 @@ msgstr "Neuen Nutzer anlegen"
 #: Template/Users/add.ctp:28 Template/Users/login.ctp:23
 msgid "Username"
 msgstr "Nutzername"
+
+#: Template/Users/add.ctp:31 Template/Users/index.ctp:47
+#: Template/Users/lost_password.ctp:14 Template/Users/profile.ctp:13
+msgid "Email"
+msgstr "E-Mail-Adresse"
 
 #: Template/Users/add.ctp:36;61 Template/Users/profile.ctp:37
 msgid "Please choose..."
