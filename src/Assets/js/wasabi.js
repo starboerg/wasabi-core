@@ -89,6 +89,86 @@ define(function(require) {
         });
       }
       return views;
+    },
+
+    blockElement: function($el, options) {
+      options = $.extend({}, {
+        deltaWidth: 0,
+        deltaHeight: 0,
+        backgroundColor: '#fff',
+        opacity: 0.6,
+        cursor: 'wait',
+        zIndex: 9997,
+        whiteSpinner: false
+      }, options);
+      var $blockBackdrop = $('<div class="block-backdrop"><div class="spinner"></div></div>');
+      var offset = $el.offset();
+      var borderLeft = $el.css('borderLeftWidth');
+      var borderTop = $el.css('borderTopWidth');
+      var width = $el.innerWidth() + options.deltaWidth;
+      var height = $el.innerHeight() + options.deltaHeight;
+
+      if (borderLeft !== '') {
+        borderLeft = parseInt(borderLeft.split('px')[0]);
+        offset.left += borderLeft;
+      }
+
+      if (borderTop !== '') {
+        borderTop = parseInt(borderTop.split('px')[0]);
+        offset.top += borderTop;
+      }
+
+      $blockBackdrop
+        .css({
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: width,
+          height: height,
+          backgroundColor: options.backgroundColor,
+          opacity: options.opacity,
+          cursor: options.cursor,
+          zIndex: options.zIndex
+        })
+        .hide()
+        .appendTo($el);
+
+      if (options.whiteSpinner) {
+        $blockBackdrop.find('.spinner').addClass('spinner-white');
+      }
+
+      $blockBackdrop.fadeIn(100, function() {
+        $blockBackdrop.on('mousedown mouseup keydown keypress keyup touchstart touchend touchmove', this.handleBlockedEvent);
+      });
+    },
+
+    /**
+     * Unblock a view.
+     *
+     * @param {jQuery} $el
+     * @param callback
+     */
+    unblockElement: function($el, callback) {
+      callback = callback || function() {};
+      if (this.spinner) {
+        this.spinner.stop();
+      }
+      $el.find('.block-backdrop')
+        .off('mousedown mouseup keydown keypress keyup touchstart touchend touchmove', this.handleBlockedEvent)
+        .remove();
+      if (typeof callback === 'function') {
+        callback.call(this);
+      }
+    },
+
+    /**
+     * Catch all event handler for blocked views.
+     *
+     * @param event
+     */
+    handleBlockedEvent: function(event) {
+      event.preventDefault();
+      event.stopPropagation();
     }
   };
 
