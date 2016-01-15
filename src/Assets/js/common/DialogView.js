@@ -2,26 +2,26 @@ define(function(require) {
 
   var $ = require('jquery');
   var _ = require('underscore');
-  var BaseView = require('common/BaseView');
+  var Marionette = require('marionette');
 
-  return BaseView.extend({
+  return Marionette.ItemView.extend({
 
     templateData: {},
 
     /**
      * Holds a reference to the left sidebar.
      */
-    $sidebarLeft: {},
+    $sidebarLeft: null,
 
     /**
      * Holds a reference to the right sidebar.
      */
-    $sidebarRight: {},
+    $sidebarRight: null,
 
     /**
      * Holds a reference to the content container.
      */
-    $content: {},
+    $content: null,
 
     events: {
       'click [data-toggle="close"]': 'closeDialog'
@@ -58,6 +58,7 @@ define(function(require) {
     closeDialog: function() {
       $(window).off('keyup', _.bind(this.onKeyup, this));
       this.destroy();
+      this.remove();
       $('body').removeClass('dialog-open');
     },
 
