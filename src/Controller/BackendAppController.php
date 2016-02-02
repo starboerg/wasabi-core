@@ -198,7 +198,7 @@ class BackendAppController extends AppController
         $this->set('sectionCssClass',
             strtolower(
                 Inflector::slug($prefix) . '--' .
-                $this->request->params['controller'] . '-' .
+                preg_replace('/\\//', '--', $this->request->params['controller']) . '-' .
                 $this->request->params['action']
             )
         );
