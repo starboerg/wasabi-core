@@ -170,7 +170,11 @@ class GuardianComponent extends Component
             return false;
         }
 
-        if ($groupId === 1) {
+        if (!is_array($groupId)) {
+            $groupId = [$groupId];
+        }
+
+        if (in_array(1, $groupId)) {
             return true;
         }
 
@@ -407,19 +411,6 @@ class GuardianComponent extends Component
 		}
 
 		return $guardableActions;
-    }
-
-//	/**
-//	 * Get or initialize an instance of the Plugin model.
-//	 *
-//	 * @return Plugin
-//	 */
-    protected function _getPluginModel()
-    {
-//		if (get_class($this->Plugin) === 'Plugin') {
-//			return $this->Plugin;
-//		}
-//		return $this->Plugin = ClassRegistry::init('Core.Plugin');
     }
 
     /**
