@@ -8,5 +8,6 @@ return [
     'formGroup' => '{{label}}<div class="field">{{input}}{{error}}</div>',
     'section' => '<div class="form-section"><div class="form-section-title">{{title}}</div><div class="form-section-description">{{description}}</div></div>',
     'checkboxFormGroup' => '<label>{{formRowLabel}}</label><div class="field">{{label}}</div>',
-    'select' => '<select name="{{name}}"{{attrs}}>{{content}}</select>{{info}}'
+    'select' => '<select name="{{name}}"{{attrs}}>{{content}}</select>{{info}}',
+    'textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>{{info}}'
 ];
