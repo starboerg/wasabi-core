@@ -22,7 +22,9 @@ class FormHelper extends \Cake\View\Helper\FormHelper {
             'input' => $options['input'],
             'label' => $options['label'],
             'error' => $options['error'],
-            'formRowLabel' => isset($options['options']['formRowLabel']) ? $options['options']['formRowLabel'] : ''
+            'formRowLabel' => isset($options['options']['formRowLabel']) ? $options['options']['formRowLabel'] : '',
+            'formRowLabelInfo' => isset($options['options']['formRowLabelInfo']) ? '<small>' . $options['options']['formRowLabelInfo'] . '</small>' : '',
+            'formRowInfo' => isset($options['options']['formRowInfo']) ? '<small>' . $options['options']['formRowInfo'] . '</small>' : '',
         ]);
     }
 
