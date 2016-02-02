@@ -450,7 +450,7 @@ th {
   position: relative;
   top: -9px;
   padding-left: 2px;
-  color: #cccccc;
+  color: #ccc;
 }
 [class*="icon-sortable"]:before {
   position: absolute;
@@ -873,7 +873,7 @@ body {
 body {
   font: 14px / 1.5 'Open Sans', sans-serif;
   color: #333333;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 nav ul {
   margin: 0;
@@ -1012,7 +1012,7 @@ body.nav-closed div#content {
 }
 .button.disabled,
 .button[disabled="disabled"] {
-  background-color: #dddddd !important;
+  background-color: #ddd !important;
   cursor: not-allowed !important;
   -webkit-box-shadow: 0 -2px 0 rgba(196, 196, 196, 0.4) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
   /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
@@ -1104,7 +1104,7 @@ body.nav-closed div#content {
 }
 .flash-message--warning a,
 .message--warning a {
-  color: #000000;
+  color: #000;
 }
 .flash-message--success,
 .message--success {
@@ -1114,7 +1114,7 @@ body.nav-closed div#content {
 }
 .flash-message--success a,
 .message--success a {
-  color: #000000;
+  color: #000;
 }
 .flash-message--info,
 .message--info {
@@ -1124,7 +1124,7 @@ body.nav-closed div#content {
 }
 .flash-message--info a,
 .message--info a {
-  color: #000000;
+  color: #000;
 }
 label {
   font-weight: 700;
@@ -1153,7 +1153,7 @@ input[type="number"],
 textarea {
   background-attachment: scroll;
   background-clip: border-box;
-  background-color: #ffffff;
+  background-color: #fff;
   background-image: none !important;
   background-origin: padding-box;
   background-position: 0 0;
@@ -1208,9 +1208,6 @@ input[type="number"].without-spinner {
 input[type="number"].without-spinner::-webkit-outer-spin-button,
 input[type="number"].without-spinner::-webkit-inner-spin-button {
   -webkit-appearance: none;
-}
-textarea {
-  max-width: 600px;
 }
 span.error-message,
 div.error-message {
@@ -1369,6 +1366,9 @@ select option {
 select.empty {
   color: #8c8c8c;
 }
+select.empty optgroup {
+  color: #333333;
+}
 input[type="radio"] {
   margin-right: 3px;
   cursor: pointer;
@@ -1423,12 +1423,12 @@ form.bulk .button.small {
   display: inline-block;
   line-height: 42px;
   font-size: 21px;
-  color: #ffffff;
+  color: #fff;
 }
 #page-header .nav-toggle {
   display: none;
   line-height: 42px;
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
   outline: none;
 }
@@ -1459,7 +1459,7 @@ body.nav-closed #page-header .nav-toggle {
   display: inline-block;
   line-height: 42px;
   padding: 0 10px;
-  color: #ffffff;
+  color: #fff;
 }
 #page-header .lang-switch li a:hover {
   background-color: #32506b;
@@ -1467,7 +1467,7 @@ body.nav-closed #page-header .nav-toggle {
 #page-header .lang-switch li.active a,
 #page-header .lang-switch li.active a:hover {
   color: #223648;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 #page-header .user-menu {
   float: right;
@@ -1476,7 +1476,7 @@ body.nav-closed #page-header .nav-toggle {
   padding: 0 10px 0 14px;
   display: inline-block;
   line-height: 42px;
-  color: #ffffff;
+  color: #fff;
 }
 #page-header .user-menu > a i {
   display: inline-block;
@@ -1496,7 +1496,7 @@ body.nav-closed #page-header .nav-toggle {
 }
 #page-header .user-menu .dropdown-menu a {
   display: block;
-  color: #ffffff;
+  color: #fff;
 }
 #page-header .user-menu .dropdown-menu a:hover {
   background-color: #436a8d;
@@ -1684,7 +1684,7 @@ body.nav-closed #page-header .nav-toggle {
 }
 .pagination li.active a {
   background-color: #32506b;
-  color: #ffffff;
+  color: #fff;
 }
 .pagination a {
   display: inline-block;
@@ -1799,7 +1799,7 @@ body.nav-closed #sidebar {
   display: block;
 }
 #backend-menu .active {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 #backend-menu .active a:hover {
   box-shadow: none;
@@ -2192,7 +2192,7 @@ table.list tbody .col-actions > a:first-child,
   margin-top: 9px;
   padding: 1px 5px 1px 4px;
   font-size: 16px;
-  color: #ffffff;
+  color: #fff;
   background-color: #878787;
   vertical-align: top;
 }
@@ -2326,9 +2326,9 @@ table.list tbody .col-actions > a:first-child,
 .support.login form {
   border-left: 1px solid #d5d7d7;
   border-top: 1px solid #d5d7d7;
-  -webkit-box-shadow: 3px 3px 4px #bbbbbb;
+  -webkit-box-shadow: 3px 3px 4px #bbb;
   /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-  box-shadow: 3px 3px 4px #bbbbbb;
+  box-shadow: 3px 3px 4px #bbb;
   /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
 }
 .support.login .input {
