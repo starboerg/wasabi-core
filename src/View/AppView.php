@@ -11,6 +11,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\View;
+use Cake\Core\Configure;
 use Cake\View\View;
 
 /**
@@ -76,8 +77,13 @@ class AppView extends View
             'className' => 'Wasabi/Core.Email'
         ]);
 
+        $this->defaultFormTemplateActions = array_merge(
+            $this->defaultFormTemplateActions,
+            Configure::read('defaultFormTemplateActions')
+        );
+
         if (!in_array(join('.', [
-            $this->request->params['plugin'],
+            $this->request->params['plugin'] ? $this->request->params['plugin'] : 'App',
             $this->request->params['controller'],
             $this->request->params['action']
         ]), $this->defaultFormTemplateActions)
