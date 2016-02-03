@@ -170,7 +170,7 @@ class UsersController extends BackendAppController
                 $this->request->session()->delete('data.login');
             }
         }
-        $this->render(null, 'support');
+        $this->render(null, 'Wasabi/Core.support');
     }
 
     /**
@@ -520,7 +520,7 @@ class UsersController extends BackendAppController
             $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
         }
         $this->set('user', $user);
-        $this->render(null, 'support');
+        $this->render(null, 'Wasabi/Core.support');
     }
 
     /**
@@ -561,6 +561,6 @@ class UsersController extends BackendAppController
             }
         }
         $this->set('user', $user);
-        $this->render(null, 'support');
+        $this->render(null, 'Wasabi/Core.support');
     }
 }
