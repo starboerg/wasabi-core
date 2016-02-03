@@ -2294,36 +2294,36 @@ table.list tbody .col-actions > a:first-child,
   padding-top: 100px;
   max-width: 600px;
 }
-.support h1 {
-  padding: 0 20px;
-  margin: 0;
-  color: #fff;
-  font-size: 1.7em;
-  font-weight: normal;
-  line-height: 2.2em;
-  background-color: #222;
-  border-bottom: 1px solid #000;
+.support .support-image {
+  margin-bottom: 20px;
+  text-align: center;
 }
-.support .support-content {
-  padding: 20px 20px 0;
-  background-color: #fff;
+.support .support-image img {
+  margin-left: -40px;
 }
-.support .form-controls {
-  border-width: 1px 0 0;
-  padding: 15px 20px;
-}
-.support.login .support-wrapper {
-  max-width: 340px;
-}
-.support.login .support-wrapper img {
-  padding: 0 0 20px 50px;
-}
-.support.login .flash-message {
-  margin-bottom: 0;
+.support .flash-message {
+  margin: -20px -20px 20px;
   padding: 15px 20px 14px;
   border-width: 0 0 1px 0;
 }
-.support.login form {
+.support h1 {
+  margin: -20px -20px 20px;
+  padding: 20px 20px 18px;
+  font-size: 18px;
+  background-color: #f2f3f4;
+  border-bottom: 1px solid #d5d7d7;
+}
+.support p {
+  margin: 0 0 20px;
+}
+.support .support-wrapper {
+  max-width: 400px;
+}
+.support .support-content {
+  padding: 20px;
+  background-color: #fff;
+}
+.support form {
   border-left: 1px solid #d5d7d7;
   border-top: 1px solid #d5d7d7;
   -webkit-box-shadow: 3px 3px 4px #bbb;
@@ -2331,21 +2331,41 @@ table.list tbody .col-actions > a:first-child,
   box-shadow: 3px 3px 4px #bbb;
   /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
 }
+.support .form-controls {
+  border-width: 1px 0 0;
+  padding: 15px 20px;
+  text-align: right;
+}
+.support .form-controls ul {
+  margin: 7px 0 0;
+  padding: 0;
+  list-style: none;
+  float: left;
+}
+.support .form-controls button {
+  margin-right: 0;
+}
+.support .bottom-links {
+  padding: 20px;
+}
+.support .bottom-links ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.support .bottom-links ul li {
+  text-align: center;
+}
+.support .bottom-links ul a {
+  color: #999999;
+  font-size: 12px;
+}
 .support.login .input {
   margin-bottom: 10px;
 }
 .support.login .input.checkbox {
   margin: 20px 0 0;
   padding-bottom: 20px;
-}
-.support.login .form-controls {
-  text-align: right;
-}
-.support.login .form-controls button {
-  margin-right: 0;
-}
-.support.login .bottom-links {
-  padding: 20px;
 }
 .wasabi-core--languages-index .languages .action-sort {
   color: #bbb;

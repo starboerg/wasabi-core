@@ -159,7 +159,15 @@ class UsersController extends BackendAppController
                 }
             } else {
                 unset($this->request->data['password']);
+                $this->request->session()->write('data.login', $this->request->data());
                 $this->Flash->error(__d('wasabi_core', 'Username or password is incorrect.'), 'auth', false);
+                $this->redirect(['action' => 'login']);
+                return;
+            }
+        } else {
+            if ($this->request->session()->check('data.login')) {
+                $this->request->data = $this->request->session()->read('data.login');
+                $this->request->session()->delete('data.login');
             }
         }
         $this->render(null, 'support');
@@ -496,11 +504,20 @@ class UsersController extends BackendAppController
                     $this->getMailer('Wasabi/Core.User')->send('lostPasswordEmail', [$user, $token]);
                 }
                 $this->Flash->success(__d('wasabi_core', 'We have sent you an email to reset your password.'));
-                $this->redirect('/');
+                $this->redirect(['action' => 'lostPassword']);
+                return;
+            } else {
+                $this->request->session()->write('data.lostPassword', $this->request->data());
+                $this->Flash->error($this->formErrorMessage);
+                $this->redirect(['action' => 'lostPassword']);
                 return;
             }
         } else {
-            $user = $this->Users->newEntity(null, ['validate' => 'emailOnly']);
+            if ($this->request->session()->check('data.lostPassword')) {
+                $this->request->data = $this->request->session()->read('data.lostPassword');
+                $this->request->session()->delete('data.lostPassword');
+            }
+            $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
         }
         $this->set('user', $user);
         $this->render(null, 'support');

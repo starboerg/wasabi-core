@@ -16,21 +16,33 @@ if (Configure::read('Settings.Core.Login.Message.show') === '1' && $message) {
     echo $this->Html->tag('div', $message, ['class' => join(' ', $msgBoxClasses)]);
 }
 ?>
-<?= $this->Html->image('/wasabi/core/img/wasabi.png') ?>
-<?= $this->Form->create(null) ?>
+<div class="support-image">
+    <?= $this->Html->image('/wasabi/core/img/wasabi.png') ?>
+</div>
+<?= $this->Form->create(null, ['novalidate' => 'novalidate']) ?>
+<div class="support-content">
+    <h1><?= __d('wasabi_core', 'Login') ?></h1>
     <?= $this->Flash->render('auth') ?>
-    <div class="support-content">
-        <?= $this->Form->input('username', ['label' => __d('wasabi_core', 'Username') . ':']) ?>
-        <?= $this->Form->input('password', ['label' => __d('wasabi_core', 'Password') . ':']) ?>
-        <?= $this->Form->input('remember', [
-            'label' => __d('wasabi_core', 'Remember me for 2 weeks'),
-            'type' => "checkbox"
-        ]) ?>
-    </div>
-    <div class="form-controls">
-        <?= $this->Form->button(__d('wasabi_core', 'Login'), ['class' => 'button blue']) ?>
-    </div>
+    <?= $this->Form->input('email', ['label' => __d('wasabi_core', 'Email') . ':']) ?>
+    <?= $this->Form->input('password', ['label' => __d('wasabi_core', 'Password') . ':']) ?>
+</div>
+<div class="form-controls">
+    <ul>
+        <li><?= $this->Html->link(__d('wasabi_core', 'Create an account.'), [
+                'plugin' => 'Wasabi/Core',
+                'controller' => 'Users',
+                'action' => 'register'
+            ]) ?></li>
+    </ul>
+    <?= $this->Form->button(__d('wasabi_core', 'Login'), ['class' => 'button blue']) ?>
+</div>
 <?= $this->Form->end() ?>
 <div class="bottom-links">
-
+    <ul>
+        <li><?= $this->Html->link(__d('wasabi_core', 'Lost your Password?'), [
+                'plugin' => 'Wasabi/Core',
+                'controller' => 'Users',
+                'action' => 'lostPassword'
+            ]) ?></li>
+    </ul>
 </div>

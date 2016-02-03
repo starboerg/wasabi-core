@@ -11,42 +11,40 @@
     max-width: 600px;
   }
 
-  h1 {
-    padding: 0 20px;
-    margin: 0;
-    color: #fff;
-    font-size: 1.7em;
-    font-weight: normal;
-    line-height: 2.2em;
-    background-color: #222;
-    border-bottom: 1px solid #000;
-  }
-
-  .support-content {
-    padding: 20px 20px 0;
-    background-color: #fff;
-  }
-
-  .form-controls {
-    border-width: 1px 0 0;
-    padding: 15px 20px;
-  }
-}
-
-.support.login {
-
-  .support-wrapper {
-    max-width: 340px;
+  .support-image {
+    margin-bottom: 20px;
+    text-align: center;
 
     img {
-      padding: 0 0 20px 50px;
+      margin-left: -40px;
     }
   }
 
   .flash-message {
-    margin-bottom: 0;
+    margin: -20px -20px 20px;
     padding: 15px 20px 14px;
     border-width: 0 0 1px 0;
+  }
+
+  h1 {
+    margin: -20px -20px 20px;
+    padding: 20px 20px 18px;
+    font-size: 18px;
+    background-color: #f2f3f4;
+    border-bottom: 1px solid #d5d7d7;
+  }
+
+  p {
+    margin: 0 0 20px;
+  }
+
+  .support-wrapper {
+    max-width: 400px;
+  }
+
+  .support-content {
+    padding: 20px;
+    background-color: #fff;
   }
 
   form {
@@ -55,17 +53,17 @@
     .box-shadow(3px 3px 4px #bbb);
   }
 
-  .input {
-    margin-bottom: 10px;
-
-    &.checkbox {
-      margin: 20px 0 0;
-      padding-bottom: 20px;
-    }
-  }
-
   .form-controls {
+    border-width: 1px 0 0;
+    padding: 15px 20px;
     text-align: right;
+
+    ul {
+      margin: 7px 0 0;
+      padding: 0;
+      list-style: none;
+      float: left;
+    }
 
     button {
       margin-right: 0;
@@ -74,5 +72,32 @@
 
   .bottom-links {
     padding: 20px;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        text-align: center;
+      }
+
+      a {
+        color: @gray-lighter;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.support.login {
+
+  .input {
+    margin-bottom: 10px;
+
+    &.checkbox {
+      margin: 20px 0 0;
+      padding-bottom: 20px;
+    }
   }
 }

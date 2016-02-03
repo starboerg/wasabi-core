@@ -39,7 +39,8 @@ class AppView extends View
      * @var array
      */
     public $defaultFormTemplateActions = [
-        'Wasabi/Core.Users.login'
+        'Wasabi/Core.Users.login',
+        'Wasabi/Core.Users.lostPassword'
     ];
 
     /**
