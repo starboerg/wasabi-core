@@ -23,7 +23,7 @@ if (Configure::read('Settings.Core.Login.Message.show') === '1' && $message) {
 <div class="support-content">
     <h1><?= __d('wasabi_core', 'Login') ?></h1>
     <?= $this->Flash->render('auth') ?>
-    <?= $this->Form->input('email', ['label' => __d('wasabi_core', 'Email') . ':']) ?>
+    <?= $this->Form->input('username', ['label' => __d('wasabi_core', 'Username') . ':']) ?>
     <?= $this->Form->input('password', ['label' => __d('wasabi_core', 'Password') . ':']) ?>
 </div>
 <div class="form-controls">
