@@ -79,7 +79,7 @@ class AppView extends View
 
         $this->defaultFormTemplateActions = array_merge(
             $this->defaultFormTemplateActions,
-            Configure::read('defaultFormTemplateActions')
+            Configure::read('defaultFormTemplateActions') ?? []
         );
 
         if (!in_array(join('.', [
