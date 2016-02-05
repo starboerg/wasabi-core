@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-01-15 11:35+0100\n"
+"POT-Creation-Date: 2016-02-05 14:11+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -159,42 +159,42 @@ msgid "Your account has not yet been activated. Once your account has been check
 msgstr ""
 
 #: Controller/UsersController.php:156
-msgid "Welcome back <strong>{0}</strong>."
+msgid "Welcome back."
 msgstr ""
 
-#: Controller/UsersController.php:162
+#: Controller/UsersController.php:163
 msgid "Username or password is incorrect."
 msgstr ""
 
-#: Controller/UsersController.php:188
+#: Controller/UsersController.php:196
 msgid "The user has been saved."
 msgstr ""
 
-#: Controller/UsersController.php:192
+#: Controller/UsersController.php:200
 msgid "Unable to add the user."
 msgstr ""
 
-#: Controller/UsersController.php:220
+#: Controller/UsersController.php:228
 msgid "The user <strong>{0}</strong> has been created."
 msgstr ""
 
-#: Controller/UsersController.php:267
+#: Controller/UsersController.php:275
 msgid "The user <strong>{0}</strong> has been saved."
 msgstr ""
 
-#: Controller/UsersController.php:304
+#: Controller/UsersController.php:312
 msgid "The user <strong>{0}</strong> has been deleted."
 msgstr ""
 
-#: Controller/UsersController.php:391
+#: Controller/UsersController.php:399
 msgid "Your profile has been updated."
 msgstr ""
 
-#: Controller/UsersController.php:498
+#: Controller/UsersController.php:506
 msgid "We have sent you an email to reset your password."
 msgstr ""
 
-#: Controller/UsersController.php:538
+#: Controller/UsersController.php:555
 msgid "Your password has been changed successfully."
 msgstr ""
 
@@ -495,7 +495,7 @@ msgid "Hello {username},{nl}your account has been activated.{nl}{nl}You can now 
 msgstr ""
 
 #: Template/Email/html/User/activated.ctp:17
-#: Template/Users/login.ctp:31
+#: Template/Users/login.ctp:24;37
 msgid "Login"
 msgstr ""
 
@@ -992,13 +992,13 @@ msgid "Create a new User"
 msgstr ""
 
 #: Template/Users/add.ctp:28
-#: Template/Users/login.ctp:23
+#: Template/Users/login.ctp:26
 msgid "Username"
 msgstr ""
 
 #: Template/Users/add.ctp:31
 #: Template/Users/index.ctp:47
-#: Template/Users/lost_password.ctp:14
+#: Template/Users/lost_password.ctp:17
 #: Template/Users/profile.ctp:13
 msgid "Email"
 msgstr ""
@@ -1018,7 +1018,7 @@ msgid "To change the user’s password fill in both password fields. Otherwise l
 msgstr ""
 
 #: Template/Users/add.ctp:45
-#: Template/Users/login.ctp:24
+#: Template/Users/login.ctp:27
 #: Template/Users/profile.ctp:20
 #: Template/Users/reset_password.ctp:14
 msgid "Password"
@@ -1074,11 +1074,27 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: Template/Users/login.ctp:26
-msgid "Remember me for 2 weeks"
+#: Template/Users/login.ctp:31
+msgid "Create an account."
 msgstr ""
 
-#: Template/Users/lost_password.ctp:18
+#: Template/Users/login.ctp:42
+msgid "Lost your Password?"
+msgstr ""
+
+#: Template/Users/lost_password.ctp:14
+msgid "Lost Password"
+msgstr ""
+
+#: Template/Users/lost_password.ctp:16
+msgid "If you forgot your password, enter your email address below. After submitting this form you will receive an email with further instruction on how to reset your password."
+msgstr ""
+
+#: Template/Users/lost_password.ctp:21
+msgid "Remember your password?"
+msgstr ""
+
+#: Template/Users/lost_password.ctp:27
 msgid "Send"
 msgstr ""
 

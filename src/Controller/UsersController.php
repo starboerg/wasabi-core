@@ -153,7 +153,7 @@ class UsersController extends BackendAppController
                     $this->Flash->warning($message, 'auth', false);
                 } else {
                     $this->Auth->setUser($user);
-                    $this->Flash->success(__d('wasabi_core', 'Welcome back <strong>{0}</strong>.', $user['username']), 'auth');
+                    $this->Flash->success(__d('wasabi_core', 'Welcome back.'), 'auth');
                     $this->redirect($this->Auth->redirectUrl());
                     return;
                 }

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
-"POT-Creation-Date: 2016-01-15 11:37+0100\n"
-"PO-Revision-Date: 2016-01-15 11:38+0100\n"
+"POT-Creation-Date: 2016-02-05 14:12+0100\n"
+"PO-Revision-Date: 2016-02-05 14:16+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,-1,109\n"
 
 #: Nav.php:38
@@ -185,42 +185,42 @@ msgstr ""
 "Administrator überprüft wurde, erhalten Sie eine Benachrichtigung."
 
 #: Controller/UsersController.php:156
-msgid "Welcome back <strong>{0}</strong>."
-msgstr "Willkommen zurück <strong>{0}</strong>."
+msgid "Welcome back."
+msgstr "Willkommen zurück."
 
-#: Controller/UsersController.php:162
+#: Controller/UsersController.php:163
 msgid "Username or password is incorrect."
 msgstr "Benutzername oder Passwort fehlerhaft."
 
-#: Controller/UsersController.php:188
+#: Controller/UsersController.php:196
 msgid "The user has been saved."
 msgstr "Ihr Nutzeraccount wurde erstellt."
 
-#: Controller/UsersController.php:192
+#: Controller/UsersController.php:200
 msgid "Unable to add the user."
 msgstr "Nutzeraccount konnte nicht erstellt werden."
 
-#: Controller/UsersController.php:220
+#: Controller/UsersController.php:228
 msgid "The user <strong>{0}</strong> has been created."
 msgstr "Der Nutzer <strong>{0}</strong> wurde erstellt."
 
-#: Controller/UsersController.php:267
+#: Controller/UsersController.php:275
 msgid "The user <strong>{0}</strong> has been saved."
 msgstr "Der Nutzer <strong>{0}</strong> wurde gespeichert."
 
-#: Controller/UsersController.php:304
+#: Controller/UsersController.php:312
 msgid "The user <strong>{0}</strong> has been deleted."
 msgstr "Der Nutzer <strong>{0}</strong> wurde gelöscht."
 
-#: Controller/UsersController.php:391
+#: Controller/UsersController.php:399
 msgid "Your profile has been updated."
 msgstr "Ihr Profil wurde aktualisiert."
 
-#: Controller/UsersController.php:498
+#: Controller/UsersController.php:506
 msgid "We have sent you an email to reset your password."
 msgstr "Wir haben Ihnen eine E-Mail zum Zurücksetzen Ihres Passworts gesendet."
 
-#: Controller/UsersController.php:538
+#: Controller/UsersController.php:555
 msgid "Your password has been changed successfully."
 msgstr "Ihr Passwort wurde erfolgreich geändert."
 
@@ -517,7 +517,7 @@ msgstr ""
 "Hallo {username},{nl}Ihr Account wurde aktiviert.{nl}{nl}Sie können sich nun "
 "anmelden und Inhalt pflegen.{nl}{nl}{loginLink}"
 
-#: Template/Email/html/User/activated.ctp:17 Template/Users/login.ctp:31
+#: Template/Email/html/User/activated.ctp:17 Template/Users/login.ctp:24;37
 msgid "Login"
 msgstr "Login"
 
@@ -1018,12 +1018,12 @@ msgstr ""
 msgid "Create a new User"
 msgstr "Neuen Nutzer anlegen"
 
-#: Template/Users/add.ctp:28 Template/Users/login.ctp:23
+#: Template/Users/add.ctp:28 Template/Users/login.ctp:26
 msgid "Username"
 msgstr "Nutzername"
 
 #: Template/Users/add.ctp:31 Template/Users/index.ctp:47
-#: Template/Users/lost_password.ctp:14 Template/Users/profile.ctp:13
+#: Template/Users/lost_password.ctp:17 Template/Users/profile.ctp:13
 msgid "Email"
 msgstr "E-Mail-Adresse"
 
@@ -1043,7 +1043,7 @@ msgstr ""
 "Um das Nutzerpasswort zu ändern, bitte beide Passwort-Felder befüllen. "
 "Andernfalls die beiden Felder leer lassen."
 
-#: Template/Users/add.ctp:45 Template/Users/login.ctp:24
+#: Template/Users/add.ctp:45 Template/Users/login.ctp:27
 #: Template/Users/profile.ctp:20 Template/Users/reset_password.ctp:14
 msgid "Password"
 msgstr "Passwort"
@@ -1098,11 +1098,33 @@ msgstr "Nach Gruppe filtern"
 msgid "Search"
 msgstr "Suchen"
 
-#: Template/Users/login.ctp:26
-msgid "Remember me for 2 weeks"
-msgstr "Login für 2 Wochen merken"
+#: Template/Users/login.ctp:31
+msgid "Create an account."
+msgstr "Ein Benutzerkonto erstellen?"
 
-#: Template/Users/lost_password.ctp:18
+#: Template/Users/login.ctp:42
+msgid "Lost your Password?"
+msgstr "Passwort vergessen?"
+
+#: Template/Users/lost_password.ctp:14
+msgid "Lost Password"
+msgstr "Passwort vergessen"
+
+#: Template/Users/lost_password.ctp:16
+msgid ""
+"If you forgot your password, enter your email address below. After "
+"submitting this form you will receive an email with further instruction on "
+"how to reset your password."
+msgstr ""
+"Wenn Sie Ihr Passwort vergessen haben, geben Sie unten Ihre E-Mail-Adresse "
+"ein. Nach Absenden dieses Formulars erhalten Sie eine E-Mail mit weiteren "
+"Anweisungen zum Zurücksetzen Ihres Passworts."
+
+#: Template/Users/lost_password.ctp:21
+msgid "Remember your password?"
+msgstr "Jetzt Anmelden"
+
+#: Template/Users/lost_password.ctp:27
 msgid "Send"
 msgstr "Senden"
 
@@ -1129,6 +1151,12 @@ msgstr "Nutzer hinzufügen"
 #: Template/Users/register.ctp:14
 msgid "Submit"
 msgstr "Absenden"
+
+#~ msgid "Welcome back <strong>{0}</strong>."
+#~ msgstr "Willkommen zurück <strong>{0}</strong>."
+
+#~ msgid "Remember me for 2 weeks"
+#~ msgstr "Login für 2 Wochen merken"
 
 #~ msgid "Please enter the ISO 639-1 code of the language (e.g. \"en\")"
 #~ msgstr ""
