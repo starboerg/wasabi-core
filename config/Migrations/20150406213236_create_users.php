@@ -18,8 +18,8 @@ class CreateUsers extends AbstractMigration
             ->addColumn('email', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('verified', 'boolean', ['default' => 0, 'null' => false])
             ->addColumn('active', 'boolean', ['default' => 0, 'null' => false])
-            ->addColumn('created', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00'])
-            ->addColumn('modified', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00']);
+            ->addColumn('created', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('modified', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP']);
         $table->addIndex('username', ['name' => 'BY_USERNAME', 'unique' => false])
             ->addIndex('group_id', ['name' => 'FK_GROUP_ID', 'unique' => false])
             ->addIndex('email', ['name' => 'BY_EMAIL', 'unique' => true])

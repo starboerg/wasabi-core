@@ -16,8 +16,8 @@ class CreateGroupPermissions extends AbstractMigration
             ->addColumn('controller', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('action', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('allowed', 'boolean', ['null' => false, 'default' => 0])
-            ->addColumn('created', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00'])
-            ->addColumn('modified', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00']);
+            ->addColumn('created', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('modified', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP']);
         $table->addIndex('group_id', ['name' => 'FK_GROUP_ID', 'unique' => false]);
         $table->create();
 

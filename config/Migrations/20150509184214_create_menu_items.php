@@ -26,8 +26,8 @@ class CreateMenuItems extends AbstractMigration
             ->addColumn('action', 'string', ['limit' => 255, 'null' => true, 'default' => null])
             ->addColumn('params', 'text', ['null' => true, 'default' => null])
             ->addColumn('query', 'text', ['null' => true, 'default' => null])
-            ->addColumn('created', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00'])
-            ->addColumn('modified', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00']);
+            ->addColumn('created', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('modified', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP']);
         $table->addIndex('menu_id', ['name' => 'FK_MENU_ID', 'unique' => false]);
         $table->addIndex('parent_id', ['name' => 'FK_PARENT_ID', 'unique' => false]);
         $table->create();

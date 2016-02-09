@@ -14,8 +14,8 @@ class CreateTokens extends AbstractMigration
             ->addColumn('token', 'string', ['limit' => 32, 'null' => false])
             ->addColumn('token_type', 'string', ['limit' => 50, 'null' => false])
             ->addColumn('used', 'boolean', ['default' => 0, 'null' => false])
-            ->addColumn('created', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00'])
-            ->addColumn('expires', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00']);
+            ->addColumn('created', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('expires', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP']);
         $table->addIndex('user_id', ['name' => 'FK_USER_ID', 'unique' => false])
             ->addIndex('token', ['name' => 'BY_TOKEN', 'unique' => true]);
         $table->create();

@@ -14,8 +14,8 @@ class CreateMenus extends AbstractMigration
         $table = $this->table('menus');
         $table->addColumn('name', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('menu_item_count', 'integer', ['default' => 0, 'null' => false])
-            ->addColumn('created', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00'])
-            ->addColumn('modified', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00']);
+            ->addColumn('created', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('modified', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP']);
         $table->addIndex('name', ['name' => 'BY_NAME', 'unique' => false]);
         $table->create();
 

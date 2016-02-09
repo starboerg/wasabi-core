@@ -14,8 +14,8 @@ class CreateGroups extends AbstractMigration
         $table = $this->table('groups');
         $table->addColumn('name', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('user_count', 'integer', ['limit' => 11, 'signed' => false, 'null' => false, 'default' => 0])
-            ->addColumn('created', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00'])
-            ->addColumn('modified', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00']);
+            ->addColumn('created', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('modified', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP']);
         $table->addIndex('name', ['name' => 'BY_NAME', 'unique' => true]);
         $table->create();
 
