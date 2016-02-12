@@ -20,8 +20,9 @@ use Wasabi\Core\Model\Entity\Group;
 
 /**
  * Class GroupsTable
+ *
  * @property UsersTable Users
- * @package Wasabi\Core\Model\Table
+ * @property GroupPermissionsTable $GroupPermissions
  */
 class GroupsTable extends Table
 {
