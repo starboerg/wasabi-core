@@ -25,6 +25,13 @@ use Wasabi\Core\Model\Entity\GroupPermission;
 class GroupPermissionsTable extends Table
 {
     /**
+     * Hold a mapping of paths to plugin controller actions in cache.
+     *
+     * @var array
+     */
+    protected $_actionMap = [];
+
+    /**
      * Initialize a table instance. Called after the constructor.
      *
      * @param array $config Configuration options passed to the constructor
@@ -136,5 +143,44 @@ class GroupPermissionsTable extends Table
                 'path IN' => $orphans
             ]);
         }
+    }
+
+    /**
+     * Find all existing group permissions. Structure: group_id.path.enity
+     *
+     * @return \Cake\Collection\CollectionInterface
+     */
+    public function findAllExisting()
+    {
+        $existingGroupPermissions = $this->find('all')->combine(
+            'path',
+            function ($entity) { return $entity; },
+            'group_id'
+        );
+        return $existingGroupPermissions;
+    }
+
+    /**
+     * Create a new GroupPermission entity for the provided $groupId, $path and $allowed setting.
+     *
+     * @param integer $groupId
+     * @param string $path
+     * @param bool|integer $allowed
+     * @return GroupPermission
+     */
+    public function newEntityFor($groupId, $path, $allowed)
+    {
+        if (empty($this->_actionMap)) {
+            $this->_actionMap = guardian()->getActionMap();
+        }
+
+        return $this->newEntity([
+            'group_id' => $groupId,
+            'path' => $path,
+            'allowed' => $allowed,
+            'plugin' => $this->_actionMap[$path]['plugin'],
+            'controller' => $this->_actionMap[$path]['controller'],
+            'action' => $this->_actionMap[$path]['action']
+        ]);
     }
 }

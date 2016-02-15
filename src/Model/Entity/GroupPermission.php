@@ -14,6 +14,19 @@ namespace Wasabi\Core\Model\Entity;
 
 use Cake\ORM\Entity;
 
+/**
+ * Class GroupPermission
+ *
+ * @property int $id
+ * @property int $group_id
+ * @property string $path
+ * @property string $plugin
+ * @property string $controller
+ * @property string $action
+ * @property bool|int $allowed
+ * @property \DateTime $created
+ * @property \DateTime $modified
+ */
 class GroupPermission extends Entity
 {
     /**

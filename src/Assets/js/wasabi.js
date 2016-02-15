@@ -21,6 +21,8 @@ define(function(require) {
       registered: []
     },
 
+    initialized: false,
+
     views: [],
 
     /**
@@ -44,6 +46,10 @@ define(function(require) {
         var name = module.name;
         var r = module.require;
         var options = module.options;
+        if (typeof that.modules[name] !== "undefined") {
+          return;
+        }
+        that.modules[name] = name;
         require([r], function(module) {
           that.modules[name] = module;
           that.modules[name].initialize(options);
@@ -54,12 +60,14 @@ define(function(require) {
         loadModule(this.modules.registered[i]);
       }
 
-      $(window).on('resize', function() {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function() {
-          WS.eventBus.trigger('window.resize');
-        }, 100);
-      });
+      if (!this.initialized) {
+        $(window).on('resize', function() {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(function() {
+            WS.eventBus.trigger('window.resize');
+          }, 100);
+        });
+      }
     },
 
     registerModule: function (name, options) {

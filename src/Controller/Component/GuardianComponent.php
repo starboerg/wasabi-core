@@ -290,18 +290,32 @@ class GuardianComponent extends Component
                 continue;
             }
             foreach ($actions as $action) {
-                $path = "App.{$controller['name']}.{$action}";
-                if (in_array($path, $this->_guestActions)) {
-                    continue;
+                if (strpos($controller['path'], ROOT . DS . 'src' . DS . 'Controller') === false) {
+                    $path = "App.{$controller['name']}.{$action}";
+                    if (in_array($path, $this->_guestActions)) {
+                        continue;
+                    }
+                    $actionMap[$path] = [
+                        'plugin' => 'App',
+                        'controller' => $controller['name'],
+                        'action' => $action
+                    ];
+                } else {
+                    $namespaceParts = explode(DS, substr($controller['path'], strlen(ROOT . DS . 'src' . DS . 'Controller') + 1));
+                    array_pop($namespaceParts);
+                    $namespace = join('/', $namespaceParts);
+                    $path = "App.{$namespace}/{$controller['name']}.{$action}";
+                    if (in_array($path, $this->_guestActions)) {
+                        continue;
+                    }
+                    $actionMap[$path] = [
+                        'plugin' => 'App',
+                        'controller' => $namespace . '/' . $controller['name'],
+                        'action' => $action
+                    ];
                 }
-                $actionMap[$path] = [
-                    'plugin' => 'App',
-                    'controller' => $controller['name'],
-                    'action' => $action
-                ];
             }
         }
-
 
 		return $actionMap;
     }
@@ -368,12 +382,13 @@ class GuardianComponent extends Component
     public function getControllersForApp()
     {
         $controllers = [];
-        $Folder = new Folder();
+        $ctrlFolder = new Folder();
 
-        $ctrlFolder = $Folder->cd(ROOT . DS . 'src' . DS . 'Controller');
+        /** @var Folder $ctrlFolder */
+        $ctrlFolder->cd(ROOT . DS . 'src' . DS . 'Controller');
 
         if (!empty($ctrlFolder)) {
-            $files = $Folder->find('.*Controller\.php$');
+            $files = $ctrlFolder->find('.*Controller\.php$');
             $subLength = strlen('Controller.php');
             foreach ($files as $f) {
                 $filename = basename($f);
@@ -383,8 +398,25 @@ class GuardianComponent extends Component
                 $ctrlName = substr($filename, 0, strlen($filename) - $subLength);
                 $controllers[] = [
                     'name' => $ctrlName,
-                    'path' => $Folder->path . DS . $f
+                    'path' => $ctrlFolder->path . DS . $f
                 ];
+            }
+            $subFolders = $ctrlFolder->read(true, false, true)[0];
+            foreach ($subFolders as $subFolder) {
+                $ctrlFolder->cd($subFolder);
+                $files = $ctrlFolder->find('.*Controller\.php$');
+                $subLength = strlen('Controller.php');
+                foreach ($files as $f) {
+                    $filename = basename($f);
+                    if ($filename === 'AppController.php') {
+                        continue;
+                    }
+                    $ctrlName = substr($filename, 0, strlen($filename) - $subLength);
+                    $controllers[] = [
+                        'name' => $ctrlName,
+                        'path' => $ctrlFolder->path . DS . $f
+                    ];
+                }
             }
         }
 

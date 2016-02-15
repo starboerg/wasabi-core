@@ -20,8 +20,8 @@ class CreateLanguages extends AbstractMigration
             ->addColumn('available_at_backend', 'boolean', ['null' => false, 'default' => 0])
             ->addColumn('in_progress', 'boolean', ['null' => false, 'default' => 1])
             ->addColumn('position', 'integer', ['null' => false, 'default' => 99999])
-            ->addColumn('created', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00'])
-            ->addColumn('modified', 'datetime', ['null' => false, 'default' => '0000-00-00 00:00']);
+            ->addColumn('created', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('modified', 'datetime', ['null' => false, 'default' => 'CURRENT_TIMESTAMP']);
         $table->addIndex('name', ['name' => 'BY_NAME', 'unique' => false])
             ->addIndex('available_at_frontend', ['name' => 'BY_AVAILABLE_AT_FRONTEND', 'unique' => false])
             ->addIndex('available_at_backend', ['name' => 'BY_AVAILABLE_AT_BACKEND', 'unique' => false])
