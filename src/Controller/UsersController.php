@@ -335,7 +335,7 @@ class UsersController extends BackendAppController
         }
 
         $user = $this->Users->get($id);
-        if ($this->Users->verify($user)) {
+        if ($this->Users->verify($user, true)) {
             $this->getMailer('Wasabi/Core.User')->send('verifiedByAdminEmail', [$user]);
             $this->set([
                 'status' => 'success',
@@ -347,23 +347,6 @@ class UsersController extends BackendAppController
                 'error' => $this->dbErrorMessage,
                 '_serialize' => ['error']
             ]);
-        }
-    }
-
-    /**
-     * VerifyByToken action
-     * GET
-     *
-     * @param $token
-     * @todo /verify/t/345235245389517581
-     */
-    public function verifyByToken($token)
-    {
-        if (!$this->Tokens->findByToken($token)) {
-            throw new NotFoundException();
-        }
-        if (!$this->request->is('get')) {
-            throw new MethodNotAllowedException();
         }
     }
 
@@ -487,6 +470,43 @@ class UsersController extends BackendAppController
     }
 
     /**
+     * requestNewVerificationEmail action
+     * GET | POST
+     */
+    public function requestNewVerificationEmail()
+    {
+        if ($this->request->is('post') && !empty($this->request->data)) {
+            /** @var User $user */
+            $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
+            if (!$user->errors()) {
+                if (($user = $this->Users->existsWithEmail($user->email))) {
+                    $this->loadModel('Wasabi/Core.Tokens');
+
+                    $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_EMAIL_VERIFICATION);
+                    $token = $this->Tokens->generateToken($user, TokensTable::TYPE_EMAIL_VERIFICATION);
+                    $this->getMailer('Wasabi/Core.User')->send('verifyEmail', [$user, $token]);
+                }
+                $this->Flash->success(__d('wasabi_core', 'We have sent you a verification email with instructions on how to verify your email address.'));
+                $this->redirect(['action' => 'login']);
+                return;
+            } else {
+                $this->request->session()->write('data.requestNewVerificationEmail', $this->request->data());
+                $this->Flash->error($this->formErrorMessage);
+                $this->redirect(['action' => 'requestNewVerificationEmail']);
+                return;
+            }
+        } else {
+            if ($this->request->session()->check('data.requestNewVerificationEmail')) {
+                $this->request->data = $this->request->session()->read('data.requestNewVerificationEmail');
+                $this->request->session()->delete('data.requestNewVerificationEmail');
+            }
+            $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
+        }
+        $this->set('user', $user);
+        $this->render(null, 'Wasabi/Core.support');
+    }
+
+    /**
      * lostPassword action
      * GET | POST
      */
@@ -504,7 +524,7 @@ class UsersController extends BackendAppController
                     $this->getMailer('Wasabi/Core.User')->send('lostPasswordEmail', [$user, $token]);
                 }
                 $this->Flash->success(__d('wasabi_core', 'We have sent you an email to reset your password.'));
-                $this->redirect(['action' => 'lostPassword']);
+                $this->redirect(['action' => 'login']);
                 return;
             } else {
                 $this->request->session()->write('data.lostPassword', $this->request->data());
@@ -565,25 +585,35 @@ class UsersController extends BackendAppController
     }
 
     /**
-     * request validation email action
-     * GET|POST
+     * verifyByToken action
+     * GET
+     *
+     * @param string $tokenString
      */
-    public function requestValidationEmail()
+    public function verifyByToken($tokenString)
     {
-        $user = $this->Users->newEntity();
-        if ($this->request->is('post') && !empty($this->request->data['email'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data());
-            if (!$user->errors()) {
-                $user = $this->Users->findNotVerified($this->request->data['email']);
-                if ($user) {
-                    $this->getMailer('Wasabi/Core.User')->send('verify', [$user]);
-                }
-                $this->Flash->success(__d('wasabi_core', 'We have sent you a new validation email to <strong>{0}</strong>.', $this->request->data['email']));
+        $this->loadModel('Wasabi/Core.Tokens');
+
+        if (!$this->request->is('get')) {
+            throw new MethodNotAllowedException();
+        }
+
+        /** @var Token $token */
+        if ($tokenString && !!($token = $this->Tokens->findByToken($tokenString)) &&
+            !$token->hasExpired() && !$token->used
+        ) {
+            /** @var User $user */
+            $user = $this->Users->get($token->user_id);
+
+            $this->Users->connection()->begin();
+            if ($this->Users->verify($user)) {
+                $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_EMAIL_VERIFICATION);
+                $this->Users->connection()->commit();
             } else {
-                $this->Flash->error($this->formErrorMessage);
+                $this->Users->connection()->rollback();
             }
         }
-        $this->set('user', $user);
+
         $this->render(null, 'Wasabi/Core.support');
     }
 }

@@ -41,38 +41,19 @@ class Config
      *
      * @return string
      */
-    public static function getEmailSender()
+    public static function getSenderEmail()
     {
         return Configure::read('Settings.Core.Email.email_sender');
     }
 
     /**
-     * Get the verify email subject.
+     * Get the name that is used as sender for
+     * all backend emails.
      *
      * @return string
      */
-    public function getVerifyEmailSubject()
+    public static function getSenderName()
     {
-        return Configure::read('Settings.Core.Email.Verify.subject');
-    }
-
-    /**
-     * Get the activation email subject.
-     *
-     * @return string
-     */
-    public static function getActivationEmailSubject()
-    {
-        return Configure::read('Settings.Core.Email.Activation.subject');
-    }
-
-    /**
-     * Get the verified by admin email subject.
-     *
-     * @return string
-     */
-    public static function getVerifiedByAdminEmailSubject()
-    {
-        return Configure::read('Settings.Core.Email.Verification.subject_admin');
+        return Configure::read('Settings.Core.Email.email_sender_name');
     }
 }

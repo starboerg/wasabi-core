@@ -42,7 +42,7 @@ class AppView extends View
     public $defaultFormTemplateActions = [
         'Wasabi/Core.Users.login',
         'Wasabi/Core.Users.lostPassword',
-        'Wasabi/Core.Users.requestValidationEmail'
+        'Wasabi/Core.Users.requestNewVerificationEmail'
     ];
 
     /**

@@ -58,18 +58,14 @@ class GeneralSettingsTable extends SettingsTable
                 'Email__email_sender',
                 __d('wasabi_core', 'Please enter an email address.')
             )
+            ->notEmpty(
+                'Email__email_sender_name',
+                __d('wasabi_core', 'Please enter a name for the email sender.')
+            )
             ->add('Email__email_sender', 'validEmail', [
                 'rule' => 'email',
                 'message' => __d('wasabi_core', 'Please enter a valid email address.')
-            ])
-            ->notEmpty(
-                'Email__Activation__subject',
-                __d('wasabi_core', 'Please enter a subject for the activation email.')
-            )
-            ->notEmpty(
-                'Email__Verification__subject_admin',
-                __d('wasabi_core', 'Please enter a subject for the verification email.')
-            );
+            ]);
     }
 
     /**

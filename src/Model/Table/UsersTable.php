@@ -141,7 +141,7 @@ class UsersTable extends Table
     public function validationPasswordOnly(Validator $validator)
     {
         $validator
-            ->notEmpty('password', __d('wasabi_core', 'Please enter a password.'), 'create')
+            ->notEmpty('password', __d('wasabi_core', 'Please enter a password.'))
             ->add('password', [
                 'length' => [
                     'rule' => ['minLength', 6],

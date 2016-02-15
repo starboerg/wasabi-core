@@ -2,12 +2,11 @@
 /**
  * @var \Wasabi\Core\View\AppView $this
  */
+use Cake\Core\Configure;
+
 ?>
 <!doctype html>
-<!--[if lt IE 7]>     <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en-US"><![endif]-->
-<!--[if IE 7]>        <html class="no-js lt-ie9 lt-ie8" lang="en-US"><![endif]-->
-<!--[if IE 8]>        <html class="no-js lt-ie9" lang="en-US"><![endif]-->
-<!--[if gt IE 8]><!--><html class="no-js" lang="en-US"><!--<![endif]-->
+<html class="no-js" lang="<?= Configure::read('backendLanguage')->iso2 ?>">
 <head>
     <?= $this->element('Wasabi/Core.Layout/head') ?>
 </head>

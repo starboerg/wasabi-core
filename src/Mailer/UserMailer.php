@@ -15,7 +15,6 @@
 namespace Wasabi\Core\Mailer;
 
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
 use Wasabi\Core\Config;
@@ -24,16 +23,38 @@ use Wasabi\Core\Model\Entity\User;
 class UserMailer extends Mailer
 {
     /**
-     * Send a verify email to the user's email address.
+     * Send a "verify" email to the user, so that he can verify his email address.
+     *
+     * @param User $user
+     * @param string $token
+     */
+    public function verifyEmail(User $user, $token)
+    {
+        $this->_prepareEmail($user, __d('wasabi_core', 'Verify your email address'));
+        $this->_email->template('Wasabi/Core.User/verify');
+        $this->_email->viewVars([
+            'user' => $user,
+            'verifyEmailLink' => [
+                'plugin' => 'Wasabi/Core',
+                'controller' => 'Users',
+                'action' => 'verifyByToken',
+                'token' => $token
+            ],
+            'instanceName' => Config::getInstanceName()
+        ]);
+    }
+
+    /**
+     * Send a "verified" email to the user, when his email address has been verified.
      *
      * @param User $user
      */
-    public function verify(User $user)
+    public function verifiedEmail(User $user)
     {
-        $this->_prepareEmail($user, Config::getVerificationSubject());
-        $this->_email->template('Wasabi/Core.User/verify');
+        $this->_prepareEmail($user, __d('wasabi_core', 'Email address verfied'));
+        $this->_email->template('Wasabi/Core.User/verfied');
         $this->_email->viewVars([
-            'username' => $user->username,
+            'user' => $user,
             'instanceName' => Config::getInstanceName()
         ]);
     }
@@ -45,25 +66,40 @@ class UserMailer extends Mailer
      */
     public function verifiedByAdminEmail(User $user)
     {
-        $this->_prepareEmail($user, Config::getVerifiedByAdminEmailSubject());
+        $this->_prepareEmail($user, __d('wasabi_core', 'Email address verfied'));
         $this->_email->template('Wasabi/Core.User/verified-by-admin');
         $this->_email->viewVars([
-            'username' => $user->username,
+            'user' => $user,
             'instanceName' => Config::getInstanceName()
         ]);
     }
 
     /**
-     * Send an activation email when an admin activated a user account.
+     * Send an "activated" email to the user when an admin activated a user account.
      *
      * @param User $user
      */
-    public function activationEmail(User $user)
+    public function activatedEmail(User $user)
     {
         $this->_prepareEmail($user, Config::getActivationEmailSubject());
         $this->_email->template('Wasabi/Core.User/activated');
         $this->_email->viewVars([
-            'username' => $user->username,
+            'user' => $user,
+            'instanceName' => Config::getInstanceName()
+        ]);
+    }
+
+    /**
+     * Send a "deactivated" email to the user when an admin deactivated a user account.
+     *
+     * @param User $user
+     */
+    public function deactivatedEmail(User $user)
+    {
+        $this->_prepareEmail($user, Config::getActivationEmailSubject());
+        $this->_email->template('Wasabi/Core.User/deactivated');
+        $this->_email->viewVars([
+            'user' => $user,
             'instanceName' => Config::getInstanceName()
         ]);
     }
@@ -79,7 +115,7 @@ class UserMailer extends Mailer
         $this->_prepareEmail($user, __d('wasabi_core', 'Password Reset'));
         $this->_email->template('Wasabi/Core.User/lost-password');
         $this->_email->viewVars([
-            'username' => $user->username,
+            'user' => $user,
             'resetPasswordLink' => [
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Users',
@@ -101,7 +137,7 @@ class UserMailer extends Mailer
         $this->layout('Wasabi/Core.responsive');
         $this->_email->transport('default');
         $this->_email->emailFormat('both');
-        $this->_email->from(Config::getEmailSender(), Config::getInstanceName());
+        $this->_email->from(Config::getSenderEmail(), Config::getSenderName());
         $this->_email->to($user->email, $user->username);
         $this->_email->subject($subject);
         $this->_email->helpers([

@@ -58,7 +58,8 @@ class GuardianListener implements EventListenerInterface
             'Wasabi/Core.Users.unauthorized',
             'Wasabi/Core.Users.lostPassword',
             'Wasabi/Core.Users.resetPassword',
-            'Wasabi/Core.Users.requestValidationEmail'
+            'Wasabi/Core.Users.requestNewVerificationEmail',
+            'Wasabi/Core.Users.verifyByToken',
         ]);
     }
 

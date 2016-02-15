@@ -43,7 +43,7 @@ echo $this->Form->create($user, ['class' => 'no-top-section']);
     }
     echo $this->Form->input('password', [
         'label' => __d('wasabi_core', 'Password'),
-        'info' => __d('wasabi_core', 'Should consist of 6 to 50 characters. All numbers, letters and special characters are allowed.'),
+        'info' => __d('wasabi_core', 'The password should consist of 6 to 50 characters. All numbers, letters and special characters are allowed.'),
         'autocomplete' => 'off'
     ]);
     echo $this->Form->input('password_confirmation', [
