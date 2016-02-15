@@ -563,4 +563,27 @@ class UsersController extends BackendAppController
         $this->set('user', $user);
         $this->render(null, 'Wasabi/Core.support');
     }
+
+    /**
+     * request validation email action
+     * GET|POST
+     */
+    public function requestValidationEmail()
+    {
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post') && !empty($this->request->data['email'])) {
+            $user = $this->Users->patchEntity($user, $this->request->data());
+            if (!$user->errors()) {
+                $user = $this->Users->findNotVerified($this->request->data['email']);
+                if ($user) {
+                    $this->getMailer('Wasabi/Core.User')->send('verify', [$user]);
+                }
+                $this->Flash->success(__d('wasabi_core', 'We have sent you a new validation email to <strong>{0}</strong>.', $this->request->data['email']));
+            } else {
+                $this->Flash->error($this->formErrorMessage);
+            }
+        }
+        $this->set('user', $user);
+        $this->render(null, 'Wasabi/Core.support');
+    }
 }

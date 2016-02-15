@@ -287,4 +287,20 @@ class UsersTable extends Table
             ])
             ->first();
     }
+
+    /**
+     * Find a user by unverified email address.
+     *
+     * @param string $email
+     * @return User mixed
+     */
+    public function findNotVerified($email)
+    {
+        return $this->find()
+            ->where([
+                $this->aliasField('email') => $email,
+                $this->aliasField('verified') => 0
+            ])
+            ->first();
+    }
 }

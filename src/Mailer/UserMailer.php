@@ -24,6 +24,21 @@ use Wasabi\Core\Model\Entity\User;
 class UserMailer extends Mailer
 {
     /**
+     * Send a verify email to the user's email address.
+     *
+     * @param User $user
+     */
+    public function verify(User $user)
+    {
+        $this->_prepareEmail($user, Config::getVerificationSubject());
+        $this->_email->template('Wasabi/Core.User/verify');
+        $this->_email->viewVars([
+            'username' => $user->username,
+            'instanceName' => Config::getInstanceName()
+        ]);
+    }
+
+    /**
      * Send a verification email, when an admin has marked a user’s email as verified.
      *
      * @param User $user

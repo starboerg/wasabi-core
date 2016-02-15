@@ -59,8 +59,9 @@ class AppController extends Controller
      *
      * @return array
      */
-    protected function _loadSettings() {
-        $settings = Cache::remember('settings', function() {
+    protected function _loadSettings()
+    {
+        $settings = Cache::remember('settings', function () {
             /** @var SettingsTable $Settings */
             $Settings = $this->loadModel('Wasabi/Core.Settings');
             return $Settings->getAllKeyValues();

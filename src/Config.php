@@ -46,11 +46,31 @@ class Config
         return Configure::read('Settings.Core.Email.email_sender');
     }
 
+    /**
+     * Get the verify email subject.
+     *
+     * @return string
+     */
+    public function getVerifyEmailSubject()
+    {
+        return Configure::read('Settings.Core.Email.Verify.subject');
+    }
+
+    /**
+     * Get the activation email subject.
+     *
+     * @return string
+     */
     public static function getActivationEmailSubject()
     {
         return Configure::read('Settings.Core.Email.Activation.subject');
     }
 
+    /**
+     * Get the verified by admin email subject.
+     *
+     * @return string
+     */
     public static function getVerifiedByAdminEmailSubject()
     {
         return Configure::read('Settings.Core.Email.Verification.subject_admin');
