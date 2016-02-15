@@ -1,7 +1,7 @@
 <?php
 /**
  * @var Wasabi\Core\View\AppView $this
- * @var string $username
+ * @var \Wasabi\Core\Model\Entity\User $user
  * @var array $resetPasswordLink
  */
 
@@ -11,7 +11,7 @@ echo __d(
     'wasabi_core',
     'Hello {username},{nl}you recently requested a password reset. To change your password click the following link.{nl}{nl}{resetPasswordLink}',
     [
-        'username' => '<b>' . $username . '</b>',
+        'username' => '<b>' . $user->username . '</b>',
         'nl' => '<br>',
         'resetPasswordLink' => $this->Email->bigActionButton(__d('wasabi_core', 'Reset password'), $resetPasswordLink)
     ]

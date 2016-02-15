@@ -1,7 +1,7 @@
 <?php
 /**
  * @var Wasabi\Core\View\AppView $this
- * @var string $username
+ * @var \Wasabi\Core\Model\Entity\User $user
  * @var string $instanceName
  */
 
@@ -11,7 +11,7 @@ echo __d(
     'wasabi_core',
     'Hello {username},{nl}your account has been activated.{nl}{nl}You can now login and start creating content.{nl}{nl}{loginLink}',
     [
-        'username' => '<b>' . $username . '</b>',
+        'username' => '<b>' . $user->username . '</b>',
         'nl' => '<br>',
         'loginLink' => $this->Email->bigActionButton(
             __d('wasabi_core', 'Login'),

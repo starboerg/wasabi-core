@@ -487,6 +487,43 @@ class UsersController extends BackendAppController
     }
 
     /**
+     * requestNewVerificationEmail action
+     * GET | POST
+     */
+    public function requestNewVerificationEmail()
+    {
+        if ($this->request->is('post') && !empty($this->request->data)) {
+            /** @var User $user */
+            $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
+            if (!$user->errors()) {
+                if (($user = $this->Users->existsWithEmail($user->email))) {
+                    $this->loadModel('Wasabi/Core.Tokens');
+
+                    $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_EMAIL_VERIFICATION);
+                    $token = $this->Tokens->generateToken($user, TokensTable::TYPE_EMAIL_VERIFICATION);
+                    $this->getMailer('Wasabi/Core.User')->send('verify', [$user, $token]);
+                }
+                $this->Flash->success(__d('wasabi_core', 'We have sent you a verification email with instructions on how to verify your email address.'));
+                $this->redirect(['action' => 'login']);
+                return;
+            } else {
+                $this->request->session()->write('data.requestNewVerificationEmail', $this->request->data());
+                $this->Flash->error($this->formErrorMessage);
+                $this->redirect(['action' => 'requestNewVerificationEmail']);
+                return;
+            }
+        } else {
+            if ($this->request->session()->check('data.requestNewVerificationEmail')) {
+                $this->request->data = $this->request->session()->read('data.requestNewVerificationEmail');
+                $this->request->session()->delete('data.requestNewVerificationEmail');
+            }
+            $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
+        }
+        $this->set('user', $user);
+        $this->render(null, 'Wasabi/Core.support');
+    }
+
+    /**
      * lostPassword action
      * GET | POST
      */
@@ -504,7 +541,7 @@ class UsersController extends BackendAppController
                     $this->getMailer('Wasabi/Core.User')->send('lostPasswordEmail', [$user, $token]);
                 }
                 $this->Flash->success(__d('wasabi_core', 'We have sent you an email to reset your password.'));
-                $this->redirect(['action' => 'lostPassword']);
+                $this->redirect(['action' => 'login']);
                 return;
             } else {
                 $this->request->session()->write('data.lostPassword', $this->request->data());
