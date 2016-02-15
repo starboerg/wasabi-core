@@ -39,6 +39,6 @@ class Token extends Entity
      */
     public function hasExpired()
     {
-        return (new Time($this->expires))->isPast();
+        return (new Time($this->expires->getTimestamp()))->isPast();
     }
 }

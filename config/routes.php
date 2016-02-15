@@ -24,6 +24,8 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
     $routes->connect('/forbidden', ['controller' => 'Users', 'action' => 'unauthorized']);
     $routes->connect('/heartbeat', ['controller' => 'Users', 'action' => 'heartbeat']);
     $routes->connect('/profile', ['controller' => 'Users', 'action' => 'profile']);
+    $routes->connect('/request-new-verification-email', ['controller' => 'Users', 'action' => 'requestNewVerificationEmail']);
+    $routes->connect('/verify/:token', ['controller' => 'Users', 'action' => 'verifyByToken'], ['token' => '[a-zA-Z0-9\-]+', 'pass' => ['token']]);
 
     $routes->scope('/password', ['controller' => 'Users'], function(RouteBuilder $route) {
         $route->connect('/lost', ['action' => 'lostPassword']);

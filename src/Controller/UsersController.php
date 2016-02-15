@@ -335,7 +335,7 @@ class UsersController extends BackendAppController
         }
 
         $user = $this->Users->get($id);
-        if ($this->Users->verify($user)) {
+        if ($this->Users->verify($user, true)) {
             $this->getMailer('Wasabi/Core.User')->send('verifiedByAdminEmail', [$user]);
             $this->set([
                 'status' => 'success',
@@ -347,23 +347,6 @@ class UsersController extends BackendAppController
                 'error' => $this->dbErrorMessage,
                 '_serialize' => ['error']
             ]);
-        }
-    }
-
-    /**
-     * VerifyByToken action
-     * GET
-     *
-     * @param $token
-     * @todo /verify/t/345235245389517581
-     */
-    public function verifyByToken($token)
-    {
-        if (!$this->Tokens->findByToken($token)) {
-            throw new NotFoundException();
-        }
-        if (!$this->request->is('get')) {
-            throw new MethodNotAllowedException();
         }
     }
 
@@ -501,7 +484,7 @@ class UsersController extends BackendAppController
 
                     $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_EMAIL_VERIFICATION);
                     $token = $this->Tokens->generateToken($user, TokensTable::TYPE_EMAIL_VERIFICATION);
-                    $this->getMailer('Wasabi/Core.User')->send('verify', [$user, $token]);
+                    $this->getMailer('Wasabi/Core.User')->send('verifyEmail', [$user, $token]);
                 }
                 $this->Flash->success(__d('wasabi_core', 'We have sent you a verification email with instructions on how to verify your email address.'));
                 $this->redirect(['action' => 'login']);
@@ -598,6 +581,39 @@ class UsersController extends BackendAppController
             }
         }
         $this->set('user', $user);
+        $this->render(null, 'Wasabi/Core.support');
+    }
+
+    /**
+     * verifyByToken action
+     * GET
+     *
+     * @param string $tokenString
+     */
+    public function verifyByToken($tokenString)
+    {
+        $this->loadModel('Wasabi/Core.Tokens');
+
+        if (!$this->request->is('get')) {
+            throw new MethodNotAllowedException();
+        }
+
+        /** @var Token $token */
+        if ($tokenString && !!($token = $this->Tokens->findByToken($tokenString)) &&
+            !$token->hasExpired() && !$token->used
+        ) {
+            /** @var User $user */
+            $user = $this->Users->get($token->user_id);
+
+            $this->Users->connection()->begin();
+            if ($this->Users->verify($user)) {
+                $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_EMAIL_VERIFICATION);
+                $this->Users->connection()->commit();
+            } else {
+                $this->Users->connection()->rollback();
+            }
+        }
+
         $this->render(null, 'Wasabi/Core.support');
     }
 }

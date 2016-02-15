@@ -11,8 +11,8 @@ echo __d(
     'wasabi_core',
     'Hello {username},{nl}before you can start using our backend, you have to verify your email address. To verify your email address click the following link.{nl}{nl}{verifyEmailLink}',
     [
-        'username' => '<b>' . $user->username . '</b>',
-        'nl' => '<br>',
-        'verifyEmailLink' => $this->Email->bigActionButton(__d('wasabi_core', 'Verify Email'), $verifyEmailLink)
+        'username' => $user->username,
+        'nl' => "\n",
+        'verifyEmailLink' => $this->Url->build($verifyEmailLink, true) . "\n"
     ]
 );
