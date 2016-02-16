@@ -26,6 +26,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Wasabi\Core\Model\Table\GroupPermissionsTable;
+use Wasabi\Core\Wasabi;
 
 /**
  * Class GuardianComponent
@@ -178,8 +179,12 @@ class GuardianComponent extends Component
             return true;
         }
 
-        $permissions = $this->_getGroupPermissions()->findAllForGroup($groupId);
-        if (in_array($path, $permissions)) {
+        $user = Wasabi::user();
+        if (empty($user->permissions)) {
+            Wasabi::user()->permissions = $this->_getGroupPermissions()->findAllForGroup($groupId);
+        }
+
+        if (array_key_exists($path, Wasabi::user()->permissions)) {
             return true;
         }
 

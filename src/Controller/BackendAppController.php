@@ -14,16 +14,12 @@
  */
 namespace Wasabi\Core\Controller;
 
-use Cake\Cache\Cache;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\I18n\I18n;
-use Cake\I18n\Time;
 use Cake\Network\Session;
 use Cake\Utility\Inflector;
 use Wasabi\Core\Model\Entity\User;
-use Wasabi\Core\Model\Table\LanguagesTable;
 use Wasabi\Core\Nav;
 use Wasabi\Core\Wasabi;
 
@@ -163,11 +159,7 @@ class BackendAppController extends AppController
      */
     public function isAuthorized($user = null)
     {
-        $url = [
-            'plugin' => $this->request->params['plugin'],
-            'controller' => $this->request->params['controller'],
-            'action' => $this->request->params['action']
-        ];
+        $url = Wasabi::getCurrentUrlArray();
         return $this->Guardian->hasAccess($url);
     }
 
@@ -176,11 +168,7 @@ class BackendAppController extends AppController
      */
     protected function _allow()
     {
-        $url = [
-            'plugin' => $this->request->params['plugin'],
-            'controller' => $this->request->params['controller'],
-            'action' => $this->request->params['action']
-        ];
+        $url = Wasabi::getCurrentUrlArray();
         if ($this->Guardian->isGuestAction($url)) {
             $this->Auth->allow($this->request->params['action']);
         }

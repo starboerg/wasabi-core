@@ -178,4 +178,20 @@ class Wasabi
     {
         return self::setting('Core.html_title_suffix');
     }
+
+    /**
+     * Get the plugin controller action url array from the request.
+     *
+     * @return array
+     */
+    public static function getCurrentUrlArray()
+    {
+        $request = Router::getRequest();
+
+        return [
+            'plugin' => $request->params['plugin'],
+            'controller' => $request->params['controller'],
+            'action' => $request->params['action']
+        ];
+    }
 }

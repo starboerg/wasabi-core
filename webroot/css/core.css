@@ -2291,7 +2291,7 @@ table.list tbody .col-actions > a:first-child,
 }
 .support .support-wrapper {
   margin: 0 auto;
-  padding-top: 100px;
+  padding: 100px 0;
   max-width: 600px;
 }
 .support .support-image {
@@ -2375,6 +2375,20 @@ table.list tbody .col-actions > a:first-child,
 }
 .support.verify-by-token .form-controls {
   min-height: 65px;
+}
+.support.register h1,
+.support.register .flash-message {
+  margin: 0;
+}
+.support.register .support-wrapper {
+  max-width: 600px;
+  padding: 50px 0 100px;
+}
+.support.register .support-content {
+  padding: 0;
+}
+.support.register .support-content .form-row {
+  border-width: 0;
 }
 .wasabi-core--languages-index .languages .action-sort {
   color: #bbb;

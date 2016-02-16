@@ -17,6 +17,7 @@ use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\ORM\Entity;
 use DateTime;
+use Wasabi\Core\Wasabi;
 
 /**
  * Class User
@@ -47,6 +48,13 @@ class User extends Entity
     protected $_accessible = [
         '*' => true
     ];
+
+    /**
+     * Holds the initialized user permissions.
+     *
+     * @var array
+     */
+    public $permissions = [];
 
     /**
      * Always hash the users password on save calls.
@@ -103,5 +111,37 @@ class User extends Entity
         EventManager::instance()->dispatch(new Event('Wasabi.User.deactivated', $this));
 
         return $this;
+    }
+
+    /**
+     * Returns the access level of the user for the given plugin controller action path.
+     *
+     * @param array $url
+     * @return int|bool
+     */
+    public function getAccessLevel($url = null)
+    {
+        if ($url === null) {
+            $url = Wasabi::getCurrentUrlArray();
+        }
+
+        $path = guardian()->getPathFromUrl($url);
+
+        if (!array_key_exists($path, $this->permissions)) {
+            return 0;
+        }
+
+        return $this->permissions[$path];
+    }
+
+    /**
+     * Determine if the user has the provided access level.
+     *
+     * @param mixed $permissionConstant e.g. Permission::OWN
+     * @return bool
+     */
+    public function hasAccessLevel($permissionConstant)
+    {
+        return ($this->getAccessLevel() === $permissionConstant['value']);
     }
 }

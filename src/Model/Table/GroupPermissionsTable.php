@@ -48,7 +48,7 @@ class GroupPermissionsTable extends Table
     /**
      * Find all permissions for a specific $groupId.
      *
-     * @param string $groupId
+     * @param array|string $groupId
      * @return array|mixed
      */
     public function findAllForGroup($groupId)
@@ -57,16 +57,23 @@ class GroupPermissionsTable extends Table
             return [];
         }
 
-        $permissions = Cache::remember($groupId, function () use ($groupId) {
+        if (!is_array($groupId)) {
+            $groupId = [$groupId];
+        }
+
+        $cacheKey = join('_', $groupId);
+
+        $permissions = Cache::remember($cacheKey, function () use ($groupId) {
             return $this
                 ->find('list', [
-                    'keyField' => 'id',
-                    'valueField' => 'path'
+                    'keyField' => 'path',
+                    'valueField' => 'allowed'
                 ])
                 ->where([
-                    'group_id' => $groupId,
-                    'allowed' => true
+                    'group_id IN' => $groupId,
+                    'allowed >' => 0
                 ])
+                ->order('allowed DESC')
                 ->hydrate(false)
                 ->toArray();
         }, 'wasabi/core/group_permissions');

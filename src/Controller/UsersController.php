@@ -197,9 +197,10 @@ class UsersController extends BackendAppController
                 $this->redirect(['action' => 'register']);
                 return;
             }
-            $this->Flash->error(__d('wasabi_core', 'Unable to add the user.'));
+            $this->Flash->error($this->formErrorMessage);
         }
         $this->set('user', $user);
+        $this->viewBuilder()->layout('Wasabi/Core.support');
     }
 
     /**
