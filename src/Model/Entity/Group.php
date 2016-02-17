@@ -14,6 +14,13 @@ namespace Wasabi\Core\Model\Entity;
 
 use Cake\ORM\Entity;
 
+/**
+ * Class Group
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $user_count
+ */
 class Group extends Entity
 {
     /**
