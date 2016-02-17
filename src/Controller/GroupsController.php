@@ -34,9 +34,7 @@ class GroupsController extends BackendAppController
      */
     public $filterFields = [
         'search' => [
-            'modelField' => [
-                'Group.name'
-            ],
+            'modelField' => 'Groups.name',
             'type' => 'like',
             'actions' => ['index']
         ]
@@ -60,21 +58,17 @@ class GroupsController extends BackendAppController
      * @var array
      */
     public $sortFields = [
-        'user' => [
-            'modelField' => 'User.firstname',
+        'id' => [
+            'modelField' => 'Groups.id',
             'default' => 'asc',
             'actions' => ['index']
         ],
-        'email' => [
-            'modelField' => 'User.email',
-            'actions' => ['index']
-        ],
         'group' => [
-            'modelField' => 'Group.name',
+            'modelField' => 'Groups.name',
             'actions' => ['index']
         ],
-        'status' => [
-            'modelField' => 'User.active',
+        'ucount' => [
+            'modelField' => 'Groups.user_count',
             'actions' => ['index']
         ]
     ];
@@ -108,8 +102,10 @@ class GroupsController extends BackendAppController
      */
     public function index()
     {
-        $groups = $this->Groups->find('all')->hydrate(false);
-        $this->set('groups', $groups);
+        $groups = $this->Filter->filter($this->Groups->find('all'));
+        $this->set([
+            'groups' => $this->Filter->paginate($groups)
+        ]);
     }
 
     /**

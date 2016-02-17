@@ -1,39 +1,39 @@
 <?php
 /**
  * @var \Wasabi\Core\View\AppView $this
- * @var array $g group
+ * @var \Wasabi\Core\Model\Entity\Group $group
  */
-?><tr<?= $class ?>>
-    <td class="col-id center"><?= $g['id'] ?></td>
+?><tr>
+    <td class="col-id center"><?= $group->id ?></td>
     <td class="col-name"><?= $this->Guardian->protectedLink(
-            $g['name'],
+            $group->name,
             [
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Groups',
                 'action' => 'edit',
-                $g['id']
+                $group->id
             ],
-            ['title' => __d('wasabi_core', 'Edit Group "{0}"', $g['name'])],
+            ['title' => __d('wasabi_core', 'Edit Group "{0}"', $group->name)],
             true
         )
         ?></td>
-    <td class="col-user-count"><?= $g['user_count'] ?></td>
+    <td class="col-user-count"><?= $group->user_count ?></td>
     <td class="col-actions center">
         <?php
-        if ($g['id'] != 1) {
+        if ($group->id != 1) {
             echo $this->Guardian->protectedConfirmationLink(
                 '<i class="wicon-remove"></i>',
                 [
                     'plugin' => 'Wasabi/Core',
                     'controller' => 'Groups',
                     'action' => 'delete',
-                    $g['id']
+                    $group->id
                 ],
                 [
                     'escapeTitle' => false,
                     'class' => 'action-delete',
                     'title' => __d('wasabi_core', 'Delete Group'),
-                    'confirm-message' => __d('wasabi_core', 'Do you really want to delete group <strong>{0}</strong>?', $g['name']),
+                    'confirm-message' => __d('wasabi_core', 'Do you really want to delete group <strong>{0}</strong>?', $group->name),
                     'confirm-title' => __d('wasabi_core', 'Confirm Deletion')
                 ]
             );

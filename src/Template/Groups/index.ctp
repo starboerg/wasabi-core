@@ -21,23 +21,40 @@ $this->Html->addAction(
         ])
 );
 ?>
+<?= $this->Form->create(false, [
+    'id' => false,
+    'class' => 'filter-form',
+    'url' => [
+        'plugin' => $this->request->params['plugin'],
+        'controller' => $this->request->params['controller'],
+        'action' => 'index'
+    ]
+]) ?>
+<div class="row pagination"><?= ($pagination = $this->Filter->pagination(5, __d('wasabi_core', 'Groups'))) ?></div>
 <table class="list groups valign-middle">
     <thead>
+    <tr class="filters">
+        <th><?= $this->Form->input('id', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'ID'), 'templates' => 'Wasabi/Core.form_templates_filter']) ?></th>
+        <th><?= $this->Form->input('group', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for Group'), 'templates' => 'Wasabi/Core.form_templates_filter']) ?></th>
+        <th></th>
+        <th class="center"><?= $this->Form->button(__d('wasabi_core', 'Search'), ['class' => 'button blue', 'type' => 'submit']); ?></th>
+    </tr>
     <tr>
         <th class="t-1-12 center">ID</th>
-        <th class="t-3-12"><?= $this->Filter->sortLink(__d('wasabi_core', 'Group'), 'group') ?></th>
-        <th class="t-3-12"><?= $this->Filter->sortLink(__d('wasabi_core', '# Users'), 'count') ?></th>
+        <th class="t-5-12"><?= $this->Filter->sortLink(__d('wasabi_core', 'Group'), 'group') ?></th>
+        <th class="t-5-12"><?= $this->Filter->sortLink(__d('wasabi_core', '# Users'), 'count') ?></th>
         <th class="t-1-12 center"><?= __d('wasabi_core', 'Actions') ?></th>
     </tr>
     </thead>
     <tbody>
     <?php
-    foreach ($groups as $key => $g) {
+    foreach ($groups as $group) {
         echo $this->element('../Groups/__group-row', [
-            'class' => (($key + 1) % 2 == 0) ? ' class="even"' : '',
-            'g' => $g
+            'group' => $group
         ]);
     }
     ?>
     </tbody>
 </table>
+<div class="row pagination"><?= $pagination ?></div>
+<?= $this->Form->end() ?>
