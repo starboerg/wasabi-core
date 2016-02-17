@@ -2034,6 +2034,9 @@ table.list tbody tr td:first-child {
 table.list tbody tr td:last-child {
   border-right: 1px solid #e6e6e3;
 }
+table.list tbody tr td.no-results {
+  text-align: center;
+}
 table.list tbody tr.sortable-placeholder td {
   background-color: #fff6bf;
 }
