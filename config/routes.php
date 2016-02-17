@@ -45,7 +45,7 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
     });
 
     $routes->scope('/users', ['controller' => 'Users'], function (RouteBuilder $routes) {
-        $routes->connect('/_:sluggedFilter', ['action' => 'index'], ['pass' => ['sluggedFilter']]);
+        $routes->connect('/:sluggedFilter', ['action' => 'index'], ['pass' => ['sluggedFilter']]);
         $routes->connect('/', ['action' => 'index']);
         $routes->connect('/add', ['action' => 'add']);
         $routes->connect('/edit/:id', ['action' => 'edit'], ['pass' => ['id'], 'id' => '[0-9]+']);
@@ -56,6 +56,7 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
     });
 
     $routes->scope('/groups', ['controller' => 'Groups'], function (RouteBuilder $routes) {
+        $routes->connect('/:sluggedFilter', ['action' => 'index'], ['pass' => ['sluggedFilter']]);
         $routes->connect('/', ['action' => 'index']);
         $routes->connect('/add', ['action' => 'add']);
         $routes->connect('/edit/:id', ['action' => 'edit'], ['pass' => ['id'], 'id' => '[0-9]+']);
