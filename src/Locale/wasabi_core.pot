@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-02-05 14:11+0100\n"
+"POT-Creation-Date: 2016-02-17 10:16+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "No menu with alias \"{0}\" does exist."
 msgstr ""
 
-#: Controller/BackendAppController.php:103
+#: Controller/BackendAppController.php:99
 msgid "Please correct the marked errors."
 msgstr ""
 
-#: Controller/BackendAppController.php:104
+#: Controller/BackendAppController.php:100
 msgid "Invalid Request."
 msgstr ""
 
-#: Controller/BackendAppController.php:105
+#: Controller/BackendAppController.php:101
 msgid "Something went wrong. Please try again."
 msgstr ""
 
@@ -46,23 +46,23 @@ msgstr ""
 msgid "All permissions have been saved."
 msgstr ""
 
-#: Controller/GroupsController.php:125
+#: Controller/GroupsController.php:121
 msgid "The group <strong>{0}</strong> has been created."
 msgstr ""
 
-#: Controller/GroupsController.php:155
+#: Controller/GroupsController.php:151
 msgid "The group <strong>{0}</strong> has been saved."
 msgstr ""
 
-#: Controller/GroupsController.php:202
+#: Controller/GroupsController.php:198
 msgid "The group <strong>{0}</strong> has been deleted. Prior <strong>{1}</strong> group member(s) ha(s/ve) been moved to the <strong>{2}</strong> group."
 msgstr ""
 
-#: Controller/GroupsController.php:204
+#: Controller/GroupsController.php:200
 msgid "The group <strong>{0}</strong> has been deleted."
 msgstr ""
 
-#: Controller/GroupsController.php:214
+#: Controller/GroupsController.php:210
 msgid "The group <strong>{0}</strong> has <strong>{1}</strong> member(s) that need to be moved to another group."
 msgstr ""
 
@@ -138,11 +138,11 @@ msgstr ""
 msgid "The URL <strong>{0}</strong> cannot be deleted. Please create another URL first."
 msgstr ""
 
-#: Controller/SettingsController.php:51
+#: Controller/SettingsController.php:50
 msgid "The general settings have been updated."
 msgstr ""
 
-#: Controller/SettingsController.php:76
+#: Controller/SettingsController.php:75
 msgid "The cache settings have been updated."
 msgstr ""
 
@@ -170,31 +170,31 @@ msgstr ""
 msgid "The user has been saved."
 msgstr ""
 
-#: Controller/UsersController.php:200
-msgid "Unable to add the user."
-msgstr ""
-
-#: Controller/UsersController.php:228
+#: Controller/UsersController.php:229
 msgid "The user <strong>{0}</strong> has been created."
 msgstr ""
 
-#: Controller/UsersController.php:275
+#: Controller/UsersController.php:276
 msgid "The user <strong>{0}</strong> has been saved."
 msgstr ""
 
-#: Controller/UsersController.php:312
+#: Controller/UsersController.php:313
 msgid "The user <strong>{0}</strong> has been deleted."
 msgstr ""
 
-#: Controller/UsersController.php:399
+#: Controller/UsersController.php:383
 msgid "Your profile has been updated."
 msgstr ""
 
-#: Controller/UsersController.php:506
+#: Controller/UsersController.php:490
+msgid "We have sent you a verification email with instructions on how to verify your email address."
+msgstr ""
+
+#: Controller/UsersController.php:527
 msgid "We have sent you an email to reset your password."
 msgstr ""
 
-#: Controller/UsersController.php:555
+#: Controller/UsersController.php:576
 msgid "Your password has been changed successfully."
 msgstr ""
 
@@ -220,12 +220,12 @@ msgid "Administration"
 msgstr ""
 
 #: Event/MenuListener.php:102
-#: Template/Users/index.ctp:33
+#: Template/Users/index.ctp:32
 msgid "Users"
 msgstr ""
 
 #: Event/MenuListener.php:114
-#: Template/Groups/index.ctp:7
+#: Template/Groups/index.ctp:7;33
 msgid "Groups"
 msgstr ""
 
@@ -272,7 +272,7 @@ msgid "Please enter your email address."
 msgstr ""
 
 #: Form/ContactForm.php:40
-#: Model/Table/GeneralSettingsTable.php:63
+#: Model/Table/GeneralSettingsTable.php:67
 #: Model/Table/UsersTable.php:66;128
 msgid "Please enter a valid email address."
 msgstr ""
@@ -289,7 +289,15 @@ msgstr ""
 msgid "Please confirm you are human."
 msgstr ""
 
-#: Mailer/UserMailer.php:64
+#: Mailer/UserMailer.php:33
+msgid "Verify your email address"
+msgstr ""
+
+#: Mailer/UserMailer.php:54;69
+msgid "Email address verified"
+msgstr ""
+
+#: Mailer/UserMailer.php:115
 #: Template/Email/html/User/lost-password.ctp:8
 #: Template/Email/text/User/lost-password.ctp:8
 msgid "Password Reset"
@@ -336,19 +344,15 @@ msgstr ""
 msgid "Please enter an email address."
 msgstr ""
 
-#: Model/Table/GeneralSettingsTable.php:67
-msgid "Please enter a subject for the activation email."
+#: Model/Table/GeneralSettingsTable.php:63
+msgid "Please enter a name for the email sender."
 msgstr ""
 
-#: Model/Table/GeneralSettingsTable.php:71
-msgid "Please enter a subject for the verification email."
-msgstr ""
-
-#: Model/Table/GroupsTable.php:54
+#: Model/Table/GroupsTable.php:55
 msgid "Please enter a name for the group."
 msgstr ""
 
-#: Model/Table/GroupsTable.php:66
+#: Model/Table/GroupsTable.php:67
 msgid "Another group with this name already exists."
 msgstr ""
 
@@ -495,7 +499,7 @@ msgid "Hello {username},{nl}your account has been activated.{nl}{nl}You can now 
 msgstr ""
 
 #: Template/Email/html/User/activated.ctp:17
-#: Template/Users/login.ctp:24;37
+#: Template/Users/login.ctp:24;38
 msgid "Login"
 msgstr ""
 
@@ -510,12 +514,23 @@ msgstr ""
 
 #: Template/Email/html/User/verified-by-admin.ctp:8
 #: Template/Email/text/User/verified-by-admin.ctp:8
+#: Template/Users/verify_by_token.ctp:14
 msgid "Email Verified"
 msgstr ""
 
 #: Template/Email/html/User/verified-by-admin.ctp:10
 #: Template/Email/text/User/verified-by-admin.ctp:10
 msgid "Hello {username},{nl}your email address has been manually verified by an admin.{nl}{nl}Your account is not active yet.{nl}You will be notified via email as soon as your account has been activated."
+msgstr ""
+
+#: Template/Email/html/User/verify.ctp:8;16
+#: Template/Email/text/User/verify.ctp:8
+msgid "Verify Email"
+msgstr ""
+
+#: Template/Email/html/User/verify.ctp:10
+#: Template/Email/text/User/verify.ctp:10
+msgid "Hello {username},{nl}before you can start using our backend, you have to verify your email address. To verify your email address click the following link.{nl}{nl}{verifyEmailLink}"
 msgstr ""
 
 #: Template/GroupPermissions/__groupPermission-row.ctp:42
@@ -526,7 +541,7 @@ msgstr ""
 #: Template/GroupPermissions/index.ctp:9
 #: Template/Groups/index.ctp:8
 #: Template/Menus/index.ctp:8
-#: Template/Users/index.ctp:9
+#: Template/Users/index.ctp:8
 msgid "Management"
 msgstr ""
 
@@ -553,7 +568,7 @@ msgstr ""
 #: Template/Menus/add.ctp:73
 #: Template/Menus/add_item.ctp:42
 #: Template/Settings/cache.ctp:29
-#: Template/Settings/general.ctp:66
+#: Template/Settings/general.ctp:62
 #: Template/Users/add.ctp:66
 #: Template/Users/profile.ctp:42
 msgid "Cancel"
@@ -596,10 +611,10 @@ msgstr ""
 #: Template/Menus/add.ctp:71
 #: Template/Menus/add_item.ctp:41
 #: Template/Settings/cache.ctp:28
-#: Template/Settings/general.ctp:65
+#: Template/Settings/general.ctp:61
 #: Template/Users/add.ctp:65
 #: Template/Users/profile.ctp:41
-#: Template/Users/reset_password.ctp:25
+#: Template/Users/reset_password.ctp:28
 msgid "Save"
 msgstr ""
 
@@ -619,21 +634,35 @@ msgstr ""
 msgid "Move Members & Delete Group"
 msgstr ""
 
-#: Template/Groups/index.ctp:28
+#: Template/Groups/index.ctp:37
+#: Template/Users/index.ctp:36
+msgid "ID"
+msgstr ""
+
+#: Template/Groups/index.ctp:38
+msgid "Search for Group"
+msgstr ""
+
+#: Template/Groups/index.ctp:40
+#: Template/Users/index.ctp:41
+msgid "Search"
+msgstr ""
+
+#: Template/Groups/index.ctp:44
 #: Template/Users/add.ctp:34
-#: Template/Users/index.ctp:48
+#: Template/Users/index.ctp:47
 msgid "Group"
 msgstr ""
 
-#: Template/Groups/index.ctp:29
+#: Template/Groups/index.ctp:45
 msgid "# Users"
 msgstr ""
 
-#: Template/Groups/index.ctp:30
+#: Template/Groups/index.ctp:46
 #: Template/Languages/index.ctp:36
 #: Template/Menus/add.ctp:41
 #: Template/Menus/index.ctp:29
-#: Template/Users/index.ctp:50
+#: Template/Users/index.ctp:49
 msgid "Actions"
 msgstr ""
 
@@ -764,7 +793,7 @@ msgid "Menu Item"
 msgstr ""
 
 #: Template/Menus/add.ctp:39
-#: Template/Users/index.ctp:49
+#: Template/Users/index.ctp:48
 msgid "Status"
 msgstr ""
 
@@ -890,27 +919,19 @@ msgid "Configure how backend emails are sent to users."
 msgstr ""
 
 #: Template/Settings/general.ctp:53
-msgid "Email Sender"
+msgid "Email Sender Name"
 msgstr ""
 
 #: Template/Settings/general.ctp:54
-msgid "The email address used as sender for all backend emails."
+msgid "The name used as sender for all backend emails."
 msgstr ""
 
 #: Template/Settings/general.ctp:57
-msgid "Activation Email Subject"
+msgid "Email Sender Address"
 msgstr ""
 
 #: Template/Settings/general.ctp:58
-msgid "The subject used for activation emails."
-msgstr ""
-
-#: Template/Settings/general.ctp:61
-msgid "[Admin] Verification Email Subject"
-msgstr ""
-
-#: Template/Settings/general.ctp:62
-msgid "The subject used for verification emails, whenever a user’s email address is verified manually by an admin."
+msgid "The email address used as sender for all backend emails."
 msgstr ""
 
 #: Template/Users/__user-row.ctp:8
@@ -987,19 +1008,22 @@ msgid "Do you really want to delete user <strong>{0}</strong>?"
 msgstr ""
 
 #: Template/Users/add.ctp:11
-#: Template/Users/index.ctp:19
+#: Template/Users/index.ctp:18
 msgid "Create a new User"
 msgstr ""
 
 #: Template/Users/add.ctp:28
-#: Template/Users/login.ctp:26
+#: Template/Users/login.ctp:27
+#: Template/Users/register.ctp:16
 msgid "Username"
 msgstr ""
 
 #: Template/Users/add.ctp:31
-#: Template/Users/index.ctp:47
+#: Template/Users/index.ctp:46
 #: Template/Users/lost_password.ctp:17
 #: Template/Users/profile.ctp:13
+#: Template/Users/register.ctp:17
+#: Template/Users/request_new_verification_email.ctp:17
 msgid "Email"
 msgstr ""
 
@@ -1018,21 +1042,23 @@ msgid "To change the user’s password fill in both password fields. Otherwise l
 msgstr ""
 
 #: Template/Users/add.ctp:45
-#: Template/Users/login.ctp:27
+#: Template/Users/login.ctp:28
 #: Template/Users/profile.ctp:20
-#: Template/Users/reset_password.ctp:14
+#: Template/Users/register.ctp:18
+#: Template/Users/reset_password.ctp:18
 msgid "Password"
 msgstr ""
 
 #: Template/Users/add.ctp:46
 #: Template/Users/profile.ctp:21
-#: Template/Users/reset_password.ctp:15
-msgid "Should consist of 6 to 50 characters. All numbers, letters and special characters are allowed."
+#: Template/Users/reset_password.ctp:16
+msgid "The password should consist of 6 to 50 characters. All numbers, letters and special characters are allowed."
 msgstr ""
 
 #: Template/Users/add.ctp:50
 #: Template/Users/profile.ctp:26
-#: Template/Users/reset_password.ctp:19
+#: Template/Users/register.ctp:19
+#: Template/Users/reset_password.ctp:22
 msgid "Password Confirmation"
 msgstr ""
 
@@ -1050,35 +1076,31 @@ msgstr ""
 msgid "Backend Interface Language"
 msgstr ""
 
-#: Template/Users/index.ctp:8;46
+#: Template/Users/index.ctp:7;45
 msgid "User"
 msgstr ""
 
 #: Template/Users/index.ctp:37
-msgid "ID"
-msgstr ""
-
-#: Template/Users/index.ctp:38
 msgid "Search for username"
 msgstr ""
 
-#: Template/Users/index.ctp:39
+#: Template/Users/index.ctp:38
 msgid "Search for email"
 msgstr ""
 
-#: Template/Users/index.ctp:40
+#: Template/Users/index.ctp:39
 msgid "Filter by group"
 msgstr ""
 
-#: Template/Users/index.ctp:42
-msgid "Search"
+#: Template/Users/index.ctp:60
+msgid "Your search yields no results. Please adjust your search criteria."
 msgstr ""
 
-#: Template/Users/login.ctp:31
+#: Template/Users/login.ctp:32
 msgid "Create an account."
 msgstr ""
 
-#: Template/Users/login.ctp:42
+#: Template/Users/login.ctp:43
 msgid "Lost your Password?"
 msgstr ""
 
@@ -1095,6 +1117,7 @@ msgid "Remember your password?"
 msgstr ""
 
 #: Template/Users/lost_password.ctp:27
+#: Template/Users/request_new_verification_email.ctp:20
 msgid "Send"
 msgstr ""
 
@@ -1110,11 +1133,43 @@ msgstr ""
 msgid "Adjust these settings for your current location."
 msgstr ""
 
-#: Template/Users/register.ctp:9
-msgid "Add User"
+#: Template/Users/register.ctp:14
+msgid "Register"
 msgstr ""
 
-#: Template/Users/register.ctp:14
+#: Template/Users/register.ctp:23
+msgid "Or log in."
+msgstr ""
+
+#: Template/Users/register.ctp:29
 msgid "Submit"
+msgstr ""
+
+#: Template/Users/request_new_verification_email.ctp:14
+msgid "Request Verification Email"
+msgstr ""
+
+#: Template/Users/request_new_verification_email.ctp:16
+msgid "If you did not verify your email address yet, you can request a new verification email below. After submitting this form you will receive an email with further instruction on how to verify your email address."
+msgstr ""
+
+#: Template/Users/reset_password.ctp:14
+msgid "Reset Password"
+msgstr ""
+
+#: Template/Users/reset_password.ctp:16
+msgid "Please enter your new password."
+msgstr ""
+
+#: Template/Users/verify_by_token.ctp:15
+msgid "You successfully verified your email address!"
+msgstr ""
+
+#: Template/Users/verify_by_token.ctp:16
+msgid "Your account will be activated by an administrator soon. You will be notified about the activation via email."
+msgstr ""
+
+#: Template/Users/verify_by_token.ctp:20
+msgid "Go to homepage"
 msgstr ""
 
