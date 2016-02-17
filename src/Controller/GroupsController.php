@@ -33,7 +33,12 @@ class GroupsController extends BackendAppController
      * @var array
      */
     public $filterFields = [
-        'search' => [
+        'id' => [
+            'modelField' => 'Groups.id',
+            'type' => 'like',
+            'actions' => ['index']
+        ],
+        'group' => [
             'modelField' => 'Groups.name',
             'type' => 'like',
             'actions' => ['index']
@@ -45,7 +50,7 @@ class GroupsController extends BackendAppController
      *
      * @var array
      */
-    public $sluggedFilterActions = [
+    public $filterActions = [
         'index'
     ];
 
