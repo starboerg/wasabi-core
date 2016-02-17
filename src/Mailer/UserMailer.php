@@ -51,7 +51,7 @@ class UserMailer extends Mailer
      */
     public function verifiedEmail(User $user)
     {
-        $this->_prepareEmail($user, __d('wasabi_core', 'Email address verfied'));
+        $this->_prepareEmail($user, __d('wasabi_core', 'Email address verified'));
         $this->_email->template('Wasabi/Core.User/verfied');
         $this->_email->viewVars([
             'user' => $user,
@@ -66,7 +66,7 @@ class UserMailer extends Mailer
      */
     public function verifiedByAdminEmail(User $user)
     {
-        $this->_prepareEmail($user, __d('wasabi_core', 'Email address verfied'));
+        $this->_prepareEmail($user, __d('wasabi_core', 'Email address verified'));
         $this->_email->template('Wasabi/Core.User/verified-by-admin');
         $this->_email->viewVars([
             'user' => $user,
