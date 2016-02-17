@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \Wasabi\Core\View\AppView $this
- * @var array $groups
+ * @var \Cake\ORM\Query $groups
  */
 
 $this->Html->setTitle(__d('wasabi_core', 'Groups'));
@@ -53,7 +53,9 @@ $this->Html->addAction(
             'group' => $group
         ]);
     }
-    ?>
+    if ($groups->all()->count() === 0) { ?>
+        <td class="no-results" colspan="6"><?= __d('wasabi_core', 'Your search yields no results. Please adjust your search criteria.') ?></td>
+    <?php } ?>
     </tbody>
 </table>
 <div class="row pagination"><?= $pagination ?></div>

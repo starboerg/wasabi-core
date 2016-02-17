@@ -211,7 +211,7 @@ class UsersController extends BackendAppController
     {
         $users = $this->Filter->filter($this->Users->find('withGroupName'));
         $this->set([
-            'users' => $this->Filter->paginate($users)->hydrate(false),
+            'users' => $this->Filter->paginate($users),
             'groups' => $this->Users->Groups->find('list')
         ]);
     }

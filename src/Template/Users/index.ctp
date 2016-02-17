@@ -1,10 +1,9 @@
 <?php
 /**
  * @var \Wasabi\Core\View\AppView $this
- * @var array $users
- * @var array $groups
+ * @var \Cake\ORM\Query $users
+ * @var \Cake\ORM\Query $groups
  */
-
 $this->Html->setTitle(__d('wasabi_core', 'User'));
 $this->Html->setSubTitle(__d('wasabi_core', 'Management'));
 $this->Html->addAction(
@@ -52,13 +51,14 @@ $this->Html->addAction(
     </thead>
     <tbody>
     <?php
-    foreach ($users as $key => $u) {
+    foreach ($users as $user) {
         echo $this->element('../Users/__user-row', [
-            'class' => (($key + 1) % 2 == 0) ? ' class="even"' : '',
-            'u' => $u
+            'user' => $user
         ]);
     }
-    ?>
+    if ($users->all()->count() === 0) { ?>
+        <td class="no-results" colspan="6"><?= __d('wasabi_core', 'Your search yields no results. Please adjust your search criteria.') ?></td>
+    <?php } ?>
     </tbody>
 </table>
 <div class="row pagination"><?= $pagination ?></div>
