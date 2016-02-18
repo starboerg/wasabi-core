@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
-"POT-Creation-Date: 2016-02-17 11:17+0100\n"
-"PO-Revision-Date: 2016-02-18 10:29+0100\n"
+"POT-Creation-Date: 2016-02-18 10:50+0100\n"
+"PO-Revision-Date: 2016-02-18 10:51+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -51,15 +51,15 @@ msgstr "Derzeit gibt es keine Rechte zum aktualisieren."
 msgid "All permissions have been saved."
 msgstr "Alle Rechte wurden gespeichert."
 
-#: Controller/GroupsController.php:121
+#: Controller/GroupsController.php:126
 msgid "The group <strong>{0}</strong> has been created."
 msgstr "Die Nutzergruppe <strong>{0}</strong> wurde erstellt."
 
-#: Controller/GroupsController.php:151
+#: Controller/GroupsController.php:156
 msgid "The group <strong>{0}</strong> has been saved."
 msgstr "Die Nutzergruppe <strong>{0}</strong> wurde gespeichert."
 
-#: Controller/GroupsController.php:198
+#: Controller/GroupsController.php:203
 msgid ""
 "The group <strong>{0}</strong> has been deleted. Prior <strong>{1}</strong> "
 "group member(s) ha(s/ve) been moved to the <strong>{2}</strong> group."
@@ -68,11 +68,11 @@ msgstr ""
 "wurden <strong>{1}</strong> bestehende Gruppenmitglieder der Nutzergruppe "
 "<strong>{2}</strong> zugeordnet."
 
-#: Controller/GroupsController.php:200
+#: Controller/GroupsController.php:205
 msgid "The group <strong>{0}</strong> has been deleted."
 msgstr "Die Nutzergruppe <strong>{0}</strong> wurde gelöscht."
 
-#: Controller/GroupsController.php:210
+#: Controller/GroupsController.php:215
 msgid ""
 "The group <strong>{0}</strong> has <strong>{1}</strong> member(s) that need "
 "to be moved to another group."
@@ -192,27 +192,32 @@ msgstr "Willkommen zurück."
 msgid "Username or password is incorrect."
 msgstr "Benutzername oder Passwort ist falsch."
 
-#: Controller/UsersController.php:196
-msgid "The user has been saved."
-msgstr "Ihr Nutzeraccount wurde erstellt."
+#: Controller/UsersController.php:200
+msgid ""
+"Registration successful! We have sent you an email to verify your email "
+"address. Please follow the instructions in this email."
+msgstr ""
+"Registrierung erfolgreich! Wir haben Ihnen eine E-Mail zur Verifizierung "
+"Ihrer E-Mail-Adresse gesendet. Bitte folgen Sie den Anweisungen in dieser E-"
+"Mail."
 
-#: Controller/UsersController.php:229
+#: Controller/UsersController.php:233
 msgid "The user <strong>{0}</strong> has been created."
 msgstr "Der Nutzer <strong>{0}</strong> wurde erstellt."
 
-#: Controller/UsersController.php:276
+#: Controller/UsersController.php:280
 msgid "The user <strong>{0}</strong> has been saved."
 msgstr "Der Nutzer <strong>{0}</strong> wurde gespeichert."
 
-#: Controller/UsersController.php:313
+#: Controller/UsersController.php:317
 msgid "The user <strong>{0}</strong> has been deleted."
 msgstr "Der Nutzer <strong>{0}</strong> wurde gelöscht."
 
-#: Controller/UsersController.php:383
+#: Controller/UsersController.php:387
 msgid "Your profile has been updated."
 msgstr "Ihr Profil wurde aktualisiert."
 
-#: Controller/UsersController.php:490
+#: Controller/UsersController.php:494
 msgid ""
 "We have sent you a verification email with instructions on how to verify "
 "your email address."
@@ -220,11 +225,11 @@ msgstr ""
 "Wir haben Ihnen eine E-Mail zum Bestätigen Ihrer E-Mail-Adresse gesendet. "
 "Bitte folgen Sie den Anweisungen in dieser E-Mail."
 
-#: Controller/UsersController.php:527
+#: Controller/UsersController.php:531
 msgid "We have sent you an email to reset your password."
 msgstr "Wir haben Ihnen eine E-Mail zum Zurücksetzen Ihres Passworts gesendet."
 
-#: Controller/UsersController.php:576
+#: Controller/UsersController.php:580
 msgid "Your password has been changed successfully."
 msgstr "Ihr Passwort wurde erfolgreich geändert."
 
@@ -695,6 +700,11 @@ msgstr "# Nutzer"
 msgid "Actions"
 msgstr "Aktionen"
 
+#: Template/Groups/index.ctp:57 Template/Users/index.ctp:60
+msgid "Your search yields no results. Please adjust your search criteria."
+msgstr ""
+"Ihre Suche lieferte keine Ergebnisse. Bitte passen Sie Ihre Suchkriterien an."
+
 #: Template/Languages/__language-row.ctp:13
 msgid "Change the position of this Language"
 msgstr "Position dieser Sprache ändern"
@@ -1121,11 +1131,6 @@ msgstr "Suche nach E-Mail-Adresse"
 msgid "Filter by group"
 msgstr "Nach Nutzergruppe filtern"
 
-#: Template/Users/index.ctp:60
-msgid "Your search yields no results. Please adjust your search criteria."
-msgstr ""
-"Ihre Suche lieferte keine Ergebnisse. Bitte passen Sie Ihre Suchkriterien an."
-
 #: Template/Users/login.ctp:32
 msgid "Create an account."
 msgstr "Ein Benutzerkonto erstellen?"
@@ -1223,6 +1228,9 @@ msgstr ""
 #: Template/Users/verify_by_token.ctp:20
 msgid "Go to homepage"
 msgstr "Zur Startseite"
+
+#~ msgid "The user has been saved."
+#~ msgstr "Ihr Nutzeraccount wurde erstellt."
 
 #~ msgid ""
 #~ "If you did not yet verify your email address, request a new validation "

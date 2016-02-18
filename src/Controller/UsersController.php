@@ -189,17 +189,21 @@ class UsersController extends BackendAppController
      */
     public function register()
     {
+        /** @var User $user */
         $user = $this->Users->newEntity($this->request->data);
-        if ($this->request->is('post')) {
-            $user->set('group_id', 1);
+        if ($this->request->is('post') && !empty($this->request->data)) {
             if ($this->Users->save($user)) {
-                $this->Flash->success(__d('wasabi_core', 'The user has been saved.'));
-                $this->redirect(['action' => 'register']);
+                $this->loadModel('Wasabi/Core.Tokens');
+                $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_EMAIL_VERIFICATION);
+                $token = $this->Tokens->generateToken($user, TokensTable::TYPE_EMAIL_VERIFICATION);
+                $this->getMailer('Wasabi/Core.User')->send('verifyEmail', [$user, $token]);
+                $this->Flash->success(__d('wasabi_core', 'Registration successful! We have sent you an email to verify your email address. Please follow the instructions in this email.'));
+                $this->redirect(['action' => 'login']);
                 return;
             }
             $this->Flash->error($this->formErrorMessage);
         }
-        $this->set('user', $user);
+        $this->set(['user' => $user]);
         $this->viewBuilder()->layout('Wasabi/Core.support');
     }
 
