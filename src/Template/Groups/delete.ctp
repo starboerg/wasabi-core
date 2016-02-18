@@ -2,7 +2,7 @@
 /**
  * @var \Wasabi\Core\View\AppView $this
  * @var \Wasabi\Core\Model\Entity\Group $group
- * @var array $groups
+ * @var \Cake\ORM\Query $groups
  */
 
 $this->Html->setTitle(__d('wasabi_core', 'Move existing Member(s)'));
