@@ -72,7 +72,7 @@ class GroupsController extends BackendAppController
             'modelField' => 'Groups.name',
             'actions' => ['index']
         ],
-        'ucount' => [
+        'count' => [
             'modelField' => 'Groups.user_count',
             'actions' => ['index']
         ]
