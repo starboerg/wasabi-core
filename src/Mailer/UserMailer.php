@@ -45,6 +45,29 @@ class UserMailer extends Mailer
     }
 
     /**
+     * Send a "verify" email to the user that contains a link to verify his email address and setup his password.
+     * This mail is sent, whenever an Admin creates a new user via the backend.
+     *
+     * @param User $user
+     * @param string $token
+     */
+    public function verifyAndResetPasswordEmail(User $user, $token)
+    {
+        $this->_prepareEmail($user, __d('wasabi_core', 'Verify your email address'));
+        $this->_email->template('Wasabi/Core.User/verify');
+        $this->_email->viewVars([
+            'user' => $user,
+            'verifyEmailLink' => [
+                'plugin' => null,
+                'controller' => 'Backend/Users',
+                'action' => 'verifyByTokenResetPassword',
+                'token' => $token
+            ],
+            'instanceName' => Config::getInstanceName()
+        ]);
+    }
+
+    /**
      * Send a "verified" email to the user, when his email address has been verified.
      *
      * @param User $user
