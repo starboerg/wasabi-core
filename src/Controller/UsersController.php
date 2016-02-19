@@ -364,11 +364,29 @@ class UsersController extends BackendAppController
         if (!$this->request->isAll(['ajax', 'post'])) {
             throw new MethodNotAllowedException();
         }
-        $this->request->session()->renew();
-        $this->set([
-            'status' => 200,
-            '_serialize' => ['status']
-        ]);
+
+        $heartBeatCount = $this->request->session()->check('heartBeatCount') ? $this->request->session()->read('heartBeatCount') : 0;
+
+        $frequency = $this->_calculateHeartBeatFrequency();
+        $maxLoginTime = 30 * 60 * 1000; //@TODO: make the max login time configurable in Settings -> General
+        $maxHeartBeats = $maxLoginTime / $frequency;
+
+        if (++$heartBeatCount < $maxHeartBeats) {
+            $this->request->session()->renew();
+            $this->request->session()->write('heartBeatCount', $heartBeatCount);
+
+            $this->set([
+                'status' => 200,
+                '_serialize' => ['status']
+            ]);
+        } else {
+            $this->Auth->logout();
+
+            $this->set([
+                'status' => 401,
+                '_serialize' => ['status']
+            ]);
+        }
     }
 
     /**
