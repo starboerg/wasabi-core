@@ -118,6 +118,15 @@ class BackendAppController extends AppController
             $this->Auth->config('authError', false);
         } else {
             Wasabi::user(new User($this->Auth->user()));
+            if (!(
+                $this->request->params['plugin'] === 'Wasabi/Core' &&
+                $this->request->params['controller'] === 'Users' &&
+                $this->request->params['action'] === 'heartBeat' &&
+                $this->request->session()->check('heartBeatCount')
+            )) {
+                // reset the heartBeatCount on non-heartBeat requests
+                $this->request->session()->delete('heartBeatCount');
+            }
         }
 
         $this->_allow();
@@ -129,7 +138,7 @@ class BackendAppController extends AppController
 
         $this->_setSectionCssClass();
 
-        $this->set('heartBeatFrequency', floor(((int) ini_get('session.gc_maxlifetime')) / 5) * 1000);
+        $this->set('heartBeatFrequency', $this->_calculateHeartBeatFrequency());
 
         if ($this->request->is('ajax')) {
             $this->viewClass = null;
@@ -191,5 +200,15 @@ class BackendAppController extends AppController
                 $this->request->params['action']
             )
         );
+    }
+
+    /**
+     * Calculate the heartBeat frequency 1/5th of session.gc_maxlifetime.
+     *
+     * @return int frequency in ms
+     */
+    protected function _calculateHeartBeatFrequency()
+    {
+        return (int)floor(((int) ini_get('session.gc_maxlifetime')) / 5) * 1000;
     }
 }
