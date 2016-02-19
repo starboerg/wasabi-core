@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-02-18 10:49+0100\n"
+"POT-Creation-Date: 2016-02-19 08:52+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -22,15 +22,20 @@ msgstr ""
 msgid "No menu with alias \"{0}\" does exist."
 msgstr ""
 
-#: Controller/BackendAppController.php:99
-msgid "Please correct the marked errors."
+#: Controller/BackendAppController.php:93
+#: Template/Users/unauthorized.ctp:12
+msgid "You are not authorized to access that location."
 msgstr ""
 
 #: Controller/BackendAppController.php:100
-msgid "Invalid Request."
+msgid "Please correct the marked errors."
 msgstr ""
 
 #: Controller/BackendAppController.php:101
+msgid "Invalid Request."
+msgstr ""
+
+#: Controller/BackendAppController.php:102
 msgid "Something went wrong. Please try again."
 msgstr ""
 
@@ -289,15 +294,15 @@ msgstr ""
 msgid "Please confirm you are human."
 msgstr ""
 
-#: Mailer/UserMailer.php:33
+#: Mailer/UserMailer.php:33;56
 msgid "Verify your email address"
 msgstr ""
 
-#: Mailer/UserMailer.php:54;69
+#: Mailer/UserMailer.php:77;92
 msgid "Email address verified"
 msgstr ""
 
-#: Mailer/UserMailer.php:115
+#: Mailer/UserMailer.php:138
 #: Template/Email/html/User/lost-password.ctp:8
 #: Template/Email/text/User/lost-password.ctp:8
 msgid "Password Reset"
@@ -1160,6 +1165,10 @@ msgstr ""
 
 #: Template/Users/reset_password.ctp:16
 msgid "Please enter your new password."
+msgstr ""
+
+#: Template/Users/unauthorized.ctp:5
+msgid "Access Denied"
 msgstr ""
 
 #: Template/Users/verify_by_token.ctp:15

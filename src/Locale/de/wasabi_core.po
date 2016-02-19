@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
-"POT-Creation-Date: 2016-02-18 10:50+0100\n"
-"PO-Revision-Date: 2016-02-18 10:51+0100\n"
+"POT-Creation-Date: 2016-02-19 08:52+0100\n"
+"PO-Revision-Date: 2016-02-19 08:52+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -27,15 +27,19 @@ msgstr "Ein Menü mit dem Namen \"{0}\" existiert bereits."
 msgid "No menu with alias \"{0}\" does exist."
 msgstr "Es existiert kein Menü mit dem Namen \"{0}\"."
 
-#: Controller/BackendAppController.php:99
+#: Controller/BackendAppController.php:93 Template/Users/unauthorized.ctp:12
+msgid "You are not authorized to access that location."
+msgstr "Sie haben nicht die nötigen Berechtigungen, um diese Seite aufzurufen."
+
+#: Controller/BackendAppController.php:100
 msgid "Please correct the marked errors."
 msgstr "Bitte korrigieren Sie die markierten Fehler."
 
-#: Controller/BackendAppController.php:100
+#: Controller/BackendAppController.php:101
 msgid "Invalid Request."
 msgstr "Ungültige Anfrage"
 
-#: Controller/BackendAppController.php:101
+#: Controller/BackendAppController.php:102
 msgid "Something went wrong. Please try again."
 msgstr "Irgendwas ging schief. Bitte versuchen Sie es erneut."
 
@@ -319,15 +323,15 @@ msgstr ""
 msgid "Please confirm you are human."
 msgstr "Bitte bestätigen Sie, dass Sie ein Mensch und kein Computer sind."
 
-#: Mailer/UserMailer.php:33
+#: Mailer/UserMailer.php:33;56
 msgid "Verify your email address"
 msgstr "E-Mail-Adresse bestätigen"
 
-#: Mailer/UserMailer.php:54;69
+#: Mailer/UserMailer.php:77;92
 msgid "Email address verified"
 msgstr "E-Mail-Adresse bestätigt"
 
-#: Mailer/UserMailer.php:115 Template/Email/html/User/lost-password.ctp:8
+#: Mailer/UserMailer.php:138 Template/Email/html/User/lost-password.ctp:8
 #: Template/Email/text/User/lost-password.ctp:8
 msgid "Password Reset"
 msgstr "Passwort zurücksetzen"
@@ -435,8 +439,7 @@ msgstr "Bitte geben Sie ein Passwort ein."
 
 #: Model/Table/UsersTable.php:74;148
 msgid "Ensure your password consists of at least 6 characters."
-msgstr ""
-"Bitte achten Sie darauf, dass Ihr Passwort aus mindestens 6 Zeichen besteht."
+msgstr "Das Passwort muss mindestens 6 Zeichen lang sein."
 
 #: Model/Table/UsersTable.php:77;151
 msgid "Please repeat your Password."
@@ -1212,6 +1215,10 @@ msgstr "Passwort Zurücksetzen"
 #: Template/Users/reset_password.ctp:16
 msgid "Please enter your new password."
 msgstr "Bitte geben Sie ein neues Passwort ein."
+
+#: Template/Users/unauthorized.ctp:5
+msgid "Access Denied"
+msgstr "Zugriff verweigert"
 
 #: Template/Users/verify_by_token.ctp:15
 msgid "You successfully verified your email address!"
