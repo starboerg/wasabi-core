@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-02-19 14:44+0100\n"
+"POT-Creation-Date: 2016-02-19 14:53+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -764,6 +764,11 @@ msgstr ""
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Languages/index.ctp:53
 msgid "More ISO codes can be found <a href=\"http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">here</a>."
+msgstr ""
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Layout/Email/html/responsive.ctp:148
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Layout/Email/text/responsive.ctp:17
+msgid "Kind regards"
 msgstr ""
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Menus/__menu-item-row.ctp:26

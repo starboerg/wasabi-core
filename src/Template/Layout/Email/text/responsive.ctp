@@ -14,6 +14,6 @@ $nl = "\n";
 <?= $nl ?>
 <?php echo $this->fetch('content') ?><?= $nl ?>
 <?= $nl ?>
-Greetings,<?= $nl ?>
+<?= __d('wasabi_core', 'Kind regards') ?>,<?= $nl ?>
 <?= $instanceName ?><?= $nl ?>
 <?= $this->Email->Url->build('/', true) ?>

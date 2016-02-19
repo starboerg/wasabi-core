@@ -1,4 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?php
+/**
+ * @var \Wasabi\Core\View\AppView $this
+ * @var string $instanceName
+ */
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -145,7 +150,7 @@
             <td class="text-pad">
                 <?php echo $this->fetch('content') ?>
                 <br><br>
-                Greetings,<br>
+                <?= __d('wasabi_core', 'Kind regards') ?>,<br>
                 <?= $instanceName ?><br>
                 <?= $this->Email->linkToCmsHomepage() ?>
             </td>
