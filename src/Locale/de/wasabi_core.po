@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
-"POT-Creation-Date: 2016-02-19 08:52+0100\n"
-"PO-Revision-Date: 2016-02-19 08:52+0100\n"
+"POT-Creation-Date: 2016-02-19 13:07+0100\n"
+"PO-Revision-Date: 2016-02-19 13:32+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -55,15 +55,15 @@ msgstr "Derzeit gibt es keine Rechte zum aktualisieren."
 msgid "All permissions have been saved."
 msgstr "Alle Rechte wurden gespeichert."
 
-#: Controller/GroupsController.php:126
+#: Controller/GroupsController.php:128
 msgid "The group <strong>{0}</strong> has been created."
 msgstr "Die Nutzergruppe <strong>{0}</strong> wurde erstellt."
 
-#: Controller/GroupsController.php:156
+#: Controller/GroupsController.php:158
 msgid "The group <strong>{0}</strong> has been saved."
 msgstr "Die Nutzergruppe <strong>{0}</strong> wurde gespeichert."
 
-#: Controller/GroupsController.php:203
+#: Controller/GroupsController.php:205
 msgid ""
 "The group <strong>{0}</strong> has been deleted. Prior <strong>{1}</strong> "
 "group member(s) ha(s/ve) been moved to the <strong>{2}</strong> group."
@@ -72,11 +72,11 @@ msgstr ""
 "wurden <strong>{1}</strong> bestehende Gruppenmitglieder der Nutzergruppe "
 "<strong>{2}</strong> zugeordnet."
 
-#: Controller/GroupsController.php:205
+#: Controller/GroupsController.php:207
 msgid "The group <strong>{0}</strong> has been deleted."
 msgstr "Die Nutzergruppe <strong>{0}</strong> wurde gelöscht."
 
-#: Controller/GroupsController.php:215
+#: Controller/GroupsController.php:217
 msgid ""
 "The group <strong>{0}</strong> has <strong>{1}</strong> member(s) that need "
 "to be moved to another group."
@@ -331,6 +331,14 @@ msgstr "E-Mail-Adresse bestätigen"
 msgid "Email address verified"
 msgstr "E-Mail-Adresse bestätigt"
 
+#: Mailer/UserMailer.php:107
+msgid "Your account has been activated"
+msgstr "Ihr Zugang wurde freigeschalten"
+
+#: Mailer/UserMailer.php:122
+msgid "Your account has been deactivated"
+msgstr "Ihr Zugang wurde gesperrt"
+
 #: Mailer/UserMailer.php:138 Template/Email/html/User/lost-password.ctp:8
 #: Template/Email/text/User/lost-password.ctp:8
 msgid "Password Reset"
@@ -520,22 +528,28 @@ msgid "Logout"
 msgstr "Ausloggen"
 
 #: Template/Email/html/User/activated.ctp:8
-#: Template/Email/text/User/activated.ctp:8
-msgid "Account Activation"
-msgstr "Account-Aktivierung"
+msgid "Account Activated"
+msgstr "Zugang Freigeschalten"
 
 #: Template/Email/html/User/activated.ctp:10
-#: Template/Email/text/User/activated.ctp:10
 msgid ""
 "Hello {username},{nl}your account has been activated.{nl}{nl}You can now "
-"login and start creating content.{nl}{nl}{loginLink}"
+"login.{nl}{nl}{loginLink}"
 msgstr ""
-"Hallo {username},{nl}Ihr Account wurde aktiviert.{nl}{nl}Sie können sich nun "
-"anmelden und Inhalt pflegen.{nl}{nl}{loginLink}"
+"Hallo {username},{nl}Ihr Account wurde freigeschalten.{nl}{nl}Sie können "
+"sich jetzt anmelden.{nl}{nl}{loginLink}"
 
 #: Template/Email/html/User/activated.ctp:17 Template/Users/login.ctp:24;38
 msgid "Login"
 msgstr "Login"
+
+#: Template/Email/html/User/deactivated.ctp:8
+msgid "Account Locked"
+msgstr "Zugang Gesperrt"
+
+#: Template/Email/html/User/deactivated.ctp:10
+msgid "Hello {username},{nl}your account has been locked."
+msgstr "Hallo {username},{nl}Ihr Account wurde gesperrt."
 
 #: Template/Email/html/User/lost-password.ctp:10
 #: Template/Email/text/User/lost-password.ctp:10
@@ -584,6 +598,18 @@ msgstr ""
 "Hallo {username},{nl}bevor Sie unser Backend nutzen können, müssen Sie Ihre "
 "E-Mail-Adresse bestätigen. Bitte klicken Sie dazu auf den folgenden Link.{nl}"
 "{nl}{verifyEmailLink}"
+
+#: Template/Email/text/User/activated.ctp:8
+msgid "Account Activation"
+msgstr "Account-Aktivierung"
+
+#: Template/Email/text/User/activated.ctp:10
+msgid ""
+"Hello {username},{nl}your account has been activated.{nl}{nl}You can now "
+"login and start creating content.{nl}{nl}{loginLink}"
+msgstr ""
+"Hallo {username},{nl}Ihr Account wurde aktiviert.{nl}{nl}Sie können sich nun "
+"anmelden und Inhalt pflegen.{nl}{nl}{loginLink}"
 
 #: Template/GroupPermissions/__groupPermission-row.ctp:42
 #: Template/GroupPermissions/index.ctp:39

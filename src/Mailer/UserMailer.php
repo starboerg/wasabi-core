@@ -104,7 +104,7 @@ class UserMailer extends Mailer
      */
     public function activatedEmail(User $user)
     {
-        $this->_prepareEmail($user, Config::getActivationEmailSubject());
+        $this->_prepareEmail($user, __d('wasabi_core', 'Your account has been activated'));
         $this->_email->template('Wasabi/Core.User/activated');
         $this->_email->viewVars([
             'user' => $user,
@@ -119,7 +119,7 @@ class UserMailer extends Mailer
      */
     public function deactivatedEmail(User $user)
     {
-        $this->_prepareEmail($user, Config::getActivationEmailSubject());
+        $this->_prepareEmail($user, __d('wasabi_core', 'Your account has been deactivated'));
         $this->_email->template('Wasabi/Core.User/deactivated');
         $this->_email->viewVars([
             'user' => $user,

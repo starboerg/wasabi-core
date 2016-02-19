@@ -268,6 +268,10 @@ select {
 
   option {
     color: @gray-darker;
+
+    &[disabled] {
+      color: @gray-lighter;
+    }
   }
 
   &.empty {

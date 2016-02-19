@@ -15,11 +15,13 @@ namespace Wasabi\Core\Controller;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Exception\NotFoundException;
+use FrankFoerster\Filter\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Table\GroupsTable;
 
 /**
  * Class GroupsController
  *
+ * @property FilterComponent $Filter
  * @property GroupsTable $Groups
  */
 class GroupsController extends BackendAppController
@@ -154,7 +156,7 @@ class GroupsController extends BackendAppController
             $group = $this->Groups->patchEntity($group, $this->request->data);
             if ($this->Groups->save($group)) {
                 $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been saved.', $this->request->data['name']));
-                $this->redirect(['action' => 'index']);
+                $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
                 return;
             } else {
                 $this->Flash->error($this->formErrorMessage);
@@ -208,7 +210,7 @@ class GroupsController extends BackendAppController
                 $this->Groups->connection()->rollback();
                 $this->Flash->error($this->dbErrorMessage);
             }
-            $this->redirect(['action' => 'index']);
+            $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
             return;
         } else {
             $this->Groups->connection()->rollback();

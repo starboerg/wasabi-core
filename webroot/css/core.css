@@ -1363,6 +1363,9 @@ select.select-small {
 select option {
   color: #333333;
 }
+select option[disabled] {
+  color: #999999;
+}
 select.empty {
   color: #8c8c8c;
 }

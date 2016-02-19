@@ -278,7 +278,7 @@ class UsersController extends BackendAppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__d('wasabi_core', 'The user <strong>{0}</strong> has been saved.', $this->request->data['username']));
-                $this->redirect(['action' => 'index']);
+                $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
                 return;
             } else {
                 $this->Flash->error($this->formErrorMessage);
@@ -319,7 +319,7 @@ class UsersController extends BackendAppController
             $this->Flash->error($this->dbErrorMessage);
         }
 
-        $this->redirect(['action' => 'index']);
+        $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
         return;
     }
 
@@ -407,7 +407,7 @@ class UsersController extends BackendAppController
      * activate action
      * AJAX POST
      *
-     * @param int|string $id
+     * @param string $id
      */
     public function activate($id)
     {
@@ -439,7 +439,7 @@ class UsersController extends BackendAppController
      * deactivate action
      * AJAX POST
      *
-     * @param int|string $id
+     * @param string $id
      */
     public function deactivate($id)
     {
@@ -552,7 +552,7 @@ class UsersController extends BackendAppController
      * resetPassword action
      * GET | POST
      *
-     * @param $tokenString
+     * @param string $tokenString
      */
     public function resetPassword($tokenString)
     {

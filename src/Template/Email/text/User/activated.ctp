@@ -5,11 +5,11 @@
  * @var string $instanceName
  */
 
-$this->set('title', __d('wasabi_core', 'Account Activation'));
+$this->set('title', __d('wasabi_core', 'Account Activated'));
 
 echo __d(
     'wasabi_core',
-    'Hello {username},{nl}your account has been activated.{nl}{nl}You can now login and start creating content.{nl}{nl}{loginLink}',
+    'Hello {username},{nl}your account has been activated.{nl}{nl}You can now login.{nl}{nl}{loginLink}',
     [
         'username' => $user->username,
         'nl' => "\n",

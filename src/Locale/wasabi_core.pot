@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-02-19 08:52+0100\n"
+"POT-Creation-Date: 2016-02-19 13:07+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -51,23 +51,23 @@ msgstr ""
 msgid "All permissions have been saved."
 msgstr ""
 
-#: Controller/GroupsController.php:126
+#: Controller/GroupsController.php:128
 msgid "The group <strong>{0}</strong> has been created."
 msgstr ""
 
-#: Controller/GroupsController.php:156
+#: Controller/GroupsController.php:158
 msgid "The group <strong>{0}</strong> has been saved."
 msgstr ""
 
-#: Controller/GroupsController.php:203
+#: Controller/GroupsController.php:205
 msgid "The group <strong>{0}</strong> has been deleted. Prior <strong>{1}</strong> group member(s) ha(s/ve) been moved to the <strong>{2}</strong> group."
 msgstr ""
 
-#: Controller/GroupsController.php:205
+#: Controller/GroupsController.php:207
 msgid "The group <strong>{0}</strong> has been deleted."
 msgstr ""
 
-#: Controller/GroupsController.php:215
+#: Controller/GroupsController.php:217
 msgid "The group <strong>{0}</strong> has <strong>{1}</strong> member(s) that need to be moved to another group."
 msgstr ""
 
@@ -302,6 +302,14 @@ msgstr ""
 msgid "Email address verified"
 msgstr ""
 
+#: Mailer/UserMailer.php:107
+msgid "Your account has been activated"
+msgstr ""
+
+#: Mailer/UserMailer.php:122
+msgid "Your account has been deactivated"
+msgstr ""
+
 #: Mailer/UserMailer.php:138
 #: Template/Email/html/User/lost-password.ctp:8
 #: Template/Email/text/User/lost-password.ctp:8
@@ -494,18 +502,24 @@ msgid "Logout"
 msgstr ""
 
 #: Template/Email/html/User/activated.ctp:8
-#: Template/Email/text/User/activated.ctp:8
-msgid "Account Activation"
+msgid "Account Activated"
 msgstr ""
 
 #: Template/Email/html/User/activated.ctp:10
-#: Template/Email/text/User/activated.ctp:10
-msgid "Hello {username},{nl}your account has been activated.{nl}{nl}You can now login and start creating content.{nl}{nl}{loginLink}"
+msgid "Hello {username},{nl}your account has been activated.{nl}{nl}You can now login.{nl}{nl}{loginLink}"
 msgstr ""
 
 #: Template/Email/html/User/activated.ctp:17
 #: Template/Users/login.ctp:24;38
 msgid "Login"
+msgstr ""
+
+#: Template/Email/html/User/deactivated.ctp:8
+msgid "Account Locked"
+msgstr ""
+
+#: Template/Email/html/User/deactivated.ctp:10
+msgid "Hello {username},{nl}your account has been locked."
 msgstr ""
 
 #: Template/Email/html/User/lost-password.ctp:10
@@ -536,6 +550,14 @@ msgstr ""
 #: Template/Email/html/User/verify.ctp:10
 #: Template/Email/text/User/verify.ctp:10
 msgid "Hello {username},{nl}before you can start using our backend, you have to verify your email address. To verify your email address click the following link.{nl}{nl}{verifyEmailLink}"
+msgstr ""
+
+#: Template/Email/text/User/activated.ctp:8
+msgid "Account Activation"
+msgstr ""
+
+#: Template/Email/text/User/activated.ctp:10
+msgid "Hello {username},{nl}your account has been activated.{nl}{nl}You can now login and start creating content.{nl}{nl}{loginLink}"
 msgstr ""
 
 #: Template/GroupPermissions/__groupPermission-row.ctp:42
