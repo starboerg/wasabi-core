@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width" />
 <meta name="format-detection" content="telephone=no" />
 <style type="text/css">
+    /* <![CDATA[ */
     body {
         margin: 0;
         padding: 0;
@@ -126,6 +127,7 @@
             width: 302px;
         }
     }
+    /* ]]> */
 </style>
 </head>
 <body>
