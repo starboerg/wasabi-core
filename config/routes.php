@@ -22,7 +22,7 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'register']);
     $routes->connect('/forbidden', ['controller' => 'Users', 'action' => 'unauthorized']);
-    $routes->connect('/heartbeat', ['controller' => 'Users', 'action' => 'heartbeat']);
+    $routes->connect('/heartbeat', ['controller' => 'Users', 'action' => 'heartBeat']);
     $routes->connect('/profile', ['controller' => 'Users', 'action' => 'profile']);
     $routes->connect('/request-new-verification-email', ['controller' => 'Users', 'action' => 'requestNewVerificationEmail']);
     $routes->connect('/verify/:token', ['controller' => 'Users', 'action' => 'verifyByToken'], ['token' => '[a-zA-Z0-9\-]+', 'pass' => ['token']]);
