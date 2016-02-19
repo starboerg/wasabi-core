@@ -9,7 +9,7 @@ $this->set('title', __d('wasabi_core', 'Account Locked'));
 
 echo __d(
     'wasabi_core',
-    'Hello {username},{nl}your account has been lcoked.',
+    'Hello {username},{nl}your account has been locked.',
     [
         'username' => $user->username,
         'nl' => "\n"
