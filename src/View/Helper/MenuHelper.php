@@ -80,7 +80,7 @@ class MenuHelper extends Helper
                 $cls[] = $openClass;
                 $subNavActiveClass .= ' in';
             }
-            $out .= '<li' . ((count($cls) > 0) ? ' class="' . join(' ', $cls) . '"' : '') . '>';
+            $itemOut = '<li' . ((count($cls) > 0) ? ' class="' . join(' ', $cls) . '"' : '') . '>';
 
             $options = isset($item['linkOptions']) ? $item['linkOptions'] : [];
 
@@ -93,21 +93,34 @@ class MenuHelper extends Helper
             $options['escape'] = false;
 
             if (isset($item['url'])) {
-                $out .= $this->Guardian->protectedLink($item['name'], $item['url'], $options);
+                $itemLink = $this->Guardian->protectedLink($item['name'], $item['url'], $options);
+                if ($itemLink !== '') {
+                    $itemOut .= $itemLink;
+                } else {
+                    $itemOut = '';
+                }
             } else {
                 if (isset($item['children']) && !empty($item['children'])) {
                     $item['name'] .= ' <i class="icon-arrow-left"></i>';
                     $item['name'] .= ' <i class="icon-arrow-down"></i>';
                 }
-                $out .= $this->Html->link($item['name'], 'javascript:void(0)', $options);
+                $itemOut .= $this->Html->link($item['name'], 'javascript:void(0)', $options);
             }
 
             if (isset($item['children']) && !empty($item['children'])) {
-                $out .= '<ul class="' . $subNavClass . $subNavActiveClass . '">';
-                $out .= $this->renderNested($item['children']);
-                $out .= '</ul>';
+                $itemOut .= '<ul class="' . $subNavClass . $subNavActiveClass . '">';
+                $nestedOut = $this->renderNested($item['children']);
+                if ($nestedOut !== '') {
+                    $itemOut .= $nestedOut;
+                    $itemOut .= '</ul>';
+                } else {
+                    $itemOut = '';
+                }
             }
-            $out .= '</li>';
+            if ($itemOut !== '') {
+                $itemOut .= '</li>';
+            }
+            $out .= $itemOut;
         }
 
         return $out;
