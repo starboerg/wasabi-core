@@ -65,6 +65,16 @@ class GeneralSettingsTable extends SettingsTable
             ->add('Email__email_sender', 'validEmail', [
                 'rule' => 'email',
                 'message' => __d('wasabi_core', 'Please enter a valid email address.')
+            ])
+            ->notEmpty(
+                'Login__HeartBeat__max_login_time',
+                __d('wasabi_core', 'Please choose a maximum login time.')
+            )
+            ->add('Login__HeartBeat__max_login_time', 'valid', [
+                'rule' => function ($value, $context) {
+                    return in_array((int)$value, [900000, 1800000, 2700000, 3600000, 6400000]);
+                },
+                'message' => __d('wasabi_core', 'Please choose a valid maximum login time.')
             ]);
     }
 

@@ -1019,6 +1019,13 @@ body.nav-closed div#content {
   box-shadow: 0 -2px 0 rgba(196, 196, 196, 0.4) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
   /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
 }
+.button > .spinner {
+  position: relative;
+  display: inline-block;
+  left: 2px;
+  top: 4px;
+  margin-right: 6px;
+}
 .button.blue {
   background-color: #368ee0;
   box-shadow: 0 -2px 0 rgba(17, 64, 108, 0.3) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
@@ -1410,7 +1417,7 @@ form.bulk .button.small {
   left: 0;
   padding: 0 21px 0 0;
   background-color: #223648;
-  z-index: 9999;
+  z-index: 1030;
   width: 100%;
 }
 #page-header ul {
@@ -1516,7 +1523,7 @@ body.nav-closed #page-header .nav-toggle {
     background-color: #32506b;
   }
 }
-.modal-backdrop,
+.modal-wrapper .modal-backdrop,
 .modal-scrollable {
   position: fixed;
   top: 0;
@@ -1524,10 +1531,15 @@ body.nav-closed #page-header .nav-toggle {
   bottom: 0;
   left: 0;
 }
+.modal-wrapper {
+  z-index: 1040;
+}
 .modal-backdrop {
   background-color: #000;
+  z-index: 1040;
 }
 .modal-scrollable {
+  z-index: 1050;
   overflow: auto;
 }
 .modal-open {
@@ -1573,6 +1585,40 @@ body.nav-closed #page-header .nav-toggle {
   border-top: 1px solid #d5d7d7;
   background-color: #f2f3f4;
   text-align: right;
+}
+.modal--login .modal-backdrop {
+  opacity: 0.6;
+  /* Chrome 4+, Firefox 2+, Safari 3.1+, Opera 9+, IE9+, iOS 3.2+, Android 2.1+ */
+  filter: alpha(opacity=60);
+}
+.modal--login .modal-scrollable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal--login .modal-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.modal--login .modal-body {
+  padding: 20px;
+}
+.modal--login .input {
+  margin-bottom: 10px;
+}
+.modal--login .input:last-child {
+  margin-bottom: 0;
+}
+.modal--login .modal-footer {
+  text-align: right;
+}
+.modal--login .modal-footer button {
+  margin-right: 0;
+}
+.modal--login .flash-message {
+  margin: -20px -20px 20px;
+  padding: 11px 20px 10px;
+  border-width: 0 0 1px;
 }
 .dialog-open {
   overflow: hidden;
@@ -2277,11 +2323,11 @@ table.list tbody .col-actions > a:first-child,
   animation: spinner-spin 3000ms linear infinite;
 }
 .spinner.spinner-white {
-  border-color: #e6e6e6;
+  border-color: #fff;
 }
 .spinner.spinner-white:before,
 .spinner.spinner-white:after {
-  background-color: #e6e6e6;
+  background-color: #fff;
 }
 @keyframes spinner-spin {
   to {

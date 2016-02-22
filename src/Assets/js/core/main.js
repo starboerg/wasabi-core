@@ -5,6 +5,7 @@ define(function(require) {
   var NavigationToggleView = require('core/views/NavigationToggle');
   var LangSwitchView = require('core/views/LangSwitch');
   var PaginationView = require('core/views/Pagination');
+  var LoginModalView = require('core/views/LoginModal');
   var ModalView = require('common/ModalView');
   var TabView = require('common/TabView');
   var WS = require('wasabi');
@@ -23,8 +24,8 @@ define(function(require) {
       dataType: 'json'
     });
     $(doc)
-      .ajaxSuccess(_onAjaxSuccess)
-      .ajaxError(_onAjaxError);
+      .ajaxSuccess(_.bind(_onAjaxSuccess, this))
+      .ajaxError(_.bind(_onAjaxError, this));
   }
 
   /**
@@ -72,6 +73,9 @@ define(function(require) {
           win.location.reload();
         }
       }
+    }
+    if (xhr.status == 403) {
+      _authError.call(this);
     }
     if (xhr.status == 500) {
       data = $.parseJSON(xhr.responseText) || {};
@@ -187,21 +191,36 @@ define(function(require) {
     }
   }
 
+  function _handleHeartBeatResponse(data) {
+    if (data.status === 401) {
+      _authError.call(this);
+    } else {
+      _initHeartBeat.call(this);
+    }
+  }
+
+  function _authError() {
+    clearTimeout(this.heartBeatTimeout);
+
+    // open login modal
+    this.loginModal.openModal();
+  }
+
   function _initHeartBeat() {
+    if (!this.loginModal) {
+      this.loginModal = WS.createView(LoginModalView, {});
+    }
+
     clearTimeout(this.heartBeatTimeout);
     this.heartBeatTimeout = setTimeout(_.bind(function() {
       $.ajax({
         url: this.options.heartbeatEndpoint,
         method: 'post',
-        type: 'json'
+        type: 'json',
+        success: _.bind(_handleHeartBeatResponse, this),
+        error: _.bind(_authError, this)
       });
-      _initHeartBeat.call(this);
     }, this), this.options.heartbeat);
-
-
-    this.heartBeatTimeout = setTimeout(function() {
-
-    }, this.options.heartbeat);
   }
 
   /**
@@ -289,6 +308,11 @@ define(function(require) {
     components: {},
 
     /**
+     * Holds a reference to the login modal.
+     */
+    loginModal: null,
+
+    /**
      * Initialization of the wasabi core module.
      *
      * @param options
@@ -307,6 +331,10 @@ define(function(require) {
       _initModals.call(this);
       _initTabs.call(this);
       _initSections.call(this);
+      _initHeartBeat.call(this);
+    },
+
+    initHeartBeat: function() {
       _initHeartBeat.call(this);
     }
   };

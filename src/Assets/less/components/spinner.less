@@ -36,11 +36,10 @@
 
   &.spinner-white {
     @spinner-main: #fff;
-    @spinner-secondary: darken(@spinner-main, 10);
-    border-color: @spinner-secondary;
+    border-color: @spinner-main;
 
     &:before, &:after {
-      background-color: @spinner-secondary;
+      background-color: @spinner-main;
     }
   }
 }

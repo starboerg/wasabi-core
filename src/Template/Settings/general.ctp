@@ -46,6 +46,20 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         ]
     ]);
     echo $this->Form->widget('section', [
+        'title' => __d('wasabi_core', 'Session Configuration'),
+        'description' => __d('wasabi_core', 'Control the duration of a user’s login session.')
+    ]);
+    echo $this->Form->input('Login__HeartBeat__max_login_time', [
+        'label' => __d('wasabi_core', 'Maximum Login Time'),
+        'options' => [
+            '900000' => __d('wasabi_core', '15 minutes'),
+            '1800000' => __d('wasabi_core', '30 minutes'),
+            '2700000' => __d('wasabi_core', '45 minutes'),
+            '3600000' => __d('wasabi_core', '1 hour'),
+            '6400000' => __d('wasabi_core', '2 hours')
+        ]
+    ]);
+    echo $this->Form->widget('section', [
         'title' => __d('wasabi_core', 'Email Configuration'),
         'description' => __d('wasabi_core', 'Configure how backend emails are sent to users.')
     ]);

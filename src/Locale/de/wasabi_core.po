@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
-"POT-Creation-Date: 2016-02-19 14:53+0100\n"
-"PO-Revision-Date: 2016-02-19 14:54+0100\n"
+"POT-Creation-Date: 2016-02-22 17:31+0100\n"
+"PO-Revision-Date: 2016-02-22 17:31+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -161,15 +161,15 @@ msgstr ""
 "Die URL <strong>{0}</strong> kann nicht gelöscht werden. Bitte erstellen Sie "
 "zunächste eine neue URL."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/SettingsController.php:50
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/SettingsController.php:51
 msgid "The general settings have been updated."
 msgstr "Die allgemeinen Einstellungen wurden aktualisiert."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/SettingsController.php:75
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/SettingsController.php:76
 msgid "The cache settings have been updated."
 msgstr "Die Cache Einstellungen wurden aktualisiert."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:140
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:142
 msgid ""
 "Please verify your email address. You can request a new verification email "
 "{0}."
@@ -177,11 +177,11 @@ msgstr ""
 "Bitte verifizieren Sie Ihre E-Mail-Adresse. Sie können {0} eine neue "
 "Verifikations-Email anfordern."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:143
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:145
 msgid "here"
 msgstr "hier"
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:148
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:150
 msgid ""
 "Your account has not yet been activated. Once your account has been checked "
 "by an administrator, you will receive a notification email."
@@ -189,15 +189,15 @@ msgstr ""
 "Ihr Account wurde noch nicht aktiviert. Sobald Ihr Account durch einen "
 "Administrator überprüft wurde, erhalten Sie eine Benachrichtigung via Email."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:156
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:159
 msgid "Welcome back."
 msgstr "Willkommen zurück."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:163
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:167
 msgid "Username or password is incorrect."
 msgstr "Benutzername oder Passwort ist falsch."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:200
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:225
 msgid ""
 "Registration successful! We have sent you an email to verify your email "
 "address. Please follow the instructions in this email."
@@ -206,23 +206,23 @@ msgstr ""
 "Ihrer E-Mail-Adresse gesendet. Bitte folgen Sie den Anweisungen in dieser E-"
 "Mail."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:233
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:258
 msgid "The user <strong>{0}</strong> has been created."
 msgstr "Der Nutzer <strong>{0}</strong> wurde erstellt."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:280
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:305
 msgid "The user <strong>{0}</strong> has been saved."
 msgstr "Der Nutzer <strong>{0}</strong> wurde gespeichert."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:317
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:342
 msgid "The user <strong>{0}</strong> has been deleted."
 msgstr "Der Nutzer <strong>{0}</strong> wurde gelöscht."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:387
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:430
 msgid "Your profile has been updated."
 msgstr "Ihr Profil wurde aktualisiert."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:494
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:537
 msgid ""
 "We have sent you a verification email with instructions on how to verify "
 "your email address."
@@ -230,11 +230,11 @@ msgstr ""
 "Wir haben Ihnen eine E-Mail zum Bestätigen Ihrer E-Mail-Adresse gesendet. "
 "Bitte folgen Sie den Anweisungen in dieser E-Mail."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:531
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:574
 msgid "We have sent you an email to reset your password."
 msgstr "Wir haben Ihnen eine E-Mail zum Zurücksetzen Ihres Passworts gesendet."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:580
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:623
 msgid "Your password has been changed successfully."
 msgstr "Ihr Passwort wurde erfolgreich geändert."
 
@@ -353,6 +353,7 @@ msgid "Password Reset"
 msgstr "Passwort zurücksetzen"
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Model/Table/CacheSettingsTable.php:49
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:58
 msgid "1 hour"
 msgstr "1 Stunde"
 
@@ -396,6 +397,14 @@ msgstr "Bitte geben Sie eine E-Mail-Adresse ein."
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Model/Table/GeneralSettingsTable.php:63
 msgid "Please enter a name for the email sender."
 msgstr "Bitte geben Sie einen Namen für den E-Mail Absender ein."
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Model/Table/GeneralSettingsTable.php:71
+msgid "Please choose a maximum login time."
+msgstr "Bitte wählen Sie eine maximale Login-Dauer aus."
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Model/Table/GeneralSettingsTable.php:77
+msgid "Please choose a valid maximum login time."
+msgstr "Bitte wählen Sie eine gültige, maximale Login-Dauer aus."
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Model/Table/GroupsTable.php:55
 msgid "Please enter a name for the group."
@@ -486,6 +495,20 @@ msgstr "Standard"
 msgid "Redirect"
 msgstr "Weiterleitung"
 
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Element/login-form-inputs.ctp:6
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/add.ctp:28
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/register.ctp:16
+msgid "Username"
+msgstr "Nutzername"
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Element/login-form-inputs.ctp:7
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/add.ctp:45
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:20
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/register.ctp:18
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/reset_password.ctp:18
+msgid "Password"
+msgstr "Passwort"
+
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Element/Filter/pagination.ctp:21
 msgid "of"
 msgstr "von"
@@ -530,6 +553,16 @@ msgstr "Nein"
 msgid "Close Dialog"
 msgstr "Dialog schließen"
 
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Element/JavaScript/templates.hbs.ctp:64
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Email/html/User/activated.ctp:17
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/login.ctp:24;37
+msgid "Login"
+msgstr "Login"
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Element/JavaScript/templates.hbs.ctp:67
+msgid "Your login session expired. Please login again."
+msgstr "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an."
+
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Element/Menu/user.ctp:10
 msgid "Edit Profile"
 msgstr "Profil bearbeiten"
@@ -551,11 +584,6 @@ msgid ""
 msgstr ""
 "Hallo {username},{nl}Ihr Account wurde freigeschalten.{nl}{nl}Sie können "
 "sich jetzt anmelden.{nl}{nl}{loginLink}"
-
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Email/html/User/activated.ctp:17
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/login.ctp:24;38
-msgid "Login"
-msgstr "Login"
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Email/html/User/deactivated.ctp:8
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Email/text/User/deactivated.ctp:8
@@ -650,7 +678,7 @@ msgstr "Alle aktualisieren"
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Menus/add.ctp:73
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Menus/add_item.ctp:42
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/cache.ctp:29
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:62
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:76
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/add.ctp:66
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:42
 msgid "Cancel"
@@ -695,7 +723,7 @@ msgstr "Nutzergruppe"
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Menus/add.ctp:71
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Menus/add_item.ctp:41
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/cache.ctp:28
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:61
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:75
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/add.ctp:65
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:41
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/reset_password.ctp:28
@@ -834,7 +862,7 @@ msgstr ""
 "Mehr ISO-Codes können  <a href=\"http://en.wikipedia.org/wiki/"
 "List_of_ISO_639-1_codes\">here</a> gefunden werden."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Layout/Email/html/responsive.ctp:148
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Layout/Email/html/responsive.ctp:156
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Layout/Email/text/responsive.ctp:17
 msgid "Kind regards"
 msgstr "Viele Grüße"
@@ -1020,26 +1048,54 @@ msgid "The CSS class that is applied to the message box."
 msgstr "Die CSS-Klasse die an der Nachrichten-Box hinzugefügt wird."
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:49
+msgid "Session Configuration"
+msgstr "Sitzungs-Konfiguration"
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:50
+msgid "Control the duration of a user’s login session."
+msgstr "Legen Sie die Dauer einer gültigen Login-Session fest."
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:53
+msgid "Maximum Login Time"
+msgstr "Maximale Login-Dauer"
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:55
+msgid "15 minutes"
+msgstr "15 Minuten"
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:56
+msgid "30 minutes"
+msgstr "30 Minuten"
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:57
+msgid "45 minutes"
+msgstr "45 Minuten"
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:59
+msgid "2 hours"
+msgstr "2 Stunden"
+
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:63
 msgid "Email Configuration"
 msgstr "E-Mail-Konfiguration"
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:50
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:64
 msgid "Configure how backend emails are sent to users."
 msgstr "Konfigurieren wie Backend E-Mails an den Nutzer gesendet werden."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:53
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:67
 msgid "Email Sender Name"
 msgstr "Absender Name"
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:54
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:68
 msgid "The name used as sender for all backend emails."
 msgstr "Der Name wird als Absender aller Backend E-Mails genutzt."
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:57
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:71
 msgid "Email Sender Address"
 msgstr "Absender E-Mail"
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:58
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Settings/general.ctp:72
 msgid "The email address used as sender for all backend emails."
 msgstr ""
 "Die E-Mail-Adresse des Absenders, die für alle Backend E-Mails genutzt wird."
@@ -1123,12 +1179,6 @@ msgstr ""
 msgid "Create a new User"
 msgstr "Neuen Nutzer anlegen"
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/add.ctp:28
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/login.ctp:27
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/register.ctp:16
-msgid "Username"
-msgstr "Nutzername"
-
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/add.ctp:31
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/index.ctp:46
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/lost_password.ctp:17
@@ -1155,14 +1205,6 @@ msgid ""
 msgstr ""
 "Um das Nutzerpasswort zu ändern, bitte beide Passwort-Felder befüllen. "
 "Andernfalls die beiden Felder leer lassen."
-
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/add.ctp:45
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/login.ctp:28
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:20
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/register.ctp:18
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/reset_password.ctp:18
-msgid "Password"
-msgstr "Passwort"
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/add.ctp:46
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:21
@@ -1211,11 +1253,11 @@ msgstr "Suche nach E-Mail-Adresse"
 msgid "Filter by group"
 msgstr "Nach Nutzergruppe filtern"
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/login.ctp:32
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/login.ctp:31
 msgid "Create an account."
 msgstr "Ein Benutzerkonto erstellen?"
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/login.ctp:43
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/login.ctp:42
 msgid "Lost your Password?"
 msgstr "Passwort vergessen?"
 

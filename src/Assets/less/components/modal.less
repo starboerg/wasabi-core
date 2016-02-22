@@ -2,7 +2,7 @@
 @import (reference) "../__colors";
 @import (reference) "../__mixins";
 
-.modal-backdrop, .modal-scrollable {
+.modal-wrapper .modal-backdrop, .modal-scrollable {
   position: fixed;
   top: 0;
   right: 0;
@@ -10,11 +10,17 @@
   left: 0;
 }
 
+.modal-wrapper {
+  z-index: @zindex-modal-background;
+}
+
 .modal-backdrop {
   background-color: #000;
+  z-index: @zindex-modal-background;
 }
 
 .modal-scrollable {
+  z-index: @zindex-modal;
   overflow: auto;
 }
 
@@ -68,4 +74,48 @@
   border-top: 1px solid @modal-form-controls-border-top-color;
   background-color: @modal-form-controls-bg-color;
   text-align: right;
+}
+
+.modal--login {
+
+  .modal-backdrop {
+    .opacity(0.6);
+  }
+
+  .modal-scrollable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .input {
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .modal-footer {
+    text-align: right;
+
+    button {
+      margin-right: 0;
+    }
+  }
+
+  .flash-message {
+    margin: -20px -20px 20px;
+    padding: 11px 20px 10px;
+    border-width: 0 0 1px;
+  }
 }

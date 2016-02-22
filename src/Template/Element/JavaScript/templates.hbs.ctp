@@ -53,3 +53,25 @@
         </div>
     </div>
 </script>
+
+<script id="wasabi-core-login-modal" type="text/template">
+    <div class="modal-wrapper modal--login" tabindex="-1">
+        <?= $this->Form->create(null, ['url' => ['plugin' => 'Wasabi/Core', 'controller' => 'Users', 'action' => 'login'], 'novalidate' => 'novalidate']) ?>
+        <div class="modal-backdrop"></div>
+        <div class="modal-scrollable">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <span><?= __d('wasabi_core', 'Login') ?></span>
+                </div>
+                <div class="modal-body">
+                    <div class="flash-message flash-message--warning"><?= __d('wasabi_core', 'Your login session expired. Please login again.') ?></div>
+                    <?= $this->element('Wasabi/Core.login-form-ajax') ?>
+                </div>
+                <div class="modal-footer modal-confirm">
+                    <?= $this->Form->button('Login', ['class' => 'button blue']) ?>
+                </div>
+            </div>
+        </div>
+        <?= $this->Form->end() ?>
+    </div>
+</script>

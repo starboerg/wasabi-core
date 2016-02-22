@@ -23,6 +23,8 @@ use Wasabi\Core\Model\Entity\Token;
 use Wasabi\Core\Model\Entity\User;
 use Wasabi\Core\Model\Table\TokensTable;
 use Wasabi\Core\Model\Table\UsersTable;
+use Wasabi\Core\View\AppView;
+use Wasabi\Core\Wasabi;
 
 /**
  * Class UsersController
@@ -153,16 +155,36 @@ class UsersController extends BackendAppController
                     $this->Flash->warning($message, 'auth', false);
                 } else {
                     $this->Auth->setUser($user);
-                    $this->Flash->success(__d('wasabi_core', 'Welcome back.'), 'auth');
-                    $this->redirect($this->Auth->redirectUrl());
-                    return;
+                    if (!$this->request->is('ajax')) {
+                        $this->Flash->success(__d('wasabi_core', 'Welcome back.'), 'auth');
+                        $this->redirect($this->Auth->redirectUrl());
+                        return;
+                    }
                 }
             } else {
                 unset($this->request->data['password']);
                 $this->request->session()->write('data.login', $this->request->data());
                 $this->Flash->error(__d('wasabi_core', 'Username or password is incorrect.'), 'auth', false);
-                $this->redirect(['action' => 'login']);
-                return;
+                if (!$this->request->is('ajax')) {
+                    $this->redirect(['action' => 'login']);
+                    return;
+                }
+            }
+
+            if ($this->request->is('ajax')) {
+                $this->set([
+                    'status' => 200,
+                    '_serialize' => ['status']
+                ]);
+                $flashType = $this->request->session()->read('Flash.auth.0.params.type');
+                if ($flashType === 'warning') {
+                    $this->set('redirect', Router::url('/' . $this->request->url, true));
+                    $this->viewVars['_serialize'][] = 'redirect';
+                }
+                if ($flashType === 'error') {
+                    $this->set('content', (new AppView($this->request, $this->response, $this->eventManager()))->element('Wasabi/Core.login-form-ajax'));
+                    $this->viewVars['_serialize'][] = 'content';
+                }
             }
         } else {
             if ($this->request->session()->check('data.login')) {
@@ -170,7 +192,10 @@ class UsersController extends BackendAppController
                 $this->request->session()->delete('data.login');
             }
         }
-        $this->render(null, 'Wasabi/Core.support');
+
+        if (!$this->request->is('ajax')) {
+            $this->render(null, 'Wasabi/Core.support');
+        }
     }
 
     /**
@@ -368,7 +393,7 @@ class UsersController extends BackendAppController
         $heartBeatCount = $this->request->session()->check('heartBeatCount') ? $this->request->session()->read('heartBeatCount') : 0;
 
         $frequency = $this->_calculateHeartBeatFrequency();
-        $maxLoginTime = 30 * 60 * 1000; //@TODO: make the max login time configurable in Settings -> General
+        $maxLoginTime = (int)Wasabi::setting('Core.Login.HeartBeat.max_login_time', 0);
         $maxHeartBeats = $maxLoginTime / $frequency;
 
         if (++$heartBeatCount < $maxHeartBeats) {
