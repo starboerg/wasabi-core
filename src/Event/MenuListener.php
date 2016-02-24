@@ -32,7 +32,7 @@ class MenuListener implements EventListenerInterface
         return [
             'Wasabi.Backend.Menu.initMain' => [
                 'callable' => 'initBackendMenuMainItems',
-                'priority' => Config::$priority
+                'priority' => 1000
             ],
             'Wasabi.Backend.MenuItems.getLinkTypes' => [
                 'callable' => 'getLinkTypesForMenuItem',
