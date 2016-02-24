@@ -282,9 +282,6 @@ class UsersController extends BackendAppController
      */
     public function edit($id)
     {
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if (!$this->request->is(['get', 'put'])) {
             throw new MethodNotAllowedException();
         }
@@ -330,9 +327,6 @@ class UsersController extends BackendAppController
      */
     public function delete($id)
     {
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -358,10 +352,6 @@ class UsersController extends BackendAppController
     {
         if (!$this->request->isAll(['ajax', 'post'])) {
             throw new MethodNotAllowedException();
-        }
-
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
         }
 
         $user = $this->Users->get($id);
@@ -458,10 +448,6 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
-
         $user = $this->Users->get($id);
         if ($this->Users->activate($user)) {
             $this->getMailer('Wasabi/Core.User')->send('activationEmail', [$user]);
@@ -488,10 +474,6 @@ class UsersController extends BackendAppController
     {
         if (!$this->request->isAll(['ajax', 'post'])) {
             throw new MethodNotAllowedException();
-        }
-
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
         }
 
         $user = $this->Users->get($id);
