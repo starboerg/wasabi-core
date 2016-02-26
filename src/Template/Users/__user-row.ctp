@@ -20,14 +20,10 @@
                     $user->id
                 ],
                 [
-                    'escape' => false,
-                    'confirm-message' => __d('wasabi_core', 'Verify user <strong>{0}</strong>?', $user->username),
-                    'confirm-title' => __d('wasabi_core', 'Verify User'),
                     'title' => __d('wasabi_core', 'Manually verify the user\'s email address.'),
-                    'ajax' => true,
-                    'notify' => 'table.users',
-                    'event' => 'verify',
-                    'data-user-id' => $user->id
+                    'confirm-title' => __d('wasabi_core', 'Verify Email'),
+                    'confirm-message' => __d('wasabi_core', 'Do you really want to verify the email address of user <strong>{0}</strong>?', $user->username),
+                    'escape' => false
                 ],
                 true
             );
@@ -45,14 +41,10 @@
                     $user->id
                 ],
                 [
-                    'escape' => false,
-                    'confirm-message' => __d('wasabi_core', 'Activate user <strong>{0}</strong>?', $user->username),
-                    'confirm-title' => __d('wasabi_core', 'Activate User'),
                     'title' => __d('wasabi_core', 'Activate user &quot;{0}&quot;', $user->username),
-                    'ajax' => true,
-                    'notify' => 'table.users',
-                    'event' => 'activate',
-                    'data-user-id' => $user->id
+                    'confirm-title' => __d('wasabi_core', 'Activate User'),
+                    'confirm-message' => __d('wasabi_core', 'Activate user <strong>{0}</strong>?', $user->username),
+                    'escape' => false
                 ],
                 true
             );
@@ -69,14 +61,10 @@
                         $user->id
                     ],
                     [
-                        'escape' => false,
-                        'confirm-message' => __d('wasabi_core', 'Deactivate user <strong>{0}</strong>?', $user->username),
-                        'confirm-title' => __d('wasabi_core', 'Deactivate User'),
                         'title' => __d('wasabi_core', 'Deactivate user &quot;{0}&quot;', $user->username),
-                        'ajax' => true,
-                        'notify' => 'table.users',
-                        'event' => 'deactivate',
-                        'data-user-id' => $user->id
+                        'confirm-title' => __d('wasabi_core', 'Deactivate User'),
+                        'confirm-message' => __d('wasabi_core', 'Deactivate user <strong>{0}</strong>?', $user->username),
+                        'escape' => false
                     ],
                     true
                 );
@@ -88,8 +76,8 @@
             echo $this->Guardian->protectedConfirmationLink('<i class="wicon-remove"></i>', '/backend/users/delete/' . $user->id, [
                 'class' => 'action-delete',
                 'title' => __d('wasabi_core', 'Delete User'),
-                'confirm-message' => __d('wasabi_core', 'Do you really want to delete user <strong>{0}</strong>?', $user->username),
                 'confirm-title' => __d('wasabi_core', 'Confirm Deletion'),
+                'confirm-message' => __d('wasabi_core', 'Do you really want to delete user <strong>{0}</strong>?', $user->username),
                 'escape' => false
             ]);
         } else {

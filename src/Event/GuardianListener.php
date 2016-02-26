@@ -33,7 +33,7 @@ class GuardianListener implements EventListenerInterface
         return [
             'Guardian.getGuestActions' => [
                 'callable' => 'getGuestActions',
-                'priority' => Config::$priority
+                'priority' => 1000
             ],
             'Guardian.GroupPermissions.afterSync' => [
                 'callable' => 'deleteGuardianPathCache'

@@ -110,6 +110,10 @@ class GuardianHelper extends HtmlHelper
                 unset($options['event']);
             }
         }
+        if (isset($options['void']) && $options['void'] === true) {
+            $linkOptions['data-modal-action'] = Router::url($url);
+            $url = 'javascript:void(0)';
+        }
 
         $linkOptions = Hash::merge($linkOptions, $options);
         return $this->link($title, $url, $linkOptions);

@@ -143,9 +143,6 @@ class GroupsController extends BackendAppController
      */
     public function edit($id)
     {
-        if (!$id || !$this->Groups->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if (!$this->request->is(['get', 'put'])) {
             throw new MethodNotAllowedException();
         }
@@ -174,9 +171,6 @@ class GroupsController extends BackendAppController
      */
     public function delete($id)
     {
-        if (!$id || !$this->Groups->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if ($id === '1') {
             throw new ForbiddenException();
         }

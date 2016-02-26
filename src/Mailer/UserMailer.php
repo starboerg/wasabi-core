@@ -17,8 +17,8 @@ namespace Wasabi\Core\Mailer;
 use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
-use Wasabi\Core\Config;
 use Wasabi\Core\Model\Entity\User;
+use Wasabi\Core\Wasabi;
 
 class UserMailer extends Mailer
 {
@@ -40,7 +40,7 @@ class UserMailer extends Mailer
                 'action' => 'verifyByToken',
                 'token' => $token
             ],
-            'instanceName' => Config::getInstanceName()
+            'instanceName' => Wasabi::getInstanceName()
         ]);
     }
 
@@ -63,7 +63,7 @@ class UserMailer extends Mailer
                 'action' => 'verifyByTokenResetPassword',
                 'token' => $token
             ],
-            'instanceName' => Config::getInstanceName()
+            'instanceName' => Wasabi::getInstanceName()
         ]);
     }
 
@@ -78,7 +78,7 @@ class UserMailer extends Mailer
         $this->_email->template('Wasabi/Core.User/verfied');
         $this->_email->viewVars([
             'user' => $user,
-            'instanceName' => Config::getInstanceName()
+            'instanceName' => Wasabi::getInstanceName()
         ]);
     }
 
@@ -93,7 +93,7 @@ class UserMailer extends Mailer
         $this->_email->template('Wasabi/Core.User/verified-by-admin');
         $this->_email->viewVars([
             'user' => $user,
-            'instanceName' => Config::getInstanceName()
+            'instanceName' => Wasabi::getInstanceName()
         ]);
     }
 
@@ -108,7 +108,7 @@ class UserMailer extends Mailer
         $this->_email->template('Wasabi/Core.User/activated');
         $this->_email->viewVars([
             'user' => $user,
-            'instanceName' => Config::getInstanceName()
+            'instanceName' => Wasabi::getInstanceName()
         ]);
     }
 
@@ -123,7 +123,7 @@ class UserMailer extends Mailer
         $this->_email->template('Wasabi/Core.User/deactivated');
         $this->_email->viewVars([
             'user' => $user,
-            'instanceName' => Config::getInstanceName()
+            'instanceName' => Wasabi::getInstanceName()
         ]);
     }
 
@@ -145,7 +145,7 @@ class UserMailer extends Mailer
                 'action' => 'resetPassword',
                 'token' => $token
             ],
-            'instanceName' => Config::getInstanceName()
+            'instanceName' => Wasabi::getInstanceName()
         ]);
     }
 
@@ -160,7 +160,7 @@ class UserMailer extends Mailer
         $this->layout('Wasabi/Core.responsive');
         $this->_email->transport('default');
         $this->_email->emailFormat('both');
-        $this->_email->from(Config::getSenderEmail(), Config::getSenderName());
+        $this->_email->from(Wasabi::getSenderEmail(), Wasabi::getSenderName());
         $this->_email->to($user->email, $user->username);
         $this->_email->subject($subject);
         $this->_email->helpers([

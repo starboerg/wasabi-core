@@ -287,9 +287,6 @@ class UsersController extends BackendAppController
      */
     public function edit($id)
     {
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if (!$this->request->is(['get', 'put'])) {
             throw new MethodNotAllowedException();
         }
@@ -335,9 +332,6 @@ class UsersController extends BackendAppController
      */
     public function delete($id)
     {
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
@@ -355,34 +349,39 @@ class UsersController extends BackendAppController
 
     /**
      * Verify action
-     * AJAX POST | GET
+     * GET | POST | PUT
      *
      * @param string $id
      */
     public function verify($id)
     {
-        if (!$this->request->isAll(['ajax', 'post'])) {
+        if (!$this->request->is(['get', 'post', 'put'])) {
             throw new MethodNotAllowedException();
         }
 
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
+        /** @var User $user */
+        $user = $this->Users->get($id);
+
+        if ($this->request->is(['post', 'put'])) {
+            if ($user->verified) {
+                $this->Flash->warning(__d('wasabi_core', 'The email address of user <strong>{0}</strong> is already verified.', $user->username));
+                $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
+                return;
+            }
+            if ($this->Users->verify($user, true)) {
+                $this->getMailer('Wasabi/Core.User')->send('verifiedByAdminEmail', [$user]);
+                $this->Flash->success(__d('wasabi_core', 'The email address of user <strong>{0}</strong> has been verified.', $user->username));
+                $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
+                return;
+            } else {
+                $this->Flash->error($this->dbErrorMessage);
+            }
+
         }
 
-        $user = $this->Users->get($id);
-        if ($this->Users->verify($user, true)) {
-            $this->getMailer('Wasabi/Core.User')->send('verifiedByAdminEmail', [$user]);
-            $this->set([
-                'status' => 'success',
-                'user' => $user,
-                '_serialize' => ['status', 'user']
-            ]);
-        } else {
-            $this->set([
-                'error' => $this->dbErrorMessage,
-                '_serialize' => ['error']
-            ]);
-        }
+        $this->set([
+            'user' => $user
+        ]);
     }
 
     /**
@@ -453,65 +452,79 @@ class UsersController extends BackendAppController
 
     /**
      * activate action
-     * AJAX POST
+     * GET | POST | PUT
      *
      * @param string $id
      */
     public function activate($id)
     {
-        if (!$this->request->isAll(['ajax', 'post'])) {
+        if (!$this->request->is(['get', 'post', 'put'])) {
             throw new MethodNotAllowedException();
         }
 
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
+        /** @var User $user */
+        $user = $this->Users->get($id);
+
+        if ($this->request->is(['post', 'put'])) {
+            if (!$user->verified) {
+                $this->Flash->error(__d('wasabi_core', 'The email address of <strong>{0}</strong> must be verified before activation.', $user->username));
+                $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
+                return;
+            }
+            if ($user->active) {
+                $this->Flash->warning(__d('wasabi_core', 'The user account of <strong>{0}</strong> is already active.', $user->username));
+                $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
+                return;
+            }
+            if ($this->Users->activate($user)) {
+                $this->getMailer('Wasabi/Core.User')->send('activatedEmail', [$user]);
+                $this->Flash->success(__d('wasabi_core', 'The user account of <strong>{0}</strong> has been activated.', $user->username));
+                $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
+                return;
+            } else {
+                $this->Flash->error($this->dbErrorMessage);
+            }
         }
 
-        $user = $this->Users->get($id);
-        if ($this->Users->activate($user)) {
-            $this->getMailer('Wasabi/Core.User')->send('activationEmail', [$user]);
-            $this->set([
-                'status' => 'success',
-                'user' => $user,
-                '_serialize' => ['status', 'user']
-            ]);
-        } else {
-            $this->set([
-                'error' => $this->dbErrorMessage,
-                '_serialize' => ['error']
-            ]);
-        }
+        $this->set([
+            'user' => $user
+        ]);
     }
 
     /**
      * deactivate action
-     * AJAX POST
+     * GET | POST | PUT
      *
      * @param string $id
      */
     public function deactivate($id)
     {
-        if (!$this->request->isAll(['ajax', 'post'])) {
+        if (!$this->request->is(['get', 'post', 'put'])) {
             throw new MethodNotAllowedException();
         }
 
-        if (!$id || !$this->Users->exists(['id' => $id])) {
-            throw new NotFoundException();
+        /** @var User $user */
+        $user = $this->Users->get($id);
+
+        if ($this->request->is(['post', 'put'])) {
+            if (!$user->active) {
+                $this->Flash->warning(__d('wasabi_core', 'The user account of <strong>{0}</strong> is already inactive.', $user->username));
+                $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
+                return;
+            }
+            if ($this->Users->deactivate($user)) {
+                $this->getMailer('Wasabi/Core.User')->send('deactivatedEmail', [$user]);
+                $this->Flash->success(__d('wasabi_core', 'The user account of <strong>{0}</strong> has been deactivated.', $user->username));
+                $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
+                return;
+            } else {
+                $this->Flash->error($this->dbErrorMessage);
+            }
         }
 
-        $user = $this->Users->get($id);
-        if ($this->Users->deactivate($user)) {
-            $this->set([
-                'status' => 'success',
-                'user' => $user,
-                '_serialize' => ['status', 'user']
-            ]);
-        } else {
-            $this->set([
-                'error' => $this->dbErrorMessage,
-                '_serialize' => ['error']
-            ]);
-        }
+        $this->set([
+            'user' => $user
+        ]);
     }
 
     /**

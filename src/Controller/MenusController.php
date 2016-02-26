@@ -103,9 +103,6 @@ class MenusController extends BackendAppController
      */
     public function edit($id)
     {
-        if (!$id || !$this->Menus->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if (!$this->request->is(['get', 'put'])) {
             throw new MethodNotAllowedException();
         }
@@ -137,9 +134,6 @@ class MenusController extends BackendAppController
      */
     public function delete($id)
     {
-        if (!$id || !$this->Menus->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if (!$this->request->is(['post'])) {
             throw new MethodNotAllowedException();
         }
@@ -207,10 +201,6 @@ class MenusController extends BackendAppController
      */
     public function editItem($id)
     {
-        if (!$id || !$this->Menus->MenuItems->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
-
         if (!$this->request->is(['get', 'put'])) {
             throw new MethodNotAllowedException();
         }
@@ -241,10 +231,6 @@ class MenusController extends BackendAppController
      */
     public function deleteItem($id)
     {
-        if (!$id || !$this->Menus->MenuItems->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
-
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }

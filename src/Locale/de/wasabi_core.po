@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
-"POT-Creation-Date: 2016-02-23 12:43+0000\n"
-"PO-Revision-Date: 2016-02-23 13:44+0100\n"
+"POT-Creation-Date: 2016-02-24 13:26+0100\n"
+"PO-Revision-Date: 2016-02-24 14:27+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,-1,109\n"
 
 #: Nav.php:38
@@ -27,21 +27,22 @@ msgstr "Ein Menü mit dem Namen \"{0}\" existiert bereits."
 msgid "No menu with alias \"{0}\" does exist."
 msgstr "Es existiert kein Menü mit dem Namen \"{0}\"."
 
-#: Controller/BackendAppController.php:105 Template/Users/unauthorized.ctp:12
+#: Controller/BackendAppController.php:93 Template/Users/unauthorized.ctp:12
 msgid "You are not authorized to access that location."
 msgstr "Sie haben nicht die nötigen Berechtigungen, um diese Seite aufzurufen."
 
-#: Controller/BackendAppController.php:112
+#: Controller/BackendAppController.php:100
 msgid "Please correct the marked errors."
 msgstr "Bitte korrigieren Sie die markierten Fehler."
 
-#: Controller/BackendAppController.php:113
+#: Controller/BackendAppController.php:101
 msgid "Invalid Request."
 msgstr "Ungültige Anfrage"
 
-#: Controller/BackendAppController.php:114
+#: Controller/BackendAppController.php:102
 msgid "Something went wrong. Please try again."
-msgstr "Irgendwas ging schief. Bitte versuchen Sie es erneut."
+msgstr ""
+"Es ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut."
 
 #: Controller/GroupPermissionsController.php:108
 msgid "All permissions have been synchronized."
@@ -59,11 +60,11 @@ msgstr "Alle Rechte wurden gespeichert."
 msgid "The group <strong>{0}</strong> has been created."
 msgstr "Die Nutzergruppe <strong>{0}</strong> wurde erstellt."
 
-#: Controller/GroupsController.php:158
+#: Controller/GroupsController.php:155
 msgid "The group <strong>{0}</strong> has been saved."
 msgstr "Die Nutzergruppe <strong>{0}</strong> wurde gespeichert."
 
-#: Controller/GroupsController.php:205
+#: Controller/GroupsController.php:199
 msgid ""
 "The group <strong>{0}</strong> has been deleted. Prior <strong>{1}</strong> "
 "group member(s) ha(s/ve) been moved to the <strong>{2}</strong> group."
@@ -72,11 +73,11 @@ msgstr ""
 "wurden <strong>{1}</strong> bestehende Gruppenmitglieder der Nutzergruppe "
 "<strong>{2}</strong> zugeordnet."
 
-#: Controller/GroupsController.php:207
+#: Controller/GroupsController.php:201
 msgid "The group <strong>{0}</strong> has been deleted."
 msgstr "Die Nutzergruppe <strong>{0}</strong> wurde gelöscht."
 
-#: Controller/GroupsController.php:217
+#: Controller/GroupsController.php:211
 msgid ""
 "The group <strong>{0}</strong> has <strong>{1}</strong> member(s) that need "
 "to be moved to another group."
@@ -88,15 +89,15 @@ msgstr ""
 msgid "The language <strong>{0}</strong> has been created."
 msgstr "Die Sprache <strong>{0}</strong> wurde erstellt."
 
-#: Controller/LanguagesController.php:90
+#: Controller/LanguagesController.php:87
 msgid "The language <strong>{0}</strong> has been saved."
 msgstr "Die Sprache <strong>{0}</strong> wurde gespeichert."
 
-#: Controller/LanguagesController.php:119
+#: Controller/LanguagesController.php:113
 msgid "The language <strong>{0}</strong> has been deleted."
 msgstr "Die Sprache <strong>{0}</strong> wurde gelöscht."
 
-#: Controller/LanguagesController.php:157
+#: Controller/LanguagesController.php:151
 msgid "The language position has been updated."
 msgstr "Die Position der Sprache wurde aktualisiert."
 
@@ -104,31 +105,31 @@ msgstr "Die Position der Sprache wurde aktualisiert."
 msgid "The menu <strong>{0}</strong> has been created."
 msgstr "Das Menü <strong>{0}</strong> wurde erstellt."
 
-#: Controller/MenusController.php:118
+#: Controller/MenusController.php:115
 msgid "The menu <strong>{0}</strong> has been saved."
 msgstr "Das Menü <strong>{0}</strong> wurde gespeichert."
 
-#: Controller/MenusController.php:149
+#: Controller/MenusController.php:143
 msgid "The menu <strong>{0}</strong> has been deleted."
 msgstr "Das Menü <strong>{0}</strong> wurde gelöscht."
 
-#: Controller/MenusController.php:171
+#: Controller/MenusController.php:165
 msgid "A menu item with id <strong>{0}</strong> does not exist."
 msgstr "Ein Menüpunkt mit der ID <strong>{0}</strong> existiert nicht."
 
-#: Controller/MenusController.php:188
+#: Controller/MenusController.php:182
 msgid "Menu Item <strong>{0}</strong> has been created."
 msgstr "Der Menüpunkt <strong>{0}</strong> wurde erstellt."
 
-#: Controller/MenusController.php:222
+#: Controller/MenusController.php:212
 msgid "Menu Item <strong>{0}</strong> has been updated."
 msgstr "Der Menüpunkt <strong>{0}</strong> wurde aktualisiert."
 
-#: Controller/MenusController.php:254
+#: Controller/MenusController.php:240
 msgid "The menu item <strong>{0}</strong> has been deleted."
 msgstr "Der Menüpunkt <strong>{0}</strong> wurde gelöscht."
 
-#: Controller/MenusController.php:300
+#: Controller/MenusController.php:286
 msgid "The menu item positions have been updated."
 msgstr "Die Position der Menüpunkte wurde aktualisiert."
 
@@ -185,22 +186,18 @@ msgid ""
 "Your account has not yet been activated. Once your account has been checked "
 "by an administrator, you will receive a notification email."
 msgstr ""
-"Ihr Account wurde noch nicht aktiviert. Sobald Ihr Account durch einen "
+"Ihr Account wurde noch nicht freigeschalten. Sobald Ihr Account durch einen "
 "Administrator überprüft wurde, erhalten Sie eine Benachrichtigung via Email."
 
 #: Controller/UsersController.php:159
 msgid "Welcome back."
 msgstr "Willkommen zurück."
 
-#: Controller/UsersController.php:168
-msgid "Email or password is incorrect."
-msgstr "E-Mail-Adresse oder Passwort ist falsch."
-
-#: Controller/UsersController.php:170
+#: Controller/UsersController.php:167
 msgid "Username or password is incorrect."
 msgstr "Benutzername oder Passwort ist falsch."
 
-#: Controller/UsersController.php:230
+#: Controller/UsersController.php:225
 msgid ""
 "Registration successful! We have sent you an email to verify your email "
 "address. Please follow the instructions in this email."
@@ -209,23 +206,56 @@ msgstr ""
 "Ihrer E-Mail-Adresse gesendet. Bitte folgen Sie den Anweisungen in dieser E-"
 "Mail."
 
-#: Controller/UsersController.php:263
+#: Controller/UsersController.php:258
 msgid "The user <strong>{0}</strong> has been created."
 msgstr "Der Nutzer <strong>{0}</strong> wurde erstellt."
 
-#: Controller/UsersController.php:310
+#: Controller/UsersController.php:302
 msgid "The user <strong>{0}</strong> has been saved."
 msgstr "Der Nutzer <strong>{0}</strong> wurde gespeichert."
 
-#: Controller/UsersController.php:347
+#: Controller/UsersController.php:336
 msgid "The user <strong>{0}</strong> has been deleted."
 msgstr "Der Nutzer <strong>{0}</strong> wurde gelöscht."
 
-#: Controller/UsersController.php:435
+#: Controller/UsersController.php:362
+msgid "The email address of user <strong>{0}</strong> is already verified."
+msgstr ""
+"Die E-Mail-Adresse des Nutzers <strong>{0}</strong> ist bereits verifiziert."
+
+#: Controller/UsersController.php:368
+msgid "The email address of user <strong>{0}</strong> has been verified."
+msgstr "Die E-Mail-Adresse des Nutzers <strong>{0}</strong> wurde verifiziert."
+
+#: Controller/UsersController.php:429
 msgid "Your profile has been updated."
 msgstr "Ihr Profil wurde aktualisiert."
 
-#: Controller/UsersController.php:542
+#: Controller/UsersController.php:465
+msgid ""
+"The email address of <strong>{0}</strong> must be verified before activation."
+msgstr ""
+"Die E-Mail-Adresse des Nutzers <strong>{0}</strong> muss vor der "
+"Freischaltung verifiziert werden."
+
+#: Controller/UsersController.php:470
+msgid "The user account of <strong>{0}</strong> is already active."
+msgstr ""
+"Der Nutzer-Account von <strong>{0}</strong> ist bereits freigeschalten."
+
+#: Controller/UsersController.php:476
+msgid "The user account of <strong>{0}</strong> has been activated."
+msgstr "Der Nutzer-Account von <strong>{0}</strong> wurde freigeschalten."
+
+#: Controller/UsersController.php:506
+msgid "The user account of <strong>{0}</strong> is already inactive."
+msgstr "Der Nutzer-Account von <strong>{0}</strong> ist bereits gesperrt."
+
+#: Controller/UsersController.php:512
+msgid "The user account of <strong>{0}</strong> has been deactivated."
+msgstr "Der Nutzer-Account von <strong>{0}</strong> wurde gesperrt."
+
+#: Controller/UsersController.php:550
 msgid ""
 "We have sent you a verification email with instructions on how to verify "
 "your email address."
@@ -233,11 +263,11 @@ msgstr ""
 "Wir haben Ihnen eine E-Mail zum Bestätigen Ihrer E-Mail-Adresse gesendet. "
 "Bitte folgen Sie den Anweisungen in dieser E-Mail."
 
-#: Controller/UsersController.php:579
+#: Controller/UsersController.php:587
 msgid "We have sent you an email to reset your password."
 msgstr "Wir haben Ihnen eine E-Mail zum Zurücksetzen Ihres Passworts gesendet."
 
-#: Controller/UsersController.php:628
+#: Controller/UsersController.php:636
 msgid "Your password has been changed successfully."
 msgstr "Ihr Passwort wurde erfolgreich geändert."
 
@@ -611,12 +641,13 @@ msgid ""
 "email as soon as your account has been activated."
 msgstr ""
 "Hallo {username},{nl}Ihre E-Mail-Adresse wurde manuell von einem "
-"Administrator validiert.{nl}{nl}Ihr Account ist noch nicht aktiviert.{nl}"
-"Sobald Ihr Account aktiviert wurde, erhalten Sie eine Benachrichtigung per E-"
-"Mail."
+"Administrator validiert.{nl}{nl}Ihr Account ist noch nicht freigeschalten."
+"{nl}Sobald Ihr Account freigeschalten wurde, erhalten Sie eine "
+"Benachrichtigung via E-Mail."
 
 #: Template/Email/html/User/verify.ctp:8;16
-#: Template/Email/text/User/verify.ctp:8
+#: Template/Email/text/User/verify.ctp:8 Template/Users/__user-row.ctp:24
+#: Template/Users/verify.ctp:7
 msgid "Verify Email"
 msgstr "E-Mail-Adresse Bestätigen"
 
@@ -680,7 +711,7 @@ msgstr ""
 "wollen?"
 
 #: Template/Groups/__group-row.ctp:37 Template/Menus/__menu-item-row.ctp:59
-#: Template/Menus/__menu-row.ctp:37 Template/Users/__user-row.ctp:92
+#: Template/Menus/__menu-row.ctp:37 Template/Users/__user-row.ctp:79
 msgid "Confirm Deletion"
 msgstr "Löschen bestätigen"
 
@@ -1068,70 +1099,84 @@ msgstr "Nutzer bearbeiten"
 msgid "not verified"
 msgstr "nicht verifiziert"
 
-#: Template/Users/__user-row.ctp:24
-msgid "Verify user <strong>{0}</strong>?"
-msgstr "Nutzer <strong>{0}</strong> verifizieren?"
-
-#: Template/Users/__user-row.ctp:25
-msgid "Verify User"
-msgstr "Nutzer verifizieren"
-
-#: Template/Users/__user-row.ctp:26
+#: Template/Users/__user-row.ctp:23
 msgid "Manually verify the user's email address."
 msgstr "Nutzer E-Mail-Adresse manuell verifizieren."
 
-#: Template/Users/__user-row.ctp:35
+#: Template/Users/__user-row.ctp:25 Template/Users/verify.ctp:12
+msgid ""
+"Do you really want to verify the email address of user <strong>{0}</strong>?"
+msgstr ""
+"Wollen Sie die E-Mail-Adresse des Nutzers <strong>{0}</strong> wirklich "
+"verifizieren?"
+
+#: Template/Users/__user-row.ctp:31
 msgid "The user has verified his email address."
 msgstr "Der Nutzer hat seine E-Mail-Adresse verifiziert."
 
-#: Template/Users/__user-row.ctp:35
+#: Template/Users/__user-row.ctp:31
 msgid "verified"
 msgstr "verifiziert"
 
-#: Template/Users/__user-row.ctp:40
+#: Template/Users/__user-row.ctp:36
 msgid "inactive"
-msgstr "inaktiv"
+msgstr "gesperrt"
 
-#: Template/Users/__user-row.ctp:49
-msgid "Activate user <strong>{0}</strong>?"
-msgstr "Nutzer <strong>{0}</strong> aktivieren?"
-
-#: Template/Users/__user-row.ctp:50
-msgid "Activate User"
-msgstr "Nutzer aktivieren"
-
-#: Template/Users/__user-row.ctp:51
+#: Template/Users/__user-row.ctp:44
 msgid "Activate user &quot;{0}&quot;"
-msgstr "Nutzer &quot;{0}&quot; aktivieren"
+msgstr "Nutzer &quot;{0}&quot; freischalten"
 
-#: Template/Users/__user-row.ctp:61
+#: Template/Users/__user-row.ctp:45
+msgid "Activate User"
+msgstr "Nutzer Freischalten"
+
+#: Template/Users/__user-row.ctp:46
+msgid "Activate user <strong>{0}</strong>?"
+msgstr "Wollen Sie den Nutzer <strong>{0}</strong> wirklich freischalten?"
+
+#: Template/Users/__user-row.ctp:53
 msgid "You cannot deactivate your own account."
 msgstr "Sie können Ihren eigenen Account nicht sperren."
 
-#: Template/Users/__user-row.ctp:61;64
+#: Template/Users/__user-row.ctp:53;56
 msgid "active"
-msgstr "aktiv"
+msgstr "freigeschalten"
 
-#: Template/Users/__user-row.ctp:73
-msgid "Deactivate user <strong>{0}</strong>?"
-msgstr "Nutzer <strong>{0}</strong> deaktivieren?"
-
-#: Template/Users/__user-row.ctp:74
-msgid "Deactivate User"
-msgstr "Nutzer deaktivieren"
-
-#: Template/Users/__user-row.ctp:75
+#: Template/Users/__user-row.ctp:64
 msgid "Deactivate user &quot;{0}&quot;"
-msgstr "Nutzer &quot;{0}&quot; deaktivieren"
+msgstr "Nutzer &quot;{0}&quot; Sperren"
 
-#: Template/Users/__user-row.ctp:90
+#: Template/Users/__user-row.ctp:65
+msgid "Deactivate User"
+msgstr "Nutzer Sperren"
+
+#: Template/Users/__user-row.ctp:66
+msgid "Deactivate user <strong>{0}</strong>?"
+msgstr ""
+"Wollen Sie den Nutzer-Account von <strong>{0}</strong> wirklich sperren?"
+
+#: Template/Users/__user-row.ctp:78
 msgid "Delete User"
 msgstr "Nutzer löschen"
 
-#: Template/Users/__user-row.ctp:91
+#: Template/Users/__user-row.ctp:80
 msgid "Do you really want to delete user <strong>{0}</strong>?"
 msgstr ""
 "Sind Sie sicher, dass Sie den Nutzer <strong>{0}</strong> löschen wollen?"
+
+#: Template/Users/activate.ctp:7
+msgid "Activate User Account"
+msgstr "Nutzer-Account Freischalten"
+
+#: Template/Users/activate.ctp:12
+msgid ""
+"Do you really want to activate the user account of <strong>{0}</strong>?"
+msgstr ""
+"Wollen Sie den Nutzer-Account von <strong>{0}</strong> wirklich freischalten?"
+
+#: Template/Users/activate.ctp:13
+msgid "Activate"
+msgstr "Freischalten"
 
 #: Template/Users/add.ctp:11 Template/Users/index.ctp:18
 msgid "Create a new User"
@@ -1185,6 +1230,20 @@ msgstr "Bearbeiten Sie diese Einstellungen für den aktuellen Nutzer-Standort."
 #: Template/Users/add.ctp:59 Template/Users/profile.ctp:35
 msgid "Backend Interface Language"
 msgstr "Backend Interface Sprache"
+
+#: Template/Users/deactivate.ctp:7
+msgid "Deactivate User Account"
+msgstr "Nutzer-Account Sperren"
+
+#: Template/Users/deactivate.ctp:12
+msgid ""
+"Do you really want to deactivate the user account of <strong>{0}</strong>?"
+msgstr ""
+"Wollen Sie den Nutzer-Account von <strong>{0}</strong> wirklich sperren?"
+
+#: Template/Users/deactivate.ctp:13
+msgid "Deactivate"
+msgstr "Sperren"
 
 #: Template/Users/index.ctp:7;45
 msgid "User"
@@ -1288,6 +1347,10 @@ msgstr "Bitte geben Sie ein neues Passwort ein."
 msgid "Access Denied"
 msgstr "Zugriff verweigert"
 
+#: Template/Users/verify.ctp:13
+msgid "Verify"
+msgstr "Verifizieren"
+
 #: Template/Users/verify_by_token.ctp:15
 msgid "You successfully verified your email address!"
 msgstr "Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt!"
@@ -1303,6 +1366,12 @@ msgstr ""
 #: Template/Users/verify_by_token.ctp:20
 msgid "Go to homepage"
 msgstr "Zur Startseite"
+
+#~ msgid "Verify user <strong>{0}</strong>?"
+#~ msgstr "Nutzer <strong>{0}</strong> verifizieren?"
+
+#~ msgid "Verify User"
+#~ msgstr "Nutzer verifizieren"
 
 #~ msgid "Greetings"
 #~ msgstr "Mit freundlichen Grüßen"

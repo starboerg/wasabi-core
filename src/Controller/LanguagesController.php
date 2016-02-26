@@ -76,9 +76,6 @@ class LanguagesController extends BackendAppController
      */
     public function edit($id)
     {
-        if (!$id || !$this->Languages->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if (!$this->request->is(['get', 'put'])) {
             throw new MethodNotAllowedException();
         }
@@ -107,9 +104,6 @@ class LanguagesController extends BackendAppController
      */
     public function delete($id)
     {
-        if (!$id || !$this->Languages->exists(['id' => $id])) {
-            throw new NotFoundException();
-        }
         if (!$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }

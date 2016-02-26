@@ -171,6 +171,16 @@ class Wasabi
     }
 
     /**
+     * Get the instance name of this wasabi instance.
+     *
+     * @return string
+     */
+    public static function getInstanceName()
+    {
+        return self::setting('Core.instance_name');
+    }
+
+    /**
      * Get the html title suffix of this wasabi instance.
      * @return string
      */
@@ -193,5 +203,27 @@ class Wasabi
             'controller' => $request->params['controller'],
             'action' => $request->params['action']
         ];
+    }
+
+    /**
+     * Get the email address that is used as sender for
+     * all backend emails.
+     *
+     * @return string
+     */
+    public static function getSenderEmail()
+    {
+        return self::setting('Core.Email.email_sender');
+    }
+
+    /**
+     * Get the name that is used as sender for
+     * all backend emails.
+     *
+     * @return string
+     */
+    public static function getSenderName()
+    {
+        return self::setting('Core.Email.email_sender_name');
     }
 }
