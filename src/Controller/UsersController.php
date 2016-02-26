@@ -164,7 +164,12 @@ class UsersController extends BackendAppController
             } else {
                 unset($this->request->data['password']);
                 $this->request->session()->write('data.login', $this->request->data());
-                $this->Flash->error(__d('wasabi_core', 'Username or password is incorrect.'), 'auth', false);
+                if (Configure::read('authenticate.username') === 'email') {
+                    $errorMsg = __d('wasabi_core', 'Email or password is incorrect.');
+                } else {
+                    $errorMsg = __d('wasabi_core', 'Username or password is incorrect.');
+                }
+                $this->Flash->error($errorMsg, 'auth', false);
                 if (!$this->request->is('ajax')) {
                     $this->redirect(['action' => 'login']);
                     return;

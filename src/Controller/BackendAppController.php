@@ -70,9 +70,20 @@ class BackendAppController extends AppController
     {
         parent::initialize();
 
+        $fieldUsername = Configure::read('authenticate.username');
+        $fieldPassword = Configure::read('authenticate.password');
+
         $this->loadComponent('Auth', [
             AuthComponent::ALL => [
                 'userModel' => 'Wasabi/Core.Users'
+            ],
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => ($fieldUsername !== null) ? $fieldUsername : 'username',
+                        'password' => ($fieldPassword !== null) ? $fieldPassword : 'password'
+                    ]
+                ]
             ],
             'loginAction' => [
                 'plugin' => 'Wasabi/Core',
