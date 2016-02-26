@@ -79,10 +79,10 @@ class AppView extends View
             'className' => 'Wasabi/Core.Email'
         ]);
 
-        $this->defaultFormTemplateActions = array_merge(
-            $this->defaultFormTemplateActions,
-            Configure::read('defaultFormTemplateActions') ?? []
-        );
+        $defaultFormTemplateActions = Configure::read('defaultFormTemplateActions');
+        if (is_array($defaultFormTemplateActions)) {
+            $this->defaultFormTemplateActions = array_merge($this->defaultFormTemplateActions, $defaultFormTemplateActions);
+        }
 
         if (!in_array(join('.', [
             $this->request->params['plugin'] ? $this->request->params['plugin'] : 'App',
