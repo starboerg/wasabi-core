@@ -54,7 +54,7 @@ class MenuCell extends Cell
                         }
                     }
                     if ($skip) {
-                        break;
+                        continue;
                     }
                 }
                 if ($item['matchAction'] !== true) {
