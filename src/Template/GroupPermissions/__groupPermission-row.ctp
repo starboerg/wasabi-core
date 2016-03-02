@@ -9,7 +9,7 @@
     <td colspan="4"><?= $plugin ?></td>
 </tr>
 <?php
-$rowCount = $i = 1;
+$rowCount = 1;
 foreach ($controllers as $controller => $actions):
     $actionCount = 1;
     foreach ($actions as $action => $groups):
@@ -30,12 +30,12 @@ foreach ($controllers as $controller => $actions):
             <td>
                 <?php foreach ($groups as $groupId => $group): ?>
                     <div>
-                        <input id="<?= $i ?>Id" type="hidden" value="<?= $group['permission_id'] ?>"name="<?= $i ?>[id]">
-                        <input id="<?= $i ?>Allowed_" type="hidden" value="0" name="<?= $i ?>[allowed]">
-                        <input id="<?= $i ?>Allowed" type="checkbox" value="1" name="<?= $i ?>[allowed]"<?= $group['allowed'] ? 'checked="checked"' : '' ?>>
-                        <label for="<?= $i ?>Allowed"><?= $group['name'] ?></label>
+                        <input id="<?= $group['permission_id'] ?>Id" type="hidden" value="<?= $group['permission_id'] ?>" name="<?= $group['permission_id'] ?>[id]">
+                        <input id="<?= $group['permission_id'] ?>Allowed_" type="hidden" value="0" name="<?= $group['permission_id'] ?>[allowed]">
+                        <input id="<?= $group['permission_id'] ?>Allowed" type="checkbox" value="1" name="<?= $group['permission_id'] ?>[allowed]"<?= $group['allowed'] ? 'checked="checked"' : '' ?>>
+                        <label for="<?= $group['permission_id'] ?>Allowed"><?= $group['name'] ?></label>
                     </div>
-                    <?php $i++; endforeach; ?>
+                    <?php endforeach; ?>
             </td>
             <td class="center valign-middle">
                 <button class="single-submit button small blue" type="submit">
