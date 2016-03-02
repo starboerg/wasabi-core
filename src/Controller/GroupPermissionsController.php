@@ -12,6 +12,7 @@
  */
 namespace Wasabi\Core\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -148,6 +149,7 @@ class GroupPermissionsController extends BackendAppController
 
         if ($this->GroupPermissions->connection()->inTransaction()) {
             $this->GroupPermissions->connection()->commit();
+            Cache::clear(false, 'wasabi/core/group_permissions');
             if ($this->request->is('ajax')) {
                 $status = 'success';
                 $this->set(compact('status'));
