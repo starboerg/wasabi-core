@@ -269,7 +269,6 @@ class GuardianComponent extends Component
 			$controllers = $this->getControllersForPlugin($plugin, $path);
 			foreach ($controllers as $controller) {
 				$actions = $this->introspectController($controller['path']);
-
 				if (empty($actions)) {
 					continue;
 				}
@@ -309,13 +308,17 @@ class GuardianComponent extends Component
                     $namespaceParts = explode(DS, substr($controller['path'], strlen(ROOT . DS . 'src' . DS . 'Controller') + 1));
                     array_pop($namespaceParts);
                     $namespace = join('/', $namespaceParts);
-                    $path = "App.{$namespace}/{$controller['name']}.{$action}";
+                    if (!empty($namespace)) {
+                        $path = "App.{$namespace}/{$controller['name']}.{$action}";
+                    } else {
+                        $path = "App.{$controller['name']}.{$action}";
+                    }
                     if (in_array($path, $this->_guestActions)) {
                         continue;
                     }
                     $actionMap[$path] = [
                         'plugin' => 'App',
-                        'controller' => $namespace . '/' . $controller['name'],
+                        'controller' => !empty($namespace) ? $namespace . '/' . $controller['name'] : $controller['name'],
                         'action' => $action
                     ];
                 }
