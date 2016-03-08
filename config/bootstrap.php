@@ -31,6 +31,7 @@ try {
         new Folder($config['path'], true, 0775);
         Cache::config($key, $config);
     }
+    unset($key, $config);
 } catch (\Exception $e) {
     die($e->getMessage() . "\n");
 }
