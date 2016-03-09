@@ -177,7 +177,9 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email'], __d('wasabi_core', 'This email is already used by another user.')));
+        $rules
+            ->add($rules->isUnique(['email'], __d('wasabi_core', 'This email is already used by another user.')))
+            ->add($rules->isUnique(['username'], __d('wasabi_core', 'This username is already taken.')));
         return $rules;
     }
 
