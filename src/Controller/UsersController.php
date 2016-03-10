@@ -157,7 +157,11 @@ class UsersController extends BackendAppController
                     $this->Auth->setUser($user);
                     if (!$this->request->is('ajax')) {
                         $this->Flash->success(__d('wasabi_core', 'Welcome back.'), 'auth');
-                        $this->redirect($this->Auth->redirectUrl());
+                        if (($redirectUrl = $this->Auth->redirectUrl()) === '/backend/heartbeat') {
+                            $this->redirect(['plugin' => 'Wasabi/Core', 'controller' => 'Dashboard', 'action' => 'index']);
+                        } else {
+                            $this->redirect($redirectUrl);
+                        }
                         return;
                     }
                 }
