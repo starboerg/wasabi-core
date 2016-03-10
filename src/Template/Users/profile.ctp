@@ -4,7 +4,7 @@
  * @var \Wasabi\Core\Model\Entity\User $user
  */
 
-$this->Html->setTitle(__d('wasabi_core', 'Edit Profle'));
+$this->Html->setTitle(__d('wasabi_core', 'Edit Profile'));
 $this->Html->setSubTitle($user->get('username'));
 
 echo $this->Form->create($user, ['class' => 'no-top-section']);

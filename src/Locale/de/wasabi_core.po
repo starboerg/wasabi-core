@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core\n"
-"POT-Creation-Date: 2016-03-09 14:23+0100\n"
-"PO-Revision-Date: 2016-03-09 14:25+0100\n"
+"POT-Creation-Date: 2016-03-10 11:19+0100\n"
+"PO-Revision-Date: 2016-03-10 11:20+0100\n"
 "Last-Translator: Frank Förster <frank.foerster@sandstein.de>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/core-3/language/"
 "de/)\n"
@@ -611,6 +611,7 @@ msgid "Your login session expired. Please login again."
 msgstr "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an."
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Element/Menu/user.ctp:10
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:7
 msgid "Edit Profile"
 msgstr "Profil bearbeiten"
 
@@ -1362,10 +1363,6 @@ msgstr "Jetzt Anmelden"
 msgid "Send"
 msgstr "Senden"
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:7
-msgid "Edit Profle"
-msgstr "Profil bearbeiten"
-
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:17
 msgid ""
 "To change your password fill in both password fields. Otherwise leave those "
@@ -1436,6 +1433,9 @@ msgstr ""
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/verify_by_token.ctp:20
 msgid "Go to homepage"
 msgstr "Zur Startseite"
+
+#~ msgid "Edit Profle"
+#~ msgstr "Profil bearbeiten"
 
 #~ msgid "Verify user <strong>{0}</strong>?"
 #~ msgstr "Nutzer <strong>{0}</strong> verifizieren?"

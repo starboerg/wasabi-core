@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-03-09 14:23+0100\n"
+"POT-Creation-Date: 2016-03-10 11:19+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -568,6 +568,7 @@ msgid "Your login session expired. Please login again."
 msgstr ""
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Element/Menu/user.ctp:10
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:7
 msgid "Edit Profile"
 msgstr ""
 
@@ -1254,10 +1255,6 @@ msgstr ""
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/lost_password.ctp:27
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/request_new_verification_email.ctp:20
 msgid "Send"
-msgstr ""
-
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:7
-msgid "Edit Profle"
 msgstr ""
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Template/Users/profile.ctp:17
