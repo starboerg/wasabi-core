@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2016-03-10 11:19+0100\n"
+"POT-Creation-Date: 2016-03-10 15:57+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -152,11 +152,11 @@ msgid "The cache settings have been updated."
 msgstr ""
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:142
-msgid "Please verify your email address. You can request a new verification email {0}."
+msgid "Please verify your email address or request a {0}."
 msgstr ""
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:145
-msgid "here"
+msgid "new verification email"
 msgstr ""
 
 #: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:150
@@ -167,71 +167,71 @@ msgstr ""
 msgid "Welcome back."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:168
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:172
 msgid "Email or password is incorrect."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:170
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:174
 msgid "Username or password is incorrect."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:230
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:234
 msgid "Registration successful! We have sent you an email to verify your email address. Please follow the instructions in this email."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:263
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:267
 msgid "The user <strong>{0}</strong> has been created."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:307
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:311
 msgid "The user <strong>{0}</strong> has been saved."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:341
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:345
 msgid "The user <strong>{0}</strong> has been deleted."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:367
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:371
 msgid "The email address of user <strong>{0}</strong> is already verified."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:373
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:377
 msgid "The email address of user <strong>{0}</strong> has been verified."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:434
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:438
 msgid "Your profile has been updated."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:470
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:474
 msgid "The email address of <strong>{0}</strong> must be verified before activation."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:475
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:479
 msgid "The user account of <strong>{0}</strong> is already active."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:481
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:485
 msgid "The user account of <strong>{0}</strong> has been activated."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:511
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:515
 msgid "The user account of <strong>{0}</strong> is already inactive."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:517
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:521
 msgid "The user account of <strong>{0}</strong> has been deactivated."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:555
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:559
 msgid "We have sent you a verification email with instructions on how to verify your email address."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:592
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:596
 msgid "We have sent you an email to reset your password."
 msgstr ""
 
-#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:641
+#: D:/www/sms/pflegenetz/vendor/wasabi-cms/core/src/Controller/UsersController.php:645
 msgid "Your password has been changed successfully."
 msgstr ""
 
