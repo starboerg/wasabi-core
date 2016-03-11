@@ -55,7 +55,7 @@ define(function (require) {
             WS.get('wasabi.core').initHeartBeat();
           }
         }, this)
-      })
+      });
     },
 
     closeModal: function() {
