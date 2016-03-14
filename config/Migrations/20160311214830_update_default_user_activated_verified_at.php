@@ -1,4 +1,5 @@
 <?php
+use Cake\Cache\Cache;
 use Migrations\AbstractMigration;
 use Cake\ORM\TableRegistry;
 
@@ -9,12 +10,14 @@ class UpdateDefaultUserActivatedVerifiedAt extends AbstractMigration
      */
     public function up()
     {
+        Cache::clear();
+
         $date = date('Y-m-d H:i:s');
-        $Users = TableRegistry::get('Users');
-        $Users->save($Users->get(1)
-            ->set('verified_at', $date)
-            ->set('activated_at', $date)
-        );
+        $Users = TableRegistry::get('Wasabi/Core.Users');
+        $Users->updateAll([
+            'verified_at' => $date,
+            'activated_at' => $date
+        ], ['id' => 1]);
     }
 
     /**
@@ -22,10 +25,12 @@ class UpdateDefaultUserActivatedVerifiedAt extends AbstractMigration
      */
     public function down()
     {
-        $Users = TableRegistry::get('Users');
-        $Users->save($Users->get(1)
-            ->set('verified_at', null)
-            ->set('activated_at', null)
-        );
+        Cache::clear();
+
+        $Users = TableRegistry::get('Wasabi/Core.Users');
+        $Users->updateAll([
+            'verified_at' => null,
+            'activated_at' => null
+        ], ['id' => 1]);
     }
 }
