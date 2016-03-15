@@ -6,9 +6,7 @@
 
 $this->set('bodyCssClass', ['support', 'verify-by-token']);
 ?>
-<div class="support-image">
-    <?= $this->Html->image('/wasabi/core/img/wasabi.png') ?>
-</div>
+<?= $this->element('Wasabi/Core.support-image') ?>
 <form>
 <div class="support-content">
     <h1><?= __d('wasabi_core', 'Email Verified') ?></h1>

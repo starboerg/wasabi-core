@@ -16,9 +16,7 @@ if (Configure::read('Settings.Core.Login.Message.show') === '1' && $message) {
     echo $this->Html->tag('div', $message, ['class' => join(' ', $msgBoxClasses)]);
 }
 ?>
-<div class="support-image">
-    <?= $this->Html->image('/wasabi/core/img/wasabi.png') ?>
-</div>
+<?= $this->element('Wasabi/Core.support-image') ?>
 <?= $this->Form->create(null, ['novalidate' => 'novalidate']) ?>
 <div class="support-content">
     <h1><?= __d('wasabi_core', 'Login') ?></h1>

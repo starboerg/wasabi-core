@@ -6,9 +6,7 @@
 
 $this->set('bodyCssClass', ['support', 'request-verification-email']);
 ?>
-<div class="support-image">
-    <?= $this->Html->image('/wasabi/core/img/wasabi.png') ?>
-</div>
+<?= $this->element('Wasabi/Core.support-image') ?>
 <?= $this->Form->create($user, ['novalidate' => 'novalidate']) ?>
 <div class="support-content">
     <h1><?= __d('wasabi_core', 'Request Verification Email') ?></h1>
