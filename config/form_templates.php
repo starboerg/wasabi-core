@@ -9,5 +9,6 @@ return [
     'section' => '<div class="form-section"><div class="form-section-title">{{title}}</div><div class="form-section-description">{{description}}</div></div>',
     'checkboxFormGroup' => '<label>{{formRowLabel}}{{formRowLabel}}</label><div class="field">{{label}}{{formRowInfo}}</div>',
     'select' => '<select name="{{name}}"{{attrs}}>{{content}}</select>{{info}}',
+    'selectMultiple' => '<select name="{{name}}[]" multiple="multiple"{{attrs}}>{{content}}</select>{{info}}',
     'textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>{{info}}'
 ];
