@@ -1222,6 +1222,11 @@ div.error-message {
   padding-top: 2px;
   color: #990000;
 }
+span.error-message > ul,
+div.error-message > ul {
+  margin: 0;
+  padding-left: 20px;
+}
 .input-group {
   border-collapse: separate;
 }
