@@ -9,6 +9,15 @@
     this.$li = null;
     this.$clone = null;
     this.$placeholder = null;
+    this.$items = [];
+    this.$lis = [];
+
+    this.isLastItem = false;
+    this.hasPrevItem = false;
+    this.placeholderIndex = 0;
+    this.$placeholderUl = null;
+    this.$placeholderParentLi = null;
+    this.$placeholderUlChildren = null;
 
     this.startPosition = {};
     this.startDepth = null;
@@ -90,79 +99,68 @@
     },
 
     _onMouseMove: function(event) {
+      var that = this;
+
       if (!this.isDragging) {
         this._initClone();
         this._initPlaceholder();
+        this._updatePlaceholderVars();
         this.$li.hide();
         this.$scrollParent = this.$clone.scrollParent();
+        this.$items = this.$el.find('li').filter(function() {
+          var $this = $(this);
+          return (
+            ($this[0] !== that.$li[0]) &&
+            ($this.css('display') !== 'none') &&
+            ($this.css('position') !== 'absolute') &&
+            !$this.parents('li').filter(function() {
+              return ($(this).css('position') === 'absolute') || $(this).is(that.$li);
+            }).length &&
+            !$this.hasClass(that.settings.placeholder)
+          );
+        }).find(this.settings.containerElement);
         this.isDragging = true;
       }
       this._updateClonePosition(event);
       this._updateDelta(event);
       this._updateTargetDepth();
-      this.placeholderDepth = this.$placeholder.parentsUntil(this.$el, 'ul').length;
 
       if (this.settings.scroll === true) {
         this._scroll(event);
       }
 
-      var $lis = this.$placeholder.parent().find('> li').filter(function() {
-        return ($(this).css('display') !== 'none' && $(this).css('position') !== 'absolute');
-      });
-      var placeholderIndex = $lis.index(this.$placeholder);
-      var isLastItem = (placeholderIndex === $lis.length - 1);
-      var hasPrevItem = (placeholderIndex > 0);
-      var that = this;
-
-      var $placeholderUl;
-      var $placeholderParentLi;
-      var $placeholderUlChildren;
       var $prevItem;
       var $prevItemUl;
-      var $items;
 
       if (this._yIntersectsPlaceholder(event)) {
         // move placeholder to parent list if it is the last item of it's current list
-        if (isLastItem && (this.targetDepth < this.placeholderDepth)) {
-          $placeholderUl = this.$placeholder.parent();
-          $placeholderParentLi = $placeholderUl.parent();
-          $placeholderUlChildren = $placeholderUl.find('> li').filter(function() {
-            return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
-          });
-          this.$placeholder.insertAfter($placeholderParentLi);
-          if (!$placeholderUlChildren.length) {
-            $placeholderParentLi.addClass(this.settings.noChildClass);
+        if (this.isLastItem && (this.targetDepth < this.placeholderDepth)) {
+          this.$placeholder.insertAfter(this.$placeholderParentLi);
+          if (!this.$placeholderUlChildren.length) {
+            this.$placeholderParentLi.addClass(this.settings.noChildClass);
           }
+          this._updatePlaceholderVars();
           return;
         }
 
         // make the item a child of its prev item
-        if (hasPrevItem && (this.targetDepth > this.placeholderDepth)) {
-          $prevItem = $($lis.get(placeholderIndex - 1));
+        if (this.hasPrevItem && (this.targetDepth > this.placeholderDepth)) {
+          $prevItem = $(this.$lis.get(this.placeholderIndex - 1));
           $prevItemUl = $prevItem.find('> ul');
-          if (!$prevItemUl.length) {
-            $prevItemUl = $('<ul></ul>');
-            $prevItem.append($prevItemUl);
+          if (!$prevItemUl.length || ($prevItem.length && !$prevItemUl.parent().hasClass('closed'))) {
+            if (!$prevItemUl.length) {
+              $prevItemUl = $('<ul></ul>');
+              $prevItem.append($prevItemUl);
+            }
+            $prevItemUl.append(this.$placeholder).parent().removeClass(this.settings.noChildClass);
+            this._updatePlaceholderVars();
           }
-          $prevItemUl.append(this.$placeholder).parent().removeClass(this.settings.noChildClass);
         }
       } else {
-        $items = this.$el.find('li').filter(function() {
-          return (
-            ($(this)[0] !== that.$li[0]) &&
-            ($(this).css('display') !== 'none') &&
-            ($(this).css('position') !== 'absolute') &&
-            !$(this).parents('li').filter(function() {
-              return ($(this).css('position') === 'absolute') || $(this).is(that.$li);
-            }).length &&
-            !$(this).hasClass(that.settings.placeholder)
-          );
-        }).find(this.settings.containerElement);
-
         var $intersectedItem = null;
         var direction = null;
 
-        $items.each(function() {
+        this.$items.each(function() {
           var min = $(this).position().top;
           var max = min + $(this).outerHeight();
           var middle = parseInt((min + max) / 2);
@@ -174,6 +172,7 @@
           if (event.pageY > middle && event.pageY <= max ) {
             $intersectedItem = $(this).parent();
             direction = 'down';
+            //noinspection ALL
             return;
           }
         });
@@ -192,30 +191,22 @@
             if ($intersectedItem.prev().hasClass(this.settings.placeholder)) {
               return;
             }
-            $placeholderUl = this.$placeholder.parent();
-            $placeholderParentLi = $placeholderUl.parent();
-            $placeholderUlChildren = $placeholderUl.find('> li').filter(function() {
-              return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
-            });
             this.$placeholder.insertBefore($intersectedItem);
-            if (!$placeholderUlChildren.length) {
-              $placeholderParentLi.addClass(this.settings.noChildClass);
+            if (!this.$placeholderUlChildren.length) {
+              this.$placeholderParentLi.addClass(this.settings.noChildClass);
             }
+            this._updatePlaceholderVars();
             return;
           }
           if (direction === 'down') {
             if ($intersectedItem.next().css('display') === 'none' && $intersectedItem.next().next().hasClass(this.settings.placeholder)) {
               return;
             }
-            $placeholderUl = this.$placeholder.parent();
-            $placeholderParentLi = $placeholderUl.parent();
-            $placeholderUlChildren = $placeholderUl.find('> li').filter(function() {
-              return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
-            });
             this.$placeholder.insertAfter($intersectedItem);
-            if (!$placeholderUlChildren.length) {
-              $placeholderParentLi.addClass(this.settings.noChildClass);
+            if (!this.$placeholderUlChildren.length) {
+              this.$placeholderParentLi.addClass(this.settings.noChildClass);
             }
+            this._updatePlaceholderVars();
           }
         }
       }
@@ -267,10 +258,8 @@
     },
 
     _updateClonePosition: function(event) {
-      this.$clone.css({
-        left: event.pageX - this.liOffset.x,
-        top: event.pageY - this.liOffset.y
-      });
+      this.$clone[0].style.left = event.pageX - this.liOffset.x + 'px';
+      this.$clone[0].style.top = event.pageY - this.liOffset.y + 'px';
     },
 
     _updateDelta: function(event) {
@@ -331,6 +320,24 @@
       var min = this.$placeholder.offset().top;
       var max = min + this.placeholderHeight;
       return (event.pageY >= min && event.pageY <= max);
+    },
+
+    _updatePlaceholderVars: function() {
+      var that = this;
+      setTimeout(function() {
+        that.placeholderDepth = that.$placeholder.parentsUntil(that.$el, 'ul').length;
+        that.$lis = that.$placeholder.parent().find('> li').filter(function() {
+          return ($(this).css('display') !== 'none' && $(this).css('position') !== 'absolute');
+        });
+        that.placeholderIndex = that.$lis.index(that.$placeholder);
+        that.isLastItem = (that.placeholderIndex === that.$lis.length - 1);
+        that.hasPrevItem = (that.placeholderIndex > 0);
+        that.$placeholderUl = that.$placeholder.parent();
+        that.$placeholderParentLi = that.$placeholderUl.parent();
+        that.$placeholderUlChildren = that.$placeholderUl.find('> li').filter(function() {
+          return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
+        });
+      }, 0);
     },
 
     _trigger: function(eventType, eventOrigin) {
