@@ -151,8 +151,14 @@
         // make the item a child of its prev item
         if (this.hasPrevItem && (this.targetDepth > this.placeholderDepth)) {
           $prevItem = $(this.$lis.get(this.placeholderIndex - 1));
+          if ($prevItem[0] === this.$li[0]) {
+            $prevItem = $(this.$lis.get(this.placeholderIndex - 2));
+          }
           $prevItemUl = $prevItem.find('> ul');
-          if (!$prevItemUl.length || ($prevItem.length && !$prevItemUl.parent().hasClass('closed'))) {
+          if ($prevItem.length && !$prevItemUl.parent().hasClass('closed')) {
+            if (!this.settings.mayHaveChildren($prevItem)) {
+              return;
+            }
             if (!$prevItemUl.length) {
               $prevItemUl = $('<ul></ul>');
               $prevItem.append($prevItemUl);
@@ -469,7 +475,10 @@
     serializeWrapKeys: true,
     serializeParentIdNullable: false,
     leftKey: 'left',
-    rightKey: 'right'
+    rightKey: 'right',
+    mayHaveChildren: function() {
+      return true;
+    }
   };
 
 })(jQuery, document, window);
