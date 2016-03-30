@@ -1416,6 +1416,25 @@ form.bulk .button.small {
   position: relative;
   top: -1px;
 }
+.form-info .form-info-content {
+  padding: 20px;
+  background-color: #fcfcfc;
+  border-width: 0 1px;
+  border-style: solid;
+  border-color: #e3e5e6;
+}
+.form-info .form-info-content.form-info-success {
+  color: #264409;
+}
+.form-info .form-info-content.form-info-warning {
+  color: #514721;
+}
+.form-info .form-info-content.form-info-info {
+  color: #205791;
+}
+.form-info .form-info-content.form-info-error {
+  color: #990000;
+}
 #page-header {
   position: fixed;
   top: 0;

@@ -328,3 +328,30 @@ form.bulk {
     top: -1px;
   }
 }
+
+.form-info {
+
+  .form-info-content {
+    padding: 20px;
+    background-color: @form-row-bg-color;
+    border-width: 0 1px;
+    border-style: solid;
+    border-color: @form-row-border-color;
+
+    &.form-info-success {
+      color: @state-success-font-color;
+    }
+
+    &.form-info-warning {
+      color: @state-warning-font-color;
+    }
+
+    &.form-info-info {
+      color: @state-info-font-color;
+    }
+
+    &.form-info-error {
+      color: @state-error-font-color;
+    }
+  }
+}
