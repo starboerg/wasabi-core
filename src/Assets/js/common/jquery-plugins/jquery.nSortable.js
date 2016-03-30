@@ -28,10 +28,14 @@
       y: 0
     };
 
+    this.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+
     this.childLevels = 0;
 
+    this.placeholderWidth = null;
     this.placeholderHeight = null;
     this.placeholderDepth = null;
+    this.placeholderOffset = {top: 0, left: 0};
 
     this.$scrollParent = null;
 
@@ -73,10 +77,9 @@
       if (this.isDragging) {
         if (this.settings.animateTarget) {
           this.$clone.insertBefore(this.$placeholder);
-          var placeholderOffset = this.$placeholder.offset();
           this.$clone.animate({
-            top: placeholderOffset.top,
-            left: placeholderOffset.left
+            top: this.placeholderOffset.top,
+            left: this.placeholderOffset.left
           }, parseInt(this.settings.animationLength), _stop);
         } else {
           _stop();
@@ -123,11 +126,13 @@
       }
       this._updateClonePosition(event);
       this._updateDelta(event);
-      this._updateTargetDepth();
 
       if (this.settings.scroll === true) {
         this._scroll(event);
+        this._updateDelta(event);
       }
+
+      this._updateTargetDepth();
 
       var $prevItem;
       var $prevItemUl;
@@ -155,64 +160,56 @@
             $prevItemUl.append(this.$placeholder).parent().removeClass(this.settings.noChildClass);
             this._updatePlaceholderVars();
           }
-        }
-      } else {
-        var $intersectedItem = null;
-        var direction = null;
-
-        this.$items.each(function() {
-          var min = $(this).position().top;
-          var max = min + $(this).outerHeight();
-          var middle = parseInt((min + max) / 2);
-          if (event.pageY >= min && event.pageY < middle) {
-            $intersectedItem = $(this).parent();
-            direction = 'up';
-            return;
-          }
-          if (event.pageY > middle && event.pageY <= max ) {
-            $intersectedItem = $(this).parent();
-            direction = 'down';
-            //noinspection ALL
-            return;
-          }
-        });
-
-        if ($intersectedItem === null) {
           return;
-        }
-
-        var intersectedItemDepth = $intersectedItem.parentsUntil(this.$el, 'ul').length;
-        if (this.targetDepth !== intersectedItemDepth) {
-          return;
-        }
-
-        if (this.targetDepth === intersectedItemDepth) {
-          if (direction === 'up') {
-            if ($intersectedItem.prev().hasClass(this.settings.placeholder)) {
-              return;
-            }
-            this.$placeholder.insertBefore($intersectedItem);
-            if (!this.$placeholderUlChildren.length) {
-              this.$placeholderParentLi.addClass(this.settings.noChildClass);
-            }
-            this._updatePlaceholderVars();
-            return;
-          }
-          if (direction === 'down') {
-            if ($intersectedItem.next().css('display') === 'none' && $intersectedItem.next().next().hasClass(this.settings.placeholder)) {
-              return;
-            }
-            this.$placeholder.insertAfter($intersectedItem);
-            if (!this.$placeholderUlChildren.length) {
-              this.$placeholderParentLi.addClass(this.settings.noChildClass);
-            }
-            this._updatePlaceholderVars();
-          }
         }
       }
 
-      // remove empty uls
-      this.$el.find('ul').not(':has(li)').remove();
+      var $intersectedItem = null;
+      var direction = null;
+
+      this.$items.each(function() {
+        var min = $(this).position().top;
+        var max = min + $(this).outerHeight();
+        var middle = parseInt((min + max) / 2);
+        var y = that.isChrome ? event.pageY : (event.pageY + (window.scrollY || window.pageYOffset));
+        if (y >= min && y < middle) {
+          $intersectedItem = $(this).parent();
+          direction = 'up';
+          return;
+        }
+        if (y > middle && y <= max ) {
+          $intersectedItem = $(this).parent();
+          direction = 'down';
+          //noinspection ALL
+          return;
+        }
+      });
+
+      if ($intersectedItem === null) {
+        return;
+      }
+
+      if (direction === 'up') {
+        if ($intersectedItem.prev().hasClass(this.settings.placeholder)) {
+          return;
+        }
+        this.$placeholder.insertBefore($intersectedItem);
+        if (!this.$placeholderUlChildren.length) {
+          this.$placeholderParentLi.addClass(this.settings.noChildClass);
+        }
+        this._updatePlaceholderVars();
+        return;
+      }
+      if (direction === 'down') {
+        if ($intersectedItem.next().css('display') === 'none' && $intersectedItem.next().next().hasClass(this.settings.placeholder)) {
+          return;
+        }
+        this.$placeholder.insertAfter($intersectedItem);
+        if (!this.$placeholderUlChildren.length) {
+          this.$placeholderParentLi.addClass(this.settings.noChildClass);
+        }
+        this._updatePlaceholderVars();
+      }
     },
 
     _initStart: function(event) {
@@ -248,6 +245,7 @@
 
     _initPlaceholder: function() {
       this.placeholderHeight = this.$li.innerHeight();
+      this.placeholderWidth = this.$li.outerWidth();
       this.$placeholder = $('<li></li>');
       this.$placeholder
         .addClass(this.settings.placeholder)
@@ -317,27 +315,38 @@
     },
 
     _yIntersectsPlaceholder: function(event) {
-      var min = this.$placeholder.offset().top;
+      var min = this.placeholderOffset.top;
       var max = min + this.placeholderHeight;
       return (event.pageY >= min && event.pageY <= max);
     },
 
+    _xIntersectsPlaceholder: function(event) {
+      var min = this.placeholderOffset.left;
+      var max = min + this.placeholderWidth;
+      return (event.pageX >= min && event.pageX <= max);
+    },
+
     _updatePlaceholderVars: function() {
       var that = this;
+      this.placeholderDepth = that.$placeholder.parentsUntil(that.$el, 'ul').length;
+      this.$lis = that.$placeholder.parent().find('> li').filter(function() {
+        return ($(this).css('display') !== 'none' && $(this).css('position') !== 'absolute');
+      });
       setTimeout(function() {
-        that.placeholderDepth = that.$placeholder.parentsUntil(that.$el, 'ul').length;
-        that.$lis = that.$placeholder.parent().find('> li').filter(function() {
-          return ($(this).css('display') !== 'none' && $(this).css('position') !== 'absolute');
-        });
-        that.placeholderIndex = that.$lis.index(that.$placeholder);
-        that.isLastItem = (that.placeholderIndex === that.$lis.length - 1);
-        that.hasPrevItem = (that.placeholderIndex > 0);
-        that.$placeholderUl = that.$placeholder.parent();
-        that.$placeholderParentLi = that.$placeholderUl.parent();
-        that.$placeholderUlChildren = that.$placeholderUl.find('> li').filter(function() {
-          return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
-        });
+        that.placeholderOffset = that.$placeholder.offset();
       }, 0);
+      this.placeholderIndex = this.$lis.index(this.$placeholder);
+      this.isLastItem = (this.placeholderIndex === this.$lis.length - 1);
+      this.hasPrevItem = (this.placeholderIndex > 0);
+      this.$placeholderUl = this.$placeholder.parent();
+      this.$placeholderParentLi = this.$placeholderUl.parent();
+      this.$placeholderUlChildren = this.$placeholderUl.find('> li').filter(function() {
+        return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
+      });
+      // remove empty uls
+      var $emptyULs = this.$el.find('ul').not(':has(li)');
+      $emptyULs.parent().addClass(this.settings.noChildClass);
+      $emptyULs.remove();
     },
 
     _trigger: function(eventType, eventOrigin) {
