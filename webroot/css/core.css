@@ -539,18 +539,22 @@ th {
   background-color: #9cb800;
   background-position: 0 0;
 }
+.wicon-edit {
+  background-color: #368ee0;
+  background-position: 0 -65px;
+}
 .wicon-sort {
-  background-color: #368EE0;
+  background-color: #368ee0;
   background-position: -60px 0;
   cursor: n-resize;
 }
 .wicon-move {
-  background-color: #368EE0;
+  background-color: #368ee0;
   background-position: -40px 0;
   cursor: move;
 }
 .wicon-copy {
-  background-color: #368EE0;
+  background-color: #368ee0;
   background-position: -80px 0;
 }
 .wicon-remove {
