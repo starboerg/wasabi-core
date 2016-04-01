@@ -97,6 +97,10 @@
         that.$scrollParent = null;
         that.childLevels = 0;
         that.isDragging = false;
+        that._removeEmptyUls();
+        var $emptyULs = that.$el.find('ul').not(':has(li)');
+        $emptyULs.parent().addClass(that.settings.noChildClass);
+        $emptyULs.remove();
         that._trigger('nSortable-change', event);
       }
     },
@@ -349,7 +353,10 @@
       this.$placeholderUlChildren = this.$placeholderUl.find('> li').filter(function() {
         return ($(this).css('display') !== 'none' && !$(this).hasClass(that.settings.placeholder) && $(this).css('position') !== 'absolute');
       });
-      // remove empty uls
+      that._removeEmptyUls();
+    },
+
+    _removeEmptyUls: function() {
       var $emptyULs = this.$el.find('ul').not(':has(li)');
       $emptyULs.parent().addClass(this.settings.noChildClass);
       $emptyULs.remove();
