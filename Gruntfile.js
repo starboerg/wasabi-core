@@ -29,7 +29,8 @@ module.exports = function(grunt) {
     less: {
       compile: {
         options: {
-          sourceMap: true
+          sourceMap: true,
+          sourceMapURL: 'core.css.map'
         },
         files: {
           'webroot/css/core.css': 'src/Assets/less/core.less'

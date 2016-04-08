@@ -391,6 +391,9 @@ th {
 .icon-arrow-left:before {
   content: "\e60a";
 }
+.icon-arrow-right:before {
+  content: "\e60e";
+}
 .icon-arrow-down:before {
   content: "\e600";
 }
@@ -2570,4 +2573,4 @@ table.list tbody .col-actions > a:first-child,
 .wasabi-core--menus-edit .menu-items [class*="wicon-"] {
   vertical-align: top;
 }
-/*# sourceMappingURL=webroot/css/core.css.map */
+/*# sourceMappingURL=core.css.map */
