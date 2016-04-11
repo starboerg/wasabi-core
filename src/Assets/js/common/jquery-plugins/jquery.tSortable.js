@@ -87,6 +87,7 @@ define(function(require) {
         that.$tr = null;
         that.$scrollParent = null;
         that.isDragging = false;
+        that.$el.removeClass('table--sorting');
         that._trigger('tSortable-change', event);
       }
     },
@@ -147,6 +148,7 @@ define(function(require) {
             return;
           }
           that.$placeholder.insertBefore($intersectedItem);
+          that._updatePlaceholderClass();
           return;
         }
         if (direction === 'down') {
@@ -154,6 +156,7 @@ define(function(require) {
             return;
           }
           that.$placeholder.insertAfter($intersectedItem);
+          that._updatePlaceholderClass();
         }
       })(this);
     },
@@ -182,12 +185,14 @@ define(function(require) {
           position: 'absolute',
           zIndex: 10000,
           opacity: this.settings.opacity
-        });
+        })
+        .addClass('sortable-clone');
       var originalTds = this.$tr.find('> td');
       this.$clone.find('> td').each(function(index) {
         $(this).css('width', originalTds.eq(index).outerWidth());
       });
       this.$el.find('tbody').append(this.$clone);
+      this.$el.addClass('table--sorting');
     },
 
     _initPlaceholder: function() {
@@ -200,6 +205,7 @@ define(function(require) {
           height: this.placeholderHeight
         });
       this.$tr.after(this.$placeholder);
+      this._updatePlaceholderClass();
     },
 
     _updateClonePosition: function(event) {
@@ -207,6 +213,15 @@ define(function(require) {
         left: event.pageX - this.trOffset.x,
         top: event.pageY - this.trOffset.y
       });
+    },
+
+    _updatePlaceholderClass: function() {
+      var $lastVisibleTr = this.$el.find('tr:visible:not(.sortable-clone):last');
+      if ($lastVisibleTr[0] === this.$placeholder[0]) {
+        this.$placeholder.addClass('placeholder--last');
+      } else {
+        this.$placeholder.removeClass('placeholder--last');
+      }
     },
 
     _scroll: function(event) {
