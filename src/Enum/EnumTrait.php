@@ -76,6 +76,22 @@ trait EnumTrait
     }
 
     /**
+     * Get the descriptive name for the given value.
+     *
+     * @param integer|string $value
+     * @return bool|string
+     */
+    public static function getNameForValue($value)
+    {
+        foreach (self::getConstants() as $constant) {
+            if ($constant['value'] === $value) {
+                return $constant['name'];
+            }
+        }
+        return false;
+    }
+
+    /**
      * Check wheter the given $value is valid.
      *
      * @param integer|string $value
