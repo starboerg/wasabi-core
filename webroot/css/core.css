@@ -1160,6 +1160,9 @@ label small {
   font-weight: 400;
   font-size: 80%;
 }
+label:empty {
+  visibility: hidden;
+}
 input[type="text"],
 input[type="email"],
 input[type="password"],
