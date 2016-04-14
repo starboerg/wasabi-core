@@ -397,11 +397,11 @@
       if (id) {
         tmpItem = {
           "id": id,
-          "parent_id": parentId,
-          "depth": depth
+          "parent_id": parentId
         };
         tmpItem[this.settings.leftKey] = left;
         tmpItem[this.settings.rightKey] = right;
+        tmpItem[this.settings.depthKey] = depth;
         this._results.push(tmpItem);
       }
 
@@ -483,6 +483,7 @@
     serializeParentIdNullable: false,
     leftKey: 'left',
     rightKey: 'right',
+    depthKey: 'depth',
     mayHaveChildren: function() {
       return true;
     }
