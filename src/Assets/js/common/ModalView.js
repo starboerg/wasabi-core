@@ -386,7 +386,7 @@ define(function(require) {
         event.preventDefault();
       }
 
-      if (this.isOpened) {
+      if (this.isOpened || this.$el.hasClass('disabled')) {
         return;
       }
       this.isOpened = true;
