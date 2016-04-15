@@ -21,7 +21,12 @@ define(function(require) {
    */
   function _setupAjax() {
     $.ajaxSetup({
-      dataType: 'json'
+      dataType: 'json',
+      beforeSend: _.bind(function(xhr, options) {
+        if (!options.heartBeat) {
+          _initHeartBeat.call(this);
+        }
+      }, this)
     });
     $(doc)
       .ajaxSuccess(_.bind(_onAjaxSuccess, this))
@@ -218,7 +223,8 @@ define(function(require) {
         method: 'post',
         type: 'json',
         success: _.bind(_handleHeartBeatResponse, this),
-        error: _.bind(_authError, this)
+        error: _.bind(_authError, this),
+        heartBeat: true
       });
     }, this), this.options.heartbeat);
   }
