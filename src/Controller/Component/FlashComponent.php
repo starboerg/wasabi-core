@@ -21,6 +21,7 @@ use Cake\Network\Exception\InternalErrorException;
  * Class FlashComponent
  *
  * @method void error() error(string $message, string $key = 'flash', boolean $dismiss = true)
+ * @method void info() info(string $message, string $key = 'flash', boolean $dismiss = true)
  * @method void success() success(string $message, string $key = 'flash', boolean $dismiss = true)
  * @method void warning() warning(string $message, string $key = 'flash', boolean $dismiss = true)
  */
