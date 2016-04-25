@@ -181,7 +181,7 @@
         var min = $(this).position().top;
         var max = min + $(this).outerHeight();
         var middle = parseInt((min + max) / 2);
-        var y = that.isChrome ? event.pageY : (event.pageY + (window.scrollY || window.pageYOffset));
+        var y = event.pageY;
         if (y >= min && y < middle) {
           $intersectedItem = $(this).parent();
           direction = 'up';
