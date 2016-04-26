@@ -78,5 +78,6 @@ require.config({
 
 // removed in production by uglify
 if (typeof DEBUG === 'undefined') {
+  //noinspection JSAnnotator
   DEBUG = true;
 }

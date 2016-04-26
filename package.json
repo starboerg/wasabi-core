@@ -2,9 +2,9 @@
   "name": "wasabi-cms.core",
   "devDependencies": {
     "bower": "^1.4.1",
-    "grunt": "~0.4.5",
+    "grunt": "1.0.*",
     "grunt-bower-requirejs": "^2.0.0",
-    "grunt-bytesize": "^0.1.1",
+    "grunt-bytesize": "0.2.*",
     "grunt-contrib-copy": "1.*",
     "grunt-contrib-cssmin": "1.*",
     "grunt-contrib-jshint": "1.*",
