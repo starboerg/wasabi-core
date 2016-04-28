@@ -130,14 +130,17 @@ class TokensTable extends Table
     public function findByToken($token)
     {
         /** @var Query $query */
-        $query = $this->isValid($token, true)->contain(['Users']);
-        return $query->first();
+        $query = $this->isValid($token, true);
+        if ($query === false) {
+            return $query;
+        }
+        return $query->contain(['Users'])->first();
     }
 
     /**
      * Mark a token as "used".
      *
-     * @property Token $token
+     * @param Token $token
      * @return EntityInterface
      */
     public function useToken($token)
