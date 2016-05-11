@@ -21,7 +21,7 @@ use DateTime;
  *
  * @property int $id
  * @property int $user_id
- * @property string $title
+ * @property string $name
  * @property string $ext
  * @property string $fullname
  * @property string $mime_type
@@ -29,8 +29,8 @@ use DateTime;
  * @property int $size
  * @property int $width
  * @property int $height
- * @property string $upload_dir
  * @property string $upload_path
+ * @property string $target_path
  * @property DateTime $created
  * @property DateTime $modified
  *
@@ -38,4 +38,33 @@ use DateTime;
  */
 class Media extends Entity
 {
+    /**
+     * Compile the upload path of a media.
+     * - replace :root with ROOT
+     * - convert backslashes to slahes
+     *
+     * @return string
+     */
+    public function compileUploadPath()
+    {
+        $uploadPath = str_replace(':root', ROOT, $this->upload_path);
+        $uploadPath = preg_replace('/\\\/', '/', $uploadPath);
+
+        return $uploadPath;
+    }
+
+    /**
+     * Compile the target path of a media.
+     * - replace :www_root with WWW_ROOT
+     * - convert backslashes to slashes
+     *
+     * @return string
+     */
+    public function compileTargetPath()
+    {
+        $targetPath = str_replace(':www_root/', WWW_ROOT, $this->target_path);
+        $targetPath = preg_replace('/\\\/', '/', $targetPath);
+
+        return $targetPath;
+    }
 }
