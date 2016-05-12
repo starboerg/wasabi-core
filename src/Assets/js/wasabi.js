@@ -23,6 +23,8 @@ define(function(require) {
 
     initialized: false,
 
+    messages: {},
+
     views: [],
 
     /**
