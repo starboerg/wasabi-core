@@ -17,7 +17,6 @@ namespace Wasabi\Core\Event;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Wasabi\Core\Menu;
-use Wasabi\Core\Config;
 
 class MenuListener implements EventListenerInterface
 {
@@ -33,11 +32,7 @@ class MenuListener implements EventListenerInterface
             'Wasabi.Backend.Menu.initMain' => [
                 'callable' => 'initBackendMenuMainItems',
                 'priority' => 1000
-            ],
-            'Wasabi.Backend.MenuItems.getLinkTypes' => [
-                'callable' => 'getLinkTypesForMenuItem',
-                'priority' => 99999
-            ],
+            ]
         ];
     }
 
@@ -184,18 +179,5 @@ class MenuListener implements EventListenerInterface
                 ],
                 'matchAction' => true
             ]);
-    }
-
-    /**
-     * Get available link types for menu items (wasabi backend).
-     *
-     * @param Event $event
-     */
-    public function getLinkTypesForMenuItem(Event $event)
-    {
-        $event->result[__d('wasabi_core', 'General')] = [
-            'ExternalLink' => __d('wasabi_core', 'External Link'),
-            'CustomAction' => __d('wasabi_core', 'Custom Controller Action')
-        ];
     }
 }
