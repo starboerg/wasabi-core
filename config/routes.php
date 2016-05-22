@@ -32,18 +32,6 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
         $route->connect('/reset/:token', ['action' => 'resetPassword'], ['token' => '[a-zA-Z0-9\-]+', 'pass' => ['token']]);
     });
 
-    $routes->scope('/menus', ['controller' => 'Menus'], function (RouteBuilder $routes) {
-        $routes->connect('/', ['action' => 'index']);
-        $routes->connect('/add', ['action' => 'add']);
-        $routes->connect('/reorder-items', ['action' => 'reorderItems']);
-        $routes->connect('/:id/edit', ['action' => 'edit'], ['pass' => ['id'], 'id' => '[0-9]+']);
-        $routes->connect('/:id/delete', ['action' => 'delete'], ['pass' => ['id'], 'id' => '[0-9]+']);
-        $routes->connect('/:menuId/item/add/:parentId', ['action' => 'addItem'], ['pass' => ['menuId', 'parentId'], 'menuId' => '[0-9]+', 'parentId' => '[0-9]+']);
-        $routes->connect('/:menuId/item/add', ['action' => 'addItem'], ['pass' => ['menuId'], 'menuId' => '[0-9]+']);
-        $routes->connect('/:menuId/item/edit/:id', ['action' => 'editItem'], ['pass' => ['id'], 'id' => '[0-9]+']);
-        $routes->connect('/:menuId/item/delete/:id', ['action' => 'deleteItem'], ['pass' => ['id'], 'id' => '[0-9]+']);
-    });
-
     $routes->scope('/users', ['controller' => 'Users'], function (RouteBuilder $routes) {
         $routes->connect('/:sluggedFilter', ['action' => 'index'], ['pass' => ['sluggedFilter']]);
         $routes->connect('/', ['action' => 'index']);
