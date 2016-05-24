@@ -9,9 +9,10 @@ use Cake\ORM\Entity;
  *
  * @property int id
  * @property string url
- * @property string table
- * @property int foreign_id
+ * @property string model
+ * @property int foreign_key
  * @property int language_id
+ * @property string page_type
  * @property int redirect_to
  * @property int status_code
  * @property \DateTime created
