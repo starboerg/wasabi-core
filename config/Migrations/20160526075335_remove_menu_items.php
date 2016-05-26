@@ -1,13 +1,34 @@
 <?php
+use Cake\Cache\Cache;
+use Migrations\AbstractMigration;
 use Phinx\Db\Table\Column;
-use Phinx\Migration\AbstractMigration;
 
-class CreateMenuItems extends AbstractMigration
+class RemoveMenuItems extends AbstractMigration
 {
+    /**
+     * Initialize
+     */
+    public function init()
+    {
+        parent::init();
+
+        Cache::clear();
+    }
+
     /**
      * Migrate up
      */
     public function up()
+    {
+        $this->dropTable('menu_items');
+
+        Cache::clear();
+    }
+
+    /**
+     * Migrate down
+     */
+    public function down()
     {
         $table = $this->table('menu_items');
         $table
@@ -37,13 +58,7 @@ class CreateMenuItems extends AbstractMigration
             ->setType('integer')
             ->setOptions(['limit' => 11, 'signed' => false, 'null' => false]);
         $table->changeColumn('id', $id)->save();
-    }
 
-    /**
-     * Migrate down
-     */
-    public function down()
-    {
-        $this->table('menu_items')->drop();
+        Cache::clear();
     }
 }
