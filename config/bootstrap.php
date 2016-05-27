@@ -55,6 +55,6 @@ if (!function_exists('guardian')) {
     }
 }
 
-if (Configure::read('debug')) {
-    DispatcherFactory::add('Wasabi/Core.Asset');
-}
+Plugin::load('FrankFoerster/Filter');
+
+DispatcherFactory::add('FrankFoerster/Asset.Asset');

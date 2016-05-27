@@ -19,7 +19,7 @@ use Cake\View\View;
  *
  * @property \Cake\View\Helper\FlashHelper $Flash
  * @property \Cake\View\Helper\UrlHelper $Url
- * @property \Wasabi\Core\View\Helper\AssetHelper $Asset
+ * @property \FrankFoerster\Asset\View\Helper\AssetHelper $Asset
  * @property \FrankFoerster\Filter\View\Helper\FilterHelper $Filter
  * @property \Wasabi\Core\View\Helper\GuardianHelper $Guardian
  * @property \Wasabi\Core\View\Helper\HtmlHelper $Html
@@ -61,7 +61,7 @@ class AppView extends View
         parent::initialize();
 
         $this->loadHelper('Asset', [
-            'className' => 'Wasabi/Core.Asset'
+            'className' => 'FrankFoerster/Asset.Asset'
         ]);
         $this->loadHelper('Html', [
             'className' => 'Wasabi/Core.Html'

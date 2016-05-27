@@ -18,6 +18,7 @@
   },
   "require": {
     "cakephp/cakephp": "3.*",
+    "frankfoerster/cakephp-asset": "dev-master",
     "frankfoerster/cakephp-filter": "dev-cake3"
   },
   "require-dev": {
