@@ -17,7 +17,7 @@ use Cake\Routing\Router;
     <?php
     if (Configure::read('debug')): ?>
     require.config(<?= json_encode([
-        'baseUrl' => Router::url('/wasabi_core/ASSETS/js'),
+        'baseUrl' => Router::url('/wasabi/core/ASSETS/js'),
         'urlArgs' => 't=' . time()
     ]) ?>);
     require(['common'], function() {

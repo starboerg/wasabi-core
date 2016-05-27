@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @var \Wasabi\Core\View\AppView $this
+ */
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
