@@ -7,9 +7,6 @@ use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
-use Wasabi\Cms\Model\Entity\Page;
-use Wasabi\Cms\View\Theme\Theme;
-use Wasabi\Cms\View\Theme\ThemeManager;
 use Wasabi\Core\Model\Entity\Language;
 use Wasabi\Core\Model\Entity\User;
 use Wasabi\Core\Model\Table\LanguagesTable;
@@ -22,13 +19,6 @@ class Wasabi
      * @var User
      */
     protected static $_user;
-
-    /**
-     * Holds the current page entity.
-     *
-     * @var Page
-     */
-    protected static $_page;
 
     /**
      * Get the currently active content language.
@@ -55,30 +45,6 @@ class Wasabi
             return null;
         }
         return self::$_user;
-    }
-
-    /**
-     * Get or set the current page.
-     *
-     * @param null $page
-     * @return null|Page
-     */
-    public static function page($page = null)
-    {
-        if ($page !== null) {
-            self::$_page = $page;
-        }
-        return self::$_page;
-    }
-
-    /**
-     * Get the theme instance.
-     *
-     * @return Theme
-     */
-    public static function getTheme()
-    {
-        return ThemeManager::theme(Wasabi::setting('Cms.Theme.id'));
     }
 
     /**

@@ -18,6 +18,12 @@ return [
             'duration' => '+999 days',
             'prefix' => '',
             'path' => CACHE . 'wasabi' . DS . 'core' . DS . 'group_permissions'
+        ],
+        'wasabi/core/routes' => [
+            'className' => 'File',
+            'duration' => '+999 days',
+            'prefix' => '',
+            'path' => CACHE . 'wasabi' . DS . 'core' . DS . 'routes'
         ]
     ]
 ];

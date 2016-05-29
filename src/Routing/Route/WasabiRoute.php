@@ -2,6 +2,7 @@
 
 namespace Wasabi\Core\Routing\Route;
 
+use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\ORM\TableRegistry;
@@ -13,68 +14,41 @@ class WasabiRoute extends Route
     CONST PAGE_PART = 'p';
 
     /**
-     * Reverse routing method to generate a url from given url array
+     * Check if a URL array matches this route instance.
      *
-     * @param array $url
-     * @return boolean|mixed
+     * If the URL matches the route parameters and settings, then
+     * return a generated string URL. If the URL doesn't match the route parameters, false will be returned.
+     * This method handles the reverse routing or conversion of URL arrays into string URLs.
+     *
+     * @param array $url An array of parameters to check matching with.
+     * @param array $context An array of the current request context.
+     *   Contains information such as the current host, scheme, port, base
+     *   directory and other url params.
+     * @return string|false Either a string URL for the parameters if they match or false.
      */
-//    public function match($url)
-//    {
-//        if (!is_array($url) || empty($url) || !isset($url[Route::PAGE_KEY]) || !isset($url[Route::LANG_KEY])) {
-//            return false;
-//        }
-//
-//        if (!isset($url['plugin']) || $url['plugin'] == false) {
-//            $url['plugin'] = null;
-//        }
-//
-//        $identifier = md5(serialize($url));
-//
-//        if ($result = Cache::read($identifier, 'core.routes')) {
-//            return $result;
-//        }
-//
-//        $conditions = array(
-//            //'Route.plugin' => ($url['plugin'] == null) ? '' : $url['plugin'],
-//            //'Route.controller' => $url['controller'],
-//            //'Route.action' => $url['action'],
-//            'Route.' . Route::PAGE_KEY => $url[Route::PAGE_KEY],
-//            'Route.' . Route::LANG_KEY => $url[Route::LANG_KEY],
-//            'Route.status_code' => null
-//        );
-//
-//        unset($url['plugin'], $url['controller'], $url['action'], $url[Route::PAGE_KEY], $url[Route::LANG_KEY]);
-//
-//        $passedParams = array();
-//        $namedParams = array();
-//
-//        foreach ($url as $key => $value) {
-//            if (is_int($key)) {
-//                $passedParams[] = $value;
-//            }
-//            if (is_string($key)) {
-//                $namedParams[] = $key . ':' . $value;
-//            }
-//        }
-//
-////		$conditions['Route.params'] = implode('|', $passedParams);
-//
-//        $route = ClassRegistry::init('Core.Route')->find('first', array(
-//            'conditions' => $conditions
-//        ));
-//
-//        if (!$route) {
-//            return false;
-//        }
-//
-//        if (!empty($namedParams)) {
-//            $route['Route']['url'] .= '/' . implode('/', $namedParams);
-//        }
-//
-//        Cache::write($identifier, $route['Route']['url'], 'core.routes');
-//
-//        return $route['Route']['url'];
-//    }
+    public function match(array $url, array $context = [])
+    {
+        unset($url['action'], $url['plugin']);
+
+        $cacheKey = md5(serialize($url));
+
+        $route = Cache::remember($cacheKey, function () use ($url, $context) {
+            $routesMatchEvent = new Event('Wasabi.Routes.match', $this, [$url, $context]);
+            EventManager::instance()->dispatch($routesMatchEvent);
+
+            if (empty($routesMatchEvent->result)) {
+                return false;
+            }
+
+            return $routesMatchEvent->result;
+        }, 'wasabi/core/routes');
+
+        if ($route === false) {
+            return false;
+        }
+
+        return $context['_base'] . $route;
+    }
 
     /**
      * Parse a requested url and create routing parameters from the routes table.

@@ -13,7 +13,7 @@
 namespace Wasabi\Core\Model\Table;
 
 use ArrayObject;
-//use Cake\Cache\Cache;
+use Cake\Cache\Cache;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
@@ -44,8 +44,8 @@ class RoutesTable extends Table
      */
     public function afterSave(Event $event, Route $entity, ArrayObject $options)
     {
-//        Cache::delete('settings', 'wasabi/core/longterm');
-//        $this->eventManager()->dispatch(new Event('Wasabi.Settings.changed'));
+        Cache::clearGroup('wasabi/core/routes');
+        $this->eventManager()->dispatch(new Event('Wasabi.Routes.changed'));
     }
 
     /**
