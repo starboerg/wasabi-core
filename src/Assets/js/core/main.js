@@ -47,14 +47,16 @@ define(function(require) {
    */
   function _onAjaxSuccess(event, xhr) {
     if (xhr.status == 200 && xhr.statusText == 'OK') {
-      var data = $.parseJSON(xhr.responseText) || {};
+      if (xhr.responseText.split('<?xml').length !== 2) {
+        var data = $.parseJSON(xhr.responseText) || {};
 
-      if (typeof data.status !== 'undefined') {
-        if (typeof data.flash !== 'undefined') {
-          _flashMessage(data.flash);
-        }
-        if (typeof data.redirect !== 'undefined') {
-          win.location = data.redirect;
+        if (typeof data.status !== 'undefined') {
+          if (typeof data.flash !== 'undefined') {
+            _flashMessage(data.flash);
+          }
+          if (typeof data.redirect !== 'undefined') {
+            win.location = data.redirect;
+          }
         }
       }
     }
