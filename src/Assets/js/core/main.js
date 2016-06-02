@@ -47,7 +47,8 @@ define(function(require) {
    */
   function _onAjaxSuccess(event, xhr) {
     if (xhr.status == 200 && xhr.statusText == 'OK') {
-      if (xhr.responseText.split('<?xml').length !== 2) {
+      var contentType = xhr.getResponseHeader('Content-Type');
+      if (contentType.split('application/json').length === 2) {
         var data = $.parseJSON(xhr.responseText) || {};
 
         if (typeof data.status !== 'undefined') {
