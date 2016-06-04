@@ -4,12 +4,67 @@ namespace Wasabi\Core\View\Helper;
 use DateTime;
 use DateTimeZone;
 
-class FormHelper extends \Cake\View\Helper\FormHelper {
+class FormHelper extends \Cake\View\Helper\FormHelper
+{
+    /**
+     * Generates an group template element
+     *
+     * @param array $options The options for group template
+     * @return string The generated group template
+     */
+    protected function _groupTemplate($options)
+    {
+        $groupTemplate = $options['options']['type'] . 'FormGroup';
+        if (!$this->templater()->get($groupTemplate)) {
+            $groupTemplate = 'formGroup';
+        }
+
+        return $this->formatTemplate($groupTemplate, [
+            'input' => $options['input'],
+            'label' => $options['label'],
+            'error' => $options['error'],
+            'templateVars' => $this->_processTemplateVars($options)
+        ]);
+    }
+
+    /**
+     * Process templateVars to wrap info elements in a small tag and
+     * apply the "for" attribute to form row labels.
+     *
+     * @param array $options
+     * @return array
+     */
+    protected function _processTemplateVars(array $options)
+    {
+        $templateVars = isset($options['options']['templateVars']) ? $options['options']['templateVars'] : [];
+
+        if (empty($templateVars)) {
+            return $templateVars;
+        }
+
+        if (isset($templateVars['formRowLabel']) && $options['options']['id'] !== false) {
+            $templateVars['formRowFor'] = ' for="' . $options['options']['id'] . '"';
+        }
+
+        $wrapInSmall = [
+            'formRowLabelInfo',
+            'formRowInfo',
+            'info'
+        ];
+
+        foreach ($wrapInSmall as $attr) {
+            if (isset($templateVars[$attr])) {
+                $templateVars[$attr] = '<small>' . $templateVars[$attr] . '</small>';
+            }
+        }
+
+        return $templateVars;
+    }
 
     /**
      * Get the options array for a label.
      * This handles the optional placement of an info text below the label.
-     * 
+     *
      * @param string $text
      * @param null|string $info
      * @return array
@@ -29,48 +84,14 @@ class FormHelper extends \Cake\View\Helper\FormHelper {
     }
 
     /**
-     * Generates an group template element
-     *
-     * @param array $options The options for group template
-     * @return string The generated group template
-     */
-    protected function _groupTemplate($options)
-    {
-        $groupTemplate = $options['options']['type'] . 'FormGroup';
-        if (!$this->templater()->get($groupTemplate)) {
-            $groupTemplate = 'formGroup';
-        }
-
-        $templateVars = isset($options['options']['templateVars']) ? $options['options']['templateVars'] : [];
-        if (isset($templateVars['formRowLabel']) && $options['options']['id'] !== false) {
-            $templateVars['formRowFor'] = ' for="' . $options['options']['id'] . '"';
-        }
-        if (isset($templateVars['formRowLabelInfo'])) {
-            $templateVars['formRowLabelInfo'] = '<small>' . $templateVars['formRowLabelInfo'] . '</small>';
-        }
-        if (isset($templateVars['formRowInfo'])) {
-            $templateVars['formRowInfo'] = '<small>' . $templateVars['formRowInfo'] . '</small>';
-        }
-        if (isset($templateVars['info'])) {
-            $templateVars['info'] = '<small>' . $templateVars['info'] . '</small>';
-        }
-
-        return $this->formatTemplate($groupTemplate, [
-            'input' => $options['input'],
-            'label' => $options['label'],
-            'error' => $options['error'],
-            'templateVars' => $templateVars
-        ]);
-    }
-
-    /**
      * Render a grouped time zone select box.
-     * 
+     *
      * @param string $field
      * @param array $options
      * @return string
      */
-    public function timeZoneSelect($field, array $options = []) {
+    public function timeZoneSelect($field, array $options = [])
+    {
         $regions = array(
             'Europe' => DateTimeZone::EUROPE,
             'America' => DateTimeZone::AMERICA,
