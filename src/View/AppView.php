@@ -21,6 +21,7 @@ use Cake\View\View;
  * @property \Cake\View\Helper\UrlHelper $Url
  * @property \FrankFoerster\Asset\View\Helper\AssetHelper $Asset
  * @property \FrankFoerster\Filter\View\Helper\FilterHelper $Filter
+ * @property \Wasabi\Core\View\Helper\FormHelper $Form
  * @property \Wasabi\Core\View\Helper\GuardianHelper $Guardian
  * @property \Wasabi\Core\View\Helper\HtmlHelper $Html
  * @property \Wasabi\Core\View\Helper\MenuHelper $Menu
@@ -42,7 +43,6 @@ class AppView extends View
     public $defaultFormTemplateActions = [
         'Wasabi/Core.Users.login',
         'Wasabi/Core.Users.lostPassword',
-//        'Wasabi/Core.Users.register',
         'Wasabi/Core.Users.requestNewVerificationEmail'
     ];
 
@@ -55,6 +55,8 @@ class AppView extends View
 
     /**
      * Initialization hook method.
+     * 
+     * @return void
      */
     public function initialize()
     {
@@ -94,12 +96,8 @@ class AppView extends View
                 'className' => 'Wasabi/Core.Form',
                 'templates' => 'Wasabi/Core.form_templates',
                 'widgets' => [
-                    'label' => ['Wasabi\Core\View\Widget\LabelWidget'],
                     'section' => ['Wasabi\Core\View\Widget\SectionWidget'],
-                    'info' => ['Wasabi\Core\View\Widget\InfoWidget'],
-                    'select' => ['Wasabi\Core\View\Widget\SelectBoxWidget'],
-                    'textarea' => ['Wasabi\Core\View\Widget\TextAreaWidget'],
-                    '_default' => ['Wasabi\Core\View\Widget\BasicWidget']
+                    'info' => ['Wasabi\Core\View\Widget\InfoWidget']
                 ]
             ]);
         }

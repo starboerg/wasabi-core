@@ -13,17 +13,13 @@ if ($this->request->params['action'] === 'add') {
 
 $isEdit = ($this->request->params['action'] === 'edit');
 
-$nameOpts = ['label' => __d('wasabi_core', 'Group Name')];
-
-if (!$isEdit) {
-    $nameOpts['class'] = 'get-focus';
-}
-
 echo $this->Form->create($group, ['class' => 'no-top-section']);
     if ($isEdit) {
         echo $this->Form->input('id', ['type' => 'hidden']);
     }
-    echo $this->Form->input('name', $nameOpts);
+    echo $this->Form->input('name', [
+        'label' => __d('wasabi_core', 'Group Name')
+    ]);
     echo $this->Html->div('form-controls');
         echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
         echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [

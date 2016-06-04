@@ -13,22 +13,36 @@ if ($this->request->params['action'] === 'add') {
 
 $isEdit = ($this->request->params['action'] === 'edit');
 
-$nameOpts = ['label' => __d('wasabi_core', 'Language Name')];
-
-if (!$isEdit) {
-    $nameOpts['class'] = 'get-focus';
-}
-
 echo $this->Form->create($language, ['class' => 'no-top-section']);
 if ($isEdit) {
     echo $this->Form->input('id', ['type' => 'hidden']);
 }
-echo $this->Form->input('name', $nameOpts);
-echo $this->Form->input('iso2', ['label' => __d('wasabi_core', 'ISO 639-1')]);
-echo $this->Form->input('iso3', ['label' => __d('wasabi_core', 'ISO 639-2/T')]);
-echo $this->Form->input('lang', ['label' => __d('wasabi_core', 'HTML lang')]);
-echo $this->Form->input('available_at_frontend', ['label' => __d('wasabi_core', 'available at Frontend'), 'type' => 'checkbox', 'formRowLabel' => 'Frontend']);
-echo $this->Form->input('available_at_backend', ['label' => __d('wasabi_core', 'available at Backend'), 'type' => 'checkbox', 'formRowLabel' => 'Backend']);
+echo $this->Form->input('name', [
+    'label' => __d('wasabi_core', 'Language Name')
+]);
+echo $this->Form->input('iso2', [
+    'label' => __d('wasabi_core', 'ISO 639-1')
+]);
+echo $this->Form->input('iso3', [
+    'label' => __d('wasabi_core', 'ISO 639-2/T')
+]);
+echo $this->Form->input('lang', [
+    'label' => __d('wasabi_core', 'HTML lang')
+]);
+echo $this->Form->input('available_at_frontend', [
+    'label' => __d('wasabi_core', 'available at Frontend'),
+    'type' => 'checkbox',
+    'templateVars' => [
+        'formRowLabel' => 'Frontend'
+    ]
+]);
+echo $this->Form->input('available_at_backend', [
+    'label' => __d('wasabi_core', 'available at Backend'),
+    'type' => 'checkbox',
+    'templateVars' => [
+        'formRowLabel' => 'Backend'
+    ]
+]);
 echo $this->Html->div('form-controls');
     echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
     echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [

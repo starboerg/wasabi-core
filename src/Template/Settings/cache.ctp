@@ -8,20 +8,20 @@
 $this->Html->setTitle(__d('wasabi_core', 'Cache Settings'));
 echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.CacheSettings'], 'class' => 'no-top-section']);
 echo $this->Form->input('enable_caching', [
-    'label' => [
-        'text' => __d('wasabi_core', 'Enable Caching'),
-        'info' => __d('wasabi_core', 'Enable or disable View caching for the entire CMS instance.')
-    ],
+    'label' => $this->Form->getLabel(
+        __d('wasabi_core', 'Enable Caching'),
+        __d('wasabi_core', 'Enable or disable View caching for the entire CMS instance.')
+    ),
     'options' => [
         '0' => __d('wasabi_core', 'No'),
         '1' => __d('wasabi_core', 'Yes')
     ]
 ]);
 echo $this->Form->input('cache_duration', [
-    'label' => [
-        'text' => __d('wasabi_core', 'Cache Duration'),
-        'info' => __d('wasabi_core', 'This is used as a default setting and can be overriden by individual plugins.')
-    ],
+    'label' => $this->Form->getLabel(
+        __d('wasabi_core', 'Cache Duration'),
+        __d('wasabi_core', 'This is used as a default setting and can be overriden by individual plugins.')
+    ),
     'options' => $cacheDurations
 ]);
 echo $this->Html->div('form-controls');

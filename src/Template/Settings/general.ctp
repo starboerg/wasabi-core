@@ -12,11 +12,15 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
     ]);
     echo $this->Form->input('instance_name', [
         'label' => __d('wasabi_core', 'Instance Name'),
-        'info' => __d('wasabi_core', 'The name of your CMS instance.')
+        'templateVars' => [
+            'info' => __d('wasabi_core', 'The name of your CMS instance.')
+        ]
     ]);
     echo $this->Form->input('html_title_suffix', [
         'label' => __d('wasabi_core', 'Html Title Suffix'),
-        'info' => __d('wasabi_core', 'The Html title suffix of your CMS instance.')
+        'templateVars' => [
+            'info' => __d('wasabi_core', 'The Html title suffix of your CMS instance.')
+        ]
     ]);
     echo $this->Form->widget('section', [
         'title' => __d('wasabi_core', 'Login Message'),
@@ -31,14 +35,19 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
     ]);
     echo $this->Form->input('Login__Message__text', [
         'label' => __d('wasabi_core', 'Login Message Text'),
-        'labelInfo' => __d('wasabi_core', 'The text of the login message.'),
-        'info' => __d('wasabi_core', 'allowed Html tags: &lt;b&gt;&lt;strong&gt;&lt;a&gt;&lt;br&gt;&lt;br/&gt;'),
+        'templateVars' => [
+            'info' =>
+                __d('wasabi_core', 'The text of the login message.') . '<br>' .
+                __d('wasabi_core', 'Allowed Html tags: &lt;b&gt;&lt;strong&gt;&lt;a&gt;&lt;br&gt;&lt;br/&gt;')
+        ],
         'type' => 'textarea',
         'rows' => 2
     ]);
     echo $this->Form->input('Login__Message__class', [
         'label' => __d('wasabi_core', 'Login Message Class'),
-        'label_info' => __d('wasabi_core', 'The CSS class that is applied to the message box.'),
+        'templateVars' => [
+            'info' => __d('wasabi_core', 'The CSS class that is applied to the message box.')
+        ],
         'options' => [
             'info' => 'info',
             'warning' => 'warning',
@@ -65,11 +74,15 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
     ]);
     echo $this->Form->input('Email__email_sender_name', [
         'label' => __d('wasabi_core', 'Email Sender Name'),
-        'info' => __d('wasabi_core', 'The name used as sender for all backend emails.')
+        'templateVars' => [
+            'info' => __d('wasabi_core', 'The name used as sender for all backend emails.')
+        ]
     ]);
     echo $this->Form->input('Email__email_sender', [
         'label' => __d('wasabi_core', 'Email Sender Address'),
-        'info' => __d('wasabi_core', 'The email address used as sender for all backend emails.')
+        'templateVars' => [
+            'info' => __d('wasabi_core', 'The email address used as sender for all backend emails.')
+        ]
     ]);
     echo $this->Html->div('form-controls');
         echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
