@@ -51,22 +51,19 @@ class Menu
      */
     public function addMenuItem($options)
     {
-        if (!isset($options['alias']) || (isset($options['alias']) && $options['alias'] === '')) {
-            throw new Exception('$options[\'alias\'] is missing.');
-        }
-        if (!isset($options['name']) || (isset($options['name']) && $options['name'] === '')) {
-            throw new Exception('$options[\'name\'] is missing.');
-        }
-        if (!isset($options['priority']) || (isset($options['priority']) && $options['priority'] === '')) {
-            throw new Exception('$options[\'priority\'] is missing.');
+        foreach (['alias', 'name', 'priority'] as $attr) {
+            if (!isset($options[$attr]) || (isset($options[$attr]) && $options[$attr] === '')) {
+                throw new Exception('$options[\'' . $attr . '\'] is missing.');
+            }
         }
 
         $menuItem = [
             'alias' => $options['alias'],
             'name' => $options['name'],
             'priority' => $options['priority'],
-            'matchAction' => false,
-            'doNotMatchAction' => []
+            'matchAction' => $options['matchAction'] ?? false,
+            'doNotMatchAction' => [],
+            'linkOptions' => $options['linkOptions'] ?? []
         ];
 
         if (isset($options['icon'])) {
@@ -87,25 +84,13 @@ class Menu
             $menuItem['url'] = $url;
         }
 
-        if (isset($options['matchAction']) && $options['matchAction'] === true) {
-            $menuItem['matchAction'] = true;
-        }
-
-        if (isset($options['linkOptions'])) {
-            $menuItem['linkOptions'] = $options['linkOptions'];
-        }
-
         if (isset($options['doNotMatchAction'])) {
-            if (is_array($options['doNotMatchAction']) && count($options['doNotMatchAction']) > 0) {
-                $menuItem['doNotMatchAction'] = $options['doNotMatchAction'];
-            } else {
-                $menuItem['doNotMatchAction'][] = $options['doNotMatchAction'];
-            }
+            $menuItem['doNotMatchAction'] = is_array($options['doNotMatchAction']) ? $options['doNotMatchAction'] : [$options['doNotMatchAction']];
         }
 
         if (isset($options['parent'])) {
             if (!isset($this->_menuItems[$options['parent']])) {
-                throw new Exception('No menu item with the alias specified in $options[\'parent\'] exists.');
+                throw new Exception('No menu item with the alias specified in $options[\'parent\'] "' . $options['parent'] . '"exists.');
             }
             $menuItem['parent'] = $options['parent'];
             $this->_menuItems[$menuItem['parent']]['children'][$menuItem['alias']] = $menuItem;
