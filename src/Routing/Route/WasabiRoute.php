@@ -108,6 +108,7 @@ class WasabiRoute extends Route
         }
 
         if ($route->redirect_to !== null) {
+            /** @var \Wasabi\Core\Model\Entity\Route $redirectRoute */
             $redirectRoute = $Routes->get($route->redirect_to);
 
             $redirectUrl = $redirectRoute->url;

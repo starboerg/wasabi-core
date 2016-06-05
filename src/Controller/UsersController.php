@@ -201,7 +201,7 @@ class UsersController extends BackendAppController
             }
         } else {
             if ($this->request->session()->check('data.login')) {
-                $this->request->data = $this->request->session()->read('data.login');
+                $this->request->data = (array)$this->request->session()->read('data.login');
                 $this->request->session()->delete('data.login');
             }
         }
@@ -356,6 +356,7 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
+        /** @var User $user */
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
             $this->Flash->success(__d('wasabi_core', 'The user <strong>{0}</strong> has been deleted.', $user->username));
@@ -450,10 +451,10 @@ class UsersController extends BackendAppController
      */
     public function profile()
     {
-        /** @var User $user */
         $user = $this->Users->get($this->Auth->user('id'));
 
         if ($this->request->is('put') && !empty($this->request->data)) {
+            /** @var User $user */
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->request->session()->write('Auth.User.language_id', $user->language_id);
@@ -597,7 +598,7 @@ class UsersController extends BackendAppController
             }
         } else {
             if ($this->request->session()->check('data.requestNewVerificationEmail')) {
-                $this->request->data = $this->request->session()->read('data.requestNewVerificationEmail');
+                $this->request->data = (array)$this->request->session()->read('data.requestNewVerificationEmail');
                 $this->request->session()->delete('data.requestNewVerificationEmail');
             }
             $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
@@ -636,7 +637,7 @@ class UsersController extends BackendAppController
             }
         } else {
             if ($this->request->session()->check('data.lostPassword')) {
-                $this->request->data = $this->request->session()->read('data.lostPassword');
+                $this->request->data = (array)$this->request->session()->read('data.lostPassword');
                 $this->request->session()->delete('data.lostPassword');
             }
             $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
@@ -663,12 +664,12 @@ class UsersController extends BackendAppController
             return;
         }
 
-        /** @var User $user */
         $user = $this->Users->get($token->user_id, [
             'fields' => ['id']
         ]);
 
         if ($this->request->is('put') && !empty($this->request->data)) {
+            /** @var User $user */
             $user = $this->Users->patchEntity($user, $this->request->data, ['validate' => 'passwordOnly']);
             /** @var Connection $connection */
             $connection = $this->Users->connection();

@@ -17,6 +17,7 @@ use Cake\Database\Connection;
 use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Session;
+use Wasabi\Core\Model\Entity\Language;
 
 /**
  * Class LanguagesController
@@ -59,6 +60,7 @@ class LanguagesController extends BackendAppController
      */
     public function add()
     {
+        /** @var Language $language */
         $language = $this->Languages->newEntity();
         if ($this->request->is('post') && !empty($this->request->data)) {
             $this->Languages->patchEntity($language, $this->request->data);
@@ -86,6 +88,7 @@ class LanguagesController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
+        /** @var Language $language */
         $language = $this->Languages->get($id);
         if ($this->request->is('put')) {
             $this->Languages->patchEntity($language, $this->request->data);
@@ -115,6 +118,7 @@ class LanguagesController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
+        /** @var Language $language */
         $language = $this->Languages->get($id);
         if ($this->Languages->delete($language)) {
             $this->Flash->success(__d('wasabi_core', 'The language <strong>{0}</strong> has been deleted.', $language->name));

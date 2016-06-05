@@ -141,7 +141,7 @@ class TokensTable extends Table
      * Mark a token as "used".
      *
      * @param Token $token The token to mark as "used".
-     * @return EntityInterface
+     * @return bool|EntityInterface
      */
     public function useToken($token)
     {

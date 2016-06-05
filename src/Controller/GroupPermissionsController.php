@@ -16,8 +16,8 @@ use Cake\Cache\Cache;
 use Cake\Database\Connection;
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\ORM\Query;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Wasabi\Core\Model\Entity\Group;
 use Wasabi\Core\Model\Table\GroupPermissionsTable;
 
 /**
@@ -85,7 +85,7 @@ class GroupPermissionsController extends BackendAppController
         $actionMap = $this->Guardian->getActionMap();
 
         // check existance of all permission entries for each individual group
-        /** @var Group $groups */
+        /** @var Query $groups */
         $groups = $this->GroupPermissions->Groups->find('all')
             ->where(['Groups.id <>' => 1]);// ignore Administrator group
 
@@ -97,7 +97,6 @@ class GroupPermissionsController extends BackendAppController
         $this->GroupPermissions->deleteAll([
             'path IN' => $this->Guardian->getGuestActions()
         ]);
-
 
         foreach ($groups as $group) {
             try {

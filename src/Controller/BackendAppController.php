@@ -16,7 +16,7 @@ use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Network\Session;
-use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 use Wasabi\Core\Model\Entity\User;
 use Wasabi\Core\Nav;
 use Wasabi\Core\Wasabi;
@@ -177,10 +177,9 @@ class BackendAppController extends AppController
      * Check if the current request needs an authenticated user.
      * Check if the user is authorized to complete the request.
      *
-     * @param array $user An array holding the current user information.
      * @return bool
      */
-    public function isAuthorized($user = null)
+    public function isAuthorized()
     {
         $url = Wasabi::getCurrentUrlArray();
         return $this->Guardian->hasAccess($url);
@@ -212,7 +211,7 @@ class BackendAppController extends AppController
         $this->set(
             'sectionCssClass',
             strtolower(
-                Inflector::slug($prefix) . '--' .
+                Text::slug($prefix) . '--' .
                 preg_replace('/\\//', '--', $this->request->params['controller']) . '-' .
                 $this->request->params['action']
             )

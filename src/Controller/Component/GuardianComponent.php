@@ -231,23 +231,16 @@ class GuardianComponent extends Component
 
         return Cache::remember($cacheKey, function () use ($url) {
             $plugin = 'App';
-            $controller = null;
             $action = 'index';
 
-            if (!is_array($url)) {
-                $url = Router::parse($url);
-            }
+            $parsedUrl = !is_array($url) ? Router::parse($url) : $url;
 
-            if (isset($url['plugin'])
-                && $url['plugin'] !== ''
-                && $url['plugin'] !== false
-                && $url['plugin'] !== null
-            ) {
-                $plugin = $url['plugin'];
+            if (isset($parsedUrl['plugin']) && !empty($parsedUrl['plugin'])) {
+                $plugin = $parsedUrl['plugin'];
             }
-            $controller = $url['controller'];
-            if (isset($url['action']) && $url['action'] !== '') {
-                $action = $url['action'];
+            $controller = $parsedUrl['controller'];
+            if (isset($parsedUrl['action']) && $parsedUrl['action'] !== '') {
+                $action = $parsedUrl['action'];
             }
 
             return $plugin . '.' . $controller . '.' . $action;
@@ -337,7 +330,7 @@ class GuardianComponent extends Component
     {
         $pluginPaths = [];
 
-        $plugins = Plugin::loaded();
+        $plugins = Plugin::loaded() ?? [];
         foreach ($plugins as $p) {
             // @TODO load active plugins from plugin manager
             if (in_array($p, ['DebugKit', 'Migrations'])) {
@@ -355,6 +348,7 @@ class GuardianComponent extends Component
      * @param string $plugin The name of the plugin.
      * @param string $pluginPath The path of the plugin.
      * @return array
+     * @todo: Refactor https://scrutinizer-ci.com/g/wasabi-cms/core/indices/834500/duplications/543470
      */
     public function getControllersForPlugin($plugin, $pluginPath)
     {

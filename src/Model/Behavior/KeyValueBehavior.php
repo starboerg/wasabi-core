@@ -16,6 +16,7 @@ use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
+use Wasabi\Core\Model\Entity\Setting;
 
 /**
  * Class KeyValueBehavior
@@ -150,6 +151,7 @@ class KeyValueBehavior extends Behavior
                 $serialized = true;
             }
 
+            /** @var Setting $kvEntity */
             $kvEntity = $this->_table->newEntity([
                 'scope' => $this->config('scope'),
                 $this->config('fields.key') => $key,

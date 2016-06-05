@@ -76,7 +76,7 @@ class FormHelper extends \Cake\View\Helper\FormHelper
             'templateVars' => []
         ];
 
-        if ($info) {
+        if ($info !== null) {
             $options['templateVars']['labelInfo'] = '<small>' . $info . '</small>';
         }
 

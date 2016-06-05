@@ -46,7 +46,7 @@ class FlashComponent extends CakeFlashComponent
             $params['class'] = 'flash-message--no-dismiss';
         }
 
-        parent::set($message, [
+        $this->set($message, [
             'key' => $key,
             'element' => 'Wasabi/Core.default',
             'params' => $params
