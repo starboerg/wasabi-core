@@ -1,7 +1,5 @@
 <?php
 /**
- * Nav
- *
  * Wasabi CMS
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
@@ -29,8 +27,8 @@ class Nav
      * Create a new menu.
      *
      * @param string $alias the alias of the menu
-     * @return Menu
      * @throws Exception
+     * @return Menu
      */
     public static function createMenu($alias)
     {
@@ -47,9 +45,9 @@ class Nav
      * of menu items of a menu.
      *
      * @param string $alias the alias of the menu
-     * @param boolean $ordered true: return array of priority ordered menu items, false: return WasabiMenu instance
-     * @return array|Menu
+     * @param bool $ordered true: return array of priority ordered menu items, false: return WasabiMenu instance
      * @throws Exception
+     * @return array|Menu
      */
     public static function getMenu($alias, $ordered = false)
     {
@@ -66,7 +64,7 @@ class Nav
     /**
      * Check if a menu with the given alias already exists.
      *
-     * @param string $alias
+     * @param string $alias The alias to check.
      * @return bool
      */
     public static function menuExists($alias)

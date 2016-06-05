@@ -1,7 +1,5 @@
 <?php
 /**
- * Wasabi Core App Controller
- *
  * Wasabi CMS
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
@@ -31,7 +29,7 @@ class AppController extends Controller
      * Called before the controller action. You can use this method to configure and customize components
      * or perform logic that needs to happen before each controller action.
      *
-     * @param Event $event
+     * @param Event $event An Event instance.
      * @return void
      */
     public function beforeFilter(Event $event)

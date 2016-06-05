@@ -26,7 +26,8 @@ class LanguagesTable extends Table
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config Configuration options passed to the constructor
+     * @param array $config Configuration options passed to the constructor.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -36,7 +37,7 @@ class LanguagesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator
+     * @param Validator $validator The validator to customize.
      * @return Validator
      */
     public function validationDefault(Validator $validator)
@@ -66,9 +67,10 @@ class LanguagesTable extends Table
      * The type of operation performed (insert or update) can be determined by checking
      * the entity's method `isNew`, true meaning an insert and false an update.
      *
-     * @param Event $event
-     * @param Language $entity
-     * @param ArrayObject $options
+     * @param Event $event An event instance.
+     * @param Language $entity The entity that triggered the event.
+     * @param ArrayObject $options Options passed to the save call.
+     * @return void
      */
     public function afterSave(Event $event, Language $entity, ArrayObject $options)
     {
@@ -79,9 +81,10 @@ class LanguagesTable extends Table
      * AfterDelete callback
      * Fired after the delete has been successful.
      *
-     * @param Event $event
-     * @param Language $entity
-     * @param ArrayObject $options
+     * @param Event $event An event instance.
+     * @param Language $entity The entity that triggered the event.
+     * @param ArrayObject $options Additional options passed to the delete call.
+     * @return void
      */
     public function afterDelete(Event $event, Language $entity, ArrayObject $options)
     {
@@ -91,8 +94,8 @@ class LanguagesTable extends Table
     /**
      * Find all frontend and backend languages.
      *
-     * @param Query $query
-     * @param array $options
+     * @param Query $query The query to decorate.
+     * @param array $options Optional options.
      * @return $this
      */
     public function findAllFrontendBackend(Query $query, array $options)
@@ -114,12 +117,12 @@ class LanguagesTable extends Table
     /**
      * Filter the provided result set by languages that are available at the frontend.
      *
-     * @param CollectionInterface $results
+     * @param CollectionInterface $results The collection to filter.
      * @return FilterIterator
      */
     public function filterFrontend(CollectionInterface $results)
     {
-        return $results->filter(function(Language $language) {
+        return $results->filter(function (Language $language) {
             return $language->available_at_frontend === true;
         });
     }
@@ -127,12 +130,12 @@ class LanguagesTable extends Table
     /**
      * Filter the provided result set by languages that are available at the backend.
      *
-     * @param CollectionInterface $results
+     * @param CollectionInterface $results The collection to filter.
      * @return FilterIterator
      */
     public function filterBackend(CollectionInterface $results)
     {
-        return $results->filter(function(Language $language) {
+        return $results->filter(function (Language $language) {
             return $language->available_at_backend === true;
         });
     }

@@ -14,6 +14,12 @@ namespace Wasabi\Core\Model\Entity;
 
 use Cake\ORM\Entity;
 
+/**
+ * Class Setting
+ *
+ * @property string key
+ * @property string value
+ */
 class Setting extends Entity
 {
     /**

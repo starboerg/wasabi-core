@@ -30,7 +30,8 @@ class SettingsTable extends Table
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config Configuration options passed to the constructor
+     * @param array $config Configuration options passed to the constructor.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -41,9 +42,10 @@ class SettingsTable extends Table
     /**
      * Called after an entity is saved.
      *
-     * @param Event $event
-     * @param Setting $entity
-     * @param ArrayObject $options
+     * @param Event $event An event instance.
+     * @param Setting $entity The entity that triggered the event.
+     * @param ArrayObject $options Additional options passed to the save call.
+     * @return void
      */
     public function afterSave(Event $event, Setting $entity, ArrayObject $options)
     {

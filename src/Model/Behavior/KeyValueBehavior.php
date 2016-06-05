@@ -11,10 +11,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Model\Behavior;
-use Cake\Collection\Collection;
+
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
-use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
 
@@ -52,14 +51,14 @@ class KeyValueBehavior extends Behavior
     {
         $query = $this->_table->query();
 
-        $query->formatResults(function(ResultSet $results) {
-                return $results->map(function ($row) {
-                    if ($row['serialized'] === true) {
-                        $row['value'] = unserialize($row['value']);
-                    }
-                    return $row;
-                });
+        $query->formatResults(function (ResultSet $results) {
+            return $results->map(function ($row) {
+                if ($row['serialized'] === true) {
+                    $row['value'] = unserialize($row['value']);
+                }
+                return $row;
             });
+        });
 
         $settings = [];
 
@@ -79,8 +78,8 @@ class KeyValueBehavior extends Behavior
      * Returns a computed entity that can be used by FormHelper.
      *
      *
-     * @param Entity $entity
-     * @param array $keys
+     * @param Entity $entity The base entity to customize.
+     * @param array $keys The keys to set on the entity.
      * @return Entity
      */
     public function getKeyValues(Entity $entity, array $keys)
@@ -96,8 +95,8 @@ class KeyValueBehavior extends Behavior
             ->hydrate(false);
 
         // unserialize serialized fields
-        $query->formatResults(function(ResultSet $results) {
-            return $results->map(function($row) {
+        $query->formatResults(function (ResultSet $results) {
+            return $results->map(function ($row) {
                 if ($row['serialized'] === true) {
                     $row['value'] = unserialize($row['value']);
                 }
@@ -115,8 +114,8 @@ class KeyValueBehavior extends Behavior
     /**
      * Save key value pairs.
      *
-     * @param Entity $entity
-     * @param array $keys
+     * @param Entity $entity The entity to save key values on.
+     * @param array $keys The keys to apply.
      * @return bool|mixed
      */
     public function saveKeyValues(Entity $entity, array $keys)
@@ -178,7 +177,7 @@ class KeyValueBehavior extends Behavior
      * Returns an array of existing keys and
      * their corresponding ids
      *
-     * @param $keys
+     * @param array $keys The keys to map.
      * @return array
      */
     protected function _getFieldToIdMapping(array $keys)

@@ -1,7 +1,5 @@
 <?php
 /**
- * Guardian Component
- *
  * Wasabi CMS
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
@@ -106,7 +104,8 @@ class GuardianComponent extends Component
     /**
      * Called before the Controller::beforeFilter().
      *
-     * @param array $config
+     * @param array $config The configuration settings provided to this component.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -140,7 +139,8 @@ class GuardianComponent extends Component
     /**
      * Add guest actions which don't require a logged in user.
      *
-     * @param array|string $guestActions
+     * @param array|string $guestActions The guest action to add.
+     * @return void
      */
     public function addGuestActions($guestActions)
     {
@@ -154,7 +154,7 @@ class GuardianComponent extends Component
     /**
      * Check if the currently logged in user is authorized to access the given url.
      *
-     * @param array $url
+     * @param array $url The url parameters.
      * @return bool
      */
     public function hasAccess($url)
@@ -195,7 +195,7 @@ class GuardianComponent extends Component
      * Check if the requested action does not require an authenticated user.
      * -> guest action
      *
-     * @param $url
+     * @param array $url The url parameters.
      * @return bool
      */
     public function isGuestAction($url)
@@ -222,7 +222,7 @@ class GuardianComponent extends Component
     /**
      * Determine the path for a given url array.
      *
-     * @param array $url
+     * @param array $url The url parameters.
      * @return string
      */
     public function getPathFromUrl($url)
@@ -262,29 +262,29 @@ class GuardianComponent extends Component
      */
     public function getActionMap()
     {
-		$plugins = $this->getLoadedPluginPaths();
+        $plugins = $this->getLoadedPluginPaths();
 
-		$actionMap = [];
-		foreach ($plugins as $plugin => $path) {
-			$controllers = $this->getControllersForPlugin($plugin, $path);
-			foreach ($controllers as $controller) {
-				$actions = $this->introspectController($controller['path']);
-				if (empty($actions)) {
-					continue;
-				}
-				foreach ($actions as $action) {
-					$path = "{$plugin}.{$controller['name']}.{$action}";
-					if (in_array($path, $this->_guestActions)) {
-						continue;
-					}
-					$actionMap[$path] = [
-						'plugin' => $plugin,
-						'controller' => $controller['name'],
-						'action' => $action
-					];
-				}
-			}
-		}
+        $actionMap = [];
+        foreach ($plugins as $plugin => $path) {
+            $controllers = $this->getControllersForPlugin($plugin, $path);
+            foreach ($controllers as $controller) {
+                $actions = $this->introspectController($controller['path']);
+                if (empty($actions)) {
+                    continue;
+                }
+                foreach ($actions as $action) {
+                    $path = "{$plugin}.{$controller['name']}.{$action}";
+                    if (in_array($path, $this->_guestActions)) {
+                        continue;
+                    }
+                    $actionMap[$path] = [
+                        'plugin' => $plugin,
+                        'controller' => $controller['name'],
+                        'action' => $action
+                    ];
+                }
+            }
+        }
 
         $appControllers = $this->getControllersForApp();
         foreach ($appControllers as $controller) {
@@ -325,7 +325,7 @@ class GuardianComponent extends Component
             }
         }
 
-		return $actionMap;
+        return $actionMap;
     }
 
     /**
@@ -335,51 +335,51 @@ class GuardianComponent extends Component
      */
     public function getLoadedPluginPaths()
     {
-		$pluginPaths = [];
+        $pluginPaths = [];
 
-		$plugins = Plugin::loaded();
-		foreach ($plugins as $p) {
+        $plugins = Plugin::loaded();
+        foreach ($plugins as $p) {
             // @TODO load active plugins from plugin manager
             if (in_array($p, ['DebugKit', 'Migrations'])) {
                 continue;
             }
-			$pluginPaths[$p] = Plugin::path($p);
-		}
+            $pluginPaths[$p] = Plugin::path($p);
+        }
 
-		return $pluginPaths;
+        return $pluginPaths;
     }
 
     /**
      * Retrieve all controller names + paths for a given plugin.
      *
-     * @param string $plugin
-     * @param string $pluginPath
+     * @param string $plugin The name of the plugin.
+     * @param string $pluginPath The path of the plugin.
      * @return array
      */
     public function getControllersForPlugin($plugin, $pluginPath)
     {
-		$controllers = [];
-		$Folder = new Folder();
+        $controllers = [];
+        $Folder = new Folder();
 
         $ctrlFolder = $Folder->cd($pluginPath . DS . 'src' . DS . 'Controller');
 
-		if (!empty($ctrlFolder)) {
-			$files = $Folder->find('.*Controller\.php$');
-			$subLength = strlen('Controller.php');
-			foreach ($files as $f) {
-				$filename = basename($f);
-				if ($filename === $plugin . 'AppController.php') {
-					continue;
-				}
-				$ctrlName = substr($filename, 0, strlen($filename) - $subLength);
-				$controllers[] = [
-					'name' => $ctrlName,
-					'path' => $Folder->path . DS . $f
-				];
-			}
-		}
+        if (!empty($ctrlFolder)) {
+            $files = $Folder->find('.*Controller\.php$');
+            $subLength = strlen('Controller.php');
+            foreach ($files as $f) {
+                $filename = basename($f);
+                if ($filename === $plugin . 'AppController.php') {
+                    continue;
+                }
+                $ctrlName = substr($filename, 0, strlen($filename) - $subLength);
+                $controllers[] = [
+                    'name' => $ctrlName,
+                    'path' => $Folder->path . DS . $f
+                ];
+            }
+        }
 
-		return $controllers;
+        return $controllers;
     }
 
     /**
@@ -434,23 +434,23 @@ class GuardianComponent extends Component
     /**
      * Retrieve all controller actions from a given controller.
      *
-     * @param string $controllerPath
+     * @param string $controllerPath The path of a specific controller.
      * @return array
      */
     public function introspectController($controllerPath)
     {
-		$content = file_get_contents($controllerPath);
-		preg_match_all('/public\s+function\s+\&?\s*([^(]+)/', $content, $methods);
+        $content = file_get_contents($controllerPath);
+        preg_match_all('/public\s+function\s+\&?\s*([^(]+)/', $content, $methods);
 
-		$guardableActions = [];
-		foreach ($methods[1] as $m) {
-			if (in_array($m, ['__construct', 'initialize', 'isAuthorized', 'setRequest', 'invokeAction', 'beforeFilter', 'beforeRender', 'beforeRedirect', 'afterFilter'])) {
-				continue;
-			}
-			$guardableActions[] = $m;
-		}
+        $guardableActions = [];
+        foreach ($methods[1] as $m) {
+            if (in_array($m, ['__construct', 'initialize', 'isAuthorized', 'setRequest', 'invokeAction', 'beforeFilter', 'beforeRender', 'beforeRedirect', 'afterFilter'])) {
+                continue;
+            }
+            $guardableActions[] = $m;
+        }
 
-		return $guardableActions;
+        return $guardableActions;
     }
 
     /**

@@ -11,6 +11,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Controller;
+
 use Wasabi\Core\Model\Entity\CacheSetting;
 use Wasabi\Core\Model\Entity\GeneralSetting;
 use Wasabi\Core\Model\Table\CacheSettingsTable;
@@ -25,10 +26,12 @@ use Wasabi\Core\Model\Table\GeneralSettingsTable;
 class SettingsController extends BackendAppController
 {
     /**
-     * general action
+     * General action
      * GET | POST
      *
      * Edit general settings.
+     *
+     * @return void
      */
     public function general()
     {
@@ -61,6 +64,14 @@ class SettingsController extends BackendAppController
         $this->set('settings', $settings);
     }
 
+    /**
+     * Cache action
+     * GET | POST
+     *
+     * Edit cache settings.
+     *
+     * @return void
+     */
     public function cache()
     {
         $keys = [

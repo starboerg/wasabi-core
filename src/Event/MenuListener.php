@@ -1,7 +1,5 @@
 <?php
 /**
- * Wasabi Core Menu Event Listener
- *
  * Wasabi CMS
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
@@ -39,7 +37,8 @@ class MenuListener implements EventListenerInterface
     /**
      * Initialize the backend main menu items.
      *
-     * @param Event $event
+     * @param Event $event An event instance.
+     * @return void
      */
     public function initBackendMenuMainItems(Event $event)
     {

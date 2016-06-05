@@ -29,7 +29,8 @@ class GroupsTable extends Table
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config Configuration options passed to the constructor
+     * @param array $config Configuration options passed to the constructor.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -47,7 +48,7 @@ class GroupsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator
+     * @param Validator $validator The validator to customize.
      * @return Validator
      */
     public function validationDefault(Validator $validator)
@@ -59,7 +60,7 @@ class GroupsTable extends Table
     /**
      * Pre persistence rules.
      *
-     * @param RulesChecker $rules
+     * @param RulesChecker $rules The rules checker to customize.
      * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules)
@@ -71,8 +72,8 @@ class GroupsTable extends Table
     /**
      * Move users from one group to another.
      *
-     * @param Group $groupFrom
-     * @param Group $groupTo
+     * @param Group $groupFrom A group instance.
+     * @param Group $groupTo A group instance.
      * @return int number of affected user rows
      */
     public function moveUsersToAlternativeGroup($groupFrom, $groupTo)

@@ -11,13 +11,12 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Controller;
+
 use Cake\Collection\Collection;
+use Cake\Database\Connection;
 use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Network\Session;
-use Cake\ORM\ResultSet;
-use Wasabi\Core\Model\Entity\Language;
 
 /**
  * Class LanguagesController
@@ -28,6 +27,8 @@ class LanguagesController extends BackendAppController
 {
     /**
      * Initialization hook method.
+     *
+     * @return void
      */
     public function initialize()
     {
@@ -36,8 +37,10 @@ class LanguagesController extends BackendAppController
     }
 
     /**
-     * index action
+     * Index action
      * GET
+     *
+     * @return void
      */
     public function index()
     {
@@ -51,6 +54,8 @@ class LanguagesController extends BackendAppController
     /**
      * Add action
      * GET | POST
+     *
+     * @return void
      */
     public function add()
     {
@@ -72,7 +77,8 @@ class LanguagesController extends BackendAppController
      * Edit action
      * GET | PUT
      *
-     * @param string $id
+     * @param string $id The language id.
+     * @return void
      */
     public function edit($id)
     {
@@ -100,7 +106,8 @@ class LanguagesController extends BackendAppController
      * Delete action
      * POST
      *
-     * @param $id
+     * @param string $id The language id.
+     * @return void
      */
     public function delete($id)
     {
@@ -115,12 +122,16 @@ class LanguagesController extends BackendAppController
             $this->Flash->error($this->dbErrorMessage);
         }
         $this->redirect(['action' => 'index']);
+        //@codingStandardIgnoreStart
         return;
+        //@codingStandardIgnoreEnd
     }
 
     /**
-     * Save the order of languages
+     * Sort action
      * AJAX POST
+     *
+     * Save the order of languages.
      *
      * @return void
      */
@@ -136,17 +147,19 @@ class LanguagesController extends BackendAppController
         // save the new language positions
         $languages = $this->Languages->patchEntities(
             $this->Languages->find('allFrontendBackend'),
-            $this->request->data()
+            $this->request->data
         );
-        $this->Languages->connection()->begin();
+        /** @var Connection $connection */
+        $connection = $this->Languages->connection();
+        $connection->begin();
         foreach ($languages as $language) {
             if (!$this->Languages->save($language)) {
-                $this->Languages->connection()->rollback();
+                $connection->rollback();
                 break;
             }
         }
-        if ($this->Languages->connection()->inTransaction()) {
-            $this->Languages->connection()->commit();
+        if ($connection->inTransaction()) {
+            $connection->commit();
             $status = 'success';
             $flashMessage = __d('wasabi_core', 'The language position has been updated.');
         } else {
@@ -171,9 +184,12 @@ class LanguagesController extends BackendAppController
     }
 
     /**
+     * Change action
+     * GET
+     *
      * Change the content language to $id and update the session.
      *
-     * @param integer $id
+     * @param string $id The language id.
      * @return void
      */
     public function change($id = null)
@@ -183,7 +199,7 @@ class LanguagesController extends BackendAppController
             $this->redirect($this->referer());
             return;
         }
-        $this->request->session()->write('contentLanguageId', (int) $id);
+        $this->request->session()->write('contentLanguageId', (int)$id);
         $this->redirect($this->referer());
     }
 }

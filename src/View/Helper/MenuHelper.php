@@ -21,7 +21,6 @@ use Cake\View\Helper;
  */
 class MenuHelper extends Helper
 {
-
     /**
      * Helpers used by this helper
      *
@@ -39,7 +38,7 @@ class MenuHelper extends Helper
     /**
      * Render provided $items as <li> elements
      *
-     * @param array $items
+     * @param array $items The menu items to render.
      * @param string $activeClass css class to add to active items
      * @return string
      */
@@ -61,11 +60,11 @@ class MenuHelper extends Helper
     /**
      * Render all nested items of a menu.
      *
-     * @param array $items items to render
-     * @param string $activeClass active css class that is applied to active items
-     * @param string $openClass open class that is applied to a parent menu item when children are active
-     * @param string $subNavClass css class applied to any child ul of a parent menu item
-     * @return string the rendered items without an outer ul
+     * @param array $items The menu items to render.
+     * @param string $activeClass Active css class that is applied to active items.
+     * @param string $openClass Open class that is applied to a parent menu item when children are active.
+     * @param string $subNavClass Css class applied to any child ul of a parent menu item.
+     * @return string The rendered items without an outer ul.
      */
     public function renderNested(array $items, $activeClass = 'active', $openClass = 'open', $subNavClass = 'sub-nav collapse')
     {
@@ -130,8 +129,8 @@ class MenuHelper extends Helper
      * Used to render menu items as a ul li fake table
      * in the backend.
      *
-     * @param $menuItems
-     * @param null $level
+     * @param array $menuItems The menu items to render as tree.
+     * @param null|int $level The current level.
      * @return string
      */
     public function renderTree($menuItems, $level = null)

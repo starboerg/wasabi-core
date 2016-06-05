@@ -1,7 +1,5 @@
 <?php
 /**
- * Wasabi Core Languages Event Listener
- *
  * Wasabi CMS
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
@@ -44,8 +42,9 @@ class LanguagesListener implements EventListenerInterface
     /**
      * Delete the language cache.
      *
-     * @param Event $event
-     * @param Entity $entity
+     * @param Event $event An event instance.
+     * @param Entity $entity An entity instance.
+     * @return void
      */
     public function deleteLanguageCache(Event $event, Entity $entity)
     {

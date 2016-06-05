@@ -41,15 +41,6 @@ use Wasabi\Core\Wasabi;
 class User extends Entity
 {
     /**
-     * Accessible fields.
-     *
-     * @var array
-     */
-    protected $_accessible = [
-        '*' => true
-    ];
-
-    /**
      * Holds the initialized user permissions.
      *
      * @var array
@@ -59,7 +50,7 @@ class User extends Entity
     /**
      * Always hash the users password on save calls.
      *
-     * @param string $password
+     * @param string $password The password to hash.
      * @return string
      */
     protected function _setPassword($password)
@@ -70,7 +61,7 @@ class User extends Entity
     /**
      * Verify user
      *
-     * @param bool $byAdmin
+     * @param bool $byAdmin True if the user is verified by an administrator.
      * @return User $this
      */
     public function verify($byAdmin = false)
@@ -116,7 +107,7 @@ class User extends Entity
     /**
      * Returns the access level of the user for the given plugin controller action path.
      *
-     * @param array $url
+     * @param array $url The url to get the access level for.
      * @return int|bool
      */
     public function getAccessLevel($url = null)

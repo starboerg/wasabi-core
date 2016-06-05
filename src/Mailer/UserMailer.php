@@ -1,7 +1,5 @@
 <?php
 /**
- * Wasabi Core Menu Event Listener
- *
  * Wasabi CMS
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
@@ -25,8 +23,9 @@ class UserMailer extends Mailer
     /**
      * Send a "verify" email to the user, so that he can verify his email address.
      *
-     * @param User $user
-     * @param string $token
+     * @param User $user The user who should verify his email address.
+     * @param string $token The verification token.
+     * @return void
      */
     public function verifyEmail(User $user, $token)
     {
@@ -48,8 +47,9 @@ class UserMailer extends Mailer
      * Send a "verify" email to the user that contains a link to verify his email address and setup his password.
      * This mail is sent, whenever an Admin creates a new user via the backend.
      *
-     * @param User $user
-     * @param string $token
+     * @param User $user The user who wants to reset his password.
+     * @param string $token The verify and reset token.
+     * @return void
      */
     public function verifyAndResetPasswordEmail(User $user, $token)
     {
@@ -70,7 +70,8 @@ class UserMailer extends Mailer
     /**
      * Send a "verified" email to the user, when his email address has been verified.
      *
-     * @param User $user
+     * @param User $user The user who has verified his email address.
+     * @return void
      */
     public function verifiedEmail(User $user)
     {
@@ -85,7 +86,8 @@ class UserMailer extends Mailer
     /**
      * Send a verification email, when an admin has marked a user’s email as verified.
      *
-     * @param User $user
+     * @param User $user The user who has been verified by an administrator.
+     * @return void
      */
     public function verifiedByAdminEmail(User $user)
     {
@@ -100,7 +102,8 @@ class UserMailer extends Mailer
     /**
      * Send an "activated" email to the user when an admin activated a user account.
      *
-     * @param User $user
+     * @param User $user The user that has been activated.
+     * @return void
      */
     public function activatedEmail(User $user)
     {
@@ -115,7 +118,8 @@ class UserMailer extends Mailer
     /**
      * Send a "deactivated" email to the user when an admin deactivated a user account.
      *
-     * @param User $user
+     * @param User $user The user who has been deactivated.
+     * @return void
      */
     public function deactivatedEmail(User $user)
     {
@@ -130,8 +134,9 @@ class UserMailer extends Mailer
     /**
      * Send a lost password email, when a user has requested a new one.
      *
-     * @param User $user
-     * @param $token
+     * @param User $user The user who want to reset his password.
+     * @param string $token The lost password token.
+     * @return void
      */
     public function lostPasswordEmail(User $user, $token)
     {
@@ -152,8 +157,9 @@ class UserMailer extends Mailer
     /**
      * Prepare the UserMailer Email instance.
      *
-     * @param User $user
-     * @param $subject
+     * @param User $user The user to send the email to.
+     * @param string $subject The subject of the email.
+     * @return void
      */
     protected function _prepareEmail(User $user, $subject)
     {
@@ -176,17 +182,17 @@ class UserMailer extends Mailer
      * @param string $action The name of the mailer action to trigger.
      * @param array $args Arguments to pass to the triggered mailer action.
      * @param array $headers Headers to set.
-     * @return array
      * @throws \Cake\Mailer\Exception\MissingActionException
      * @throws \BadMethodCallException
+     * @return array
      */
     public function send($action, $args = [], $headers = [])
     {
         $results = [];
 
         try {
-            $results = @parent::send($action, $args, $headers);
-        } catch(\Exception $e) {
+            $results = parent::send($action, $args, $headers);
+        } catch (\Exception $e) {
             Log::write(LOG_CRIT, 'Emails cannot be sent: ' . $e->getMessage(), $this->_email);
         }
 

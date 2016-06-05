@@ -16,11 +16,10 @@ use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\WidgetInterface;
 
 /**
- * Form info widget
+ * Class InfoWidget
  */
 class InfoWidget implements WidgetInterface
 {
-
     /**
      * Templates
      *
@@ -44,6 +43,7 @@ class InfoWidget implements WidgetInterface
      *   Can use the following variables `attrs`, `text` and `input`.
      *
      * @param \Cake\View\StringTemplate $templates Templates list.
+     * @return InfoWidget
      */
     public function __construct($templates)
     {

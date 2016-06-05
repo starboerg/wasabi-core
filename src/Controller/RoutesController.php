@@ -9,7 +9,6 @@ use Cake\ORM\ResultSet;
 use Wasabi\Core\Model\Entity\Route;
 use Wasabi\Core\Model\Table\RoutesTable;
 use Wasabi\Core\Routing\RouteTypes;
-use Wasabi\Core\View\AppView;
 use Wasabi\Core\Wasabi;
 
 /**
@@ -21,6 +20,8 @@ class RoutesController extends BackendAppController
 {
     /**
      * Initialization hook method.
+     *
+     * @return void
      */
     public function initialize()
     {
@@ -30,11 +31,12 @@ class RoutesController extends BackendAppController
     }
 
     /**
-     * Add action.
+     * Add action
      * AJAX POST
      *
      * @throws MethodNotAllowedException
      * @throws BadRequestException
+     * @return void
      */
     public function add()
     {
@@ -45,6 +47,7 @@ class RoutesController extends BackendAppController
         $model = $this->request->data('model');
         $foreignKey = (int)$this->request->data('foreign_key');
         $languageId = Wasabi::contentLanguage()->id;
+        /** @var string|null $url */
         $url = $this->request->data('url');
         $routeType = (int)$this->request->data('route_type');
         $element = $this->request->data('element');
@@ -65,50 +68,12 @@ class RoutesController extends BackendAppController
         ];
 
         switch ($routeType) {
-
             case RouteTypes::TYPE_DEFAULT_ROUTE:
-                /** @var Connection $connection */
-                $connection = $this->Routes->connection();
-                $connection->begin();
-
-                // Save the new default route.
-                $defaultRoute = new Route($routeData);
-                if ($this->Routes->save($defaultRoute)) {
-
-                    // Make all other routes for this model + foreignKey + languageId
-                    // redirect to the new default route.
-                    $otherRoutes = $this->Routes->getOtherRoutesExcept($defaultRoute->id, $model, $foreignKey, $languageId);
-                    $this->Routes->redirectRoutesToId($otherRoutes, $defaultRoute->id);
-
-                    $connection->commit();
-                    $this->Flash->success(__d('wasabi_core', 'New default URL <strong>{0}</strong> has been added.', $url), 'routes');
-                    $this->request->data = [];
-                } else {
-                    $connection->rollback();
-                    $this->Flash->error($this->formErrorMessage, 'routes');
-                }
-
+                $this->_addDefaultRoute($routeData);
                 break;
-
             case RouteTypes::TYPE_REDIRECT_ROUTE:
-                $defaultRoute = $this->Routes->getDefaultRoute($model, $foreignKey, $languageId);
-
-                if (!empty($defaultRoute)) {
-                    $routeData['redirect_to'] = $defaultRoute['id'];
-                    $routeData['status_code'] = 301;
-
-                    if ($this->Routes->save(new Route($routeData))) {
-                        $this->Flash->success(__d('wasabi_core', 'New redirect URL <strong>{0}</strong> has been added.', $url), 'routes');
-                        $this->request->data = [];
-                    } else {
-                        $this->Flash->error($this->formErrorMessage, 'routes');
-                    }
-                } else {
-                    $this->Flash->error(__d('wasabi_core', 'Please create a default route first.'), 'routes');
-                }
-
+                $this->_addRedirectRoute($routeData);
                 break;
-
             default:
                 throw new BadRequestException();
         }
@@ -117,10 +82,11 @@ class RoutesController extends BackendAppController
     }
 
     /**
-     * makeDefault action
+     * MakeDefault action
      * AJAX POST
      *
-     * @param int|string $id
+     * @param int|string $id The route id.
+     * @return void
      */
     public function makeDefault($id)
     {
@@ -154,10 +120,11 @@ class RoutesController extends BackendAppController
     }
 
     /**
-     * delete action
+     * Delete action
      * AJAX POST
      *
-     * @param int|string $id
+     * @param int|string $id The route id.
+     * @return void
      */
     public function delete($id)
     {
@@ -206,12 +173,13 @@ class RoutesController extends BackendAppController
     }
 
     /**
-     * Global render method for all action of this controller.
+     * Global render method for all actions of this controller.
      *
-     * @param string $model
-     * @param int $foreignKey
-     * @param int $languageId
-     * @param string $element
+     * @param string $model The model name.
+     * @param int $foreignKey The foreign key of the entity.
+     * @param int $languageId The language id.
+     * @param string $element The name of the view element.
+     * @return void
      */
     protected function _render($model, $foreignKey, $languageId, $element)
     {
@@ -227,5 +195,59 @@ class RoutesController extends BackendAppController
         ]);
 
         $this->render('add');
+    }
+
+    /**
+     * Add a new default route.
+     *
+     * @param array $routeData The route data.
+     * @return void
+     */
+    protected function _addDefaultRoute(array $routeData)
+    {
+        /** @var Connection $connection */
+        $connection = $this->Routes->connection();
+        $connection->begin();
+
+        // Save the new default route.
+        $defaultRoute = new Route($routeData);
+        if ($this->Routes->save($defaultRoute)) {
+            // Make all other routes for this model + foreignKey + languageId
+            // redirect to the new default route.
+            $otherRoutes = $this->Routes->getOtherRoutesExcept($defaultRoute->id, $routeData['model'], $routeData['foreign_key'], $routeData['language_id']);
+            $this->Routes->redirectRoutesToId($otherRoutes, $defaultRoute->id);
+
+            $connection->commit();
+            $this->Flash->success(__d('wasabi_core', 'New default URL <strong>{0}</strong> has been added.', $routeData['url']), 'routes');
+            $this->request->data = [];
+        } else {
+            $connection->rollback();
+            $this->Flash->error($this->formErrorMessage, 'routes');
+        }
+    }
+
+    /**
+     * Add a new redirect route.
+     *
+     * @param array $routeData The route data.
+     * @return void
+     */
+    protected function _addRedirectRoute($routeData)
+    {
+        $defaultRoute = $this->Routes->getDefaultRoute($routeData['model'], $routeData['foreign_key'], $routeData['language_id']);
+
+        if (!empty($defaultRoute)) {
+            $routeData['redirect_to'] = $defaultRoute['id'];
+            $routeData['status_code'] = 301;
+
+            if ($this->Routes->save(new Route($routeData))) {
+                $this->Flash->success(__d('wasabi_core', 'New redirect URL <strong>{0}</strong> has been added.', $routeData['url']), 'routes');
+                $this->request->data = [];
+            } else {
+                $this->Flash->error($this->formErrorMessage, 'routes');
+            }
+        } else {
+            $this->Flash->error(__d('wasabi_core', 'Please create a default route first.'), 'routes');
+        }
     }
 }

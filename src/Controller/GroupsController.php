@@ -12,9 +12,9 @@
  */
 namespace Wasabi\Core\Controller;
 
+use Cake\Database\Connection;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\MethodNotAllowedException;
-use Cake\Network\Exception\NotFoundException;
 use FrankFoerster\Filter\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Table\GroupsTable;
 
@@ -96,6 +96,8 @@ class GroupsController extends BackendAppController
 
     /**
      * Initialization hook method.
+     *
+     * @return void
      */
     public function initialize()
     {
@@ -104,8 +106,10 @@ class GroupsController extends BackendAppController
     }
 
     /**
-     * index action
+     * Index action
      * GET
+     *
+     * @return void
      */
     public function index()
     {
@@ -118,6 +122,8 @@ class GroupsController extends BackendAppController
     /**
      * Add action
      * GET | POST
+     *
+     * @return void
      */
     public function add()
     {
@@ -139,7 +145,8 @@ class GroupsController extends BackendAppController
      * Edit action
      * GET | PUT
      *
-     * @param string $id
+     * @param string $id The group id.
+     * @return void
      */
     public function edit($id)
     {
@@ -167,7 +174,8 @@ class GroupsController extends BackendAppController
      * Delete action
      * POST
      *
-     * @param string $id
+     * @param string $id The group id.
+     * @return void
      */
     public function delete($id)
     {
@@ -178,9 +186,11 @@ class GroupsController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        $this->Groups->connection()->begin();
+        /** @var Connection $connection */
+        $connection = $this->Groups->connection();
+        $connection->begin();
         $group = $this->Groups->get($id);
-        $userCount = (int) $group->user_count;
+        $userCount = (int)$group->user_count;
         $groupCanBeDeleted = ($userCount === 0);
 
         $alternativeGroup = null;
@@ -194,20 +204,20 @@ class GroupsController extends BackendAppController
 
         if ($groupCanBeDeleted === true) {
             if ($this->Groups->delete($group)) {
-                $this->Groups->connection()->commit();
+                $connection->commit();
                 if ($userCount > 0) {
                     $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been deleted. Prior <strong>{1}</strong> group member(s) ha(s/ve) been moved to the <strong>{2}</strong> group.', $group->name, $userCount, $alternativeGroup->name));
                 } else {
                     $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been deleted.', $group->name));
                 }
             } else {
-                $this->Groups->connection()->rollback();
+                $connection->rollback();
                 $this->Flash->error($this->dbErrorMessage);
             }
             $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
             return;
         } else {
-            $this->Groups->connection()->rollback();
+            $connection->rollback();
             $this->Flash->warning(__d('wasabi_core', 'The group <strong>{0}</strong> has <strong>{1}</strong> member(s) that need to be moved to another group.', $group->name, $userCount));
             $this->set([
                 'group' => $group,

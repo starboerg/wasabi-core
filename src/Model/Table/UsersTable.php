@@ -25,15 +25,16 @@ use Wasabi\Core\Model\Entity\User;
 
 /**
  * Class UsersTable
+ *
  * @property GroupsTable Groups
- * @package Wasabi\Core\Model\Table
  */
 class UsersTable extends Table
 {
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config Configuration options passed to the constructor
+     * @param array $config Configuration options passed to the constructor.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -52,7 +53,7 @@ class UsersTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator
+     * @param Validator $validator The validator to customize.
      * @return Validator
      */
     public function validationDefault(Validator $validator)
@@ -115,7 +116,7 @@ class UsersTable extends Table
     /**
      * Only validate email.
      *
-     * @param Validator $validator
+     * @param Validator $validator The validator to customize.
      * @return Validator
      */
     public function validationEmailOnly(Validator $validator)
@@ -135,7 +136,7 @@ class UsersTable extends Table
     /**
      * Only validate password.
      *
-     * @param Validator $validator
+     * @param Validator $validator The validator to customize.
      * @return Validator
      */
     public function validationPasswordOnly(Validator $validator)
@@ -172,7 +173,7 @@ class UsersTable extends Table
     /**
      * Pre persistence rules.
      *
-     * @param RulesChecker $rules
+     * @param RulesChecker $rules The rules checker to customize.
      * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules)
@@ -186,9 +187,10 @@ class UsersTable extends Table
     /**
      * Called before request data is converted to an entity.
      *
-     * @param Event $event
-     * @param ArrayObject $data
-     * @param ArrayObject $options
+     * @param Event $event An event instance.
+     * @param ArrayObject $data The data to marshal.
+     * @param ArrayObject $options Additional options.
+     * @return void
      */
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
@@ -207,7 +209,7 @@ class UsersTable extends Table
     /**
      * Find all active users.
      *
-     * @param Query $query
+     * @param Query $query The query to decorate.
      * @return Query
      */
     public function findActive(Query $query)
@@ -221,7 +223,7 @@ class UsersTable extends Table
     /**
      * Find users including their group name.
      *
-     * @param Query $query
+     * @param Query $query The query to decorate.
      * @return $this|array
      */
     public function findWithGroupName(Query $query)
@@ -244,8 +246,8 @@ class UsersTable extends Table
     /**
      * Verify the given $user.
      *
-     * @param User $user
-     * @param bool $byAdmin
+     * @param User $user The user to verify.
+     * @param bool $byAdmin Whether this action was initiated by an administrator or not.
      * @return bool|\Cake\Datasource\EntityInterface
      */
     public function verify(User $user, $byAdmin = false)
@@ -256,7 +258,7 @@ class UsersTable extends Table
     /**
      * Activate the given $user.
      *
-     * @param User $user
+     * @param User $user The user to activate.
      * @return bool|\Cake\Datasource\EntityInterface
      */
     public function activate(User $user)
@@ -267,7 +269,7 @@ class UsersTable extends Table
     /**
      * Deactivate the given $user.
      *
-     * @param User $user
+     * @param User $user The user to deactivate.
      * @return bool|\Cake\Datasource\EntityInterface
      */
     public function deactivate(User $user)
@@ -278,7 +280,7 @@ class UsersTable extends Table
     /**
      * Check if user with email exists and return the result
      *
-     * @param $email
+     * @param string $email The email to check for.
      * @return User The User Entity or an empty Entity if none is found
      */
     public function existsWithEmail($email)
@@ -293,7 +295,7 @@ class UsersTable extends Table
     /**
      * Find a user by unverified email address.
      *
-     * @param string $email
+     * @param string $email The email to check for.
      * @return User mixed
      */
     public function findNotVerified($email)

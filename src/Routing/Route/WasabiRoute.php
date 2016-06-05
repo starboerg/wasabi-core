@@ -1,17 +1,27 @@
 <?php
-
+/**
+ * Wasabi CMS
+ * Copyright (c) Frank Förster (http://frankfoerster.com)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Wasabi\Core\Routing\Route;
 
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Route\Route;
 use Cake\Routing\Router;
+use Cake\Routing\Route\Route;
 
 class WasabiRoute extends Route
 {
-    CONST PAGE_PART = 'p';
+    const PAGE_PART = 'p';
 
     /**
      * Check if a URL array matches this route instance.
@@ -53,8 +63,8 @@ class WasabiRoute extends Route
     /**
      * Parse a requested url and create routing parameters from the routes table.
      *
-     * @param string $url
-     * @return array|boolean|mixed
+     * @param string $url The url to parse.
+     * @return array|bool|mixed
      */
     public function parse($url)
     {
@@ -129,6 +139,13 @@ class WasabiRoute extends Route
         return $params;
     }
 
+    /**
+     * Redirect to the given url.
+     *
+     * @param string $redirectUrl The url to redirect to.
+     * @param int $statusCode The http status code.
+     * @return void
+     */
     protected function _redirect($redirectUrl, $statusCode = 301)
     {
         header('HTTP/1.1 ' . $statusCode);

@@ -62,7 +62,7 @@ trait EnumTrait
     /**
      * Get a single enum constant configuration for a specific value.
      *
-     * @param integer|string $value
+     * @param int|string $value The value to find a constant config for.
      * @return array|bool
      */
     public static function getConstantConfigByValue($value)
@@ -78,7 +78,7 @@ trait EnumTrait
     /**
      * Get the descriptive name for the given value.
      *
-     * @param integer|string $value
+     * @param int|string $value The value to get the name of a constant for.
      * @return bool|string
      */
     public static function getNameForValue($value)
@@ -94,7 +94,7 @@ trait EnumTrait
     /**
      * Check wheter the given $value is valid.
      *
-     * @param integer|string $value
+     * @param int|string $value The value to check.
      * @return bool
      */
     public static function isValidValue($value)

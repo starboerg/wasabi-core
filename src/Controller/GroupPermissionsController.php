@@ -13,6 +13,7 @@
 namespace Wasabi\Core\Controller;
 
 use Cake\Cache\Cache;
+use Cake\Database\Connection;
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -21,12 +22,15 @@ use Wasabi\Core\Model\Table\GroupPermissionsTable;
 
 /**
  * Class GroupPermissionsController
+ *
  * @property GroupPermissionsTable GroupPermissions
  */
 class GroupPermissionsController extends BackendAppController
 {
     /**
-     * Initialization hook method
+     * Initialization hook method.
+     *
+     * @return void
      */
     public function initialize()
     {
@@ -37,6 +41,8 @@ class GroupPermissionsController extends BackendAppController
     /**
      * Index action
      * GET
+     *
+     * @return void
      */
     public function index()
     {
@@ -83,7 +89,9 @@ class GroupPermissionsController extends BackendAppController
         $groups = $this->GroupPermissions->Groups->find('all')
             ->where(['Groups.id <>' => 1]);// ignore Administrator group
 
-        $this->GroupPermissions->connection()->begin();
+        /** @var Connection $connection */
+        $connection = $this->GroupPermissions->connection();
+        $connection->begin();
 
         // delete guest actions
         $this->GroupPermissions->deleteAll([
@@ -96,24 +104,28 @@ class GroupPermissionsController extends BackendAppController
                 $this->GroupPermissions->createMissingPermissions($group->id, $actionMap);
                 $this->GroupPermissions->deleteOrphans($group->id, $actionMap);
             } catch (Exception $e) {
-                $this->GroupPermissions->connection()->rollback();
+                $connection->rollback();
             }
         }
 
-        if ($this->GroupPermissions->connection()->inTransaction()) {
-            $this->GroupPermissions->connection()->commit();
+        if ($connection->inTransaction()) {
+            $connection->commit();
         }
         // delete guardian path cache
         $this->eventManager()->dispatch(new Event('Guardian.GroupPermissions.afterSync'));
 
         $this->Flash->success(__d('wasabi_core', 'All permissions have been synchronized.'));
         $this->redirect(['action' => 'index']);
+        //@codingStandardIgnoreStart
         return;
+        //@codingStandardIgnoreEnd
     }
 
     /**
      * Update action
      * POST | AJAX
+     *
+     * @return void
      */
     public function update()
     {
@@ -136,19 +148,21 @@ class GroupPermissionsController extends BackendAppController
         // save the new language positions
         $permissions = $this->GroupPermissions->patchEntities(
             $this->GroupPermissions->find('all'),
-            $this->request->data()
+            $this->request->data
         );
 
-        $this->GroupPermissions->connection()->begin();
+        /** @var Connection $connection */
+        $connection = $this->GroupPermissions->connection();
+        $connection->begin();
         foreach ($permissions as $permission) {
             if (!$this->GroupPermissions->save($permission)) {
-                $this->GroupPermissions->connection()->rollback();
+                $connection->rollback();
                 break;
             }
         }
 
-        if ($this->GroupPermissions->connection()->inTransaction()) {
-            $this->GroupPermissions->connection()->commit();
+        if ($connection->inTransaction()) {
+            $connection->commit();
             Cache::clear(false, 'wasabi/core/group_permissions');
             if ($this->request->is('ajax')) {
                 $status = 'success';

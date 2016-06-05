@@ -21,11 +21,11 @@ use Cake\ORM\Table;
  */
 class MediaTable extends Table
 {
-
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config Configuration options passed to the constructor
+     * @param array $config Configuration options passed to the constructor.
+     * @return void
      */
     public function initialize(array $config)
     {

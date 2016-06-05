@@ -22,8 +22,13 @@
     "frankfoerster/cakephp-filter": "dev-cake3"
   },
   "require-dev": {
-    "cakephp/cakephp-codesniffer": "dev-master",
-    "phpunit/phpunit": "5.*"
+    "cakephp/cakephp-codesniffer": "2.*",
+    "phpunit/phpunit": "*",
+    "sebastian/phpcpd": "*",
+    "phpmd/phpmd": "*",
+    "pdepend/pdepend": "*",
+    "phploc/phploc": "*",
+    "phpunit/php-code-coverage": "*"
   },
   "autoload": {
     "psr-4": {

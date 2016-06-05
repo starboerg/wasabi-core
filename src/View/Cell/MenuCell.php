@@ -15,12 +15,16 @@ namespace Wasabi\Core\View\Cell;
 use Cake\View\Cell;
 use Wasabi\Core\Nav;
 
+/**
+ * Class MenuCell
+ */
 class MenuCell extends Cell
 {
     /**
      * Prepares the menu items before rendering the cell.
      *
-     * @param string $alias the name of the menu
+     * @param string $alias the name of the menu.
+     * @return void
      */
     public function display($alias)
     {
@@ -33,9 +37,9 @@ class MenuCell extends Cell
      * classes 'active', 'open' depending
      * on the provided request params.
      *
-     * @param array $items
-     * @param array $requestParams
-     * @param boolean $subActiveFound
+     * @param array $items The menu items to process.
+     * @param array $requestParams The current request parameters.
+     * @param bool $subActiveFound Whether an active sub menu item has been found.
      * @return array
      */
     protected function _processMenuItems($items, $requestParams, &$subActiveFound = false)

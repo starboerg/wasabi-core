@@ -11,6 +11,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\View;
+
 use Cake\Core\Configure;
 use Cake\View\View;
 
@@ -55,7 +56,7 @@ class AppView extends View
 
     /**
      * Initialization hook method.
-     * 
+     *
      * @return void
      */
     public function initialize()

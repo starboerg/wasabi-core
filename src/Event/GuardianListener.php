@@ -1,7 +1,5 @@
 <?php
 /**
- * Wasabi Core Guardian Event Listener
- *
  * Wasabi CMS
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
@@ -18,7 +16,6 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Wasabi\Core\Controller\Component\GuardianComponent;
-use Wasabi\Core\Config;
 
 class GuardianListener implements EventListenerInterface
 {
@@ -44,7 +41,8 @@ class GuardianListener implements EventListenerInterface
     /**
      * Adds all core wasabi guest actions that do not need a logged in user.
      *
-     * @param Event $event
+     * @param Event $event An event instance.
+     * @return void
      */
     public function getGuestActions(Event $event)
     {
@@ -64,7 +62,10 @@ class GuardianListener implements EventListenerInterface
     }
 
     /**
-     * @param Event $event
+     * Delete the guardian paths cache.
+     *
+     * @param Event $event An event instance.
+     * @return void
      */
     public function deleteGuardianPathCache(Event $event)
     {

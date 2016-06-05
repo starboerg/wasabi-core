@@ -29,12 +29,4 @@ use Cake\ORM\Entity;
  */
 class GroupPermission extends Entity
 {
-    /**
-     * Accessible fields.
-     *
-     * @var array
-     */
-    protected $_accessible = [
-        '*' => true
-    ];
 }

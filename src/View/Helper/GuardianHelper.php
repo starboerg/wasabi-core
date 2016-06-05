@@ -17,6 +17,8 @@ use Cake\Utility\Hash;
 use Cake\View\View;
 
 /**
+ * Class GuardianHelper
+ *
  * @property HtmlHelper $Html
  * @property View $_View
  */
@@ -27,10 +29,11 @@ class GuardianHelper extends HtmlHelper
      *
      * automatically prepends the backend url prefix to the desired $url
      *
-     * @param string $title
-     * @param array|string $url
-     * @param array $options
-     * @param boolean $displayLinkTextIfUnauthorized
+     * @param string $title The link title.
+     * @param array|string $url The url to link to.
+     * @param array $options Options passed to the html link helper method.
+     * @param bool $displayLinkTextIfUnauthorized Whether to display the link title if the user is
+     *                                               not authorized to access the link.
      * @return string
      */
     public function protectedLink($title, $url, $options = [], $displayLinkTextIfUnauthorized = false)
@@ -49,9 +52,9 @@ class GuardianHelper extends HtmlHelper
      * Create a properly prefixed backend link and
      * don't check permissions.
      *
-     * @param string $title
-     * @param array|string $url
-     * @param array $options
+     * @param string $title The link title.
+     * @param array|string $url The url to link to.
+     * @param array $options Options passed to the html link helper method.
      * @return string
      */
     public function unprotectedLink($title, $url, $options = [])
@@ -63,10 +66,11 @@ class GuardianHelper extends HtmlHelper
     /**
      * Create a backend confirmation link.
      *
-     * @param string $title
-     * @param array|string $url
-     * @param array $options
-     * @param bool $displayLinkTextIfUnauthorized
+     * @param string $title The link title.
+     * @param array|string $url The url to link to.
+     * @param array $options Options passed to the html link helper method.
+     * @param bool $displayLinkTextIfUnauthorized Whether to display the link title if the user is
+     *                                            not authorized to access the link.
      * @return string
      */
     public function protectedConfirmationLink($title, $url, $options, $displayLinkTextIfUnauthorized = false)
@@ -122,8 +126,8 @@ class GuardianHelper extends HtmlHelper
     /**
      * Transform the supplied $url into a properly prefixed backend url.
      *
-     * @param array|string $url
-     * @param bool $rel
+     * @param array|string $url The url to transform.
+     * @param bool $rel Whether to generate a relative or absolute url.
      * @return array|string
      */
     protected function _getUrl($url, $rel = false)

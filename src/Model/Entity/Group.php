@@ -23,12 +23,4 @@ use Cake\ORM\Entity;
  */
 class Group extends Entity
 {
-    /**
-     * Accessible fields.
-     *
-     * @var array
-     */
-    protected $_accessible = [
-        '*' => true
-    ];
 }

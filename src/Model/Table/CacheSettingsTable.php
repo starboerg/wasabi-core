@@ -11,11 +11,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Model\Table;
+
 use Cake\ORM\Entity;
 use Cake\Validation\Validator;
-use ArrayObject;
-use Cake\Event\Event;
-use Wasabi\Core\Model\Entity\Setting;
 
 /**
  * Class CacheSettingsTable
@@ -35,7 +33,8 @@ class CacheSettingsTable extends SettingsTable
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config Configuration options passed to the constructor
+     * @param array $config Configuration options passed to the constructor.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -70,7 +69,7 @@ class CacheSettingsTable extends SettingsTable
     /**
      * Default validation rules.
      *
-     * @param Validator $validator
+     * @param Validator $validator The validator to customize.
      * @return Validator
      */
     public function validationDefault(Validator $validator)
@@ -78,7 +77,7 @@ class CacheSettingsTable extends SettingsTable
         return $validator
             ->requirePresence('enable_caching', true, __d('wasabi_core', 'Please select a cache status.'))
             ->add('enable_caching', 'inList', [
-                'rule' =>  ['inList', ['0', '1']],
+                'rule' => ['inList', ['0', '1']],
                 'message' => __d('wasabi_core', 'Please select a valid cache status.')
             ])
             ->requirePresence('cache_duration', true, __d('wasabi_core', 'Please select a cache duration.'))

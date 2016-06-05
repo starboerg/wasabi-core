@@ -13,10 +13,10 @@
 namespace Wasabi\Core\View\Helper;
 
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
-use Cake\Routing\Router;
-use Cake\Utility\Hash;
 
+/**
+ * Class HtmlHelper
+ */
 class HtmlHelper extends \Cake\View\Helper\HtmlHelper
 {
     /**
@@ -43,7 +43,8 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
     /**
      * Set the primary title of the title pad.
      *
-     * @param $title
+     * @param string $title The title.
+     * @return void
      */
     public function setTitle($title)
     {
@@ -53,7 +54,8 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
     /**
      * Set the secondary title of the title pad.
      *
-     * @param $subTitle
+     * @param string $subTitle The subtitle.
+     * @return void
      */
     public function setSubTitle($subTitle)
     {
@@ -63,7 +65,8 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
     /**
      * Add an action to the title pad.
      *
-     * @param $action
+     * @param string $action The action(s).
+     * @return void
      */
     public function addAction($action)
     {
@@ -96,52 +99,10 @@ class HtmlHelper extends \Cake\View\Helper\HtmlHelper
     }
 
     /**
-     * @param string $type
-     * @param string $title
-     * @param array $params
-     * @param array $options
-     * @return string
-     * @deprecated
-     * @todo new implementation needed
-     */
-    public function linkTo($type = 'page', $title = '', $params = [], $options = [])
-    {
-        $link = '';
-        switch ($type) {
-            case 'page':
-                if (!isset($params['page_id'])) {
-                    user_error('Html::linkTo(\'page\', ...) $params requires the key \'page_id\'.');
-                }
-                if (!isset($params['language_id'])) {
-                    $params['language_id'] = Configure::read('Wasabi.content_language_id');
-                }
-                $url = [
-                    'plugin' => 'cms',
-                    'controller' => 'cms_pages_frontend',
-                    'action' => 'view',
-                    $params['page_id'],
-                    $params['language_id']
-                ];
-                $link = $this->link($title, $url, $options);
-                break;
-            case 'collection_item':
-                if (!isset($params['collection'])) {
-                    user_error('Html::linkTo(\'collection_item\', ...) $params requires the key \'collection\'.');
-                }
-                if (!isset($params['item_id'])) {
-                    user_error('Html::linkTo(\'collection_item\', ...) $params requires the key \'item_id\'.');
-                }
-                break;
-        }
-
-        return $link;
-    }
-
-    /**
      * Used internally to render the title (primary and secondary) of the title pad.
      *
-     * @param string $title
-     * @param bool $subtitle
+     * @param string $title The title.
+     * @param bool $subtitle The subtitle.
      * @return string
      */
     protected function _pageTitle($title, $subtitle = false)

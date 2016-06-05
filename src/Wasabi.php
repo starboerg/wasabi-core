@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * Wasabi CMS
+ * Copyright (c) Frank Förster (http://frankfoerster.com)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Wasabi\Core;
 
 use Cake\Cache\Cache;
@@ -33,7 +43,7 @@ class Wasabi
     /**
      * Get or set the currently logged in user.
      *
-     * @param User $user
+     * @param User $user The user to set (optional).
      * @return User
      */
     public static function user($user = null)
@@ -70,11 +80,12 @@ class Wasabi
      *
      * @param null $langId If set, then the language with id = $langId will be set as the content language.
      * @param bool|false $backend If true also initializes all backend languages
+     * @return void
      */
     public static function loadLanguages($langId = null, $backend = false)
     {
         // Configure all available frontend and backend languages.
-        $languages = Cache::remember('languages', function() {
+        $languages = Cache::remember('languages', function () {
             /** @var LanguagesTable $Languages */
             $Languages = TableRegistry::get('Wasabi/Core.Languages');
             $langs = $Languages->find('allFrontendBackend')->all();
@@ -148,6 +159,7 @@ class Wasabi
 
     /**
      * Get the html title suffix of this wasabi instance.
+     *
      * @return string
      */
     public static function getHtmlTitleSuffix()

@@ -28,12 +28,4 @@ use Cake\ORM\Entity;
  */
 class Language extends Entity
 {
-    /**
-     * Accessible fields.
-     *
-     * @var array
-     */
-    protected $_accessible = [
-        '*' => true
-    ];
 }

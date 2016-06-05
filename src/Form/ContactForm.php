@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * Wasabi CMS
+ * Copyright (c) Frank Förster (http://frankfoerster.com)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Wasabi\Core\Form;
 
 use Cake\Event\Event;
@@ -13,7 +23,7 @@ class ContactForm extends Form
     /**
      * The schema definition for the fields of this form.
      *
-     * @param Schema $schema
+     * @param Schema $schema The schema to customize.
      * @return $this
      */
     protected function _buildSchema(Schema $schema)
@@ -27,7 +37,7 @@ class ContactForm extends Form
     /**
      * Validation rules for the submitted fields of this form.
      *
-     * @param Validator $validator
+     * @param Validator $validator The validator to customize.
      * @return $this
      */
     protected function _buildValidator(Validator $validator)
@@ -51,7 +61,7 @@ class ContactForm extends Form
     /**
      * Execute the form's action.
      *
-     * @param array $data
+     * @param array $data The form data.
      * @return bool
      */
     protected function _execute(array $data)

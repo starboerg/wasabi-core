@@ -31,7 +31,7 @@ class FormHelper extends \Cake\View\Helper\FormHelper
      * Process templateVars to wrap info elements in a small tag and
      * apply the "for" attribute to form row labels.
      *
-     * @param array $options
+     * @param array $options The input options
      * @return array
      */
     protected function _processTemplateVars(array $options)
@@ -65,8 +65,8 @@ class FormHelper extends \Cake\View\Helper\FormHelper
      * Get the options array for a label.
      * This handles the optional placement of an info text below the label.
      *
-     * @param string $text
-     * @param null|string $info
+     * @param string $text The label text.
+     * @param null|string $info The optional label info.
      * @return array
      */
     public function getLabel($text, $info = null)
@@ -86,13 +86,13 @@ class FormHelper extends \Cake\View\Helper\FormHelper
     /**
      * Render a grouped time zone select box.
      *
-     * @param string $field
-     * @param array $options
+     * @param string $field The input field name.
+     * @param array $options Additional options for the generated select.
      * @return string
      */
     public function timeZoneSelect($field, array $options = [])
     {
-        $regions = array(
+        $regions = [
             'Europe' => DateTimeZone::EUROPE,
             'America' => DateTimeZone::AMERICA,
             'Africa' => DateTimeZone::AFRICA,
@@ -101,15 +101,13 @@ class FormHelper extends \Cake\View\Helper\FormHelper
             'Atlantic' => DateTimeZone::ATLANTIC,
             'Indian' => DateTimeZone::INDIAN,
             'Pacific' => DateTimeZone::PACIFIC
-        );
-        $timezones = array();
-        foreach ($regions as $name => $mask)
-        {
+        ];
+        $timezones = [];
+        foreach ($regions as $name => $mask) {
             $zones = DateTimeZone::listIdentifiers($mask);
-            foreach($zones as $timezone)
-            {
+            foreach ($zones as $timezone) {
                 // Lets sample the time there right now
-                $time = new DateTime(NULL, new DateTimeZone($timezone));
+                $time = new DateTime(null, new DateTimeZone($timezone));
                 // Us dumb Americans can't handle millitary time
                 // Remove region name and add a sample time
                 $timezones[$name][] = [

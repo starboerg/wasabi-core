@@ -18,8 +18,10 @@ namespace Wasabi\Core\Controller;
 class DashboardController extends BackendAppController
 {
     /**
-     * index action
+     * Index action
      * GET
+     *
+     * @return void
      */
     public function index()
     {

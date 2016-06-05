@@ -1,7 +1,5 @@
 <?php
 /**
- * Flash Component (used for code completion)
- *
  * Wasabi CMS
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
@@ -14,7 +12,7 @@
  */
 namespace Wasabi\Core\Controller\Component;
 
-use \Cake\Controller\Component\FlashComponent as CakeFlashComponent;
+use Cake\Controller\Component\FlashComponent as CakeFlashComponent;
 use Cake\Network\Exception\InternalErrorException;
 
 /**
@@ -27,6 +25,9 @@ use Cake\Network\Exception\InternalErrorException;
  */
 class FlashComponent extends CakeFlashComponent
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __call($name, $args)
     {
         if (count($args) < 1) {

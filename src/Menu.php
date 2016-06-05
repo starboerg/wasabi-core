@@ -1,7 +1,5 @@
 <?php
 /**
- * Menu
- *
  * Wasabi CMS
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
@@ -37,7 +35,8 @@ class Menu
     /**
      * Constructor
      *
-     * @param string $alias
+     * @param string $alias The alias of the menu.
+     * @return Menu
      */
     public function __construct($alias)
     {
@@ -47,9 +46,9 @@ class Menu
     /**
      * Add a new menu item
      *
-     * @param array $options
-     * @return $this
+     * @param array $options The options of the menu item.
      * @throws Exception
+     * @return $this
      */
     public function addMenuItem($options)
     {
@@ -121,8 +120,9 @@ class Menu
     /**
      * Remove a menu item with the given $alias.
      *
-     * @param string $alias
-     * @param null|string $parent
+     * @param string $alias The alias of the menu item.
+     * @param null|string $parent An optional parent menu item.
+     * @return void
      */
     public function removeMenuItem($alias, $parent = null)
     {
@@ -146,7 +146,7 @@ class Menu
     /**
      * Create and return an array clone of menu items ordered by their priority.
      *
-     * @param array $items
+     * @param array $items The menu items to order.
      * @return array
      */
     public function getOrderedArray($items = [])

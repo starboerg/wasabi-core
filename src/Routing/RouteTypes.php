@@ -1,10 +1,23 @@
 <?php
-
+/**
+ * Wasabi CMS
+ * Copyright (c) Frank Förster (http://frankfoerster.com)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
 namespace Wasabi\Core\Routing;
 
-class RouteTypes {
-
-    const TYPE_DEFAULT_ROUTE  = 1;
+/**
+ * Class RouteTypes
+ */
+class RouteTypes
+{
+    const TYPE_DEFAULT_ROUTE = 1;
     const TYPE_REDIRECT_ROUTE = 2;
 
     /**
@@ -23,6 +36,8 @@ class RouteTypes {
 
     /**
      * Initialization
+     *
+     * @return void
      */
     protected static function _init()
     {
@@ -37,7 +52,7 @@ class RouteTypes {
     /**
      * Get the translated name of a route type with the given $routeTypeId.
      *
-     * @param int|string $routeTypeId
+     * @param int|string $routeTypeId The route type id.
      * @return bool|string
      */
     public static function get($routeTypeId)
@@ -46,7 +61,7 @@ class RouteTypes {
             self::_init();
         }
 
-        $routeTypeId = (int) $routeTypeId;
+        $routeTypeId = (int)$routeTypeId;
 
         if (isset(self::$_routeTypes[$routeTypeId])) {
             return self::$_routeTypes[$routeTypeId];

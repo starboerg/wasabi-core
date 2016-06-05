@@ -1,7 +1,5 @@
 <?php
 /**
- * Wasabi Core Backend App Controller
- *
  * Wasabi CMS
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
@@ -64,7 +62,9 @@ class BackendAppController extends AppController
     public $detect;
 
     /**
-     * Initialization hook method
+     * Initialization hook method.
+     *
+     * @return void
      */
     public function initialize()
     {
@@ -118,7 +118,8 @@ class BackendAppController extends AppController
     /**
      * beforeFilter callback
      *
-     * @param Event $event
+     * @param Event $event An Event instance.
+     * @return void
      */
     public function beforeFilter(Event $event)
     {
@@ -134,7 +135,8 @@ class BackendAppController extends AppController
                 $this->request->params['controller'] === 'Users' &&
                 $this->request->params['action'] === 'heartBeat' &&
                 $this->request->session()->check('heartBeatCount')
-            )) {
+            )
+            ) {
                 // reset the heartBeatCount on non-heartBeat requests
                 $this->request->session()->delete('heartBeatCount');
             }
@@ -161,8 +163,8 @@ class BackendAppController extends AppController
      *
      * - setup global view/layout variables
      *
-     * @param Event $event
-     * @return \Cake\Network\Response|null|void
+     * @param Event $event An Event instance.
+     * @return void
      */
     public function beforeRender(Event $event)
     {
@@ -175,7 +177,7 @@ class BackendAppController extends AppController
      * Check if the current request needs an authenticated user.
      * Check if the user is authorized to complete the request.
      *
-     * @param array $user
+     * @param array $user An array holding the current user information.
      * @return bool
      */
     public function isAuthorized($user = null)
@@ -186,6 +188,8 @@ class BackendAppController extends AppController
 
     /**
      * Allow all guest actions.
+     *
+     * @return void
      */
     protected function _allow()
     {
@@ -199,12 +203,14 @@ class BackendAppController extends AppController
      * Set the section css class that is applied to the html body of the action.
      * Format is "prefix--controller-action" where prefix is either "app" or the name of the plugin.
      *
-     * return string
+     * @return void
      */
-    protected function _setSectionCssClass() {
+    protected function _setSectionCssClass()
+    {
         $plugin = $this->request->params['plugin'];
         $prefix = ($plugin !== null) ? $plugin : 'app';
-        $this->set('sectionCssClass',
+        $this->set(
+            'sectionCssClass',
             strtolower(
                 Inflector::slug($prefix) . '--' .
                 preg_replace('/\\//', '--', $this->request->params['controller']) . '-' .
@@ -220,6 +226,6 @@ class BackendAppController extends AppController
      */
     protected function _calculateHeartBeatFrequency()
     {
-        return (int)floor(((int) ini_get('session.gc_maxlifetime')) / 5) * 1000;
+        return (int)floor(((int)ini_get('session.gc_maxlifetime')) / 5) * 1000;
     }
 }

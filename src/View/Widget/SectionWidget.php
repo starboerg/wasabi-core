@@ -16,6 +16,8 @@ use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\WidgetInterface;
 
 /**
+ * Class SectionWidget
+ *
  * Form 'widget' for creating labels.
  *
  * Generally this element is used by other widgets,
@@ -23,7 +25,6 @@ use Cake\View\Widget\WidgetInterface;
  */
 class SectionWidget implements WidgetInterface
 {
-
     /**
      * Templates
      *
@@ -47,6 +48,7 @@ class SectionWidget implements WidgetInterface
      *   Can use the following variables `attrs`, `text` and `input`.
      *
      * @param \Cake\View\StringTemplate $templates Templates list.
+     * @return SectionWidget
      */
     public function __construct($templates)
     {

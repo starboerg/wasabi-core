@@ -13,9 +13,9 @@
 namespace Wasabi\Core\Controller;
 
 use Cake\Core\Configure;
+use Cake\Database\Connection;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Network\Exception\MethodNotAllowedException;
-use Cake\Network\Exception\NotFoundException;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use FrankFoerster\Filter\Controller\Component\FilterComponent;
@@ -121,6 +121,8 @@ class UsersController extends BackendAppController
 
     /**
      * Initialization hook method.
+     *
+     * @return void
      */
     public function initialize()
     {
@@ -132,6 +134,8 @@ class UsersController extends BackendAppController
     /**
      * login action
      * GET | POST
+     *
+     * @return void
      */
     public function login()
     {
@@ -210,16 +214,22 @@ class UsersController extends BackendAppController
     /**
      * logout action
      * GET
+     *
+     * @return void
      */
     public function logout()
     {
         $this->redirect($this->Auth->logout());
+        //@codingStandardIgnoreStart
         return;
+        //@codingStandardIgnoreEnd
     }
 
     /**
-     * register action
+     * Register action
      * GET | POST
+     *
+     * @return void
      */
     public function register()
     {
@@ -242,8 +252,10 @@ class UsersController extends BackendAppController
     }
 
     /**
-     * index action
+     * Index action
      * GET
+     *
+     * @return void
      */
     public function index()
     {
@@ -257,6 +269,8 @@ class UsersController extends BackendAppController
     /**
      * Add action
      * GET | POST
+     *
+     * @return void
      */
     public function add()
     {
@@ -287,7 +301,8 @@ class UsersController extends BackendAppController
      * Edit action
      * GET | PUT
      *
-     * @param string $id
+     * @param string $id The user id.
+     * @return void
      */
     public function edit($id)
     {
@@ -332,7 +347,8 @@ class UsersController extends BackendAppController
      * Delete action
      * POST
      *
-     * @param string $id
+     * @param string $id The user id.
+     * @return void
      */
     public function delete($id)
     {
@@ -348,14 +364,17 @@ class UsersController extends BackendAppController
         }
 
         $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
+        //@codingStandardIgnoreStart
         return;
+        //@codingStandardIgnoreEnd
     }
 
     /**
      * Verify action
      * GET | POST | PUT
      *
-     * @param string $id
+     * @param string $id The user id.
+     * @return void
      */
     public function verify($id)
     {
@@ -380,7 +399,6 @@ class UsersController extends BackendAppController
             } else {
                 $this->Flash->error($this->dbErrorMessage);
             }
-
         }
 
         $this->set([
@@ -391,6 +409,8 @@ class UsersController extends BackendAppController
     /**
      * HeartBeat action
      * AJAX POST
+     *
+     * @return void
      */
     public function heartBeat()
     {
@@ -425,6 +445,8 @@ class UsersController extends BackendAppController
     /**
      * Profile action
      * GET | PUT
+     *
+     * @return void
      */
     public function profile()
     {
@@ -455,10 +477,11 @@ class UsersController extends BackendAppController
     }
 
     /**
-     * activate action
+     * Activate action
      * GET | POST | PUT
      *
-     * @param string $id
+     * @param string $id The user id.
+     * @return void
      */
     public function activate($id)
     {
@@ -496,10 +519,11 @@ class UsersController extends BackendAppController
     }
 
     /**
-     * deactivate action
+     * Deactivate action
      * GET | POST | PUT
      *
-     * @param string $id
+     * @param string $id The user id.
+     * @return void
      */
     public function deactivate($id)
     {
@@ -532,8 +556,12 @@ class UsersController extends BackendAppController
     }
 
     /**
+     * Unauthorized action
+     *
      * This action is called whenever a user tries to access a controller action
      * without the proper access rights.
+     *
+     * @return void
      */
     public function unauthorized()
     {
@@ -542,6 +570,8 @@ class UsersController extends BackendAppController
     /**
      * requestNewVerificationEmail action
      * GET | POST
+     *
+     * @return void
      */
     public function requestNewVerificationEmail()
     {
@@ -579,6 +609,8 @@ class UsersController extends BackendAppController
     /**
      * lostPassword action
      * GET | POST
+     *
+     * @return void
      */
     public function lostPassword()
     {
@@ -617,7 +649,8 @@ class UsersController extends BackendAppController
      * resetPassword action
      * GET | POST
      *
-     * @param string $tokenString
+     * @param string $tokenString The reset password token.
+     * @return void
      */
     public function resetPassword($tokenString)
     {
@@ -637,16 +670,18 @@ class UsersController extends BackendAppController
 
         if ($this->request->is('put') && !empty($this->request->data)) {
             $user = $this->Users->patchEntity($user, $this->request->data, ['validate' => 'passwordOnly']);
-            $this->Users->connection()->begin();
+            /** @var Connection $connection */
+            $connection = $this->Users->connection();
+            $connection->begin();
             if ($this->Users->save($user)) {
                 $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_LOST_PASSWORD);
-                $this->Users->connection()->commit();
+                $connection->commit();
 
                 $this->Flash->success(__d('wasabi_core', 'Your password has been changed successfully.'));
                 $this->redirect(['action' => 'login']);
                 return;
             } else {
-                $this->Users->connection()->rollback();
+                $connection->rollback();
                 $this->Flash->error($this->formErrorMessage);
             }
         }
@@ -658,7 +693,8 @@ class UsersController extends BackendAppController
      * verifyByToken action
      * GET
      *
-     * @param string $tokenString
+     * @param string $tokenString The verification token.
+     * @return void
      */
     public function verifyByToken($tokenString)
     {
@@ -669,18 +705,20 @@ class UsersController extends BackendAppController
         }
 
         /** @var Token $token */
-        if ($tokenString && !!($token = $this->Tokens->findByToken($tokenString)) &&
+        if ($tokenString && (bool)($token = $this->Tokens->findByToken($tokenString)) &&
             !$token->hasExpired() && !$token->used
         ) {
             /** @var User $user */
             $user = $this->Users->get($token->user_id);
 
-            $this->Users->connection()->begin();
+            /** @var Connection $connection */
+            $connection = $this->Users->connection();
+            $connection->begin();
             if ($this->Users->verify($user)) {
                 $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_EMAIL_VERIFICATION);
-                $this->Users->connection()->commit();
+                $connection->commit();
             } else {
-                $this->Users->connection()->rollback();
+                $connection->rollback();
             }
         }
 

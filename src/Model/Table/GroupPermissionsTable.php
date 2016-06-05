@@ -19,6 +19,7 @@ use Wasabi\Core\Model\Entity\GroupPermission;
 
 /**
  * Class GroupPermissionsTable
+ *
  * @property GroupsTable Groups
  * @package Wasabi\Core\Model\Table
  */
@@ -34,7 +35,8 @@ class GroupPermissionsTable extends Table
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config Configuration options passed to the constructor
+     * @param array $config Configuration options passed to the constructor.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -48,7 +50,7 @@ class GroupPermissionsTable extends Table
     /**
      * Find all permissions for a specific $groupId.
      *
-     * @param array|string $groupId
+     * @param array|string $groupId A single group id or an array of group ids.
      * @return array|mixed
      */
     public function findAllForGroup($groupId)
@@ -84,7 +86,7 @@ class GroupPermissionsTable extends Table
     /**
      * Get all permissions paths (Plugin.Controller.action) for a specific $groupId.
      *
-     * @param string $groupId
+     * @param string $groupId The group id.
      * @return array of permission paths
      */
     public function getAllPermissionPathsForGroup($groupId)
@@ -102,8 +104,9 @@ class GroupPermissionsTable extends Table
      * Create all missing permissions for a specific $groupId and the
      * supplied $actionMap.
      *
-     * @param string $groupId
-     * @param array $actionMap
+     * @param string $groupId The group id to create missing permissions for.
+     * @param array $actionMap The action map.
+     * @return void
      */
     public function createMissingPermissions($groupId, array $actionMap)
     {
@@ -135,8 +138,9 @@ class GroupPermissionsTable extends Table
      * Delete all permission for a $groupId for paths (Plugin.Controller.action)
      * that are no longer present in the codebase.
      *
-     * @param string $groupId
-     * @param array $actionMap
+     * @param string $groupId The group id.
+     * @param array $actionMap The action map.
+     * @return void
      */
     public function deleteOrphans($groupId, array $actionMap)
     {
@@ -161,7 +165,9 @@ class GroupPermissionsTable extends Table
     {
         $existingGroupPermissions = $this->find('all')->combine(
             'path',
-            function ($entity) { return $entity; },
+            function ($entity) {
+                return $entity;
+            },
             'group_id'
         );
         return $existingGroupPermissions;
@@ -170,9 +176,9 @@ class GroupPermissionsTable extends Table
     /**
      * Create a new GroupPermission entity for the provided $groupId, $path and $allowed setting.
      *
-     * @param integer $groupId
-     * @param string $path
-     * @param bool|integer $allowed
+     * @param int $groupId The group id
+     * @param string $path The plugin controller action path.
+     * @param bool|int $allowed The access level.
      * @return GroupPermission
      */
     public function newEntityFor($groupId, $path, $allowed)

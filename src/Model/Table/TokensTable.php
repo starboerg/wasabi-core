@@ -27,7 +27,6 @@ use Wasabi\Core\Model\Entity\User;
  */
 class TokensTable extends Table
 {
-
     const TYPE_EMAIL_VERIFICATION = 'email_verification';
     const TYPE_LOST_PASSWORD = 'lost_password';
 
@@ -45,7 +44,8 @@ class TokensTable extends Table
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config Configuration options passed to the constructor
+     * @param array $config Configuration options passed to the constructor.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -60,8 +60,8 @@ class TokensTable extends Table
     /**
      * Check if a token already exists.
      *
-     * @param $token
-     * @param bool $returnQuery
+     * @param string $token The token to check for.
+     * @param bool $returnQuery Whether to return or execute the query.
      * @return Query The Token Query or an empty Entity if none is found
      */
     public function tokenExists($token, $returnQuery = false)
@@ -79,7 +79,7 @@ class TokensTable extends Table
     /**
      * Generate a new unique token for an existing user.
      *
-     * @param User $user
+     * @param User $user The user to generate a token for.
      * @param string $tokenType The type of token to be generated. Always make sure to supply this param as a constant
      *                                                             e.g. Token::TYPE_EMAIL_VERIFICATION
      * @return string A 32 character long randomized token
@@ -92,7 +92,7 @@ class TokensTable extends Table
 
         do {
             $token = md5(microtime(true) . Configure::read('Security.salt') . $user->get('id') . $user->get('email'));
-        } while ((boolean)$this->tokenExists($token));
+        } while ((bool)$this->tokenExists($token));
 
         $this->save(
             new Entity([
@@ -109,8 +109,8 @@ class TokensTable extends Table
     /**
      * Check if the supplied token is valid and exists in the database.
      *
-     * @param string $token
-     * @param bool $returnQuery
+     * @param string $token The token to check.
+     * @param bool $returnQuery Whether to return or execute the query.
      * @return bool|Query The Token Query if it is valid and exists, an empty array otherwise.
      */
     public function isValid($token, $returnQuery = false)
@@ -124,7 +124,7 @@ class TokensTable extends Table
     /**
      * Find a token entity by the given token string. (including User entity)
      *
-     * @param string $token
+     * @param string $token The token to find.
      * @return Token|mixed
      */
     public function findByToken($token)
@@ -140,7 +140,7 @@ class TokensTable extends Table
     /**
      * Mark a token as "used".
      *
-     * @param Token $token
+     * @param Token $token The token to mark as "used".
      * @return EntityInterface
      */
     public function useToken($token)
@@ -153,8 +153,8 @@ class TokensTable extends Table
      * Marks every token of type ($tokenType) for a specific user ($userId)
      * as used (used => true).
      *
-     * @param $userId
-     * @param $tokenType
+     * @param int|string $userId The user id.
+     * @param string $tokenType The token type.
      * @return int Number of updated rows.
      */
     public function invalidateExistingTokens($userId, $tokenType)

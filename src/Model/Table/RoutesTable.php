@@ -28,7 +28,8 @@ class RoutesTable extends Table
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config Configuration options passed to the constructor
+     * @param array $config Configuration options passed to the constructor.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -38,9 +39,10 @@ class RoutesTable extends Table
     /**
      * Called after an entity is saved.
      *
-     * @param Event $event
-     * @param Route $entity
-     * @param ArrayObject $options
+     * @param Event $event An event instance.
+     * @param Route $entity The entity that triggered the event.
+     * @param ArrayObject $options Additional options passed to the save call.
+     * @return void
      */
     public function afterSave(Event $event, Route $entity, ArrayObject $options)
     {
@@ -51,7 +53,7 @@ class RoutesTable extends Table
     /**
      * Check wheter a route with the given $url already exists.
      *
-     * @param string $url
+     * @param string $url The url to check.
      * @return bool
      */
     public function routeAlreadyExists($url)
@@ -68,9 +70,9 @@ class RoutesTable extends Table
     /**
      * Get the default route for an entity $table + $foreignId for the given language $languageId.
      *
-     * @param string $model
-     * @param int $foreignKey
-     * @param int $languageId
+     * @param string $model The model name.
+     * @param int $foreignKey The foreign key of the model instance.
+     * @param int $languageId The language id.
      * @return bool|array
      */
     public function getDefaultRoute($model, $foreignKey, $languageId)
@@ -92,10 +94,10 @@ class RoutesTable extends Table
     /**
      * Get all other routes for the given $table and $foreignId except the route with id = $id.
      *
-     * @param int $id
-     * @param string $model
-     * @param int $foreignKey
-     * @param int $languageId
+     * @param int $id The route id to exclude.
+     * @param string $model The model name.
+     * @param int $foreignKey The foreign key of the model instance.
+     * @param int $languageId The language id.
      * @return Query
      */
     public function getOtherRoutesExcept($id, $model, $foreignKey, $languageId)
@@ -114,8 +116,9 @@ class RoutesTable extends Table
     /**
      * Redirect the given $routes to the route with id = $id.
      *
-     * @param Route[]|Query|ResultSetInterface $routes
-     * @param int $id
+     * @param Route[]|Query|ResultSetInterface $routes The routes to redirect.
+     * @param int $id The route id to redirect the routes to.
+     * @return void
      */
     public function redirectRoutesToId($routes, $id)
     {
@@ -131,9 +134,9 @@ class RoutesTable extends Table
     /**
      * Find all routes that match the given $table, $foreignId and $languageId.
      *
-     * @param string $model
-     * @param int $foreignKey
-     * @param int $languageId
+     * @param string $model The model name.
+     * @param int $foreignKey The foreign key of the model instance.
+     * @param int $languageId The language id.
      * @return Query
      */
     public function findAllFor($model, $foreignKey, $languageId)

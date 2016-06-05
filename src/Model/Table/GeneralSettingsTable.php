@@ -11,10 +11,11 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Model\Table;
-use Cake\ORM\Entity;
-use Cake\Validation\Validator;
+
 use ArrayObject;
 use Cake\Event\Event;
+use Cake\ORM\Entity;
+use Cake\Validation\Validator;
 use Wasabi\Core\Model\Entity\Setting;
 
 /**
@@ -28,7 +29,8 @@ class GeneralSettingsTable extends SettingsTable
     /**
      * Initialize a table instance. Called after the constructor.
      *
-     * @param array $config Configuration options passed to the constructor
+     * @param array $config Configuration options passed to the constructor.
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -44,7 +46,7 @@ class GeneralSettingsTable extends SettingsTable
     /**
      * Default validation rules.
      *
-     * @param Validator $validator
+     * @param Validator $validator The validator to customize.
      * @return Validator
      */
     public function validationDefault(Validator $validator)
@@ -82,9 +84,10 @@ class GeneralSettingsTable extends SettingsTable
      * Called before an entity is saved.
      * Strips unallowed tags from 'Login__Message__text'
      *
-     * @param Event $event
-     * @param Setting $setting
-     * @param ArrayObject $options
+     * @param Event $event An event instance.
+     * @param Setting $setting The entity the event is triggered on.
+     * @param ArrayObject $options Options passed to the save call.
+     * @return void
      */
     public function beforeSave(Event $event, Setting $setting, ArrayObject $options)
     {
