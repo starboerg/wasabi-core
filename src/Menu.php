@@ -36,7 +36,6 @@ class Menu
      * Constructor
      *
      * @param string $alias The alias of the menu.
-     * @return Menu
      */
     public function __construct($alias)
     {

@@ -43,7 +43,6 @@ class InfoWidget implements WidgetInterface
      *   Can use the following variables `attrs`, `text` and `input`.
      *
      * @param \Cake\View\StringTemplate $templates Templates list.
-     * @return InfoWidget
      */
     public function __construct($templates)
     {

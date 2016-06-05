@@ -48,7 +48,6 @@ class SectionWidget implements WidgetInterface
      *   Can use the following variables `attrs`, `text` and `input`.
      *
      * @param \Cake\View\StringTemplate $templates Templates list.
-     * @return SectionWidget
      */
     public function __construct($templates)
     {
