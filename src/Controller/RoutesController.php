@@ -28,6 +28,7 @@ class RoutesController extends BackendAppController
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
+        $this->loadModel('Wasabi/Core.Routes');
     }
 
     /**
@@ -52,11 +53,11 @@ class RoutesController extends BackendAppController
         $routeType = (int)$this->request->data('route_type');
         $element = $this->request->data('element');
 
-        if (empty($model) || !$foreignKey || empty($url) || !RouteTypes::get($routeType) || empty($element)) {
+        if (empty($model) || !$foreignKey || !RouteTypes::get($routeType) || empty($element)) {
             throw new BadRequestException();
         }
 
-        if (substr($url, 0, 1) !== '/') {
+        if (!empty($url) && substr($url, 0, 1) !== '/') {
             $url = '/' . $url;
         }
 
@@ -69,16 +70,16 @@ class RoutesController extends BackendAppController
 
         switch ($routeType) {
             case RouteTypes::TYPE_DEFAULT_ROUTE:
-                $this->_addDefaultRoute($routeData);
+                $route = $this->_addDefaultRoute($routeData);
                 break;
             case RouteTypes::TYPE_REDIRECT_ROUTE:
-                $this->_addRedirectRoute($routeData);
+                $route = $this->_addRedirectRoute($routeData);
                 break;
             default:
                 throw new BadRequestException();
         }
 
-        $this->_render($model, $foreignKey, $languageId, $element);
+        $this->_render($model, $foreignKey, $languageId, $element, $route ?? null);
     }
 
     /**
@@ -179,9 +180,10 @@ class RoutesController extends BackendAppController
      * @param int $foreignKey The foreign key of the entity.
      * @param int $languageId The language id.
      * @param string $element The name of the view element.
+     * @param Route|null $route The route.
      * @return void
      */
-    protected function _render($model, $foreignKey, $languageId, $element)
+    protected function _render($model, $foreignKey, $languageId, $element, $route = null)
     {
         $routes = $this->Routes
             ->findAllFor($model, $foreignKey, $languageId)
@@ -191,7 +193,8 @@ class RoutesController extends BackendAppController
             'routes' => $routes,
             'routeTypes' => RouteTypes::getForSelect(),
             'model' => $model,
-            'element' => $element
+            'element' => $element,
+            'formRoute' => $route
         ]);
 
         $this->render('add');
@@ -201,7 +204,7 @@ class RoutesController extends BackendAppController
      * Add a new default route.
      *
      * @param array $routeData The route data.
-     * @return void
+     * @return Route
      */
     protected function _addDefaultRoute(array $routeData)
     {
@@ -210,7 +213,8 @@ class RoutesController extends BackendAppController
         $connection->begin();
 
         // Save the new default route.
-        $defaultRoute = new Route($routeData);
+        $defaultRoute = $this->Routes->newEntity($routeData);
+
         if ($this->Routes->save($defaultRoute)) {
             // Make all other routes for this model + foreignKey + languageId
             // redirect to the new default route.
@@ -223,31 +227,39 @@ class RoutesController extends BackendAppController
         } else {
             $connection->rollback();
             $this->Flash->error($this->formErrorMessage, 'routes');
+            $defaultRoute->set('type', RouteTypes::TYPE_DEFAULT_ROUTE);
         }
+
+        return $defaultRoute;
     }
 
     /**
      * Add a new redirect route.
      *
      * @param array $routeData The route data.
-     * @return void
+     * @return Route
      */
     protected function _addRedirectRoute($routeData)
     {
         $defaultRoute = $this->Routes->getDefaultRoute($routeData['model'], $routeData['foreign_key'], $routeData['language_id']);
 
-        if (!empty($defaultRoute)) {
-            $routeData['redirect_to'] = $defaultRoute['id'];
-            $routeData['status_code'] = 301;
+        $redirectRoute = $this->Routes->newEntity($routeData);
 
-            if ($this->Routes->save(new Route($routeData))) {
+        if (!empty($defaultRoute)) {
+            $redirectRoute->set('redirect_to', $defaultRoute['id']);
+            $redirectRoute->set('status_code', 301);
+            if ($this->Routes->save($redirectRoute)) {
                 $this->Flash->success(__d('wasabi_core', 'New redirect URL <strong>{0}</strong> has been added.', $routeData['url']), 'routes');
                 $this->request->data = [];
             } else {
                 $this->Flash->error($this->formErrorMessage, 'routes');
+                $redirectRoute->set('type', RouteTypes::TYPE_REDIRECT_ROUTE);
             }
         } else {
             $this->Flash->error(__d('wasabi_core', 'Please create a default route first.'), 'routes');
+            $redirectRoute->set('type', RouteTypes::TYPE_REDIRECT_ROUTE);
         }
+
+        return $redirectRoute;
     }
 }

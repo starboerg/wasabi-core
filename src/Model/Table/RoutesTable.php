@@ -17,7 +17,9 @@ use Cake\Cache\Cache;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Validation\Validator;
 use Wasabi\Core\Model\Entity\Route;
 
 /**
@@ -34,6 +36,30 @@ class RoutesTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param Validator $validator The validator to customize.
+     * @return Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        return $validator
+            ->notEmpty('url', __d('wasabi_core', 'Please enter a url for this route.'));
+    }
+
+    /**
+     * Build Rules.
+     *
+     * @param RulesChecker $rules The rules checker to customize.
+     * @return RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['url'], __d('wasabi_core', 'This url is already taken.')));
+        return $rules;
     }
 
     /**

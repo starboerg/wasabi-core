@@ -2372,6 +2372,110 @@ table.list tbody .col-actions > a:first-child,
     transform: rotate(360deg);
   }
 }
+.toggle-switch {
+  position: relative;
+  display: block;
+}
+.toggle-switch:before,
+.toggle-switch:after {
+  content: "";
+  display: table;
+}
+.toggle-switch:after {
+  clear: both;
+}
+.lt-ie7 .toggle-switch {
+  zoom: 1;
+}
+.toggle-switch a {
+  display: block;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+.toggle-switch label,
+.toggle-switch > span {
+  line-height: 2em;
+  vertical-align: middle;
+}
+.toggle-switch input:focus ~ span a,
+.toggle-switch input:focus + label {
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
+}
+.toggle-switch input {
+  position: absolute;
+  opacity: 0;
+  z-index: 3;
+}
+.toggle-switch input ~ span a + span {
+  color: #333333;
+}
+.toggle-switch input ~ span a + span + span {
+  color: #fff;
+}
+.toggle-switch input:checked ~ span a {
+  right: 50%;
+}
+.toggle-switch input:checked ~ span a + span {
+  color: #fff;
+}
+.toggle-switch input:checked ~ span a + span + span {
+  color: #333333;
+}
+.toggle-switch strong {
+  font-weight: inherit;
+}
+.toggle-switch > span {
+  position: relative;
+  display: block;
+  min-height: 2em;
+  padding: 0;
+  text-align: left;
+  background-color: #fcfcfc;
+  border: 1px solid #e3e5e6;
+}
+.toggle-switch span span {
+  position: relative;
+  display: block;
+  float: left;
+  width: 50%;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: color 0.2s;
+  -moz-transition: color 0.2s;
+  -o-transition: color 0.2s;
+  transition: color 0.2s;
+}
+.toggle-switch a {
+  position: absolute;
+  right: 0;
+  top: -1px;
+  display: block;
+  width: 50%;
+  bottom: -1px;
+  padding: 0;
+  background-color: #3e5d79;
+}
+@media only screen and (-webkit-max-device-pixel-ratio: 2) and (max-device-width: 1280px) {
+  .toggle-switch {
+    -webkit-animation: webkitSiblingBugfix infinite 1s;
+  }
+}
+@-webkit-keyframes webkitSiblingBugfix {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+}
 .support {
   background-color: #efefef;
 }

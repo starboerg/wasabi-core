@@ -14,6 +14,14 @@ define(function(require) {
       this.tabifyId = this.$el.attr('data-tabify-id');
       this.$listItems = this.$('> li');
       this.$tabs = $('div[data-tabify-tab]').filter('[data-tabify-id="' + this.tabifyId + '"]');
+
+      var target = window.location.hash.split('#')[1] || null;
+      var $activeItem = this.$listItems.filter('[data-tabify-target="' + target + '"]:not([data-tabify-disabled="1"])');
+      if ($activeItem.length > 0) {
+        $activeItem.find('a').trigger('click');
+      } else {
+        this.$listItems.first().addClass('active');
+      }
     },
 
     onClick: function(event) {
@@ -39,6 +47,7 @@ define(function(require) {
       this.$listItems.removeClass('active');
       this.$tabs.removeClass('active').hide();
       this.$tabs.filter('[data-tabify-tab="' + target + '"]').addClass('active').show();
+      window.history.replaceState(null, null, '#' + target);
 
       $$.addClass('active');
     }
