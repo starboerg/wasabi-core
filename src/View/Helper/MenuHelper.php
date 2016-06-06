@@ -18,6 +18,7 @@ use Cake\View\Helper;
  * Class MenuHelper
  *
  * @property GuardianHelper $Guardian
+ * @property HtmlHelper $Html
  */
 class MenuHelper extends Helper
 {
@@ -70,55 +71,20 @@ class MenuHelper extends Helper
     {
         $out = '';
         foreach ($items as $item) {
-            $cls = [];
-            if (isset($item['active']) && $item['active'] === true) {
-                $cls[] = $activeClass;
-            }
             $subNavActiveClass = '';
-            if (isset($item['open']) && $item['open'] === true) {
-                $cls[] = $openClass;
-                $subNavActiveClass .= ' in';
-            }
+            $cls = $this->_buildClasses($item, $activeClass, $openClass, $subNavActiveClass);
+
             $itemOut = '<li' . ((count($cls) > 0) ? ' class="' . join(' ', $cls) . '"' : '') . '>';
 
-            $options = isset($item['linkOptions']) ? $item['linkOptions'] : [];
-
-            $item['name'] = '<span class="item-name">' . $item['name'] . '</span>';
-
-            if (isset($item['icon'])) {
-                $item['name'] = '<i class="' . $item['icon'] . '"></i>' . $item['name'];
+            $itemLink = $this->_renderItemLink($item);
+            if ($itemLink === '') {
+                continue;
             }
 
-            $options['escape'] = false;
+            $itemOut .= $itemLink;
+            $itemOut .= $this->_renderChildren($item, $subNavClass, $subNavActiveClass);
+            $itemOut .= '</li>';
 
-            if (isset($item['url'])) {
-                $itemLink = $this->Guardian->protectedLink($item['name'], $item['url'], $options);
-                if ($itemLink !== '') {
-                    $itemOut .= $itemLink;
-                } else {
-                    $itemOut = '';
-                }
-            } else {
-                if (isset($item['children']) && !empty($item['children'])) {
-                    $item['name'] .= ' <i class="icon-arrow-left"></i>';
-                    $item['name'] .= ' <i class="icon-arrow-down"></i>';
-                }
-                $itemOut .= $this->Html->link($item['name'], 'javascript:void(0)', $options);
-            }
-
-            if (isset($item['children']) && !empty($item['children'])) {
-                $itemOut .= '<ul class="' . $subNavClass . $subNavActiveClass . '">';
-                $nestedOut = $this->renderNested($item['children']);
-                if ($nestedOut !== '') {
-                    $itemOut .= $nestedOut;
-                    $itemOut .= '</ul>';
-                } else {
-                    $itemOut = '';
-                }
-            }
-            if ($itemOut !== '') {
-                $itemOut .= '</li>';
-            }
             $out .= $itemOut;
         }
 
@@ -155,5 +121,134 @@ class MenuHelper extends Helper
         }
 
         return $output;
+    }
+
+    /**
+     * Build the css classes for a menu item.
+     *
+     * @param array $item The menu item.
+     * @param string $activeClass The active css class.
+     * @param string $openClass The open css class.
+     * @param string $subNavActiveClass The sub navigation active css class.
+     * @return array An array of applied css classes.
+     */
+    protected function _buildClasses($item, $activeClass, $openClass, &$subNavActiveClass)
+    {
+        $cls = [];
+
+        if ($this->_isActive($item)) {
+            $cls[] = $activeClass;
+        }
+
+        if ($this->_isOpen($item)) {
+            $cls[] = $openClass;
+            $subNavActiveClass .= ' in';
+        }
+
+        return $cls;
+    }
+
+    /**
+     * Check if the menu item is active.
+     *
+     * @param array $item The menu item.
+     * @return bool
+     */
+    protected function _isActive($item)
+    {
+        return (isset($item['active']) && $item['active'] === true);
+    }
+
+    /**
+     * Check if the menu item is open.
+     *
+     * @param array $item The menu item.
+     * @return bool
+     */
+    protected function _isOpen($item)
+    {
+        return (isset($item['open']) && $item['open'] === true);
+    }
+
+    /**
+     * Check if the menu item has children.
+     *
+     * @param array $item The menu item.
+     * @return bool
+     */
+    protected function _hasChildren($item)
+    {
+        return (isset($item['children']) && !empty($item['children']));
+    }
+
+    /**
+     * Render the icon of the menu item.
+     *
+     * @param array $item The menu item.
+     * @return string
+     */
+    protected function _renderIcon($item)
+    {
+        if (!isset($item['icon'])) {
+            return '';
+        }
+        return '<i class="' . $item['icon'] . '"></i>';
+    }
+
+    /**
+     * Render the name of the menu item.
+     *
+     * @param array $item The menu item.
+     * @return string
+     */
+    protected function _renderName($item)
+    {
+        return '<span class="item-name">' . $item['name'] . '</span>';
+    }
+
+    /**
+     * Render the item link of the menu item.
+     *
+     * @param array $item The menu item.
+     * @return string
+     */
+    protected function _renderItemLink($item)
+    {
+        $linkText = $this->_renderIcon($item) . $this->_renderName($item);
+        $options = $item['linkOptions'] ?? [];
+        $options['escape'] = false;
+
+        if (isset($item['url'])) {
+            $itemLink = $this->Guardian->protectedLink($linkText, $item['url'], $options);
+        } else {
+            if ($this->_hasChildren($item)) {
+                $linkText .= ' <i class="icon-arrow-left"></i>';
+                $linkText .= ' <i class="icon-arrow-down"></i>';
+            }
+            $itemLink = $this->Html->link($linkText, 'javascript:void(0)', $options);
+        }
+        return $itemLink;
+    }
+
+    /**
+     * Render the subnavigation of the menu item.
+     *
+     * @param array $item The menu item.
+     * @param string $subNavClass The subnavigation class.
+     * @param string $subNavActiveClass The subnavigation active class.
+     * @return string
+     */
+    protected function _renderChildren($item, $subNavClass, $subNavActiveClass)
+    {
+        if (!$this->_hasChildren($item)) {
+            return '';
+        }
+
+        $nestedOut = $this->renderNested($item['children']);
+        if ($nestedOut === '') {
+            return '';
+        }
+
+        return '<ul class="' . $subNavClass . $subNavActiveClass . '">' . $nestedOut . '</ul>';
     }
 }
