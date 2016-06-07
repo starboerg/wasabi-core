@@ -72,7 +72,7 @@ class RoutesTable extends Table
      */
     public function afterSave(Event $event, Route $entity, ArrayObject $options)
     {
-        Cache::clearGroup('wasabi/core/routes');
+        Cache::clear(false, 'wasabi/core/routes');
         $this->eventManager()->dispatch(new Event('Wasabi.Routes.changed'));
     }
 
