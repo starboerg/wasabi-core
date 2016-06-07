@@ -1160,6 +1160,12 @@ label small {
   font-weight: 400;
   font-size: 80%;
 }
+label code {
+  margin: 0 1px;
+  padding: 3px 5px 2px;
+  font-size: 13px;
+  background: rgba(0, 0, 0, 0.07);
+}
 label:empty {
   visibility: hidden;
 }
@@ -1304,6 +1310,9 @@ div.error-message > ul {
 .form-row.form-row-checkbox .field > label input[type="checkbox"] {
   position: relative;
   top: 1px;
+}
+.form-row.form-row-toggleSwitch .field {
+  padding-top: 23px;
 }
 .form-row.last-of-section {
   border-bottom: 1px solid #d5d7d7;
