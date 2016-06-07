@@ -213,16 +213,17 @@ class RoutesController extends BackendAppController
         $connection->begin();
 
         // Save the new default route.
+        /** @var Route $defaultRoute */
         $defaultRoute = $this->Routes->newEntity($routeData);
 
         if ($this->Routes->save($defaultRoute)) {
             // Make all other routes for this model + foreignKey + languageId
             // redirect to the new default route.
-            $otherRoutes = $this->Routes->getOtherRoutesExcept($defaultRoute->id, $routeData['model'], $routeData['foreign_key'], $routeData['language_id']);
+            $otherRoutes = $this->Routes->getOtherRoutesExcept($defaultRoute->id, $defaultRoute->model, $defaultRoute->foreign_key, $defaultRoute->language_id);
             $this->Routes->redirectRoutesToId($otherRoutes, $defaultRoute->id);
 
             $connection->commit();
-            $this->Flash->success(__d('wasabi_core', 'New default URL <strong>{0}</strong> has been added.', $routeData['url']), 'routes');
+            $this->Flash->success(__d('wasabi_core', 'New default URL <strong>{0}</strong> has been added.', $defaultRoute->url), 'routes');
             $this->request->data = [];
         } else {
             $connection->rollback();
@@ -241,15 +242,16 @@ class RoutesController extends BackendAppController
      */
     protected function _addRedirectRoute($routeData)
     {
+        /** @var Route $defaultRoute */
         $defaultRoute = $this->Routes->getDefaultRoute($routeData['model'], $routeData['foreign_key'], $routeData['language_id']);
-
+        /** @var Route $redirectRoute */
         $redirectRoute = $this->Routes->newEntity($routeData);
 
         if (!empty($defaultRoute)) {
-            $redirectRoute->set('redirect_to', $defaultRoute['id']);
+            $redirectRoute->set('redirect_to', $defaultRoute->id);
             $redirectRoute->set('status_code', 301);
             if ($this->Routes->save($redirectRoute)) {
-                $this->Flash->success(__d('wasabi_core', 'New redirect URL <strong>{0}</strong> has been added.', $routeData['url']), 'routes');
+                $this->Flash->success(__d('wasabi_core', 'New redirect URL <strong>{0}</strong> has been added.', $redirectRoute->url), 'routes');
                 $this->request->data = [];
             } else {
                 $this->Flash->error($this->formErrorMessage, 'routes');
