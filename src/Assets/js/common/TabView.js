@@ -17,10 +17,13 @@ define(function(require) {
 
       var target = window.location.hash.split('#')[1] || null;
       var $activeItem = this.$listItems.filter('[data-tabify-target="' + target + '"]:not([data-tabify-disabled="1"])');
-      if ($activeItem.length > 0) {
-        $activeItem.find('a').trigger('click');
-      } else {
-        this.$listItems.first().addClass('active');
+      var isActiveClassSet = this.$listItems.filter('.active').length > 0;
+      if (!isActiveClassSet) {
+        if ($activeItem.length > 0) {
+          $activeItem.find('a').trigger('click');
+        } else {
+          this.$listItems.first().addClass('active');
+        }
       }
     },
 
