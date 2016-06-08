@@ -98,7 +98,8 @@ class AppView extends View
                 'templates' => 'Wasabi/Core.form_templates',
                 'widgets' => [
                     'section' => ['Wasabi\Core\View\Widget\SectionWidget'],
-                    'info' => ['Wasabi\Core\View\Widget\InfoWidget']
+                    'info' => ['Wasabi\Core\View\Widget\InfoWidget'],
+                    'toggleSwitch' => ['Wasabi\Core\View\Widget\ToggleSwitchWidget']
                 ]
             ]);
         }

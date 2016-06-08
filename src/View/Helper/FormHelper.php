@@ -119,4 +119,54 @@ class FormHelper extends \Cake\View\Helper\FormHelper
         $options['options'] = $timezones;
         return $this->input($field, $options);
     }
+
+    /**
+     * Creates a toggleSwitch input widget.
+     *
+     * ### Options:
+     *
+     * - `value` - the value of the underlaying checkbox
+     * - `checked` - boolean to indicate that this toggleSwitch is on.
+     * - `hiddenField` - boolean to indicate if you want the results of toggleSwitch() to include
+     *    a hidden input with a value of ''.
+     * - `disabled` - create a disabled input.
+     * - `default` - Set the default value for the toggleSwitch. This allows you to start toggleSwitches
+     *    as checked, without having to check the POST data. A matching POST data value, will overwrite
+     *    the default value.
+     *
+     * @param string $fieldName Name of a field, like this "modelname.fieldname"
+     * @param array $options Array of HTML attributes.
+     * @return string|array An HTML text input element.
+     */
+    public function toggleSwitch($fieldName, array $options = [])
+    {
+        $options += ['hiddenField' => true, 'value' => 1];
+
+        // Work around value=>val translations.
+        $value = $options['value'];
+        unset($options['value']);
+        $options = $this->_initInputField($fieldName, $options);
+        $options['value'] = $value;
+
+        $output = '';
+        if ($options['hiddenField']) {
+            $hiddenOptions = [
+                'name' => $options['name'],
+                'value' => ($options['hiddenField'] !== true && $options['hiddenField'] !== '_split' ? $options['hiddenField'] : '0'),
+                'form' => isset($options['form']) ? $options['form'] : null,
+                'secure' => false
+            ];
+            if (isset($options['disabled']) && $options['disabled']) {
+                $hiddenOptions['disabled'] = 'disabled';
+            }
+            $output = $this->hidden($fieldName, $hiddenOptions);
+        }
+
+        if ($options['hiddenField'] === '_split') {
+            unset($options['hiddenField'], $options['type']);
+            return ['hidden' => $output, 'input' => $this->widget('checkbox', $options)];
+        }
+        unset($options['hiddenField'], $options['type']);
+        return $output . $this->widget('toggleSwitch', $options);
+    }
 }

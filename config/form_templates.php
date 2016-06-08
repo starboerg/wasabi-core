@@ -11,5 +11,7 @@ return [
     'checkboxFormGroup' => '<label{{formRowFor}}>{{formRowLabel}}{{formRowLabelInfo}}</label><div class="field">{{label}}{{formRowInfo}}</div>',
     'select' => '<select name="{{name}}"{{attrs}}>{{content}}</select>',
     'selectMultiple' => '<select name="{{name}}[]" multiple="multiple"{{attrs}}>{{content}}</select>',
-    'textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>'
+    'textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>',
+    'toggleSwitchFormGroup' => '<label{{formRowFor}}>{{formRowLabel}}{{formRowLabelInfo}}</label><div class="field">{{input}}{{formRowInfo}}</div>',
+    'toggleSwitch' => '{{checkbox}}<span><a></a><span>{{onLabel}}</span><span>{{offLabel}}</span></span>'
 ];
