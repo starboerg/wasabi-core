@@ -1394,6 +1394,11 @@ select.empty {
 select.empty optgroup {
   color: #333333;
 }
+select[disabled="disabled"] {
+  cursor: not-allowed;
+  color: #6d6d6d;
+  background-color: #f0f0f0;
+}
 input[type="radio"] {
   margin-right: 3px;
   cursor: pointer;

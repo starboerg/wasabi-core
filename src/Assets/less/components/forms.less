@@ -290,6 +290,12 @@ select {
       color: @gray-darker;
     }
   }
+
+  &[disabled="disabled"] {
+    cursor: not-allowed;
+    color: @form-input-disabled-color;
+    background-color: @form-input-disabled-bg-color;
+  }
 }
 
 input[type="radio"] {

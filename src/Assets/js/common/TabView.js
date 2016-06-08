@@ -26,6 +26,7 @@ define(function(require) {
 
     onClick: function(event) {
       event.preventDefault();
+      event.stopPropagation();
 
       var $$ = $(event.target);
 
@@ -39,8 +40,9 @@ define(function(require) {
 
       var target = $$.attr('data-tabify-target');
       var disabled = $$.attr('data-tabify-disabled');
+      var active = $$.hasClass('active');
 
-      if (typeof disabled !== 'undefined' && disabled === '1') {
+      if (typeof disabled !== 'undefined' && disabled === '1' || active === true) {
         return false;
       }
 
@@ -48,6 +50,7 @@ define(function(require) {
       this.$tabs.removeClass('active').hide();
       this.$tabs.filter('[data-tabify-tab="' + target + '"]').addClass('active').show();
       window.history.replaceState(null, null, '#' + target);
+      $('body').trigger('tab-changed.' + target);
 
       $$.addClass('active');
     }
