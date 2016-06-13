@@ -48,18 +48,9 @@ class RoutesController extends BackendAppController
         $model = $this->request->data('model');
         $foreignKey = (int)$this->request->data('foreign_key');
         $languageId = Wasabi::contentLanguage()->id;
-        /** @var string|null $url */
-        $url = $this->request->data('url');
+        $url = $this->_formatUrl($this->request->data('url'));
         $routeType = (int)$this->request->data('route_type');
         $element = $this->request->data('element');
-
-        if (empty($model) || !$foreignKey || !RouteTypes::get($routeType) || empty($element)) {
-            throw new BadRequestException();
-        }
-
-        if (!empty($url) && substr($url, 0, 1) !== '/') {
-            $url = '/' . $url;
-        }
 
         $routeData = [
             'url' => $url,
@@ -68,18 +59,9 @@ class RoutesController extends BackendAppController
             'language_id' => $languageId,
         ];
 
-        switch ($routeType) {
-            case RouteTypes::TYPE_DEFAULT_ROUTE:
-                $route = $this->_addDefaultRoute($routeData);
-                break;
-            case RouteTypes::TYPE_REDIRECT_ROUTE:
-                $route = $this->_addRedirectRoute($routeData);
-                break;
-            default:
-                throw new BadRequestException();
-        }
+        $route = $this->_addRoute($routeType, $routeData);
 
-        $this->_render($model, $foreignKey, $languageId, $element, $route ?? null);
+        $this->_render($route, $element);
     }
 
     /**
@@ -117,7 +99,7 @@ class RoutesController extends BackendAppController
             $this->Flash->error($this->dbErrorMessage, 'routes');
         }
 
-        $this->_render($route->model, $route->foreign_key, $route->language_id, $this->request->query('element'));
+        $this->_render($route, $this->request->query('element'));
     }
 
     /**
@@ -170,34 +152,68 @@ class RoutesController extends BackendAppController
             $this->Flash->error(__d('wasabi_core', 'The URL <strong>{0}</strong> cannot be deleted. Please create another URL first.', $route->url), 'routes');
         }
 
-        $this->_render($route->model, $route->foreign_key, $route->language_id, $this->request->query('element'));
+        $this->_render($route, $this->request->query('element'));
     }
 
     /**
      * Global render method for all actions of this controller.
      *
-     * @param string $model The model name.
-     * @param int $foreignKey The foreign key of the entity.
-     * @param int $languageId The language id.
+     * @param Route $route The route.
      * @param string $element The name of the view element.
-     * @param Route|null $route The route.
      * @return void
      */
-    protected function _render($model, $foreignKey, $languageId, $element, $route = null)
+    protected function _render($route, $element)
     {
         $routes = $this->Routes
-            ->findAllFor($model, $foreignKey, $languageId)
+            ->findAllFor($route->model, $route->foreign_key, $route->language_id)
             ->order([$this->Routes->aliasField('url') => 'asc']);
 
         $this->set([
             'routes' => $routes,
             'routeTypes' => RouteTypes::getForSelect(),
-            'model' => $model,
+            'model' => $route->model,
             'element' => $element,
             'formRoute' => $route
         ]);
 
         $this->render('add');
+    }
+
+    /**
+     * Format the given $url.
+     *
+     * @param string $url The url.
+     * @return string
+     */
+    protected function _formatUrl($url)
+    {
+        if (!empty($url) && substr($url, 0, 1) !== '/') {
+            $url = '/' . $url;
+        }
+        return $url;
+    }
+
+    /**
+     * Add the given route.
+     *
+     * @param string $routeType The route type (default/redirect).
+     * @param array $routeData The route data.
+     * @throws BadRequestException
+     * @return Route
+     */
+    protected function _addRoute($routeType, $routeData)
+    {
+        switch ($routeType) {
+            case RouteTypes::TYPE_DEFAULT_ROUTE:
+                $route = $this->_addDefaultRoute($routeData);
+                break;
+            case RouteTypes::TYPE_REDIRECT_ROUTE:
+                $route = $this->_addRedirectRoute($routeData);
+                break;
+            default:
+                throw new BadRequestException();
+        }
+        return $route;
     }
 
     /**
