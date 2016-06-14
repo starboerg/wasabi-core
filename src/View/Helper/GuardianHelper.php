@@ -122,23 +122,4 @@ class GuardianHelper extends HtmlHelper
         $linkOptions = Hash::merge($linkOptions, $options);
         return $this->link($title, $url, $linkOptions);
     }
-
-    /**
-     * Transform the supplied $url into a properly prefixed backend url.
-     *
-     * @param array|string $url The url to transform.
-     * @param bool $rel Whether to generate a relative or absolute url.
-     * @return array|string
-     */
-    protected function _getUrl($url, $rel = false)
-    {
-        if (!is_array($url)) {
-            $url = ltrim($url, '/');
-            $url = '/' . $url;
-        }
-        if ($rel !== false) {
-            $url = Router::url($url);
-        }
-        return $url;
-    }
 }
