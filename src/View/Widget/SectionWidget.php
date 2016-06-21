@@ -72,16 +72,20 @@ class SectionWidget implements WidgetInterface
     public function render(array $data, ContextInterface $context)
     {
         $data += [
+            'class' => '',
             'title' => '',
             'description' => ''
         ];
 
+        $class = !empty($data['class']) ? ' ' . $data['class'] : '';
+
         return $this->_templates->format($this->_sectionTemplate, [
             'title' => $data['title'],
             'description' => $data['description'],
+            'class' => $class,
             'attrs' => $this->_templates->formatAttributes(
                 $data,
-                ['title', 'description']
+                ['class', 'title', 'description']
             )
         ]);
     }
