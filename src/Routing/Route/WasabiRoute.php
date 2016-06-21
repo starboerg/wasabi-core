@@ -75,10 +75,9 @@ class WasabiRoute extends Route
         $Routes = TableRegistry::get('Wasabi/Core.Routes');
 
         $route = $Routes->find()
-            ->where([
-                $Routes->aliasField('page_type') => 'simple',
-                $Routes->aliasField('url') => $url
-            ])
+            ->orWhere([$Routes->aliasField('page_type') => 'collection'])
+            ->orWhere([$Routes->aliasField('page_type') => 'simple'])
+            ->andWhere([$Routes->aliasField('url') => $url])
             ->first();
 
         $pageNumber = false;
@@ -98,8 +97,8 @@ class WasabiRoute extends Route
             if ($pageNumber !== false && $part === self::PAGE_PART) {
                 $route = $Routes->find()->where([
                     $Routes->aliasField('page_type') => 'collection',
-                    $Routes->aliasField('url') => '/' . join('/', $urlParts)
-                ]);
+                    $Routes->aliasField('url') => join('/', $urlParts)
+                ])->first();
             }
         }
 

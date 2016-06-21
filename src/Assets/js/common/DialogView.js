@@ -6,6 +6,8 @@ define(function(require) {
 
   return Marionette.ItemView.extend({
 
+    template: '#wasabi-core-dialog',
+
     templateData: {},
 
     /**
@@ -27,28 +29,28 @@ define(function(require) {
       'click [data-toggle="close"]': 'closeDialog'
     },
 
-    initialize: function() {
-      this.template = _.template($('#wasabi-core-dialog').html());
+    ui: {
+      sidebarLeft: '.dialog-sidebar-left',
+      sidebarRight: '.dialog-sidebar-right',
+      content: '.dialog-content'
     },
 
-    render: function() {
-      if (typeof this.beforeRender === 'function') {
-        this.beforeRender();
-      }
+    initialize: function() {
       if (!this.templateData.sidebarLeft) {
         this.templateData.sidebarLeft = false;
       }
       if (!this.templateData.sidebarRight) {
         this.templateData.sidebarRight = false;
       }
-      this.setElement(this.template(this.templateData));
-      $('body').addClass('dialog-open').append(this.$el);
 
+      this.templateHelpers = function() {
+        return this.templateData
+      }
+    },
+
+    onRender: function () {
+      $('body').addClass('dialog-open');
       $(window).on('keyup', _.bind(this.onKeyup, this));
-
-      this.$sidebarLeft = this.$('.dialog-sidebar-left');
-      this.$sidebarRight = this.$('.dialog-sidebar-right');
-      this.$content = this.$('.dialog-content');
 
       if (typeof this.initDialogContent === 'function') {
         this.initDialogContent();
@@ -56,9 +58,11 @@ define(function(require) {
     },
 
     closeDialog: function() {
+      if (typeof this.beforeClose === 'function') {
+        this.beforeClose();
+      }
       $(window).off('keyup', _.bind(this.onKeyup, this));
       this.destroy();
-      this.remove();
       $('body').removeClass('dialog-open');
     },
 
