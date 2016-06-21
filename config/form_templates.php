@@ -6,7 +6,7 @@ return [
     'inputContainer' => '<div class="form-row form-row-{{type}}{{required}}">{{content}}</div>',
     'inputContainerError' => '<div class="form-row form-row-{{type}}{{required}} error">{{content}}</div>',
     'formGroup' => '{{label}}<div class="field">{{input}}{{info}}{{error}}</div>',
-    'section' => '<div class="form-section"><div class="form-section-title">{{title}}</div><div class="form-section-description">{{description}}</div></div>',
+    'section' => '<div class="form-section"{{attrs}}><div class="form-section-title">{{title}}</div><div class="form-section-description">{{description}}</div></div>',
     'info' => '<div class="form-info"><div class="form-info-content{{class}}">{{text}}</div></div>',
     'checkboxFormGroup' => '<label{{formRowFor}}>{{formRowLabel}}{{formRowLabelInfo}}</label><div class="field">{{label}}{{formRowInfo}}</div>',
     'select' => '<select name="{{name}}"{{attrs}}>{{content}}</select>',

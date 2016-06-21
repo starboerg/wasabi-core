@@ -78,7 +78,11 @@ class SectionWidget implements WidgetInterface
 
         return $this->_templates->format($this->_sectionTemplate, [
             'title' => $data['title'],
-            'description' => $data['description']
+            'description' => $data['description'],
+            'attrs' => $this->_templates->formatAttributes(
+                $data,
+                ['title', 'description']
+            )
         ]);
     }
 
