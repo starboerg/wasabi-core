@@ -187,6 +187,12 @@ define(function(require) {
     });
   }
 
+  function _initInteractionDropdownMenus() {
+    this.$body.on('click', '.dropdown-interaction', function(event) {
+      event.stopPropagation();
+    });
+  }
+
   function _initSections() {
     if (this.$body.hasClass('wasabi-core--languages-index')) {
       WS.createView(require('core/sections/LanguagesIndex'));
@@ -337,6 +343,7 @@ define(function(require) {
       _initModals.call(this);
       _initTabs.call(this);
       _initSections.call(this);
+      _initInteractionDropdownMenus.call(this);
       _initHeartBeat.call(this);
     },
 
