@@ -2,9 +2,8 @@
   "name": "wasabi-cms.core",
   "devDependencies": {
     "bower": "^1.4.1",
-    "grunt": "1.0.*",
-    "grunt-bower-requirejs": "^2.0.0",
-    "grunt-bytesize": "0.2.*",
+    "grunt": "1.*",
+    "grunt-bytesize": "0.*",
     "grunt-contrib-copy": "1.*",
     "grunt-contrib-cssmin": "1.*",
     "grunt-contrib-jshint": "1.*",
@@ -12,8 +11,7 @@
     "grunt-contrib-requirejs": "1.*",
     "grunt-contrib-uglify": "1.*",
     "grunt-contrib-watch": "1.*",
-    "jit-grunt": "~0.10.0",
-    "less-plugin-clean-css": "~1.5.0",
+    "jit-grunt": "0.*",
     "modernizr": "^3.0.0-alpha.4",
     "time-grunt": "^1.2.0"
   }
