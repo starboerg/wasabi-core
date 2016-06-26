@@ -546,6 +546,10 @@ th {
   background-color: #368ee0;
   background-position: 0 -65px;
 }
+.wicon-view {
+  background-color: #666e75;
+  background-position: -20px -65px;
+}
 .wicon-sort {
   background-color: #368ee0;
   background-position: -60px 0;
