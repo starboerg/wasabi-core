@@ -44,8 +44,8 @@ define(function(require) {
       }
 
       this.templateHelpers = function() {
-        return this.templateData
-      }
+        return this.templateData;
+      };
     },
 
     onRender: function () {
