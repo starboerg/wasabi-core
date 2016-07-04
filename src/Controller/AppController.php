@@ -26,6 +26,18 @@ use Wasabi\Core\Model\Table\SettingsTable;
 class AppController extends Controller
 {
     /**
+     * Initialization hook method.
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('Wasabi/Core.Common');
+    }
+
+    /**
      * Called before the controller action. You can use this method to configure and customize components
      * or perform logic that needs to happen before each controller action.
      *
