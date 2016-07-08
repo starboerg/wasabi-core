@@ -117,4 +117,20 @@ trait EnumTrait
     {
         return in_array($value, self::getValues());
     }
+
+    /**
+     * Get the specified $attribute for the given enum $value.
+     *
+     * @param string $attribute The name of the attribute.
+     * @param int|string $value The value of the enum entry.
+     * @return mixed
+     */
+    public static function getAttributeByValue($attribute, $value)
+    {
+        $constant = self::getConstantConfigByValue($value);
+        if (isset($constant[$attribute])) {
+            return $constant[$attribute];
+        }
+        return false;
+    }
 }
