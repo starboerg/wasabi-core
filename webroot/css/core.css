@@ -587,6 +587,10 @@ th {
 .wicon-collapse {
   background-position: -111px 0;
 }
+.wicon-download {
+  background-color: #5c6a7d;
+  background-position: -40px -65px;
+}
 .cursor--help {
   cursor: help;
 }
