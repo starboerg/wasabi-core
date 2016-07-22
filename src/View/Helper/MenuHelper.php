@@ -74,15 +74,19 @@ class MenuHelper extends Helper
             $subNavActiveClass = '';
             $cls = $this->_buildClasses($item, $activeClass, $openClass, $subNavActiveClass);
 
-            $itemOut = '<li' . ((count($cls) > 0) ? ' class="' . join(' ', $cls) . '"' : '') . '>';
-
             $itemLink = $this->_renderItemLink($item);
             if ($itemLink === '') {
                 continue;
             }
 
+            $children = $this->_renderChildren($item, $subNavClass, $subNavActiveClass);
+            if ($this->_hasChildren($item) && empty($children)) {
+                continue;
+            }
+
+            $itemOut = '<li' . ((count($cls) > 0) ? ' class="' . join(' ', $cls) . '"' : '') . '>';
             $itemOut .= $itemLink;
-            $itemOut .= $this->_renderChildren($item, $subNavClass, $subNavActiveClass);
+            $itemOut .= $children;
             $itemOut .= '</li>';
 
             $out .= $itemOut;
