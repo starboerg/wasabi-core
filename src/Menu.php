@@ -60,12 +60,15 @@ class Menu
         $menuItem = [
             'alias' => $options['alias'],
             'name' => $options['name'],
-            'name_short' => $options['name_short'],
             'priority' => $options['priority'],
             'matchAction' => $options['matchAction'] ?? false,
             'doNotMatchAction' => [],
             'linkOptions' => $options['linkOptions'] ?? []
         ];
+
+        if (isset($options['name_short'])) {
+            $menuItem['name_short'] = $options['name_short'];
+        }
 
         if (isset($options['icon'])) {
             $menuItem['icon'] = $options['icon'];
