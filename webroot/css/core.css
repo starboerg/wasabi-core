@@ -591,6 +591,22 @@ th {
   background-color: #5c6a7d;
   background-position: -40px -65px;
 }
+.wicon-lock {
+  background-color: #a2339a;
+  background-position: -60px -65px;
+}
+.wicon-unlock {
+  background-color: #a2339a;
+  background-position: -80px -65px;
+}
+.wicon-update {
+  background-color: #28b6bb;
+  background-position: -100px -65px;
+}
+.wicon-upload {
+  background-color: #9cb800;
+  background-position: 0 -85px;
+}
 .cursor--help {
   cursor: help;
 }
