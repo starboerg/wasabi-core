@@ -60,6 +60,7 @@ class Menu
         $menuItem = [
             'alias' => $options['alias'],
             'name' => $options['name'],
+            'name_short' => $options['name_short'],
             'priority' => $options['priority'],
             'matchAction' => $options['matchAction'] ?? false,
             'doNotMatchAction' => [],

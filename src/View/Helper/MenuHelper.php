@@ -207,7 +207,15 @@ class MenuHelper extends Helper
      */
     protected function _renderName($item)
     {
-        return '<span class="item-name">' . $item['name'] . '</span>';
+        $out = '';
+
+        if (isset($item['name_short'])) {
+            $out .= '<span class="item-name-short">' . $item['name_short'] . '</span>';
+        }
+
+        $out .= '<span class="item-name">' . $item['name'] . '</span>';
+
+        return $out;
     }
 
     /**

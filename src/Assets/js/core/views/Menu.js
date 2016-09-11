@@ -200,6 +200,10 @@ define(function(require) {
       var resizing = !event || (event.type !== 'scroll');
       var menuTop;
 
+      if ($('body').hasClass('backend-nav--is-visible')) {
+        return;
+      }
+
       if (this.isIOS) {
         return;
       }

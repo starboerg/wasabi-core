@@ -21,6 +21,7 @@
   position: fixed;
   margin-top: @header-height;
   width: @sidebar-width;
+  z-index: @zindex-navbar;
 
   .ios &, .safari & {
     .transform(translate3d(0, 0, 1px));
@@ -80,15 +81,19 @@
     }
   }
 
-  .item-name {
+  .item-name, .item-name-short {
     display: inline-block;
     width: 100%;
     padding-right: 10px;
     line-height: 20px;
   }
 
-  [class*="icon-"] + .item-name {
+  [class*="icon-"] ~ .item-name, [class*="icon-"] ~ .item-name-short {
     padding: 11px 16px 0 31px;
+  }
+
+  .item-name-short {
+    display: none;
   }
 
   .sub-nav {
@@ -182,7 +187,7 @@
       line-height: inherit;
     }
 
-    .item-name {
+    .item-name, .item-name-short {
       font-size: 13px;
       padding: 3px 5px 7px !important;
     }
@@ -202,9 +207,13 @@
       }
     }
 
-    [class*="icon-"] + .item-name {
+    [class*="icon-"] ~ .item-name, [class*="icon-"] ~ .item-name-short {
       display: block;
       text-align: center;
+    }
+
+    .item-name-short ~ .item-name {
+      display: none;
     }
 
     .sub-nav {
@@ -251,6 +260,10 @@
 
         .item-name {
           padding: 0 !important;
+        }
+
+        .item-name-short {
+          display: none;
         }
 
         li.active {

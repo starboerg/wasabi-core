@@ -1831,6 +1831,7 @@ body.nav-closed #sidebarbg {
   position: fixed;
   margin-top: 42px;
   width: 189px;
+  z-index: 1000;
 }
 .ios #sidebar,
 .safari #sidebar {
@@ -1884,14 +1885,19 @@ body.nav-closed #sidebar {
 #backend-menu i.icon-arrow-down {
   display: none;
 }
-#backend-menu .item-name {
+#backend-menu .item-name,
+#backend-menu .item-name-short {
   display: inline-block;
   width: 100%;
   padding-right: 10px;
   line-height: 20px;
 }
-#backend-menu [class*="icon-"] + .item-name {
+#backend-menu [class*="icon-"] ~ .item-name,
+#backend-menu [class*="icon-"] ~ .item-name-short {
   padding: 11px 16px 0 31px;
+}
+#backend-menu .item-name-short {
+  display: none;
 }
 #backend-menu .sub-nav a {
   padding: 8px 0 7px 42px;
@@ -1955,7 +1961,8 @@ body.nav-closed #sidebar {
     padding: 0;
     line-height: inherit;
   }
-  #backend-menu .item-name {
+  #backend-menu .item-name,
+  #backend-menu .item-name-short {
     font-size: 13px;
     padding: 3px 5px 7px !important;
   }
@@ -1975,9 +1982,13 @@ body.nav-closed #sidebar {
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
   }
-  #backend-menu [class*="icon-"] + .item-name {
+  #backend-menu [class*="icon-"] ~ .item-name,
+  #backend-menu [class*="icon-"] ~ .item-name-short {
     display: block;
     text-align: center;
+  }
+  #backend-menu .item-name-short ~ .item-name {
+    display: none;
   }
   #backend-menu .sub-nav {
     display: none;
@@ -2016,6 +2027,9 @@ body.nav-closed #sidebar {
   }
   #backend-menu .popout > .sub-nav .item-name {
     padding: 0 !important;
+  }
+  #backend-menu .popout > .sub-nav .item-name-short {
+    display: none;
   }
   #backend-menu .popout > .sub-nav li.active {
     background-color: transparent;
@@ -2072,8 +2086,7 @@ table.list tfoot tr th {
   color: #444;
   text-align: left;
   background-color: #f2f3f4;
-  padding: 0 10px;
-  line-height: 40px;
+  padding: 10px 10px;
 }
 table.list thead tr th:first-child,
 table.list tfoot tr th:first-child {
@@ -2098,6 +2111,10 @@ table.list tfoot tr th a span {
 table.list thead tr th a:hover span,
 table.list tfoot tr th a:hover span {
   border-color: #424242;
+}
+table.list thead tr th a [class*="icon-sortable-"],
+table.list tfoot tr th a [class*="icon-sortable-"] {
+  padding-left: 2px;
 }
 table.list thead tr:first-child th,
 table.list tfoot tr:first-child th {

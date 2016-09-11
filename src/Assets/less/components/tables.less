@@ -17,8 +17,7 @@ table.list {
         color: #444;
         text-align: left;
         background-color: @table-th-bg-color;
-        padding: 0 @computed-height--half;
-        line-height: (2 * @computed-height) - 2;
+        padding: 10px @computed-height--half;
 
         &:first-child {
           border-left: 1px solid @table-th-border-color;
@@ -41,6 +40,10 @@ table.list {
 
           &:hover span {
             border-color: @table-th-link-color;
+          }
+
+          [class*="icon-sortable-"] {
+            padding-left: 2px;
           }
         }
       }
