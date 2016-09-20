@@ -1838,7 +1838,6 @@ body.nav-closed #page-header .nav-toggle {
   height: 100%;
   background-color: #f2f3f4;
   border-right: 1px solid #d5d7d7;
-  z-index: -1;
 }
 body.nav-closed #sidebarbg {
   display: none;
@@ -2313,10 +2312,11 @@ table.list tbody .col-actions > a:first-child,
   color: #990000;
 }
 .titlepad {
-  position: relative;
+  display: flex;
   margin: 0 0 21px;
 }
 .titlepad-title {
+  flex: 1;
   margin: 0;
   font-size: 28px;
   font-weight: normal;
@@ -2339,9 +2339,6 @@ table.list tbody .col-actions > a:first-child,
   vertical-align: top;
 }
 .titlepad-actions {
-  position: absolute;
-  right: 0;
-  top: 0;
   margin: 0;
   padding: 0;
   list-style: none;
