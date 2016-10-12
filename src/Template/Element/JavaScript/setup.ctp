@@ -6,16 +6,18 @@
 
 use Cake\Core\Configure;
 use Cake\Routing\Router;
+
+$debugJavascript = (Configure::read('debug') && Configure::read('debugJS'));
 ?>
 <?= $this->Asset->js('js/require.js', 'Wasabi/Core') ?>
-<?php if (!Configure::read('debug')): ?>
+<?php if (!$debugJavascript): ?>
 <?= $this->Asset->js('js/common.js', 'Wasabi/Core') ?>
 <?= $this->Asset->js('js/wasabi.js', 'Wasabi/Core') ?>
 <?= $this->fetch('js-files') ?>
 <?php endif; ?>
 <script>
     <?php
-    if (Configure::read('debug')): ?>
+    if ($debugJavascript): ?>
     require.config(<?= json_encode([
         'baseUrl' => Router::url('/wasabi/core/ASSETS/js'),
         'urlArgs' => 't=' . time()
@@ -35,7 +37,7 @@ use Cake\Routing\Router;
 <?= $this->fetch('requirejs') ?>
             WS.boot();
         });
-    <?php if (Configure::read('debug')): ?>
+    <?php if ($debugJavascript): ?>
     });
     <?php endif; ?>
 </script>
