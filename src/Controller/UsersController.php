@@ -159,6 +159,7 @@ class UsersController extends BackendAppController
                     $this->Flash->warning($message, 'auth', false);
                 } else {
                     $this->Auth->setUser($user);
+                    $this->request->session()->write('loginTime', time());
                     if (!$this->request->is('ajax')) {
                         $this->Flash->success(__d('wasabi_core', 'Welcome back.'), 'auth');
                         if (($redirectUrl = $this->Auth->redirectUrl()) === '/backend/heartbeat') {
@@ -419,16 +420,11 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        $heartBeatCount = $this->request->session()->check('heartBeatCount') ? $this->request->session()->read('heartBeatCount') : 0;
+        $loginTime = $this->request->session()->check('loginTime') ? $this->request->session()->read('loginTime') : 0;
+        $maxLoggedInTime = (int)Wasabi::setting('Core.Login.HeartBeat.max_login_time', 0) / 1000;
+        $logoutTime = $loginTime + $maxLoggedInTime;
 
-        $frequency = $this->_calculateHeartBeatFrequency();
-        $maxLoginTime = (int)Wasabi::setting('Core.Login.HeartBeat.max_login_time', 0);
-        $maxHeartBeats = $maxLoginTime / $frequency;
-
-        if (++$heartBeatCount < $maxHeartBeats) {
-            $this->request->session()->renew();
-            $this->request->session()->write('heartBeatCount', $heartBeatCount);
-
+        if (time() <= $logoutTime) {
             $this->set([
                 'status' => 200,
                 '_serialize' => ['status']

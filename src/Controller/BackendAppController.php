@@ -130,15 +130,16 @@ class BackendAppController extends AppController
             $this->Auth->config('authError', false);
         } else {
             Wasabi::user(new User($this->Auth->user()));
-            if (!(
-                $this->request->params['plugin'] === 'Wasabi/Core' &&
-                $this->request->params['controller'] === 'Users' &&
-                $this->request->params['action'] === 'heartBeat' &&
-                $this->request->session()->check('heartBeatCount')
-            )
-            ) {
-                // reset the heartBeatCount on non-heartBeat requests
-                $this->request->session()->delete('heartBeatCount');
+
+            $currentUrlArray = Wasabi::getCurrentUrlArray();
+            $currentRequestPath = join('.', [
+                $currentUrlArray['plugin'],
+                $currentUrlArray['controller'],
+                $currentUrlArray['action']
+            ]);
+
+            if (!$this->request->is('ajax') || $currentRequestPath !== 'Wasabi/Core.Users.heartBeat') {
+                $this->request->session()->write('loginTime', time());
             }
         }
 
