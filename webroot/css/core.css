@@ -1671,7 +1671,6 @@ body.nav-closed #page-header .nav-toggle {
 }
 .modal--login .modal-container {
   max-width: 600px;
-  margin: 0 auto;
 }
 .modal--login .modal-body {
   padding: 20px;
