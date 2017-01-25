@@ -38,15 +38,25 @@ class UsersTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->belongsTo('Groups', [
-            'className' => 'Wasabi/Core.Groups'
-        ]);
+        if (Configure::read('Wasabi.User.belongsToManyGroups')) {
+            $this->belongsToMany('Groups', [
+                'className' => 'Wasabi/Core.Groups',
+                'through' => 'Wasabi/Core.UsersGroups'
+            ]);
+            $this->hasMany('UsersGroups', [
+                'className' => 'Wasabi/Core.UsersGroups'
+            ]);
+        } else {
+            $this->belongsTo('Groups', [
+                'className' => 'Wasabi/Core.Groups'
+            ]);
+            $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
+        }
 
         $this->hasMany('Tokens', [
             'className' => 'Wasabi/Core.Tokens'
         ]);
 
-        $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
         $this->addBehavior('Timestamp');
     }
 

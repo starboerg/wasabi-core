@@ -193,6 +193,8 @@ class GroupsController extends BackendAppController
         $userCount = (int)$group->user_count;
         $groupCanBeDeleted = ($userCount === 0);
 
+        // @TODO: handle differently if (Configure::read('Wasabi.User.belongsToManyGroups'))
+
         $alternativeGroup = null;
         if (($alternativeGroupId = $this->request->data('alternative_group_id')) !== null &&
             $this->Groups->exists($alternativeGroupId)

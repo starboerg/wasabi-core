@@ -127,6 +127,9 @@ class UsersController extends BackendAppController
     public function initialize()
     {
         parent::initialize();
+
+        //@TODO: get Wasabi.User settings and setup filter/sort fields accordingly.
+
         $this->loadComponent('FrankFoerster/Filter.Filter');
         $this->loadComponent('RequestHandler');
     }
@@ -173,10 +176,12 @@ class UsersController extends BackendAppController
             } else {
                 unset($this->request->data['password']);
                 $this->request->session()->write('data.login', $this->request->data());
-                if (Configure::read('authenticate.username') === 'email') {
+                if (Configure::read('Wasabi.Auth.loginWithEmailPassword')) {
                     $errorMsg = __d('wasabi_core', 'Email or password is incorrect.');
-                } else {
+                } elseif (Configure::read('Wasabi.Auth.loginWithUsernamePassword')) {
                     $errorMsg = __d('wasabi_core', 'Username or password is incorrect.');
+                } else {
+                    $errorMsg = __d('wasabi_core', 'We could not log you in. Please try again.');
                 }
                 $this->Flash->error($errorMsg, 'auth', false);
                 if (!$this->request->is('ajax')) {

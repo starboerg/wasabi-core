@@ -12,6 +12,7 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -21,8 +22,9 @@ use Wasabi\Core\Model\Entity\Group;
 /**
  * Class GroupsTable
  *
- * @property UsersTable Users
+ * @property UsersTable $Users
  * @property GroupPermissionsTable $GroupPermissions
+ * @property UsersGroupsTable $UsersGroupsTable
  */
 class GroupsTable extends Table
 {
@@ -34,9 +36,21 @@ class GroupsTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->hasMany('Users', [
-            'className' => 'Wasabi/Core.Users'
-        ]);
+        if (Configure::read('Wasabi.User.belongsToManyGroups')) {
+            $this->belongsToMany('Users', [
+                'className' => 'Wasabi/Core.Users',
+                'through' => 'Wasabi/Core.UsersGroups'
+            ]);
+
+            $this->hasMany('UsersGroups', [
+                'className' => 'Wasabi/Core.UsersGroups'
+            ]);
+        } else {
+            $this->hasMany('Users', [
+                'className' => 'Wasabi/Core.Users'
+            ]);
+        }
+
         $this->hasMany('GroupPermissions', [
             'className' => 'Wasabi/Core.GroupPermissions',
             'dependent' => true
@@ -54,6 +68,7 @@ class GroupsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator->notEmpty('name', __d('wasabi_core', 'Please enter a name for the group.'));
+        $validator->notEmpty('description', __d('wasabi_core', 'Please enter a description for the group.'));
         return $validator;
     }
 
@@ -70,7 +85,7 @@ class GroupsTable extends Table
     }
 
     /**
-     * Move users from one group to another.
+     * Move users from one group to another. (Used when a user may only belong to a single group.) 
      *
      * @param Group $groupFrom A group instance.
      * @param Group $groupTo A group instance.
@@ -87,5 +102,51 @@ class GroupsTable extends Table
             $this->updateAll([$addToUserCountExpression], ['id' => $groupTo->id]);
         }
         return $affectedUsers;
+    }
+
+    /**
+     * Assign users to new groups. (Used when a user may belong to multiple groups.) 
+     *
+     * @param array $userIdGroupIdMapping A mapping of user ids to their new group ids.
+     * @return int number of affected user rows
+     */
+    public function moveUsersToAlternativeGroups($userIdGroupIdMapping)
+    {
+        $affectedUsers = 0;
+        $affectedGroups = [];
+        foreach ($userIdGroupIdMapping as $userId => $groupId) {
+            $affectedUsers += $this->UsersGroups->updateAll([
+                'group_id' => $groupId
+            ], [
+                'user_id' => $userId
+            ]);
+            if (!in_array($groupId, $affectedGroups)) {
+                $affectedGroups[] = $groupId;
+            }
+        }
+        if ($affectedUsers > 0 && !empty($affectedGroups)) {
+            $this->updateUserCount($affectedGroups);
+        }
+        return $affectedUsers;
+    }
+
+    /**
+     * Update the user_count counter cache for the given $groupIds.
+     *
+     * @param array $groupIds An array of group ids whose user_count should be updated.
+     * @return void
+     */
+    public function updateUserCount($groupIds)
+    {
+        $query = $this->UsersGroups->find();
+        $groupIdUserCount = $query
+            ->select(['group_id', 'user_count' => $query->func()->count('user_id')])
+            ->where(['group_id IN' => $groupIds])->group('group_id')
+            ->combine('group_id', 'user_count')->toArray();
+
+        foreach ($groupIds as $groupId) {
+            $userCount = isset($groupIdUserCount[$groupId]) ? $groupIdUserCount[$groupId] : 0;
+            $this->save($this->get($groupId)->set('user_count', $userCount));
+        }
     }
 }
