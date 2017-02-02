@@ -1,6 +1,6 @@
 <?php
 /**
- * Wasabi CMS
+ * Wasabi Core
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
  * Licensed under The MIT License
@@ -8,6 +8,7 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Controller;
@@ -70,15 +71,8 @@ class BackendAppController extends AppController
     {
         parent::initialize();
 
-        if (Configure::read('Wasabi.Auth.loginWithUsernamePassword')) {
-            $fieldUsername = 'username';
-        }
-
-        if (Configure::read('Wasabi.Auth.loginWithEmailPassword')) {
-            $fieldUsername = 'email';
-        }
-
-        $fieldPassword = 'password';
+        $fieldIdentity = Wasabi::setting('Core.auth.identity_field') ?? 'email';
+        $fieldPassword = Wasabi::setting('Core.auth.password_field') ?? 'password';
 
         $this->loadComponent('Auth', [
             AuthComponent::ALL => [
@@ -87,7 +81,7 @@ class BackendAppController extends AppController
             'authenticate' => [
                 'Form' => [
                     'fields' => [
-                        'username' => ($fieldUsername !== null) ? $fieldUsername : 'username',
+                        'username' => $fieldIdentity,
                         'password' => $fieldPassword
                     ]
                 ]
