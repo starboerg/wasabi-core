@@ -1329,12 +1329,25 @@ div.error-message > ul {
   max-width: 900px;
   border: 1px solid #e3e5e6;
 }
-.form-row.form-row-checkbox > label {
+.form-row.form-row-checkbox > label,
+.form-row.form-row-radio > label {
   padding-top: 20px;
 }
-.form-row.form-row-checkbox .field > label input[type="checkbox"] {
+.form-row.form-row-checkbox .field > label input[type="checkbox"],
+.form-row.form-row-radio .field > label input[type="checkbox"] {
   position: relative;
   top: 1px;
+}
+.form-row.form-row-radio .field > label {
+  display: block;
+  max-width: 250px;
+  padding: 5px 0;
+}
+.form-row.form-row-radio .field > label:first-of-type {
+  margin-top: -5px;
+}
+.form-row.form-row-radio .field > label:before {
+  display: none;
 }
 .form-row.form-row-toggleSwitch .field {
   padding-top: 23px;
@@ -2152,6 +2165,11 @@ table.list tfoot tr.filters select {
   font-size: 12px;
   vertical-align: top;
 }
+table.list thead tr.filters select,
+table.list tfoot tr.filters select {
+  width: 100%;
+  max-width: 100%;
+}
 table.list thead tr.filters button,
 table.list tfoot tr.filters button {
   margin-top: 1px;
@@ -2674,5 +2692,8 @@ table.list tbody .col-actions > a:first-child,
 .wasabi-core--grouppermissions-index .permissions .spinner {
   position: relative !important;
   margin-top: 0;
+}
+.wasabi-core--settings-general #auth-max-login-attempts {
+  max-width: 100px;
 }
 /*# sourceMappingURL=core.css.map */

@@ -179,7 +179,7 @@ span.error-message, div.error-message {
     border: 1px solid @form-row-border-color;
   }
 
-  &.form-row-checkbox {
+  &.form-row-checkbox, &.form-row-radio {
 
     & > label {
       padding-top: 20px;
@@ -190,6 +190,23 @@ span.error-message, div.error-message {
       input[type="checkbox"] {
         position: relative;
         top: 1px;
+      }
+    }
+  }
+
+  &.form-row-radio {
+
+    .field > label {
+      display: block;
+      max-width: 250px;
+      padding: 5px 0;
+
+      &:first-of-type {
+        margin-top: -5px;
+      }
+
+      &:before {
+        display: none;
       }
     }
   }
