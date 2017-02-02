@@ -1,6 +1,6 @@
 <?php
 /**
- * Wasabi CMS
+ * Wasabi Core
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
  * Licensed under The MIT License
@@ -8,6 +8,7 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Model\Entity;
@@ -24,19 +25,22 @@ use Wasabi\Core\Wasabi;
  * @package Wasabi\Core\Model\Entity
  *
  * @property int $id
- * @property int $group_id
  * @property int $language_id
+ * @property string $firstname
+ * @property string $lastname
  * @property string $username
  * @property string $password
  * @property string $email
+ * @property string $timezone
  * @property bool $verified
- * @property bool $active
  * @property DateTime $verified_at
+ * @property bool $active
  * @property DateTime $activated_at
  * @property DateTime $created
  * @property DateTime $modified
- *
  * @property Media[] $media
+ * @property Group[] $groups
+ *
  */
 class User extends Entity
 {
@@ -48,14 +52,39 @@ class User extends Entity
     public $permissions = [];
 
     /**
-     * Always hash the users password on save calls.
+     * Get the full name of the user.
      *
-     * @param string $password The password to hash.
+     * @param bool $lastNameFirst Whether to display the lastname at the first position or not.
      * @return string
      */
-    protected function _setPassword($password)
+    public function fullName($lastNameFirst = false)
     {
-        return (new DefaultPasswordHasher)->hash($password);
+        if (!Wasabi::setting('Core.User.has_firstname_lastname')) {
+            return $this->username;
+        }
+        if ($lastNameFirst) {
+            return $this->lastname . ', ' . $this->firstname;
+        }
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    /**
+     * Get an array of group names the user belongs to.
+     *
+     * @return array
+     */
+    public function getGroupNames()
+    {
+        if (empty($this->groups)) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($this->groups as $group) {
+            $result[] = $group->name;
+        }
+
+        return $result;
     }
 
     /**
@@ -134,5 +163,16 @@ class User extends Entity
     public function hasAccessLevel($permissionConstant)
     {
         return ($this->getAccessLevel() === $permissionConstant['value']);
+    }
+
+    /**
+     * Always hash the users password on save calls.
+     *
+     * @param string $password The password to hash.
+     * @return string
+     */
+    protected function _setPassword($password)
+    {
+        return (new DefaultPasswordHasher)->hash($password);
     }
 }
