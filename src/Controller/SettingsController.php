@@ -1,6 +1,6 @@
 <?php
 /**
- * Wasabi CMS
+ * Wasabi Core
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
  * Licensed under The MIT License
@@ -8,6 +8,7 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Controller;
@@ -43,7 +44,13 @@ class SettingsController extends BackendAppController
             'Login__Message__class',
             'Login__HeartBeat__max_login_time',
             'Email__email_sender_name',
-            'Email__email_sender'
+            'Email__email_sender',
+            'Auth__max_login_attempts',
+            'Auth__failed_login_recognition_time',
+            'Auth__block_time',
+            'User__has_username',
+            'User__has_firstname_lastname',
+            'User__allow_timezone_change'
         ];
         $this->GeneralSettings = $this->loadModel('Wasabi/Core.GeneralSettings');
         $settings = $this->GeneralSettings->getKeyValues(new GeneralSetting(), $keys);
