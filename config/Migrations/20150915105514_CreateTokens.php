@@ -1,11 +1,25 @@
 <?php
-use Phinx\Migration\AbstractMigration;
-use Phinx\Db\Table\Column;
+/**
+ * Wasabi Core
+ * Copyright (c) Frank Förster (http://frankfoerster.com)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
 
-class CreateTokens extends AbstractMigration
+use Wasabi\Core\BaseMigration;
+
+class CreateTokens extends BaseMigration
 {
     /**
      * Migrate up
+     *
+     * @return void
      */
     public function up()
     {
@@ -20,19 +34,19 @@ class CreateTokens extends AbstractMigration
             ->addIndex('token', ['name' => 'BY_TOKEN', 'unique' => true]);
         $table->create();
 
-        $id = new Column();
-        $id->setIdentity(true)
-            ->setType('integer')
-            ->setOptions(['limit' => 11, 'signed' => false, 'null' => false]);
-
-        $table->changeColumn('id', $id)->save();
+        $this->unsignedIntId($table);
+        $table->save();
     }
 
     /**
      * Migrate down
+     *
+     * @return void
      */
     public function down()
     {
-        $this->table('tokens')->drop();
+        $this->dropTable('tokens');
+
+        $this->clearModelCache();
     }
 }

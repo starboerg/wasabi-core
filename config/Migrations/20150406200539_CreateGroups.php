@@ -1,13 +1,27 @@
 <?php
+/**
+ * Wasabi Core
+ * Copyright (c) Frank Förster (http://frankfoerster.com)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+
 use Cake\ORM\TableRegistry;
-use Phinx\Db\Table\Column;
-use Phinx\Migration\AbstractMigration;
+use Wasabi\Core\BaseMigration;
 use Wasabi\Core\Model\Entity\Group;
 
-class CreateGroups extends AbstractMigration
+class CreateGroups extends BaseMigration
 {
     /**
      * Migrate up
+     *
+     * @return void
      */
     public function up()
     {
@@ -19,12 +33,8 @@ class CreateGroups extends AbstractMigration
         $table->addIndex('name', ['name' => 'BY_NAME', 'unique' => true]);
         $table->create();
 
-        $id = new Column();
-        $id->setIdentity(true)
-            ->setType('integer')
-            ->setOptions(['limit' => 11, 'signed' => false, 'null' => false]);
-
-        $table->changeColumn('id', $id)->save();
+        $this->unsignedIntId($table);
+        $table->save();
 
         $group = new Group([
             'name' => 'Super Admin'
@@ -35,8 +45,13 @@ class CreateGroups extends AbstractMigration
 
     /**
      * Migrate down
+     *
+     * @return void
      */
-    public function down() {
-        $this->table('groups')->drop();
+    public function down()
+    {
+        $this->dropTable('groups');
+
+        $this->clearModelCache();
     }
 }

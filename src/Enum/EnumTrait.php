@@ -1,6 +1,6 @@
 <?php
 /**
- * Wasabi CMS
+ * Wasabi Core
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
  * Licensed under The MIT License
@@ -8,6 +8,7 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
  * @author Frank Förster <frank at frankfoerster.com>
  * @author Stephan Gonder <stephan.gonder at gmx.de>
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License

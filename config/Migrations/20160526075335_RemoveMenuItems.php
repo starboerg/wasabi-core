@@ -1,13 +1,39 @@
 <?php
-use Phinx\Db\Table\Column;
-use Phinx\Migration\AbstractMigration;
+/**
+ * Wasabi Core
+ * Copyright (c) Frank Förster (http://frankfoerster.com)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
 
-class CreateMenuItems extends AbstractMigration
+use Wasabi\Core\BaseMigration;
+
+class RemoveMenuItems extends BaseMigration
 {
     /**
      * Migrate up
+     *
+     * @return void
      */
     public function up()
+    {
+        $this->dropTable('menu_items');
+
+        $this->clearModelCache();
+    }
+
+    /**
+     * Migrate down
+     *
+     * @return void
+     */
+    public function down()
     {
         $table = $this->table('menu_items');
         $table
@@ -32,18 +58,7 @@ class CreateMenuItems extends AbstractMigration
         $table->addIndex('parent_id', ['name' => 'FK_PARENT_ID', 'unique' => false]);
         $table->create();
 
-        $id = new Column();
-        $id->setIdentity(true)
-            ->setType('integer')
-            ->setOptions(['limit' => 11, 'signed' => false, 'null' => false]);
-        $table->changeColumn('id', $id)->save();
-    }
-
-    /**
-     * Migrate down
-     */
-    public function down()
-    {
-        $this->table('menu_items')->drop();
+        $this->unsignedIntId($table);
+        $table->save();
     }
 }
