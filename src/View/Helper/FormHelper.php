@@ -140,7 +140,7 @@ class FormHelper extends \Cake\View\Helper\FormHelper
      */
     public function toggleSwitch($fieldName, array $options = [])
     {
-        $options += ['hiddenField' => true, 'value' => 1];
+        $options += ['hiddenField' => true, 'value' => 1, 'id' => true];
 
         // Work around value=>val translations.
         $value = $options['value'];
