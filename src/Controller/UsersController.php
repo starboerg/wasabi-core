@@ -1,6 +1,6 @@
 <?php
 /**
- * Wasabi CMS
+ * Wasabi Core
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
  * Licensed under The MIT License
@@ -8,19 +8,25 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Controller;
 
 use Cake\Core\Configure;
 use Cake\Database\Connection;
+use Cake\Event\EventDispatcherTrait;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\ORM\Query;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
+use Cake\Utility\Text;
 use FrankFoerster\Filter\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Entity\Token;
 use Wasabi\Core\Model\Entity\User;
+use Wasabi\Core\Model\Enum\Permission;
+use Wasabi\Core\Model\Table\LoginLogsTable;
 use Wasabi\Core\Model\Table\TokensTable;
 use Wasabi\Core\Model\Table\UsersTable;
 use Wasabi\Core\View\AppView;
@@ -29,12 +35,14 @@ use Wasabi\Core\Wasabi;
 /**
  * Class UsersController
  *
- * @property UsersTable $Users
- * @property TokensTable $Tokens
+ * @property UsersTable Users
+ * @property TokensTable Tokens
  * @property FilterComponent Filter
+ * @property LoginLogsTable LoginLogs
  */
 class UsersController extends BackendAppController
 {
+    use EventDispatcherTrait;
     use MailerAwareTrait;
 
     /**
@@ -56,14 +64,21 @@ class UsersController extends BackendAppController
             'type' => 'like',
             'actions' => ['index']
         ],
+        'name' => [
+            'modelField' => [
+                'Users.lastname',
+                'Users.firstname'
+            ],
+            'type' => 'like',
+            'actions' => ['index']
+        ],
         'email' => [
             'modelField' => 'Users.email',
             'type' => 'like',
             'actions' => ['index']
         ],
         'group_id' => [
-            'modelField' => 'Groups.id',
-            'type' => '=',
+            'type' => 'custom',
             'actions' => ['index']
         ]
     ];
@@ -86,17 +101,30 @@ class UsersController extends BackendAppController
      * @var array
      */
     public $sortFields = [
-        'user' => [
+        'id' => [
+            'modelField' => 'Users.id',
+            'actions' => ['index']
+        ],
+        'username' => [
             'modelField' => 'Users.username',
+            'default' => 'asc',
+            'actions' => ['index']
+        ],
+        'name' => [
+            'modelField' => [
+                'Users.lastname',
+                'Users.firstname'
+            ],
+            'custom' => [
+                'Users.lastname :dir',
+                'Users.firstname :dir'
+            ],
             'default' => 'asc',
             'actions' => ['index']
         ],
         'email' => [
             'modelField' => 'Users.email',
-            'actions' => ['index']
-        ],
-        'group' => [
-            'modelField' => 'Groups.name',
+            'default' => 'asc',
             'actions' => ['index']
         ],
         'status' => [
@@ -128,7 +156,40 @@ class UsersController extends BackendAppController
     {
         parent::initialize();
 
-        //@TODO: get Wasabi.User settings and setup filter/sort fields accordingly.
+        if (!Wasabi::setting('Core.User.has_username')) {
+            unset($this->filterFields['username']);
+            unset($this->sortFields['username']);
+        } else {
+            if (isset($this->sortFields['email']['default'])) {
+                unset($this->sortFields['email']['default']);
+            }
+        }
+
+        if (!Wasabi::setting('Core.User.has_firstname_lastname')) {
+            unset($this->filterFields['name']);
+            unset($this->sortFields['name']);
+        } else {
+            if (isset($this->sortFields['email']['default'])) {
+                unset($this->sortFields['email']['default']);
+            }
+        }
+
+        $this->filterFields['group_id']['customConditions'] = function ($value) {
+            if ((int)$value === 0) {
+                $query = $this->Users->findUsersWithNoGroup();
+                $userIds = $query->extract('id')->toArray();
+            } else {
+                $userIds = $this->Users->UsersGroups->find()
+                    ->where(['group_id' => $value])
+                    ->extract('user_id')
+                    ->toArray();
+            }
+            if (!empty($userIds)) {
+                return ['Users.id IN' => $userIds];
+            } else {
+                return ['Users.id' => 0];
+            }
+        };
 
         $this->loadComponent('FrankFoerster/Filter.Filter');
         $this->loadComponent('RequestHandler');
@@ -143,8 +204,15 @@ class UsersController extends BackendAppController
     public function login()
     {
         if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
+            $this->loadModel('Wasabi/Core.LoginLogs');
+            $clientIp = $this->request->clientIp();
+            $ipIsBlocked = $this->LoginLogs->ipIsBlocked($clientIp);
+
+            if ($ipIsBlocked) {
+                $errorMsg = __d('wasabi_core', 'You made too many failed login attempts in a short period of time. Please try again later.');
+            }
+
+            if (!$ipIsBlocked && ($user = $this->Auth->identify())) {
                 if ((bool)$user['verified'] === false) {
                     $message = __d(
                         'wasabi_core',
@@ -176,14 +244,15 @@ class UsersController extends BackendAppController
             } else {
                 unset($this->request->data['password']);
                 $this->request->session()->write('data.login', $this->request->data());
-                if (Configure::read('Wasabi.Auth.loginWithEmailPassword')) {
+                if (!$ipIsBlocked) {
+                    $identityField = Wasabi::setting('Core.Auth.identity_field');
+                    $this->dispatchEvent('Auth.failedLogin', [$clientIp, $identityField, $this->request->data[$identityField]]);
                     $errorMsg = __d('wasabi_core', 'Email or password is incorrect.');
-                } elseif (Configure::read('Wasabi.Auth.loginWithUsernamePassword')) {
-                    $errorMsg = __d('wasabi_core', 'Username or password is incorrect.');
-                } else {
-                    $errorMsg = __d('wasabi_core', 'We could not log you in. Please try again.');
                 }
-                $this->Flash->error($errorMsg, 'auth', false);
+
+                if (isset($errorMsg)) {
+                    $this->Flash->error($errorMsg, 'auth', false);
+                }
                 if (!$this->request->is('ajax')) {
                     $this->redirect(['action' => 'login']);
                     return;
@@ -265,10 +334,34 @@ class UsersController extends BackendAppController
      */
     public function index()
     {
-        $users = $this->Filter->filter($this->Users->find('withGroupName'));
+        $userQuery = $this->Users->find()
+            ->select([
+                $this->Users->aliasField('id'),
+                $this->Users->aliasField('firstname'),
+                $this->Users->aliasField('lastname'),
+                $this->Users->aliasField('username'),
+                $this->Users->aliasField('email'),
+                $this->Users->aliasField('verified'),
+                $this->Users->aliasField('active')
+            ])
+            ->contain([
+                'Groups' => [
+                    'queryBuilder' => function (Query $q) {
+                        return $q
+                            ->select([
+                                $this->Users->Groups->aliasField('id'),
+                                $this->Users->Groups->aliasField('name')
+                            ]);
+                    }
+                ]
+            ]);
+
+        $groups = $this->Users->Groups->find('list')->order(['name' => 'ASC'])->toArray();
+        $groups[0] = __d('wasabi_core', '--- (unassigned)');
+
         $this->set([
-            'users' => $this->Filter->paginate($users),
-            'groups' => $this->Users->Groups->find('list')
+            'users' => $this->Filter->paginate($this->Filter->filter($userQuery)),
+            'groups' => $groups
         ]);
     }
 
@@ -280,20 +373,39 @@ class UsersController extends BackendAppController
      */
     public function add()
     {
-        $user = $this->Users->newEntity();
-        if ($this->request->is('post') && !empty($this->request->data)) {
-            $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__d('wasabi_core', 'The user <strong>{0}</strong> has been created.', $this->request->data['username']));
+        if (!$this->request->is(['get', 'post'])) {
+            throw new MethodNotAllowedException();
+        }
+
+        /** @var User $user */
+        $user = $this->Users->newEntity(null, ['associated' => 'Groups']);
+
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->data, ['associated' => 'Groups']);
+            $user->set('password', Text::uuid());
+
+            if ($this->Users->save($user, ['associated' => 'Groups'])) {
+                $this->Users->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_EMAIL_VERIFICATION);
+                $token = $this->Users->Tokens->generateToken($user, TokensTable::TYPE_EMAIL_VERIFICATION);
+                $this->getMailer('Wasabi/Core.User')->send('verifyAndResetPasswordEmail', [$user, $token]);
+                $this->Flash->success(__d('pb', 'The user <strong>{0}</strong> has been created.', $user->fullName()));
                 $this->redirect(['action' => 'index']);
                 return;
             } else {
                 $this->Flash->error($this->formErrorMessage);
             }
         }
+
+        $groups = $this->Users->Groups->find('list')->order('id ASC');
+
+        // users that are no admin, may not select the super admin group
+        if (Wasabi::user()->hasAccessLevel(Permission::OWN)) {
+            $groups->where(['id <>' => 1]);
+        }
+
         $this->set([
             'user' => $user,
-            'groups' => $this->Users->Groups->find('list'),
+            'groups' => $groups,
             'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function ($language) {
                 return [
                     'value' => $language->id,
@@ -316,29 +428,62 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        $user = $this->Users->get($id, [
-            'fields' => [
-                'id',
-                'username',
-                'email',
-                'group_id',
-                'language_id',
-                'timezone'
-            ]
-        ]);
+        /** @var User $user */
+        $user = $this->Users->getUserAndGroups($id);
+
         if ($this->request->is('put')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__d('wasabi_core', 'The user <strong>{0}</strong> has been saved.', $this->request->data['username']));
+            $user = $this->Users->patchEntity($user, $this->request->data, ['associated' => 'Groups']);
+            $userActivated = ($user->dirty('active') && $user->active);
+            if ($userActivated) {
+                // do not allow a user to be activated if his email address is not verified
+                if (!$user->verified) {
+                    $user->active = false;
+                    $userActivated = false;
+                } else {
+                    $user->activate();
+                }
+            }
+            $userDeactivated = ($user->dirty('active') && !$user->active);
+            if ($userDeactivated) {
+                // do not allow a user to deactivate his own account
+                if ($user->id === Wasabi::user()->id) {
+                    $user->active = true;
+                    $userDeactivated = false;
+                } else {
+                    $user->deactivate();
+                }
+            }
+            if ($this->Users->save($user, ['associated' => 'Groups'])) {
+                if ($user->id === Wasabi::user()->id) {
+                    $updateUser = $this->Users->get($user->id);
+                    $updateUser->group_id = $this->Users->UsersGroups->getGroupIds($updateUser->id);
+                    $this->Auth->setUser($updateUser->toArray());
+                    Wasabi::user($updateUser);
+                }
+                if ($userActivated && $user->verified) {
+                    $this->getMailer('Wasabi/Core.User')->send('activatedEmail', [$user]);
+                }
+                if ($userDeactivated && $user->verified) {
+                    $this->getMailer('Wasabi/Core.User')->send('deactivatedEmail', [$user]);
+                }
+                $this->Flash->success(__d('pb', 'The user <strong>{0}</strong> has been updated.', $user->fullName()));
                 $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
                 return;
             } else {
                 $this->Flash->error($this->formErrorMessage);
             }
         }
+
+        $groups = $this->Users->Groups->find('list')->order('id ASC');
+
+        // users that are no admin, may not select the admin group
+        if (Wasabi::user()->hasAccessLevel(Permission::OWN)) {
+            $groups->where(['id <>' => 1]);
+        }
+
         $this->set([
             'user' => $user,
-            'groups' => $this->Users->Groups->find('list'),
+            'groups' => $groups,
             'languages' => Hash::map(Configure::read('languages.backend'), '{n}', function ($language) {
                 return [
                     'value' => $language->id,
@@ -346,6 +491,7 @@ class UsersController extends BackendAppController
                 ];
             })
         ]);
+
         $this->render('add');
     }
 
