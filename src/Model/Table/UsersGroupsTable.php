@@ -21,8 +21,12 @@ class UsersGroupsTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->belongsTo('Users');
-        $this->belongsTo('Groups');
+        $this->belongsTo('Users', [
+            'className' => 'Wasabi/Core.Users'
+        ]);
+        $this->belongsTo('Groups', [
+            'className' => 'Wasabi/Core.Groups'
+        ]);
 
         $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
     }

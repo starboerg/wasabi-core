@@ -1,6 +1,6 @@
 <?php
 /**
- * Wasabi CMS
+ * Wasabi Core
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
  * Licensed under The MIT License
@@ -8,6 +8,7 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Model\Table;
@@ -22,11 +23,14 @@ use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use DateTimeZone;
 use Wasabi\Core\Model\Entity\User;
+use Wasabi\Core\Wasabi;
 
 /**
  * Class UsersTable
  *
  * @property GroupsTable Groups
+ * @property UsersGroupsTable UsersGroups
+ * @property TokensTable Tokens
  */
 class UsersTable extends Table
 {
@@ -38,21 +42,13 @@ class UsersTable extends Table
      */
     public function initialize(array $config)
     {
-        if (Configure::read('Wasabi.User.belongsToManyGroups')) {
-            $this->belongsToMany('Groups', [
-                'className' => 'Wasabi/Core.Groups',
-                'through' => 'Wasabi/Core.UsersGroups'
-            ]);
-            $this->hasMany('UsersGroups', [
-                'className' => 'Wasabi/Core.UsersGroups'
-            ]);
-        } else {
-            $this->belongsTo('Groups', [
-                'className' => 'Wasabi/Core.Groups'
-            ]);
-            $this->addBehavior('CounterCache', ['Groups' => ['user_count']]);
-        }
-
+        $this->belongsToMany('Groups', [
+            'className' => 'Wasabi/Core.Groups',
+            'through' => 'Wasabi/Core.UsersGroups'
+        ]);
+        $this->hasMany('UsersGroups', [
+            'className' => 'Wasabi/Core.UsersGroups'
+        ]);
         $this->hasMany('Tokens', [
             'className' => 'Wasabi/Core.Tokens'
         ]);
@@ -68,8 +64,7 @@ class UsersTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-        return $validator
-            ->notEmpty('username', __d('wasabi_core', 'Please enter a username.'))
+        $validator
             ->notEmpty('email', __d('wasabi_core', 'Please enter an email address.'))
             ->add('email', [
                 'email' => [
@@ -77,7 +72,6 @@ class UsersTable extends Table
                     'message' => __d('wasabi_core', 'Please enter a valid email address.')
                 ]
             ])
-            ->notEmpty('group_id', __d('wasabi_core', 'Please select a group this user belongs to.'))
             ->notEmpty('password', __d('wasabi_core', 'Please enter a password.'), 'create')
             ->add('password', [
                 'length' => [
@@ -113,7 +107,40 @@ class UsersTable extends Table
                     return true;
                 }
             ])
-            ->add('timezone', 'isValid', [
+            ->add('groups', 'notEmpty', [
+                'rule' => function ($groups) {
+                    return !empty($groups['_ids'] ?? []);
+                },
+                'message' => __d('wasabi_core', 'Please select a group this user should belong to.')
+            ])
+            ->add('groups', 'isValid', [
+                'rule' => function ($groups) {
+                    if (!Wasabi::setting('Core.User.belongs_to_many_groups') && count($groups['_ids']) > 1) {
+                        return false;
+                    }
+                    $validGroupIds = $this->Groups->find()->extract('id')->toArray();
+                    foreach ($groups['_ids'] as $groupId) {
+                        if (!in_array($groupId, $validGroupIds)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                'message' => __d('wasabi_core', 'Please select a group from the provided list.')
+            ]);
+
+        if (Wasabi::setting('Core.User.has_username')) {
+            $validator->notEmpty('username', __d('wasabi_core', 'Please enter a username.'));
+        }
+
+        if (Wasabi::setting('Core.User.has_firstname_lastname')) {
+            $validator->notEmpty('firstname', __d('wasabi_core', 'Please enter a first name.'));
+            $validator->notEmpty('lastname', __d('wasabi_core', 'Please enter a last name.'));
+        }
+
+        if (Wasabi::setting('Core.User.allow_timezone_change')) {
+            $validator->notEmpty('timezone', __d('wasabi_core', 'Please choose a time zone.'));
+            $validator->add('timezone', 'isValid', [
                 'rule' => function ($timezone) {
                     if (!in_array($timezone, DateTimeZone::listIdentifiers())) {
                         return __d('wasabi_core', 'Invalid timezone selected.');
@@ -121,6 +148,9 @@ class UsersTable extends Table
                     return true;
                 }
             ]);
+        }
+
+        return $validator;
     }
 
     /**
@@ -234,7 +264,7 @@ class UsersTable extends Table
      * Find users including their group name.
      *
      * @param Query $query The query to decorate.
-     * @return $this|array
+     * @return Query
      */
     public function findWithGroupName(Query $query)
     {
@@ -316,5 +346,60 @@ class UsersTable extends Table
                 $this->aliasField('verified') => 0
             ])
             ->first();
+    }
+
+    /**
+     * Find all users that do not belong to a group.
+     *
+     * @return Query
+     */
+    public function findUsersWithNoGroup()
+    {
+        $query = $this->find();
+
+        return $query->leftJoin(
+                [$this->UsersGroups->alias() => $this->UsersGroups->table()],
+                [$this->aliasField('id') . ' = ' . $this->UsersGroups->aliasField('user_id')]
+            )
+            ->select([
+                'Users.id',
+                'group_count' => $query->func()->count('UsersGroups.group_id')
+            ])
+            ->group('Users.id')
+            ->having('group_count = 0');
+    }
+
+    /**
+     * Get a user by $id including all user groups the user is assigned to.
+     *
+     * @param int|string $id The id of the user.
+     * @return Query
+     */
+    public function getUserAndGroups($id)
+    {
+        return $this->get($id, [
+            'fields' => [
+                $this->aliasField('id'),
+                $this->aliasField('language_id'),
+                $this->aliasField('firstname'),
+                $this->aliasField('lastname'),
+                $this->aliasField('username'),
+                $this->aliasField('email'),
+                $this->aliasField('timezone'),
+                $this->aliasField('active'),
+                $this->aliasField('verified'),
+                $this->aliasField('verified_at')
+            ],
+            'contain' => [
+                'Groups' => [
+                    'queryBuilder' => function (Query $q) {
+                        return $q->select([
+                            $this->Groups->aliasField('id'),
+                            $this->Groups->aliasField('name')
+                        ]);
+                    }
+                ]
+            ]
+        ]);
     }
 }

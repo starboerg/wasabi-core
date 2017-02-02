@@ -84,6 +84,53 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
             'info' => __d('wasabi_core', 'The email address used as sender for all backend emails.')
         ]
     ]);
+    echo $this->Form->widget('section', [
+        'title' => __d('wasabi_core', 'Authentication'),
+        'description' => __d('wasabi_core', 'Configure the authentication mechanism.')
+    ]);
+    echo $this->Form->input('Auth__max_login_attempts', [
+        'label' => __d('wasabi_core', 'Maximum number of failed login attempts'),
+        'default' => 5
+    ]);
+    echo $this->Form->input('Auth__failed_login_recognition_time', [
+        'label' => __d('wasabi_core', 'within x Minutes'),
+        'default' => 5,
+        'templateVars' => [
+            'info' => __d('wasabi_core', 'The number of minutes failed logins are collected.')
+        ]
+    ]);
+    echo $this->Form->input('Auth__block_time', [
+        'label' => __d('wasabi_core', 'Block Time'),
+        'default' => 30,
+        'templateVars' => [
+            'info' => __d('wasabi_core', 'If a user continuously tries to login with wrong credentials his IP will be blocked for the entered number of minutes.')
+        ]
+    ]);
+    echo $this->Form->widget('section', [
+        'title' => __d('wasabi_core', 'User Configuration'),
+        'description' => __d('wasabi_core', 'Modify user specific settings.')
+    ]);
+    echo $this->Form->input('User__has_username', [
+        'label' => __d('wasabi_core', 'User has username?'),
+        'options' => [
+            '0' => __d('wasabi_core', 'No'),
+            '1' => __d('wasabi_core', 'Yes')
+        ]
+    ]);
+    echo $this->Form->input('User__has_firstname_lastname', [
+        'label' => __d('wasabi_core', 'User has firstname and lastname?'),
+        'options' => [
+            '0' => __d('wasabi_core', 'No'),
+            '1' => __d('wasabi_core', 'Yes')
+        ]
+    ]);
+    echo $this->Form->input('User__allow_timezone_change', [
+        'label' => __d('wasabi_core', 'User may change his timezone?'),
+        'options' => [
+            '0' => __d('wasabi_core', 'No'),
+            '1' => __d('wasabi_core', 'Yes')
+        ]
+    ]);
     echo $this->Html->div('form-controls');
         echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
         echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [

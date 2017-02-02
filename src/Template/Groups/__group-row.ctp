@@ -17,6 +17,7 @@
             true
         )
         ?></td>
+    <td class="col-description"><?= $group->description ?></td>
     <td class="col-user-count"><?= $group->user_count ?></td>
     <td class="col-actions center">
         <?php

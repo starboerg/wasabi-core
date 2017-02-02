@@ -20,6 +20,9 @@ echo $this->Form->create($group, ['class' => 'no-top-section']);
     echo $this->Form->input('name', [
         'label' => __d('wasabi_core', 'Group Name')
     ]);
+    echo $this->Form->input('description', [
+        'label' => __d('wasabi_core', 'Description')
+    ]);
     echo $this->Html->div('form-controls');
         echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
         echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [

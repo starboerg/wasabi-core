@@ -1,6 +1,6 @@
 <?php
 /**
- * Wasabi CMS
+ * Wasabi Core
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
  * Licensed under The MIT License
@@ -8,6 +8,7 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Model\Table;
@@ -24,7 +25,7 @@ use Wasabi\Core\Model\Entity\Group;
  *
  * @property UsersTable $Users
  * @property GroupPermissionsTable $GroupPermissions
- * @property UsersGroupsTable $UsersGroupsTable
+ * @property UsersGroupsTable $UsersGroups
  */
 class GroupsTable extends Table
 {
@@ -36,20 +37,14 @@ class GroupsTable extends Table
      */
     public function initialize(array $config)
     {
-        if (Configure::read('Wasabi.User.belongsToManyGroups')) {
-            $this->belongsToMany('Users', [
-                'className' => 'Wasabi/Core.Users',
-                'through' => 'Wasabi/Core.UsersGroups'
-            ]);
+        $this->belongsToMany('Users', [
+            'className' => 'Wasabi/Core.Users',
+            'through' => 'Wasabi/Core.UsersGroups'
+        ]);
 
-            $this->hasMany('UsersGroups', [
-                'className' => 'Wasabi/Core.UsersGroups'
-            ]);
-        } else {
-            $this->hasMany('Users', [
-                'className' => 'Wasabi/Core.Users'
-            ]);
-        }
+        $this->hasMany('UsersGroups', [
+            'className' => 'Wasabi/Core.UsersGroups'
+        ]);
 
         $this->hasMany('GroupPermissions', [
             'className' => 'Wasabi/Core.GroupPermissions',
@@ -85,27 +80,7 @@ class GroupsTable extends Table
     }
 
     /**
-     * Move users from one group to another. (Used when a user may only belong to a single group.) 
-     *
-     * @param Group $groupFrom A group instance.
-     * @param Group $groupTo A group instance.
-     * @return int number of affected user rows
-     */
-    public function moveUsersToAlternativeGroup($groupFrom, $groupTo)
-    {
-        $affectedUsers = $this->Users->updateAll(['group_id' => $groupTo->id], ['group_id' => $groupFrom->id]);
-        if ($affectedUsers > 0) {
-            // manually update group counter cache
-            $subFromUserCountExpression = new QueryExpression('user_count = user_count - ' . $affectedUsers);
-            $this->updateAll([$subFromUserCountExpression], ['id' => $groupFrom->id]);
-            $addToUserCountExpression = new QueryExpression('user_count = user_count + ' . $affectedUsers);
-            $this->updateAll([$addToUserCountExpression], ['id' => $groupTo->id]);
-        }
-        return $affectedUsers;
-    }
-
-    /**
-     * Assign users to new groups. (Used when a user may belong to multiple groups.) 
+     * Assign users to new groups.
      *
      * @param array $userIdGroupIdMapping A mapping of user ids to their new group ids.
      * @return int number of affected user rows

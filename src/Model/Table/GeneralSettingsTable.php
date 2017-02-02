@@ -1,6 +1,6 @@
 <?php
 /**
- * Wasabi CMS
+ * Wasabi Core
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
  * Licensed under The MIT License
@@ -8,6 +8,7 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Wasabi\Core\Model\Table;
@@ -77,7 +78,28 @@ class GeneralSettingsTable extends SettingsTable
                     return in_array((int)$value, [900000, 1800000, 2700000, 3600000, 6400000]);
                 },
                 'message' => __d('wasabi_core', 'Please choose a valid maximum login time.')
-            ]);
+            ])
+            ->numeric(
+                'Auth__max_login_attempts',
+                __d('wasabi_core', 'Please enter a number above 0.')
+            )
+            ->greaterThan(
+                'Auth__max_login_attempts',
+                0,
+                __d('wasabi_core', 'Please enter a number above 0.')
+            )
+            ->notEmpty(
+                'User__has_username',
+                __d('wasabi_core', 'Please choose if users have a username.')
+            )
+            ->notEmpty(
+                'User__has_firstname_lastname',
+                __d('wasabi_core', 'Please choose if users have a firstname and lastname.')
+            )
+            ->notEmpty(
+                'User__allow_timezone_change',
+                __d('wasabi_core', 'Please choose if users may change his timezone.')
+            );
     }
 
     /**
