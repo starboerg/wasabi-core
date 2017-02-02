@@ -1,8 +1,8 @@
 <?php
 /**
- * Wasabi Core Plugin bootstrap
+ * bootstrap
  *
- * Wasabi CMS
+ * Wasabi Core
  * Copyright (c) Frank Förster (http://frankfoerster.com)
  *
  * Licensed under The MIT License
@@ -10,6 +10,7 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
@@ -28,7 +29,7 @@ use Wasabi\Core\Controller\Component\GuardianComponent;
 try {
     // Load Wasabi Core config.
     Configure::load('Wasabi/Core.config', 'default');
-    
+
     // Load and apply the Wasabi Core cache config.
     Configure::load('Wasabi/Core.cache', 'default');
     foreach (Configure::consume('Cache') as $key => $config) {
@@ -46,7 +47,7 @@ try {
 }
 
 // Configure plugin translation paths.
-Configure::write('App.paths.locales', array_merge(Configure::read('App.paths.locales'), [Plugin::path('Wasabi/Core') . 'src' . DS . 'Locale' . DS]));
+Configure::write('App.paths.locales', array_merge((Configure::read('App.paths.locales') ?? []), [Plugin::path('Wasabi/Core') . 'src' . DS . 'Locale' . DS]));
 
 EventManager::instance()->on(new GuardianListener());
 EventManager::instance()->on(new AuthListener());
