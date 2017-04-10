@@ -31,6 +31,7 @@ use Wasabi\Core\Wasabi;
  * @property string $username
  * @property string $password
  * @property string $email
+ * @property string title
  * @property string $timezone
  * @property bool $verified
  * @property DateTime $verified_at
