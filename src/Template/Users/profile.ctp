@@ -12,6 +12,18 @@ $this->Html->setSubTitle($user->fullName());
 
 echo $this->Form->create($user, ['class' => 'no-top-section']);
     echo $this->Form->input('id', ['type' => 'hidden']);
+    if (Wasabi::setting('Core.User.has_username')) {
+        echo $this->Form->input('username', [
+            'label' => __d('wasabi_core', 'Username'),
+            'disabled' => 'disabled'
+        ]);
+    }
+    echo $this->Form->input('email', [
+        'label' => __d('wasabi_core', 'Email'),
+        'templateVars' => [
+            'info' => '<span class="email-verified">' . __d('wasabi_core', 'You verified your email address <strong>{0}</strong> on <strong>{1}</strong>.', $user->email, $user->verified_at->format('d. M Y, H:i')) . '</span>'
+        ]
+    ]);
     if (Wasabi::setting('Core.User.has_firstname_lastname')) {
         echo $this->Form->input('firstname', [
             'label' => __d('wasabi_core', 'First Name')
@@ -20,11 +32,8 @@ echo $this->Form->create($user, ['class' => 'no-top-section']);
             'label' => __d('wasabi_core', 'Last Name')
         ]);
     }
-    echo $this->Form->input('email', [
-        'label' => __d('wasabi_core', 'Email'),
-        'templateVars' => [
-            'info' => '<span class="email-verified">' . __d('wasabi_core', 'You verified your email address <strong>{0}</strong> on <strong>{1}</strong>.', $user->email, $user->verified_at->format('d. M Y, H:i')) . '</span>'
-        ]
+    echo $this->Form->input('title', [
+        'label' => __d('wasabi_core', 'Title')
     ]);
     echo $this->Form->widget('section', [
         'title' => __d('wasabi_core', 'Change Password'),
