@@ -247,6 +247,31 @@ class UsersTable extends Table
     }
 
     /**
+     * Default finder for authenticated users.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function findAuthenticated(Query $query)
+    {
+        return $query
+            ->select([
+                'id',
+                'language_id',
+                'username',
+                'firstname',
+                'lastname',
+                'email',
+                'title',
+                'timezone',
+                'verified',
+                'verified_at',
+                'active',
+                'activated_at'
+            ]);
+    }
+
+    /**
      * Find all active users.
      *
      * @param Query $query The query to decorate.
