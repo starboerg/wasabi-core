@@ -43,8 +43,14 @@ class AuthListener implements EventListenerInterface
      */
     public function setupUser(Event $event, $user)
     {
-        $this->_resetFailedLoginAttempts($user);
-        return $this->_prepareUserSessionArray($user);
+        /** @var UsersGroupsTable $UsersGroups */
+        $UsersGroups = TableRegistry::get('Wasabi/Core.UsersGroups');
+
+        // setup the group ids for the given user
+        $user['group_id'] = $UsersGroups->getGroupIds($user['id']);
+
+        $user['password_hashed'] = $UsersGroups->Users->get($user['id'], ['fields' => ['password']])->get('password');
+        return $user;
     }
 
     /**
@@ -86,41 +92,5 @@ class AuthListener implements EventListenerInterface
         }
 
         $LoginLogs->save($loginLog);
-    }
-
-    /**
-     * Reset failed login attempts for the given user.
-     *
-     * @param array $user
-     * @return void
-     */
-    protected function _resetFailedLoginAttempts(array $user)
-    {
-        /** @var UsersTable $Users */
-        $Users = TableRegistry::get('Wasabi/Core.Users');
-
-        /** @var User $user */
-        $user = $Users->get($user['id']);
-        $user->failed_login_attempts = 0;
-        $user->last_failed_login_attempt_at = null;
-        $Users->save($user);
-    }
-
-    /**
-     * Prepare the user session array by decorating it with group_id(s) and the password_hash.
-     *
-     * @param array $user
-     * @return array
-     */
-    protected function _prepareUserSessionArray(array $user)
-    {
-        /** @var UsersGroupsTable $UsersGroups */
-        $UsersGroups = TableRegistry::get('Wasabi/Core.UsersGroups');
-
-        // setup the group ids for the given user
-        $user['group_id'] = $UsersGroups->getGroupIds($user['id']);
-
-        $user['password_hashed'] = $UsersGroups->Users->get($user['id'], ['fields' => ['password']])->get('password');
-        return $user;
     }
 }
