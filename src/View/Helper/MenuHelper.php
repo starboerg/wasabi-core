@@ -14,6 +14,7 @@
 namespace Wasabi\Core\View\Helper;
 
 use Cake\View\Helper;
+use Cake\View\StringTemplateTrait;
 
 /**
  * Class MenuHelper
@@ -23,6 +24,8 @@ use Cake\View\Helper;
  */
 class MenuHelper extends Helper
 {
+    use StringTemplateTrait;
+
     /**
      * Helpers used by this helper
      *
@@ -34,6 +37,46 @@ class MenuHelper extends Helper
         ],
         'Guardian' => [
             'className' => 'Wasabi/Core.Guardian'
+        ]
+    ];
+
+    /**
+     * Default config for the helper.
+     *
+     * @var array
+     */
+    protected $_defaultConfig = [
+        // Css class of a single menu item (li).
+        'itemClass' => 'menu--item',
+        // Active css class that is applied to active items.
+        'itemActiveClass' => 'active',
+        // Open class that is applied to a parent menu item when children are active.
+        'itemOpenClass' => 'open',
+        // Css class applied to any child ul of a parent menu item.
+        'subnavClass' => 'menu--item-subnav level-{{level}} collapse',
+        // The additional css class to add to open sub navigation uls.
+        'subnavOpenClass' => 'in',
+        // Css class for menu item links (a).
+        'linkClass' => 'menu--item-link',
+        // Css class applied to nested links in sub menus.
+        'nestedLinkClass' => 'is-nested',
+        // Css class used for menu item names.
+        'nameClass' => 'menu--item-name',
+        // Css class used for menu item short names.
+        'shortNameClass' => 'menu--item-short-name',
+        // Css class used for the icon of a menu item.
+        'iconClass' => 'menu--item-icon',
+        // Css class used for carets to mark menu items containing sub menus.
+        'caretClass' => 'menu--item-caret',
+        // All templates used for menu rendering.
+        'templates' => [
+            'item' => '<li{{attrs}}>{{link}}{{subnav}}</li>',
+            'subnav' => '<ul{{attrs}}>{{items}}</ul>',
+            'linkContent' => '{{icon}}{{shortName}}{{name}}{{caret}}',
+            'icon' => '<i{{attrs}}></i>',
+            'shortName' => '<span{{attrs}}>{{shortName}}</span>',
+            'name' => '<span{{attrs}}>{{name}}</span>',
+            'caret' => '<i{{attrs}}></i>',
         ]
     ];
 
@@ -63,36 +106,15 @@ class MenuHelper extends Helper
      * Render all nested items of a menu.
      *
      * @param array $items The menu items to render.
-     * @param string $activeClass Active css class that is applied to active items.
-     * @param string $openClass Open class that is applied to a parent menu item when children are active.
-     * @param string $subNavClass Css class applied to any child ul of a parent menu item.
+     * @param int $level The current level of rendered menu items.
      * @return string The rendered items without an outer ul.
      */
-    public function renderNested(array $items, $activeClass = 'active', $openClass = 'open', $subNavClass = 'sub-nav collapse')
+    public function renderNested(array $items, $level = 0)
     {
         $out = '';
         foreach ($items as $item) {
-            $subNavActiveClass = '';
-            $cls = $this->_buildClasses($item, $activeClass, $openClass, $subNavActiveClass);
-
-            $itemLink = $this->_renderItemLink($item);
-            if ($itemLink === '') {
-                continue;
-            }
-
-            $children = $this->_renderChildren($item, $subNavClass, $subNavActiveClass);
-            if ($this->_hasChildren($item) && empty($children)) {
-                continue;
-            }
-
-            $itemOut = '<li' . ((count($cls) > 0) ? ' class="' . join(' ', $cls) . '"' : '') . '>';
-            $itemOut .= $itemLink;
-            $itemOut .= $children;
-            $itemOut .= '</li>';
-
-            $out .= $itemOut;
+            $out .= $this->_renderItem($item, $level);
         }
-
         return $out;
     }
 
@@ -132,22 +154,46 @@ class MenuHelper extends Helper
      * Build the css classes for a menu item.
      *
      * @param array $item The menu item.
-     * @param string $activeClass The active css class.
-     * @param string $openClass The open css class.
-     * @param string $subNavActiveClass The sub navigation active css class.
      * @return array An array of applied css classes.
      */
-    protected function _buildClasses($item, $activeClass, $openClass, &$subNavActiveClass)
+    protected function _buildItemClasses($item)
     {
-        $cls = [];
+        $cls = [
+            $this->config('itemClass')
+        ];
 
         if ($this->_isActive($item)) {
-            $cls[] = $activeClass;
+            $cls[] = $this->config('itemActiveClass');
         }
 
         if ($this->_isOpen($item)) {
-            $cls[] = $openClass;
-            $subNavActiveClass .= ' in';
+            $cls[] = $this->config('itemOpenClass');
+        }
+
+        return $cls;
+    }
+
+    protected function _buildLinkClasses($level)
+    {
+        $cls = [
+            $this->config('linkClass')
+        ];
+
+        if ($level > 0) {
+            $cls[] = $this->config('nestedLinkClass');
+        }
+
+        return $cls;
+    }
+
+    protected function _buildSubnavClasses($item, $level)
+    {
+        $cls = [
+            str_replace('{{level}}', (string)$level, $this->config('subnavClass'))
+        ];
+
+        if ($this->_isOpen($item)) {
+            $cls[] = $this->config('subnavOpenClass');
         }
 
         return $cls;
@@ -186,82 +232,135 @@ class MenuHelper extends Helper
         return (isset($item['children']) && !empty($item['children']));
     }
 
-    /**
-     * Render the icon of the menu item.
-     *
-     * @param array $item The menu item.
-     * @return string
-     */
-    protected function _renderIcon($item)
+    protected function _renderItem($item, $level)
     {
-        if (!isset($item['icon'])) {
+        if (($itemLink = $this->_renderLink($item, $level)) === '') {
             return '';
         }
-        return '<i class="' . $item['icon'] . '"></i>';
-    }
 
-    /**
-     * Render the name of the menu item.
-     *
-     * @param array $item The menu item.
-     * @return string
-     */
-    protected function _renderName($item)
-    {
-        $out = '';
+        $cls = $this->_buildItemClasses($item);
 
-        if (isset($item['name_short'])) {
-            $out .= '<span class="item-name-short">' . $item['name_short'] . '</span>';
+        $subnav = $this->_renderChildren($item, $level + 1);
+        if (($this->_hasChildren($item) && empty($subnav)) ||
+            ((!isset($item['url']) || empty($item['url'])) && !$this->_hasChildren($item))
+        ) {
+            return '';
         }
 
-        $out .= '<span class="item-name">' . $item['name'] . '</span>';
+        $templater = $this->templater();
 
-        return $out;
+        $htmlAttributes = [
+            'class' => $cls
+        ];
+
+        return $this->formatTemplate('item', [
+            'attrs' => $templater->formatAttributes($htmlAttributes),
+            'link' => $itemLink,
+            'subnav' => $subnav
+        ]);
     }
 
     /**
-     * Render the item link of the menu item.
+     * Render the link of the menu item.
      *
      * @param array $item The menu item.
+     * @param int $level The current nesting level.
      * @return string
      */
-    protected function _renderItemLink($item)
+    protected function _renderLink($item, $level)
     {
-        $linkText = $this->_renderIcon($item) . $this->_renderName($item);
-        $options = $item['linkOptions'] ?? [];
-        $options['escape'] = false;
+        $templater = $this->templater();
 
-        if (isset($item['url'])) {
-            $itemLink = $this->Guardian->protectedLink($linkText, $item['url'], $options);
+        if ($item['icon'] ?? false) {
+            $attrs = [
+                'class' => [
+                    $this->config('iconClass'),
+                    $item['icon']
+                ]
+            ];
+
+            $icon = $this->formatTemplate('icon', [
+                'attrs' => $templater->formatAttributes($attrs)
+            ]);
         } else {
-            if ($this->_hasChildren($item)) {
-                $linkText .= ' <i class="icon-arrow-left"></i>';
-                $linkText .= ' <i class="icon-arrow-down"></i>';
-            }
-            $itemLink = $this->Html->link($linkText, 'javascript:void(0)', $options);
+            $icon = null;
         }
-        return $itemLink;
+
+        if ($item['name_short'] ?? false) {
+            $attrs = [
+                'class' => $this->config('nameShortClass')
+            ];
+            $shortName = $this->formatTemplate('name', [
+                'attrs' => $templater->formatAttributes($attrs),
+                'shortName' => $item['name_short']
+            ]);
+        } else {
+            $shortName = null;
+        }
+
+        if ($item['name'] ?? false) {
+            $attrs = [
+                'class' => $this->config('nameClass')
+            ];
+            $name = $this->formatTemplate('name', [
+                'attrs' => $templater->formatAttributes($attrs),
+                'name' => $item['name']
+            ]);
+        } else {
+            $name = null;
+        }
+
+        if ($this->_hasChildren($item)) {
+            $attrs = [
+                'class' => $this->config('caretClass')
+            ];
+            $caret = $this->formatTemplate('caret', [
+                'attrs' => $templater->formatAttributes($attrs)
+            ]);
+        } else {
+            $caret = null;
+        }
+
+        $linkContent = $this->formatTemplate('linkContent', compact('icon', 'shortName', 'name', 'caret'));
+        $options = [
+            'class' => $this->_buildLinkClasses($level),
+            'escape' => false
+        ];
+
+        if (isset($item['url']) && !empty($item['url'])) {
+            return $this->Guardian->protectedLink($linkContent, $item['url'], $options);
+        }
+
+        return $this->Html->link($linkContent, 'javascript:void(0)', $options);
     }
 
     /**
      * Render the subnavigation of the menu item.
      *
      * @param array $item The menu item.
-     * @param string $subNavClass The subnavigation class.
-     * @param string $subNavActiveClass The subnavigation active class.
+     * @param int $level The current
      * @return string
      */
-    protected function _renderChildren($item, $subNavClass, $subNavActiveClass)
+    protected function _renderChildren($item, $level)
     {
         if (!$this->_hasChildren($item)) {
             return '';
         }
 
-        $nestedOut = $this->renderNested($item['children']);
-        if ($nestedOut === '') {
+        $subnavItems = $this->renderNested($item['children'], $level);
+        if ($subnavItems === '') {
             return '';
         }
 
-        return '<ul class="' . $subNavClass . $subNavActiveClass . '">' . $nestedOut . '</ul>';
+        $templater = $this->templater();
+
+        $htmlAttributes = [
+            'class' => $this->_buildSubnavClasses($item, $level)
+        ];
+
+        return $this->formatTemplate('subnav', [
+            'attrs' => $templater->formatAttributes($htmlAttributes),
+            'items' => $subnavItems
+        ]);
     }
 }
