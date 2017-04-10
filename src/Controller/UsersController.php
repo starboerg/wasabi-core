@@ -604,7 +604,7 @@ class UsersController extends BackendAppController
             /** @var User $user */
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->request->session()->write('Auth.User.language_id', $user->language_id);
+                $this->Auth->setUser(Hash::merge($this->Auth->user(), $user->toArray()));
                 $this->Flash->success(__d('wasabi_core', 'Your profile has been updated.'));
                 $this->redirect(['action' => 'profile']);
                 return;
