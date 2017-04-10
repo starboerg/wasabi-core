@@ -75,10 +75,10 @@ class BackendAppController extends AppController
         $fieldPassword = Wasabi::setting('Core.auth.password_field') ?? 'password';
 
         $this->loadComponent('Auth', [
-            AuthComponent::ALL => [
-                'userModel' => 'Wasabi/Core.Users'
-            ],
             'authenticate' => [
+                AuthComponent::ALL => [
+                    'userModel' => 'Wasabi/Core.Users',
+                ],
                 'Form' => [
                     'fields' => [
                         'username' => $fieldIdentity,
