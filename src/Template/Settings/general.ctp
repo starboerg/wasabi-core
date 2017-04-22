@@ -131,6 +131,13 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
             '1' => __d('wasabi_core', 'Yes')
         ]
     ]);
+    echo $this->Form->input('User__belongs_to_many_groups', [
+        'label' => __d('wasabi_core', 'User may belong to multiple groups?'),
+        'options' => [
+            '0' => __d('wasabi_core', 'No'),
+            '1' => __d('wasabi_core', 'Yes')
+        ]
+    ]);
     echo $this->Html->div('form-controls');
         echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
         echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [

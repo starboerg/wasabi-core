@@ -115,8 +115,8 @@ class UsersTable extends Table
             ])
             ->add('groups', 'isValid', [
                 'rule' => function ($groups) {
-                    if (!Wasabi::setting('Core.User.belongs_to_many_groups') && count($groups['_ids']) > 1) {
-                        return false;
+                    if (empty($groups['_ids'])) {
+                        return true;
                     }
                     $validGroupIds = $this->Groups->find()->extract('id')->toArray();
                     foreach ($groups['_ids'] as $groupId) {

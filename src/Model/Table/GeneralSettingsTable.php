@@ -99,6 +99,10 @@ class GeneralSettingsTable extends SettingsTable
             ->notEmpty(
                 'User__allow_timezone_change',
                 __d('wasabi_core', 'Please choose if users may change his timezone.')
+            )
+            ->notEmpty(
+                'User__belongs_to_many_groups',
+                __d('wasabi_core', 'Please choose if users may belong to multiple groups.')
             );
     }
 

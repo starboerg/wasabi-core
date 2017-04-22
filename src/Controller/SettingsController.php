@@ -50,7 +50,8 @@ class SettingsController extends BackendAppController
             'Auth__block_time',
             'User__has_username',
             'User__has_firstname_lastname',
-            'User__allow_timezone_change'
+            'User__allow_timezone_change',
+            'User__belongs_to_many_groups'
         ];
         $this->GeneralSettings = $this->loadModel('Wasabi/Core.GeneralSettings');
         $settings = $this->GeneralSettings->getKeyValues(new GeneralSetting(), $keys);
