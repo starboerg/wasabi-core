@@ -52,6 +52,12 @@ echo $this->Form->create($user, ['class' => 'no-top-section']);
     if ($isEdit) {
         echo $this->Form->input('id', ['type' => 'hidden']);
     }
+    echo $this->Form->input('email', [
+        'label' => __d('wasabi_core', 'Email'),
+        'templateVars' => [
+            'info' => $emailInfo
+        ]
+    ]);
     if (Wasabi::setting('Core.User.has_username')) {
         echo $this->Form->input('username', [
             'label' => __d('wasabi_core', 'Username')
@@ -65,11 +71,8 @@ echo $this->Form->create($user, ['class' => 'no-top-section']);
             'label' => __d('wasabi_core', 'Last Name')
         ]);
     }
-    echo $this->Form->input('email', [
-        'label' => __d('wasabi_core', 'Email'),
-        'templateVars' => [
-            'info' => $emailInfo
-        ]
+    echo $this->Form->input('title', [
+        'label' => __d('wasabi_core', 'Title')
     ]);
     echo $this->Form->input($groupField, $groupOptions);
     if ($isEdit) {
