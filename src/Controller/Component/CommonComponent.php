@@ -19,7 +19,7 @@ class CommonComponent extends Component
      *
      * Trim all submitted data.
      *
-     * @param \Cake\Event\Event $event
+     * @param Event $event
      * @return void
      */
     public function startup(Event $event)
