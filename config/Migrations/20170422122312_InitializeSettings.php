@@ -95,6 +95,11 @@ class InitializeSettings extends AbstractMigration
                 'scope' => 'Core',
                 'field' => 'User__allow_timezone_change',
                 'value' => 0
+            ],
+            [
+                'scope' => 'Core',
+                'field' => 'Core.User.belongs_to_many_groups',
+                'value' => 0
             ]
         ]);
 
