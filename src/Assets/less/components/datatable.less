@@ -1,0 +1,162 @@
+@import (reference) "../__config";
+@import (reference) "../__colors";
+@import (reference) "../__mixins";
+
+.datatable-wrapper {
+  overflow-x: auto;
+}
+
+.datatable {
+  width: 100%;
+  vertical-align: top;
+
+  &.valign-middle {
+    vertical-align: middle;
+  }
+
+  & > thead > tr > th,
+  & > tfoot > tr > th,
+  & > tbody > tr > td {
+    text-align: left;
+
+    &.center {
+      text-align: center;
+    }
+  }
+
+  & > thead > tr,
+  & > tfoot > tr {
+
+    & > th {
+      .rem(padding, 10px);
+      font-weight: 600;
+      color: #444;
+      text-align: left;
+      background-color: @table-th-bg-color;
+
+      &:first-child {
+        border-left: 1px solid @table-th-border-color;
+      }
+
+      &:last-child {
+        border-right: 1px solid @table-th-border-color;
+      }
+
+      a {
+        color: @table-th-link-color;
+
+        span {
+          border-bottom: 1px dotted darken(@table-th-border-color, 15%);
+        }
+
+        &:hover span {
+          border-color: @table-th-link-color;
+        }
+
+        [class*="icon-sortable-"] {
+          .rem(padding-left, 2px);
+        }
+      }
+    }
+
+    &:first-child > th {
+      border-top: 1px solid @table-th-border-color;
+    }
+
+    &:last-child > th {
+      border-bottom: 1px solid @table-th-border-color;
+    }
+
+    &.datatable-filters {
+
+      & > th {
+        .rem(padding, 8px,8px,2px);
+        .rem(line-height, 34px);
+        border-bottom: 1px solid @table-th-border-color;
+        background-color: @table-filters-bg-color;
+      }
+
+      input[type="text"],
+      select {
+        .rem(font-size, 12px);
+        vertical-align: top;
+      }
+
+      select {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      button {
+        .rem(padding-top, 8px);
+        .rem(padding-bottom, 8px);
+        line-height: 1;
+        vertical-align: top;
+      }
+    }
+  }
+
+  & > tfoot > tr > th {
+    border-top: 1px solid #d7d7d7;
+  }
+
+  & > tbody > tr {
+
+    & > td {
+      border-top: 1px solid @table-td-border-color;
+      .rem(padding, 10px);
+
+      &:first-child {
+        border-left: 1px solid @table-td-border-color;
+      }
+
+      &:last-child {
+        border-right: 1px solid @table-td-border-color;
+      }
+
+      &.no-results {
+        text-align: center;
+      }
+    }
+
+    &.sortable-placeholder td {
+      background-color: @sortable-placeholder-bg-color;
+      border-bottom: 1px solid @table-td-border-color;
+    }
+
+    &:not(.sortable-placeholder):not(.sortable-clone) {
+      td {
+        border-bottom: 1px solid @table-td-border-color;
+      }
+    }
+
+    &.sortable-clone td {
+      background-color: #fff;
+      border-bottom: 1px solid @table-td-border-color;
+    }
+
+    &:first-child td {
+      border-top: none;
+    }
+
+    &.new {
+      display: none;
+    }
+
+    &:hover td {
+      background-color: @table-row--hover;
+    }
+
+    &.selected td {
+      background-color: @table-row--selected;
+    }
+
+    &.selected:hover td {
+      background-color: @table-row--selected--hover;
+    }
+
+    &.valign-top td {
+      vertical-align: top;
+    }
+  }
+}
