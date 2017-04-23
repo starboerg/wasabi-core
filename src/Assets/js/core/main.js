@@ -2,13 +2,17 @@ define(function(require) {
   var $ = require('jquery');
   var _ = require('underscore');
   var MenuView = require('core/views/Menu');
-  var NavigationToggleView = require('core/views/NavigationToggle');
+  var SidebarOpenHandleView = require('core/views/SidebarOpenHandle');
+  var SidebarToggleView = require('core/views/SidebarToggle');
   var LangSwitchView = require('core/views/LangSwitch');
   var PaginationView = require('core/views/Pagination');
   var LoginModalView = require('core/views/LoginModal');
   var ModalView = require('common/ModalView');
   var TabView = require('common/TabView');
   var WS = require('wasabi');
+  var pace = require('pace');
+
+  require('geminiscrollbar');
   require('jquery.livequery');
 
   var win = window;
@@ -147,7 +151,8 @@ define(function(require) {
 
   function _initializeBackendViews() {
     WS.views.menu = WS.createView(MenuView);
-    WS.views.navigationToggle = WS.createView(NavigationToggleView);
+    WS.views.navigationToggle = WS.createView(SidebarToggleView);
+    WS.views.sidebarOpenHandle = WS.createView(SidebarOpenHandleView);
     WS.views.langSwitch = WS.createView(LangSwitchView);
     WS.views.paginations = WS.createViews($('.pagination'), PaginationView);
   }
@@ -184,6 +189,20 @@ define(function(require) {
       WS.views.push(WS.createView(TabView, {
         el: $(this)
       }));
+    });
+  }
+
+  function _initScrollbars() {
+    this.$body.find('[data-init="gm-scrollbar"]').each(function() {
+      $(this).css('overflow', 'auto');
+      var instance = new window.GeminiScrollbar({
+        element: $(this).get(0),
+        autoshow: false,
+        createElements: false,
+        forceGemini: false
+      });
+      instance.create();
+      $(this).data('scrollbar', instance);
     });
   }
 
@@ -336,8 +355,10 @@ define(function(require) {
       this.$html = $('html');
       this.$body = $('body');
 
+      pace.start();
       _setupAjax.call(this);
       _detectFeatures.call(this);
+      _initScrollbars.call(this);
       _initializeBackendViews.call(this);
       _toggleEmptySelects.call(this);
       _initModals.call(this);

@@ -154,6 +154,9 @@ class BackendAppController extends AppController
         $this->_setSectionCssClass();
 
         $this->set('heartBeatFrequency', $this->_calculateHeartBeatFrequency());
+        if (isset($_COOKIE['sidebar-collapsed'])) {
+            $this->set('sidebarCollapsed', (bool)$_COOKIE['sidebar-collapsed'] ? 'sidebar-is-collapsed' : '');
+        }
 
         if ($this->request->is('ajax')) {
             $this->viewClass = null;

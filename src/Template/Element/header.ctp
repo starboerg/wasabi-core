@@ -6,7 +6,6 @@ use Wasabi\Core\Wasabi;
 
 ?><header id="page-header" class="row">
     <ul class="row">
-        <li><a class="nav-toggle" href="javascript:void(0)"><i class="icon-nav"></i></a></li>
         <li><?= $this->Html->link(
             Wasabi::getInstanceName(),
             [

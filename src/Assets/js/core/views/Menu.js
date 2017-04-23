@@ -2,7 +2,7 @@
 define(function(require) {
   var $ = require('jquery');
   var BaseView = require('common/BaseView');
-  var WS = require('wasabi');
+  var Tether = require('tether');
   require('bootstrap.collapse');
 
   /**
@@ -40,7 +40,7 @@ define(function(require) {
      *
      * @type {string} CSS selector
      */
-    el: '#backend-menu > ul',
+    el: '.sidebar--menu',
 
     /**
      * Registered events of this view.
@@ -55,7 +55,8 @@ define(function(require) {
      * Registered global event handlers.
      */
     globalEvents: {
-      'window.resize': 'onWindowResize'
+      'window.resize': 'onWindowResize',
+      'sidebar.toggle-collapse': 'onToggleCollapse'
     },
 
     /**
@@ -66,22 +67,22 @@ define(function(require) {
     isCollapsed: false,
 
     /**
+     * Determines wheter the sidebar is collapsed by an outer component.
+     */
+    isForceCollapsed: false,
+
+    /**
      * Options
      *
      * @param {Object}
      */
     options: {},
 
-    $window: null,
     $document: null,
-    $wrap: null,
+    $scrollContainer: null,
 
-    isIOS: /iPhone|iPad|iPod/.test(navigator.userAgent),
-
-    menuIsPinned: false,
-    pinnedMenuTop: false,
-    pinnedMenuBottom: false,
-    lastScrollPosition: 0,
+    subnavTether: null,
+    $subnavClone: null,
 
     /**
      * Initialization of the view.
@@ -90,19 +91,13 @@ define(function(require) {
      */
     initialize: function(options) {
       this.options = $.extend({}, defaults, options);
-      this.$('> li').filter('.active').prev().addClass('prev-active');
-      this.$window = $(window);
       this.$document = $(document);
-      this.$wrap = this.$el.parent().parent();
-      this.lastScrollPosition = this.$window.scrollTop();
-      this.$window.on('scroll', _.bind(this.pinMenu, this));
+      this.$scrollContainer = this.$el.closest('.gm-scrollbar-container');
       this.collapseMenu();
-      this.pinMenu();
     },
 
     onWindowResize: function(event) {
       this.collapseMenu();
-      this.pinMenu();
     },
 
     /**
@@ -112,11 +107,30 @@ define(function(require) {
      * The visuals of the collapsed navigation are done via media queries and not via JS.
      */
     collapseMenu: function() {
-      var content = window.getComputedStyle(document.querySelector('#backend-menu'), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
-      this.isCollapsed = (content === 'collapsed');
-      this.$el.toggleClass(this.options.collapsedClass, this.isCollapsed);
-      if (!this.isCollapsed) {
-        this.$el.find('.' + this.options.selectedClass).removeClass(this.options.selectedClass).find('.sub-nav').css({marginTop: ''});
+      var content = window.getComputedStyle(document.querySelector(this.$el.selector), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
+      this.isCollapsed = (this.isForceCollapsed || this.$document.find('body').hasClass('sidebar-is-collapsed') || content === 'collapsed');
+
+      if (!this.isCollapsed && this.subnavTether !== null) {
+        this.subnavTether.destroy();
+        this.$subnavClone.remove();
+      }
+
+      if (this.$scrollContainer.data('scrollbar')) {
+        this.$scrollContainer.data('scrollbar').update();
+      }
+    },
+
+    onToggleCollapse: function(collapsed) {
+      this.isForceCollapsed = collapsed;
+      this.isCollapsed = collapsed;
+
+      if (!collapsed && this.subnavTether !== null) {
+        this.subnavTether.destroy();
+        this.$subnavClone.remove();
+      }
+
+      if (this.$scrollContainer.data('scrollbar')) {
+        this.$scrollContainer.data('scrollbar').update();
       }
     },
 
@@ -128,8 +142,9 @@ define(function(require) {
      */
     onMainItemClick: function(event) {
       var $target = _getEventTarget(event);
+      var $subnav = $target.find('> ul');
 
-      if ($target.find('.sub-nav').length === 0) {
+      if ($subnav.length === 0) {
         return;
       }
 
@@ -142,197 +157,59 @@ define(function(require) {
 
       $otherOpened.removeClass(this.options.selectedClass);
 
-      if (this.isCollapsed) {
-        var $subnav = $target.find('.sub-nav');
-        $subnav.css({marginTop: '', height: ''});
-        if (!$target.hasClass(this.options.selectedClass)) {
-          $target.addClass(this.options.selectedClass);
-          this.adjustPopoutMenu($target);
-          this.$document.on('click', _.bind(this.hideSubnav, this));
+      if (this.isCollapsed && !this.$document.find('body').hasClass('sidebar-is-open')) {
+        if ($target.hasClass(this.options.selectedClass)) {
+          this.hideSubnav();
         } else {
-          $target.removeClass(this.options.selectedClass);
-          this.$document.off('click', _.bind(this.hideSubnav, this));
+          this.hideSubnav();
+          $target.addClass(this.options.selectedClass);
+          this.$subnavClone = $subnav.clone().appendTo('body');
+          this.subnavTether = new Tether({
+            element: this.$subnavClone,
+            target: $target,
+            attachment: 'top left',
+            targetAttachment: 'top right',
+            constraints: [
+              {
+                to: this.$document.find('#content').get(0),
+                pin: true
+              }
+            ]
+          });
+          this.$document.on('click', _.bind(this.hideSubnav, this));
         }
       } else {
         if (!$target.hasClass(this.options.openClass)) {
           $target.addClass(this.options.openClass);
-          $target.find('.sub-nav').collapse('show');
+          $subnav.one('shown.bs.collapse', _.bind(function() {
+            setTimeout(_.bind(function() {
+              if (this.$scrollContainer.data('scrollbar')) {
+                this.$scrollContainer.data('scrollbar').update();
+              }
+            }, this), 0);
+          }, this));
+          $subnav.collapse('show');
         } else {
           $target.removeClass(this.options.openClass);
-          $target.find('.sub-nav').collapse('hide');
+          $subnav.one('hidden.bs.collapse', _.bind(function() {
+            setTimeout(_.bind(function() {
+              if (this.$scrollContainer.data('scrollbar')) {
+                this.$scrollContainer.data('scrollbar').update();
+              }
+            }, this), 0);
+          }, this));
+          $subnav.collapse('hide');
         }
       }
     },
 
-    hideSubnav: function(event) {
-      var $target = _getEventTarget(event);
-      if ($target.parents('.'+ this.options.selectedClass).length === 0) {
-        var $menuItem = this.$('.' + this.options.selectedClass);
-        $menuItem.removeClass(this.options.selectedClass);
-        $menuItem.find('.sub-nav').css('margin-top', '');
+    hideSubnav: function() {
+      this.$('.' + this.options.selectedClass).removeClass(this.options.selectedClass);
+      if (this.subnavTether !== null) {
+        this.subnavTether.destroy();
+        this.$subnavClone.remove();
+        this.$document.off('click', _.bind(this.hideSubnav, this));
       }
-    },
-
-    adjustPopoutMenu: function($menuItem) {
-      var $submenu = $menuItem.find('.sub-nav');
-      var offset = $submenu.offset();
-      var adjustment;
-
-      if (offset) {
-        var offsetTop = offset.top;
-        var height = $submenu.outerHeight();
-        var windowHeight = this.$window.height();
-
-        if (offsetTop + height > windowHeight) {
-          adjustment = offsetTop + height - windowHeight - this.$window.scrollTop();
-        }
-      }
-
-      if ( adjustment > 1 ) {
-        $submenu.css( 'margin-top', '-' + adjustment + 'px' );
-      } else {
-        $submenu.css( 'margin-top', '' );
-      }
-    },
-
-    pinMenu: function(event) {
-      var windowPos = this.$window.scrollTop();
-      var resizing = !event || (event.type !== 'scroll');
-      var menuTop;
-
-      if ($('body').hasClass('backend-nav--is-visible')) {
-        return;
-      }
-
-      if (this.isIOS) {
-        return;
-      }
-
-      var headerHeight = $('#page-header').outerHeight();
-      var menuHeight = this.$el.outerHeight();
-      var windowHeight = this.$window.height();
-      var documentHeight = this.$document.height();
-
-      if (menuHeight + headerHeight < windowHeight) {
-        this.unpinMenu();
-        return;
-      }
-
-      this.menuIsPinned = true;
-
-      if (menuHeight + headerHeight > windowHeight) {
-
-        // Check for overscrolling
-        if (windowPos < 0) {
-          if (!this.pinnedMenuTop) {
-            this.pinnedMenuTop = true;
-            this.pinnedMenuBottom = false;
-
-            this.$wrap.css({
-              position: 'fixed',
-              top: '',
-              bottom: ''
-            });
-          }
-          return;
-        } else if (windowPos + windowHeight > documentHeight - 1) {
-          if (!this.pinnedMenuBottom) {
-            this.pinnedMenuBottom = true;
-            this.pinnedMenuTop = false;
-
-            this.$wrap.css({
-              position: 'fixed',
-              top: '',
-              bottom: 0
-            });
-          }
-          return;
-        }
-
-        if (windowPos > this.lastScrollPosition) {
-          // Scrolling down
-          if (this.pinnedMenuTop) {
-            // let it scroll
-            this.pinnedMenuTop = false;
-            menuTop = this.$wrap.offset().top - headerHeight - (windowPos - this.lastScrollPosition);
-
-            if (menuTop + menuHeight + headerHeight < windowPos + windowHeight) {
-              menuTop = windowPos + windowHeight - menuHeight - headerHeight;
-            }
-
-            this.$wrap.css({
-              position: 'absolute',
-              top: menuTop,
-              bottom: ''
-            });
-          } else if (!this.pinnedMenuBottom && this.$wrap.offset().top + menuHeight < windowPos + windowHeight) {
-            // pin the bottom
-            this.pinnedMenuBottom = true;
-
-            this.$wrap.css({
-              position: 'fixed',
-              top: '',
-              bottom: 0
-            });
-          }
-        } else if (windowPos < this.lastScrollPosition) {
-          // Scrolling up
-          if (this.pinnedMenuBottom) {
-            // let it scroll
-            this.pinnedMenuBottom = false;
-            menuTop = this.$wrap.offset().top - headerHeight + (this.lastScrollPosition - windowPos);
-
-            if (menuTop + menuHeight > windowPos + windowHeight) {
-              menuTop = windowPos;
-            }
-
-            this.$wrap.css({
-              position: 'absolute',
-              top: menuTop,
-              bottom: ''
-            });
-          } else if (!this.pinnedMenuTop && this.$wrap.offset().top >= windowPos + headerHeight) {
-            // pin the top
-            this.pinnedMenuTop = true;
-
-            this.$wrap.css({
-              position: 'fixed',
-              top: '',
-              bottom: ''
-            });
-          }
-        } else if (resizing) {
-          // Resizing
-          this.pinnedMenuTop = this.pinnedMenuBottom = false;
-          menuTop = windowPos + windowHeight - menuHeight - headerHeight - 1;
-
-          if (menuTop > 0) {
-            this.$wrap.css({
-              position: 'absolute',
-              top: menuTop,
-              bottom: ''
-            });
-          } else {
-            this.unpinMenu();
-          }
-        }
-
-      }
-
-      this.lastScrollPosition = windowPos;
-    },
-
-    unpinMenu: function() {
-      if (this.isIOS || !this.menuIsPinned) {
-        return;
-      }
-
-      this.pinnedMenuTop = this.pinnedMenuBottom = this.menuIsPinned = false;
-      this.$wrap.css({
-        position: '',
-        top: '',
-        bottom: ''
-      });
     }
 
   });

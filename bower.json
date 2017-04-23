@@ -8,7 +8,12 @@
     "bootstrap": "3.3.6",
     "spin.js": "2.3.2",
     "purl": "2.3.1",
-    "jquery-color": "~2.1.2"
+    "jquery-color": "~2.1.2",
+    "gemini-scrollbar": "1.4.3",
+    "tether": "^1.4.0",
+    "js-cookie": "^2.1.4",
+    "cookies.js": "*",
+    "PACE": "pace#^1.0.2"
   },
   "license": "MIT",
   "private": true,

@@ -1,6 +1,9 @@
 define(function(require) {
+
   var $ = require('jquery');
   var BaseView = require('common/BaseView');
+  var WS = require('wasabi');
+  var Cookies = require('js-cookie');
 
   /**
    * Holds a reference to the body.
@@ -15,7 +18,7 @@ define(function(require) {
    * @type {{navClosedClass: string}}
    */
   var defaults = {
-    forceOpenClass: 'backend-nav--is-visible'
+    forceCollapsedClass: 'sidebar-is-collapsed'
   };
 
   return BaseView.extend({
@@ -25,7 +28,7 @@ define(function(require) {
      *
      * @type {string} CSS selector
      */
-    el: '#page-header .nav-toggle',
+    el: '.sidebar--open-handle',
 
     /**
      * Registered events of this view.
@@ -33,7 +36,7 @@ define(function(require) {
      * @type {Object}
      */
     events: {
-      'click': 'toggleNav'
+      'click': 'collapseToggleNav'
     },
 
     /**
@@ -53,14 +56,18 @@ define(function(require) {
     },
 
     /**
-     * toggleNav event handler
-     * Toggles navClosedClass on the body to show/hide the navigation.
+     * collapseToggleNav event handler
+     * Toggles forceCollapsedClass on the body to collapse/uncollapse the navigation.
      */
-    toggleNav: function() {
-      if (!$body.hasClass(this.options.forceOpenClass)) {
-        $body.addClass(this.options.forceOpenClass);
+    collapseToggleNav: function() {
+      if (!$body.hasClass(this.options.forceCollapsedClass)) {
+        $body.addClass(this.options.forceCollapsedClass);
+        Cookies.set('sidebar-collapsed', 1, {expires: 365});
+        WS.eventBus.trigger('sidebar.toggle-collapse', true);
       } else {
-        $body.removeClass(this.options.forceOpenClass);
+        $body.removeClass(this.options.forceCollapsedClass);
+        Cookies.set('sidebar-collapsed', 0, {expires: 365});
+        WS.eventBus.trigger('sidebar.toggle-collapse', false);
       }
     }
   });

@@ -18,9 +18,13 @@ require.config({
     'jquery.nSortable': 'common/jquery-plugins/jquery.nSortable',
     'jquery.tSortable': 'common/jquery-plugins/jquery.tSortable',
     'jquery.position': 'common/jquery-plugins/jquery.position',
+    'js-cookie': 'common/js.cookie',
     'bootstrap.collapse': 'vendor/bootstrap/js/collapse',
     'bootstrap.dropdown': 'vendor/bootstrap/js/dropdown',
-    'bootstrap.transition': 'vendor/bootstrap/js/transition'
+    'bootstrap.transition': 'vendor/bootstrap/js/transition',
+    'geminiscrollbar': 'vendor/gemini-scrollbar/index',
+    'tether': 'vendor/tether/dist/js/tether',
+    'pace': 'vendor/PACE/pace'
   },
   hbs: { // optional
     helpers: true,            // default: true

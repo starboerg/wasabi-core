@@ -20,7 +20,10 @@ module.exports = function(grunt) {
     'jquery.color',
     'bootstrap.dropdown',
     'bootstrap.transition',
-    'bootstrap.collapse'
+    'bootstrap.collapse',
+    'tether',
+    'js-cookie',
+    'pace'
   ];
 
   grunt.initConfig({
@@ -56,14 +59,6 @@ module.exports = function(grunt) {
         'Gruntfile.js',
         'src/Assets/js/**/*.js'
       ]
-    },
-    bowerRequirejs: {
-      all: {
-        rjsConfig: './src/Assets/js/common.js',
-        options: {
-          baseUrl: './src/Assets/js/'
-        }
-      }
     },
     requirejs: {
       compile: {
