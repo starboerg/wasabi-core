@@ -116,6 +116,7 @@ define(function(require) {
             ($(this)[0] !== that.$tr[0]) &&
             ($(this).css('display') !== 'none') &&
             ($(this).css('position') !== 'absolute') &&
+            !$(this).hasClass('sortable-clone') &&
             !$(this).hasClass(that.settings.placeholder)
           );
         });
@@ -124,7 +125,7 @@ define(function(require) {
         var direction = null;
 
         $items.each(function() {
-          var min = $(this).position().top;
+          var min = $(this).offset().top;
           var max = min + $(this).outerHeight();
           var middle = parseInt((min + max) / 2);
           if (event.pageY >= min && event.pageY < middle) {
@@ -182,7 +183,7 @@ define(function(require) {
         .css({
           width: this.$tr.outerWidth(),
           height: this.$tr.outerHeight(),
-          position: 'absolute',
+          position: 'fixed',
           zIndex: 10000,
           opacity: this.settings.opacity
         })
@@ -286,7 +287,7 @@ define(function(require) {
 
   $.fn.tSortable.defaults = {
     handle: 'div',
-    items: 'tbody > tr',
+    items: '> tbody > tr',
     opacity: 0.6,
     placeholder: 'placeholder',
     animateTarget: true,
