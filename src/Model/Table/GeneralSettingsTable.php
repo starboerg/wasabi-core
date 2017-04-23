@@ -23,7 +23,7 @@ use Wasabi\Core\Model\Entity\Setting;
  * Class GeneralSettingsTable
  *
  * @method getKeyValues(Entity $entity, array $fields) KeyValueBehavior::getKeyValues(Entity $entity, array $fields)
- * @method saveKeyValues(Entity $entity, array $fields) KeyValueBehavrio::saveKeyValues(Entity $entity, array $fields)
+ * @method saveKeyValues(Entity $entity, array $fields) KeyValueBehavior::saveKeyValues(Entity $entity, array $fields)
  */
 class GeneralSettingsTable extends SettingsTable
 {
@@ -55,7 +55,11 @@ class GeneralSettingsTable extends SettingsTable
         return $validator
             ->notEmpty(
                 'instance_name',
-                __d('wasabi_core', 'Please enter a name for your CMS instance.')
+                __d('wasabi_core', 'Please enter a name for your app.')
+            )
+            ->notEmpty(
+                'instance_short_name',
+                __d('wasabi_core', 'Please enter a short name for your app.')
             )
             ->notEmpty(
                 'Email__email_sender',

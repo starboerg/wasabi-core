@@ -33,6 +33,11 @@ class InitializeSettings extends AbstractMigration
             ],
             [
                 'scope' => 'Core',
+                'field' => 'instance_short_name',
+                'value' => 'A'
+            ],
+            [
+                'scope' => 'Core',
                 'field' => 'html_title_suffix',
                 'value' => 'My App'
             ],

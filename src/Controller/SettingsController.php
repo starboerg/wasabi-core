@@ -38,6 +38,7 @@ class SettingsController extends BackendAppController
     {
         $keys = [
             'instance_name',
+            'instance_short_name',
             'html_title_suffix',
             'Login__Message__show',
             'Login__Message__text',

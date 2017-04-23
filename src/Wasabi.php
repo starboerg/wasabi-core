@@ -163,6 +163,16 @@ class Wasabi
     }
 
     /**
+     * Get the instance short name of this wasabi instance.
+     *
+     * @return string
+     */
+    public static function getInstanceShortName()
+    {
+        return self::setting('Core.instance_short_name') ?? 'w';
+    }
+
+    /**
      * Get the html title suffix of this wasabi instance.
      *
      * @return string

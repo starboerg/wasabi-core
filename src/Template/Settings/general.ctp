@@ -13,7 +13,13 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
     echo $this->Form->input('instance_name', [
         'label' => __d('wasabi_core', 'Instance Name'),
         'templateVars' => [
-            'info' => __d('wasabi_core', 'The name of your CMS instance.')
+            'info' => __d('wasabi_core', 'The name of your app.')
+        ]
+    ]);
+    echo $this->Form->input('instance_short_name', [
+        'label' => __d('wasabi_core', 'Instance Short Name'),
+        'templateVars' => [
+            'info' => __d('wasabi_core', 'The short name of your app (preferably only 1 character).')
         ]
     ]);
     echo $this->Form->input('html_title_suffix', [
