@@ -11,9 +11,12 @@ html, body {
 }
 
 body {
-  font: @font-size~'/'@line-height @font-os;
+  font-family: @font-os;
+  font-size: @font-size;
+  line-height: @line-height;
   color: @font-color;
   background-color: @body-bg-color;
+  overflow: hidden;
 }
 
 nav {
@@ -59,26 +62,40 @@ b, strong {
   min-height: 100%;
 }
 
-div#content {
-  margin-left: @sidebar-width;
-  padding: (@header-height + @computed-height) @computed-height (2 * @computed-height);
-  min-height: 500px;
+#content {
+  position: relative;
+  margin-left: 0;
 
-  body.nav-closed & {
-    margin-left: 0;
+  .content--wrapper {
+    position: relative;
+    height: calc(~'100vh - 42px');
+    height: calc(~'100vh - 2.625rem');
+    .rem(margin-top, 42px);
   }
 }
 
-@media only screen and (max-width: @menuCollapsedBreakPoint) {
+.content--padding {
+  .rem(padding, 10px);
+}
 
-  div#content {
-    margin-left: @sidebar-width--collapsed;
+@media only screen and (min-width: 768px) {
+
+  #content {
+    .rem(margin-left, @sidebar-width--collapsed);
+  }
+
+  .content--padding {
+    .rem(padding, 20px);
   }
 }
 
-@media only screen and (max-width: @menuSlideInBreakpoint) {
+@media only screen and (min-width: 1200px) {
 
-  div#content {
-    margin-left: 0;
+  #content {
+    .rem(margin-left, @sidebar-width);
+  }
+
+  .content--padding {
+    .rem(padding, 30px);
   }
 }

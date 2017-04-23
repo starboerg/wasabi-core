@@ -7,6 +7,10 @@
 @brand-error-color:   #c90000;
 @brand-success-color: #9cb800;
 
+@icon-font-key: 'uap8j5';
+@icon-font-path: '../fonts/icomoon';
+@icon-font-family: 'icomoon';
+
 @gray-base:       #000;
 @gray-darker:     lighten(@gray-base, 20%); // #333
 @gray-dark:       lighten(@gray-base, 26%); // #424242
@@ -39,13 +43,14 @@
 @sortable-placeholder-bg-color: #fff6bf;
 
 //----------------------------------------------- BREAK POINTS -------------------------------------------------------//
-@menuCollapsedBreakPoint: 1169px;
-@menuSlideInBreakpoint: 767px;
+@menuCollapsedBreakPoint: 1200px;
+@menuSlideInBreakpoint: 768px;
 
 //------------------------------------------------- Z-INDEX ----------------------------------------------------------//
+@zindex-sidebar:           3;
 @zindex-navbar:            1000;
 @zindex-dropdown:          1000;
-@zindex-navbar-fixed:      1030;
+@zindex-navbar-fixed:      2;
 @zindex-modal-background:  1040;
 @zindex-modal:             1050;
 @zindex-popover:           1060;
@@ -54,9 +59,6 @@
 //----------------------------------------- BODY AND GENERIC ELEMENTS ------------------------------------------------//
 @body-bg-color:       #fff;
 
-//@font-os:             'open_sans_webfont', sans-serif;
-//@font-os-light:       'open_sans_webfont_light', sans-serif;
-//@font-os-semibold:    'open_sans_webfont_semibold', sans-serif;
 @font-os:             'Open Sans', sans-serif;
 @font-os-light:       'Open Sans', sans-serif;
 @font-os-semibold:    'Open Sans', sans-serif;
@@ -67,15 +69,13 @@
 @link-color:          @brand-link;
 @link-color--hover:   @brand-link--hover;
 
-@computed-height:         (@font-size * @line-height); // 21px
-@computed-height--half:   floor(@computed-height / 2); // 10px
+@computed-height:         (@font-size * @line-height);
+@computed-height--half:   floor(@computed-height / 2);
 
 //------------------------------------------------ HEADER ------------------------------------------------------------//
-@header-height:               2 * @computed-height;
-@header-bg-color:             @brand-primary;
+@header-height:               42px;
+@header-bg-color:             #0d0d0d;
 @header-brand-color:          #fff;
-@header-nav-toggle-color:     #fff;
-@header-nav-toggle-bg-color:  lighten(@brand-primary, 10%);
 
 @lang-switch-link-color:              #fff;
 @lang-switch-link-color--active:      @brand-primary;
@@ -89,8 +89,8 @@
 @user-menu-dropdown-link-color--hover:  lighten(@brand-primary, 20%);
 
 //------------------------------------------------ SIDEBAR -----------------------------------------------------------//
-@sidebar-width:         (9 * @computed-height); // 189px;
-@sidebar-width--collapsed: 110px;
+@sidebar-width:         240px;
+@sidebar-width--collapsed: 65px;
 @sidebar-bg-color:      #f2f3f4;
 @sidebar-border-color:  #d5d7d7;
 
@@ -104,7 +104,7 @@
 
 //-------------------------------------------- TITLE PAD -------------------------------------------------------------//
 @titlepad-title-font-size:       2 * @font-size;
-@titlepad-title-font-color:      @gray-dark;
+@titlepad-title-font-color:      #0d0d0d;
 @titlepad-title-letter-spacing:  -1px;
 
 @titlepad-small-font-size:       14px;

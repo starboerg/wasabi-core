@@ -1,5 +1,8 @@
 @import (reference) "__config";
 
+@rem-fallback: true;
+@base-font-size: 100%;
+
 /**
  * General Mixins.
  *
@@ -21,18 +24,6 @@
   .lt-ie7 & {
     zoom: 1;
   }
-}
-
-.single-icon(@content: "", @top: 5px, @fs: 24px) {
-  display: inline-block;
-  position: relative;
-  top: @top;
-  font-family: sandstein_karneol, serif;
-  font-size: @fs;
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: none;
-  content: @content;
 }
 
 .border-radius(@radius: 5px) {
@@ -122,12 +113,6 @@
   //-ms-filter: ~'"progid:DXImageTransform.Microsoft.Alpha(opacity=(@value*100))"';
 }
 
-.inline-block() {
-  display: inline-block;
-  zoom: 1;
-  *display: inline;
-}
-
 .visuallyhidden() {
   position: absolute;
   overflow: hidden;
@@ -159,16 +144,6 @@
   -webkit-order: @val;
   order: @val;
 }
-
-// When using modernizer uncomment below
-//.inline-block() {
-//  display: inline-block;
-//
-//  .lt-ie7 & {
-//    zoom: 1;
-//    display: inline;
-//  }
-//}
 
 .disable-touch-callout() {
   -webkit-touch-callout: none;
@@ -337,4 +312,98 @@
   -moz-animation-delay: @content;
   -o-animation-delay: @content;
   animation-delay: @content;
+}
+
+.rem(@property, @rest...) {
+  @length: length(@rest);
+
+  .result () when (@length = 1) {
+    .fallback () when (@rem-fallback) {
+        @{property}:
+        unit(extract(@rest, 1), px);
+    }
+
+    .fallback;
+
+      @{property}:
+      unit(@base-font-size / 100 / 16 * extract(@rest, 1), rem);
+  }
+
+  .result () when (@length = 2) {
+    .fallback () when (@rem-fallback) {
+        @{property}:
+        unit(extract(@rest, 1), px)
+        unit(extract(@rest, 2), px);
+    }
+
+    .fallback;
+
+      @{property}:
+      unit(@base-font-size / 100 / 16 * extract(@rest, 1), rem)
+      unit(@base-font-size / 100 / 16 * extract(@rest, 2), rem);
+  }
+
+  .result () when (@length = 3) {
+    .fallback () when (@rem-fallback) {
+        @{property}:
+        unit(extract(@rest, 1), px)
+        unit(extract(@rest, 2), px)
+        unit(extract(@rest, 3), px);
+    }
+
+    .fallback;
+
+      @{property}:
+      unit(@base-font-size / 100 / 16 * extract(@rest, 1), rem)
+      unit(@base-font-size / 100 / 16 * extract(@rest, 2), rem)
+      unit(@base-font-size / 100 / 16 * extract(@rest, 3), rem);
+  }
+
+  .result () when (@length = 4) {
+    .fallback () when (@rem-fallback) {
+        @{property}:
+        unit(extract(@rest, 1), px)
+        unit(extract(@rest, 2), px)
+        unit(extract(@rest, 3), px)
+        unit(extract(@rest, 4), px);
+    }
+
+    .fallback;
+
+      @{property}:
+      unit(@base-font-size / 100 / 16 * extract(@rest, 1), rem)
+      unit(@base-font-size / 100 / 16 * extract(@rest, 2), rem)
+      unit(@base-font-size / 100 / 16 * extract(@rest, 3), rem)
+      unit(@base-font-size / 100 / 16 * extract(@rest, 4), rem);
+  }
+
+  .result;
+}
+
+.vertical-center() {
+  position: relative;
+  top: 50%;
+  .transform(translateY(-50%));
+}
+
+.icon(@content: false) {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: @icon-font-family !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  & when not (@content = false) {
+
+    &:before {
+      content: @content;
+    }
+  }
 }

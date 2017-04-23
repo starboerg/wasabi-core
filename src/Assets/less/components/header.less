@@ -6,7 +6,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  padding: 0 @computed-height 0 0;
+  .rem(padding, 0 10px 0 0);
   background-color: @header-bg-color;
   z-index: @zindex-navbar-fixed;
   width: 100%;
@@ -25,47 +25,24 @@
   }
 
   .brand {
-    margin-left: 9px;
+    .rem(margin-left, 42px);
     display: inline-block;
-    line-height: @header-height;
-    font-size: @computed-height;
+    .rem(line-height, @header-height);
+    .rem(font-size, @computed-height);
     color: @header-brand-color;
-  }
-
-  .nav-toggle {
-    display: none;
-    line-height: @header-height;
-    color: @header-nav-toggle-color;
-    text-decoration: none;
-    outline: none;
-
-    i {
-      display: inline-block;
-      width: 36px;
-      text-align: center;
-      .transform(translate(0, 5px));
-
-      &:before {
-        font-size: 24px;
-      }
-    }
-
-    body.nav-closed & {
-      background-color: transparent;
-    }
   }
 
   .lang-switch {
     float: right;
-    margin-right: 10px;
+    .rem(margin-right, 10px);
 
     li {
       display: inline-block;
 
       a {
         display: inline-block;
-        line-height: @header-height;
-        padding: 0 @computed-height--half;
+        .rem(line-height, @header-height);
+        .rem(padding, 0, @computed-height--half);
         color: @lang-switch-link-color;
 
         &:hover {
@@ -84,18 +61,18 @@
     float: right;
 
     & > a {
-      padding: 0 @computed-height--half 0 @font-size;
       display: inline-block;
-      line-height: @header-height;
+      .rem(padding, 0,@computed-height--half,0,@font-size);
+      .rem(line-height, @header-height);
       color: @user-menu-link-color;
 
       i {
         display: inline-block;
         position: relative;
-        margin-left: 5px;
-        width: 12px;
-        font-size: @font-size + 2px;
-        top: 3px;
+        .rem(margin-left, 5px);
+        .rem(width, 12px);
+        .rem(font-size, @font-size + 2px);
+        .rem(top, 3px);
       }
     }
 
@@ -122,22 +99,20 @@
   position: static;
 }
 
-@media only screen and (max-width: @menuSlideInBreakpoint) {
+@media only screen and (min-width: 768px) {
 
   #page-header {
+    .rem(padding-right, 20px);
 
-    .nav-toggle {
-      display: inline-block;
+    .brand {
+      display: none;
     }
   }
+}
 
-  .backend-nav--is-visible {
+@media only screen and (min-width: 1200px) {
 
-    #page-header {
-
-      .nav-toggle {
-        background-color: @header-nav-toggle-bg-color;
-      }
-    }
+  #page-header {
+    .rem(padding-right, 30px);
   }
 }
