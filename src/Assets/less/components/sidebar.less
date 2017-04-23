@@ -3,16 +3,17 @@
 @import (reference) "../__mixins";
 
 .sidebar {
-  display: none;
   position: absolute;
-  left: 0;
+  left: -99999px;
   top: 0;
   bottom: 0;
   max-height: 100vh;
   float: left;
-  width: 100%;
+  width: @sidebar-width--collapsed;
   background-color: @brand-primary;
   z-index: @zindex-sidebar;
+  .opacity(0);
+  .transition(opacity 0.2s ease);
 
   .gm-scrollbar.-vertical {
     opacity: 0;
@@ -132,6 +133,12 @@
 
 .sidebar-is-open {
 
+  .sidebar {
+    left: 0;
+    width: 100%;
+    .opacity(1);
+  }
+
   .sidebar--navigation-toggle-lines {
     background-color: transparent;
 
@@ -161,8 +168,10 @@
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
 
   .sidebar {
-    display: block;
+    left: 0;
     width: @sidebar-width--collapsed;
+    .opacity(1);
+    .transition(none);
   }
 
   .sidebar--menu {
@@ -186,8 +195,10 @@
 @media only screen and (min-width: 1200px) {
 
   .sidebar {
-    display: block;
+    left: 0;
     width: @sidebar-width;
+    .opacity(1);
+    .transition(none);
   }
 
   .sidebar--navigation-toggle {

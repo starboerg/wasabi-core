@@ -114,10 +114,6 @@ define(function(require) {
         this.subnavTether.destroy();
         this.$subnavClone.remove();
       }
-
-      if (this.$scrollContainer.data('scrollbar')) {
-        this.$scrollContainer.data('scrollbar').update();
-      }
     },
 
     onToggleCollapse: function(collapsed) {

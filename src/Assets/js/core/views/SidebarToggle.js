@@ -62,15 +62,21 @@ define(function(require) {
     toggleNav: function(event) {
       if (!$body.hasClass(this.options.forceOpenClass)) {
         $body.addClass(this.options.forceOpenClass);
-        this.$sidebar.fadeIn();
         setTimeout(_.bind(function() {
           this.$sidebar.find('.gm-scrollbar-container').data('scrollbar').update();
         }, this), 0);
       } else {
+        this.$sidebar.css({
+          left: 0,
+          width: '100%'
+        });
         $body.removeClass(this.options.forceOpenClass);
-        this.$sidebar.fadeOut(_.bind(function() {
-          this.$sidebar.attr('style', '');
-        }, this));
+        setTimeout(_.bind(function() {
+          this.$sidebar.css({
+            left: '',
+            width: ''
+          });
+        }, this), 200);
       }
     }
   });
