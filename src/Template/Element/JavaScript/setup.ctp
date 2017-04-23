@@ -32,7 +32,8 @@ $debugJavascript = (Configure::read('debug') && Configure::read('debugJS'));
                     confirmNo: '<?= __d('wasabi_core', 'No') ?>'
                 },
                 heartbeat: <?= $heartBeatFrequency ?>,
-                heartbeatEndpoint: '<?= $this->Url->build('/backend/heartbeat') ?>'
+                heartbeatEndpoint: '<?= $this->Url->build('/backend/heartbeat') ?>',
+                cookiePath: '<?= $this->request->getAttribute('base') ?>'
             });
 <?= $this->fetch('requirejs') ?>
             WS.boot();
