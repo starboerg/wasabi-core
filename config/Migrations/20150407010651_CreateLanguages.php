@@ -68,11 +68,7 @@ class CreateLanguages extends BaseMigration
             ])
         ];
         $Languages = TableRegistry::get('Wasabi/Core.Languages');
-        $Languages->connection()->transactional(function () use ($Languages, $languages) {
-            foreach ($languages as $language) {
-                $Languages->save($language);
-            }
-        });
+        $Languages->saveMany($languages);
     }
 
     /**

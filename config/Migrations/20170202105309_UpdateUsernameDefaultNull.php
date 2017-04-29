@@ -26,6 +26,8 @@ class UpdateUsernameDefaultNull extends BaseMigration
         $table = $this->table('users');
         $table->changeColumn('username', 'string', ['null' => true, 'default' => null]);
         $table->update();
+
+        $this->clearModelCache();
     }
 
     /**
@@ -38,5 +40,7 @@ class UpdateUsernameDefaultNull extends BaseMigration
         $table = $this->table('users');
         $table->changeColumn('username', 'string', ['null' => false]);
         $table->update();
+
+        $this->clearModelCache();
     }
 }

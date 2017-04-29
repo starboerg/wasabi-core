@@ -1,6 +1,19 @@
 <?php
+/**
+ * Wasabi Core
+ * Copyright (c) Frank Förster (http://frankfoerster.com)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Frank Förster (http://frankfoerster.com)
+ * @link          https://github.com/wasabi-cms/core Wasabi Project
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+
 use Cake\ORM\TableRegistry;
-use Migrations\AbstractMigration;
+use Wasabi\Core\BaseMigration;
 use Wasabi\Core\Model\Table\SettingsTable;
 
 /**
@@ -8,13 +21,15 @@ use Wasabi\Core\Model\Table\SettingsTable;
  *
  * @property SettingsTable Settings
  */
-class InitializeSettings extends AbstractMigration
+class InitializeSettings extends BaseMigration
 {
     /**
      * @inheritdoc
      */
     public function init()
     {
+        parent::init();
+
         $this->Settings = TableRegistry::get('Wasabi/Core.Settings');
     }
 
