@@ -1,6 +1,6 @@
 <?php
 
-namespace Wasabi\Core;
+namespace Wasabi\Core\Database\Migration;
 
 use Cake\Cache\Cache;
 use Migrations\AbstractMigration;

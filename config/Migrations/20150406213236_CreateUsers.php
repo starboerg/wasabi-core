@@ -13,7 +13,7 @@
  */
 
 use Cake\ORM\TableRegistry;
-use Wasabi\Core\BaseMigration;
+use Wasabi\Core\Database\Migration\BaseMigration;
 use Wasabi\Core\Model\Entity\User;
 
 class CreateUsers extends BaseMigration

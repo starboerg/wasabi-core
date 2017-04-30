@@ -12,7 +12,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-use Wasabi\Core\BaseMigration;
+use Wasabi\Core\Database\Migration\BaseMigration;
 
 class AddActivatedAtToUsers extends BaseMigration
 {
