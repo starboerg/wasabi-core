@@ -18,9 +18,10 @@ module.exports = function(grunt) {
     'jquery.nSortable',
     'jquery.tSortable',
     'jquery.color',
+    'bootstrap.button',
+    'bootstrap.collapse',
     'bootstrap.dropdown',
     'bootstrap.transition',
-    'bootstrap.collapse',
     'tether',
     'js-cookie',
     'pace'

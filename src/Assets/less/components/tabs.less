@@ -1,4 +1,5 @@
 @import (reference) '../__config';
+@import (reference) '../__mixins';
 
 .tabs {
   margin: 0;
@@ -11,7 +12,7 @@
 
     & > a {
       display: inline-block;
-      padding: 10px 15px;
+      .rem(padding, 10px,15px);
       color: #333;
       cursor: pointer;
       outline: none;

@@ -1,7 +1,6 @@
 @import (reference) "../__config";
-@import (reference) "../__colors";
-@import (reference) "../basic/icons";
 @import (reference) "../__mixins";
+@import (reference) "../basic/icons";
 
 .menu {
   position: relative;
@@ -176,7 +175,7 @@
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
 
   .menu--item-link {
-    min-height: 48px;
+    .rem(min-height, 48px);
   }
 
   .menu--item-name,
@@ -194,7 +193,7 @@
   .sidebar-is-collapsed {
 
     .menu--item-link {
-      min-height: 48px;
+      .rem(min-height, 48px);
     }
 
     .menu--item-name,

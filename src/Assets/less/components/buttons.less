@@ -3,8 +3,7 @@
 
 .button {
   @buttonBg: @brand-success-color;
-
-  padding: 6px 16px 7px;
+  .rem(padding, 6px,16px,7px);
   display: inline-block;
   outline: none;
   color: #fff;
@@ -14,7 +13,8 @@
   .border-radius(3px);
   .box-shadow(0 -2px 0 fade(darken(@buttonBg, 10%), 40%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3););
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     color: #fff;
     background-color: hsl(hue(@buttonBg) - 1, saturation(@buttonBg), lightness(@buttonBg) + 3);
   }
@@ -23,7 +23,8 @@
     .box-shadow(0 2px 1px fade(darken(@buttonBg, 20%), 40%) inset);
   }
 
-  &.disabled, &[disabled="disabled"] {
+  &.disabled,
+  &[disabled="disabled"] {
     @buttonBg: #ddd;
     background-color: @buttonBg !important;
     cursor: not-allowed !important;
@@ -32,62 +33,62 @@
 
   & > .spinner {
     position: relative;
+    .rem(top, 4px);
+    .rem(left, 2px);
     display: inline-block;
-    left: 2px;
-    top: 4px;
-    margin-right: 6px;
+    .rem(margin-right, 6px);
   }
 }
 
 .button.blue {
   @buttonBg: @brand-link;
-
   background-color: @buttonBg;
-  box-shadow: 0 -2px 0 fade(darken(@buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  .box-shadow(0 -2px 0 fade(darken(@buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3););
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: hsl(hue(@buttonBg) - 4, saturation(@buttonBg) + 3, lightness(@buttonBg) + 5);
   }
 
   &:active {
-    box-shadow: 0 2px 1px fade(darken(@buttonBg, 30%), 30%) inset;
+    .box-shadow(0 2px 1px fade(darken(@buttonBg, 30%), 30%) inset);
   }
 }
 
 .button.red {
   @buttonBg: #c22d2d;
-
   background-color: @buttonBg;
-  box-shadow: 0 -2px 0 fade(darken(@buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  .box-shadow(0 -2px 0 fade(darken(@buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3););
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: hsl(hue(@buttonBg) - 4, saturation(@buttonBg) + 3, lightness(@buttonBg) + 5);
   }
 
   &:active {
-    box-shadow: 0 2px 1px fade(darken(@buttonBg, 30%), 30%) inset;
+    .box-shadow(0 2px 1px fade(darken(@buttonBg, 30%), 30%) inset);
   }
 }
 
 .button.gray {
   @buttonBg: @border-dark;
   color: @gray-dark;
-
   background-color: @buttonBg;
-  box-shadow: 0 -2px 0 fade(darken(@buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  .box-shadow(0 -2px 0 fade(darken(@buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3););
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background-color: hsl(hue(@buttonBg) - 4, saturation(@buttonBg) + 3, lightness(@buttonBg) + 5);
   }
 
   &:active {
-    box-shadow: 0 2px 1px fade(darken(@buttonBg, 30%), 30%) inset;
+    .box-shadow(0 2px 1px fade(darken(@buttonBg, 30%), 30%) inset);
   }
 }
 
 .button.small {
-  padding: 4px 8px;
-  font-size: 12px;
+  .rem(padding, 4px,8px);
+  .rem(font-size, 12px);
   font-weight: 600;
   .border-radius(3px);
 }

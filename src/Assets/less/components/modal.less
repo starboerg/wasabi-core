@@ -1,5 +1,4 @@
 @import (reference) "../__config";
-@import (reference) "../__colors";
 @import (reference) "../__mixins";
 
 .modal-wrapper .modal-backdrop, .modal-scrollable {
@@ -34,7 +33,7 @@
     }
 
     header {
-      padding-right: 37px;
+      .rem(padding-right, 37px);
     }
   }
 }
@@ -50,27 +49,27 @@
 }
 
 .modal-header {
-  padding: 10px 20px;
+  .rem(padding, 10px,20px);
   background-color: @modal-header-bg-color;
 
   span {
     font-weight: 600;
-    font-size: 20px;
+    .rem(font-size, 20px);
     color: #fff;
   }
 }
 
 .modal-body {
-  padding: 20px 0 0;
+  .rem(padding, 20px,0,0);
 
   p {
-    padding: 0 20px 20px;
+    .rem(padding, 0,20px,20px);
     line-height: 1.5em;
   }
 }
 
 .modal-confirm {
-  padding: 10px 20px;
+  .rem(padding, 10px,20px);
   border-top: 1px solid @modal-form-controls-border-top-color;
   background-color: @modal-form-controls-bg-color;
   text-align: right;
@@ -89,15 +88,15 @@
   }
 
   .modal-container {
-    max-width: 600px;
+    .rem(max-width, 600px);
   }
 
   .modal-body {
-    padding: 20px;
+    .rem(padding, 20px);
   }
 
   .input {
-    margin-bottom: 10px;
+    .rem(margin-bottom, 10px);
 
     &:last-child {
       margin-bottom: 0;
@@ -113,8 +112,8 @@
   }
 
   .flash-message {
-    margin: -20px -20px 20px;
-    padding: 11px 20px 10px;
+    .rem(margin, -20px,-20px,20px);
+    .rem(padding, 11px,20px,10px);
     border-width: 0 0 1px;
   }
 }

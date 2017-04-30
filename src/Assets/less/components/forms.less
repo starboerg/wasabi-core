@@ -1,5 +1,4 @@
 @import (reference) '../__config';
-@import (reference) '../__colors';
 @import (reference) '../__mixins';
 
 label {
@@ -8,13 +7,13 @@ label {
   cursor: pointer;
 
   .form-row.required &:before {
-    color: @brand-error-color;
-    content: "*";
-    font-size: (@font-size - 1px);
-    left: -10px;
-    margin-right: -7px;
     position: relative;
     top: 0;
+    .rem(left, -10px);
+    .rem(margin-right, -7px);
+    .rem(font-size, @font-size - 1px);
+    content: "*";
+    color: @brand-error-color;
   }
 
   small {
@@ -25,9 +24,9 @@ label {
   }
 
   code {
-    margin: 0 1px;
-    padding: 3px 5px 2px;
-    font-size: 13px;
+    .rem(margin, 0, 1px);
+    .rem(padding, 3px,5px,2px);
+    .rem(font-size, 13px);
     background: rgba(0, 0, 0, 0.07);
   }
 
@@ -54,7 +53,7 @@ textarea {
   filter: none !important;
   font-weight: normal;
   outline: 0 none;
-  padding: 6px 6px 5px;
+  .rem(padding, 6px,6px,5px);
   vertical-align: top;
   border: 1px solid @form-input-border-color;
   width: 100%;
@@ -73,21 +72,21 @@ textarea {
 }
 
 input[type="number"] {
-  padding: 3px 2px 2px 3px;
+  .rem(padding, 3px,2px,2px,3px);
 }
 
 input[type="checkbox"] {
-  margin-right: 5px;
+  .rem(margin-right, 5px);
   cursor: pointer;
 }
 
 input[type="checkbox"] + label {
   position: relative;
-  top: -1px;
+  .rem(top, -1px);
 }
 
 input[type="number"].without-spinner {
-  padding: 6px 6px 5px;
+  .rem(padding, 6px,6px,5px);
   -moz-appearance:textfield;
 
   &::-webkit-outer-spin-button,
@@ -98,12 +97,12 @@ input[type="number"].without-spinner {
 
 span.error-message, div.error-message {
   display: block;
-  padding-top: 2px;
+  .rem(padding-top, 2px);
   color: @state-error-font-color;
 
   & > ul {
     margin: 0;
-    padding-left: 20px;
+    .rem(padding-left, 20px);
   }
 }
 
@@ -123,38 +122,38 @@ span.error-message, div.error-message {
   border-width: 0 1px;
 
   & > label {
-    padding: 27px 20px 20px;
+    .rem(padding, 27px,20px,20px);
     float: left;
     width: 100%;
-    min-width: 200px;
+    .rem(min-width, 200px);
     vertical-align: top;
   }
 
   & > .field {
     float: none;
     display: table-cell;
-    padding: 20px;
+    .rem(padding, 20px);
     background-color: #fff;
     vertical-align: top;
     width: 100%;
 
     &.no-input {
-      padding-top: 27px;
-      padding-bottom: 25px;
+      .rem(padding-top, 27px);
+      .rem(padding-bottom, 25px);
     }
 
     &.top-pd {
-      padding-top: 27px;
+      .rem(padding-top, 27px);
     }
 
     & > .sub-row {
-      padding-bottom: 20px;
+      .rem(padding-bottom, 20px);
     }
 
     &.small {
 
       input {
-        max-width: 100px;
+        .rem(max-width, 100px);
       }
     }
 
@@ -175,21 +174,21 @@ span.error-message, div.error-message {
   }
 
   & table.list {
-    max-width: 900px;
+    .rem(max-width, 900px);
     border: 1px solid @form-row-border-color;
   }
 
   &.form-row-checkbox, &.form-row-radio {
 
     & > label {
-      padding-top: 20px;
+      .rem(padding-top, 20px);
     }
 
     .field > label {
 
       input[type="checkbox"] {
         position: relative;
-        top: 1px;
+        .rem(top, 1px);
       }
     }
   }
@@ -198,11 +197,11 @@ span.error-message, div.error-message {
 
     .field > label {
       display: block;
-      max-width: 250px;
-      padding: 5px 0;
+      .rem(max-width, 250px);
+      .rem(padding, 5px,0);
 
       &:first-of-type {
-        margin-top: -5px;
+        .rem(margin-top, -5px);
       }
 
       &:before {
@@ -214,7 +213,7 @@ span.error-message, div.error-message {
   &.form-row-toggleSwitch {
 
     .field {
-      padding-top: 23px;
+      .rem(padding-top, 23px);
     }
   }
 
@@ -239,7 +238,7 @@ form.no-top-section {
 }
 
 .form-section {
-  padding: 15px 20px;
+  .rem(padding, 15px,20px);
   background-color: @form-section-bg-color;
   border-style: solid;
   border-color: @form-section-border-color;
@@ -247,7 +246,7 @@ form.no-top-section {
 }
 
 .form-section-title {
-  font-size: 18px;
+  .rem(font-size, 18px);
 }
 
 .form-section-description {
@@ -260,29 +259,29 @@ textarea {
 }
 
 .form-controls {
-  padding: 20px;
+  .rem(padding, 20px);
   background-color: @form-section-bg-color;
   border: 1px solid @form-section-border-color;
 }
 
 .form-controls, .modal-confirm {
   button {
-    margin-right: 15px;
+    .rem(margin-right, 15px);
   }
 }
 
 .form-row .field small {
   display: block;
   color: @form-input-info-color;
-  padding-top: 2px;
+  .rem(padding-top, 2px);
 
   & + .multi-fileupload {
-    margin-top: 5px;
+    .rem(margin-top, 5px);
   }
 }
 
 select {
-  padding: 5px 5px 4px;
+  .rem(padding, 5px,5px,4px);
   border: 1px solid @form-input-border-color;
   font-family: @font-os;
   font-weight: 400;
@@ -302,8 +301,8 @@ select {
   }
 
   &.select-small {
-    font-size: 13px;
-    padding: 3px 4px;
+    .rem(padding, 3px,4px);
+    .rem(font-size, 13px);
   }
 
   option {
@@ -330,14 +329,14 @@ select {
 }
 
 input[type="radio"] {
-  margin-right: 3px;
+  .rem(margin-right, 3px);
   cursor: pointer;
 
   & + label {
     position: relative;
-    top: -1px;
+    .rem(top, -1px);
     display: inline;
-    margin-right: 10px;
+    .rem(margin-right, 10px);
   }
 }
 
@@ -346,34 +345,34 @@ input[type="radio"] {
 }
 
 .bottom-links {
-  padding: 10px 10px 0;
+  .rem(padding, 10px,10px,0);
 }
 
 form.bulk {
   float: left;
 
   &.top {
-    padding-bottom: 10px;
+    .rem(padding-bottom, 10px);
   }
 
   &.bottom {
-    padding: 10px 0;
+    .rem(padding, 10px,0);
   }
 
   .select-small {
-    margin-right: 8px;
+    .rem(margin-right, 8px);
   }
 
   .button.small {
     position: relative;
-    top: -1px;
+    .rem(top, -1px);
   }
 }
 
 .form-info {
 
   .form-info-content {
-    padding: 20px;
+    .rem(padding, 20px);
     background-color: @form-row-bg-color;
     border-width: 0 1px;
     border-style: solid;

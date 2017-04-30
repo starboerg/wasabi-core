@@ -17,10 +17,10 @@
 
 .dialog-inner {
   position: absolute;
-  top: @header-height + 8px;
-  left: 36px;
-  right: 21px;
-  bottom: @header-height + 8px;
+  .rem(top, @header-height + 8px);
+  .rem(left, 36px);
+  .rem(right, 21px);
+  .rem(bottom, @header-height + 8px);
   .box-shadow(0 0 8px rgba(0, 0, 0, 0.3));
 }
 
@@ -28,12 +28,12 @@
   position: relative;
 
   h3 {
-    padding: 10px 20px;
+    margin: 0;
+    .rem(padding, 10px,20px);
+    .rem(font-size, 20px);
     font-weight: 600;
-    font-size: 20px;
     color: #fff;
     background-color: @modal-header-bg-color;
-    margin: 0;
   }
 
   [data-toggle="close"] {
@@ -41,28 +41,29 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 49px;
-    height: 50px;
+    .rem(width, 49px);
+    .rem(height, 50px);
+    .rem(line-height, 50px);
     text-align: center;
-    line-height: 50px;
     color: #fff;
     border-left: 1px solid darken(@modal-header-bg-color, 5%);
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background-color: lighten(@modal-header-bg-color, 10%);
     }
 
     i:before {
       position: relative;
-      top: 1px;
+      .rem(top, 1px);
     }
   }
 }
 
 .dialog-sidebar {
   position: absolute;
-  width: 320px;
-  top: 50px;
+  .rem(width, 320px);
+  .rem(top, 50px);
   bottom: 0;
   background-color: #f1f2f4;
   border: 0 solid @border-dark;
@@ -80,11 +81,11 @@
 
 .dialog-content {
   position: absolute;
-  top: 50px;
+  .rem(top, 50px);
   right: 0;
-  bottom: 76px;
+  .rem(bottom, 76px);
   left: 0;
-  padding: 20px 20px 0;
+  .rem(padding, 20px,20px,0);
   background-color: #fff;
   overflow-x: hidden;
 }
@@ -101,20 +102,20 @@
 
   button {
     margin-right: 0;
-    margin-left: 15px;
+    .rem(margin-left, 15px);
   }
 }
 
 .dialog-has-sidebar-left {
 
   .dialog-content, .dialog-controls {
-    left: 320px;
+    .rem(left, 320px);
   }
 }
 
 .dialog-has-sidebar-right {
 
   .dialog-content, .dialog-controls {
-    right: 320px;
+    .rem(right, 320px);
   }
 }

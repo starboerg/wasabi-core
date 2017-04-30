@@ -19,6 +19,7 @@ require.config({
     'jquery.tSortable': 'common/jquery-plugins/jquery.tSortable',
     'jquery.position': 'common/jquery-plugins/jquery.position',
     'js-cookie': 'common/js.cookie',
+    'bootstrap.button': 'vendor/bootstrap/js/button',
     'bootstrap.collapse': 'vendor/bootstrap/js/collapse',
     'bootstrap.dropdown': 'vendor/bootstrap/js/dropdown',
     'bootstrap.transition': 'vendor/bootstrap/js/transition',

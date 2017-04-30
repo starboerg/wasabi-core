@@ -1,16 +1,15 @@
-@import (reference) "../__colors";
 @import (reference) "../__config";
 @import (reference) "../__mixins";
 
 [class*="flash-message--"], [class*="message--"] {
   position: relative;
+  .rem(margin-bottom, 20px);
+  .rem(padding, 10px,35px,10px,15px);
   border: 1px solid transparent;
-  margin-bottom: 20px;
-  padding: 10px 35px 10px 15px;
 }
 
 [class*="message--no-dismiss"] {
-  padding: 10px 15px;
+  .rem(padding, 10px,15px);
 
   .dismiss-flash {
     display: none;
@@ -19,11 +18,11 @@
 
 .dismiss-flash {
   position: absolute;
-  right: 10px;
-  top: 11px;
+  .rem(top, 11px);
+  .rem(right, 10px);
 
   i {
-    font-size: @font-size + 2px;;
+    .rem(font-size, @font-size + 2px);
   }
 }
 
