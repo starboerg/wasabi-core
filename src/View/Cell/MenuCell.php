@@ -14,7 +14,7 @@
 namespace Wasabi\Core\View\Cell;
 
 use Cake\View\Cell;
-use Wasabi\Core\Nav;
+use Wasabi\Core\Navigation\Nav;
 
 /**
  * Class MenuCell

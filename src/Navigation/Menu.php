@@ -11,7 +11,7 @@
  * @link          https://github.com/wasabi-cms/core Wasabi Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace Wasabi\Core;
+namespace Wasabi\Core\Navigation;
 
 use Cake\Core\Exception\Exception;
 use Cake\Utility\Hash;

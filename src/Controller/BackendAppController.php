@@ -14,12 +14,10 @@
 namespace Wasabi\Core\Controller;
 
 use Cake\Controller\Component\AuthComponent;
-use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Network\Session;
 use Cake\Utility\Text;
 use Wasabi\Core\Model\Entity\User;
-use Wasabi\Core\Nav;
+use Wasabi\Core\Navigation\Nav;
 use Wasabi\Core\Wasabi;
 
 /**
