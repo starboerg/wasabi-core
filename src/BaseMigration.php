@@ -18,7 +18,7 @@ abstract class BaseMigration extends AbstractMigration
     {
         parent::init();
 
-        Cache::clear();
+        $this->clearModelCache();
     }
 
     /**
