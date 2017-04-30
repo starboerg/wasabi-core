@@ -15,7 +15,7 @@ namespace Wasabi\Core\Event;
 
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
-use Wasabi\Core\Menu;
+use Wasabi\Core\Navigation\Menu;
 
 class MenuListener implements EventListenerInterface
 {
