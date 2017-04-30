@@ -245,7 +245,7 @@ class UsersController extends BackendAppController
                 unset($this->request->data['password']);
                 $this->request->session()->write('data.login', $this->request->data());
                 if (!$ipIsBlocked) {
-                    $identityField = Wasabi::setting('Core.Auth.identity_field');
+                    $identityField = Wasabi::setting('Auth.identity_field');
                     $this->dispatchEvent('Auth.failedLogin', [$clientIp, $identityField, $this->request->data[$identityField]]);
                     $errorMsg = __d('wasabi_core', 'Email or password is incorrect.');
                 }

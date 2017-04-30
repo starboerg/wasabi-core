@@ -71,8 +71,8 @@ class BackendAppController extends AppController
     {
         parent::initialize();
 
-        $fieldIdentity = Wasabi::setting('Core.auth.identity_field') ?? 'email';
-        $fieldPassword = Wasabi::setting('Core.auth.password_field') ?? 'password';
+        $fieldIdentity = Wasabi::setting('Auth.identity_field') ?? 'email';
+        $fieldPassword = Wasabi::setting('Auth.password_field') ?? 'password';
 
         $this->loadComponent('Auth', [
             'authenticate' => [
