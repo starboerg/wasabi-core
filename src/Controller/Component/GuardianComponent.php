@@ -25,6 +25,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Wasabi\Core\Model\Table\GroupPermissionsTable;
+use Wasabi\Core\Permission\PermissionManager;
 use Wasabi\Core\Wasabi;
 
 /**
@@ -65,12 +66,19 @@ class GuardianComponent extends Component
     public $session;
 
     /**
+     * Holds the permission manager instance.
+     *
+     * @var PermissionManager
+     */
+    public $permissionManager;
+
+    /**
      * @var GuardianComponent
      */
     protected static $_instance;
 
     /**
-     * Holds an instance of the GroupPermission model.
+     * Holds an instance of the GroupPermissionsTable.
      *
      * @var GroupPermissionsTable
      */
@@ -110,12 +118,12 @@ class GuardianComponent extends Component
      */
     public function initialize(array $config)
     {
-        $controller = $this->_registry->getController();
-        $this->request = $controller->request;
-        $this->response = $controller->response;
-        $this->session = $controller->request->session();
+        $this->request = $this->getController()->request;
+        $this->response = $this->getController()->response;
+        $this->session = $this->request->session();
+        $this->permissionManager = new PermissionManager();
 
-        $this->eventManager($controller->eventManager());
+        $this->eventManager($this->getController()->eventManager());
         $this->eventManager()->dispatch(new Event('Guardian.getGuestActions', $this));
 
         if (!self::$_instance) {
@@ -246,6 +254,19 @@ class GuardianComponent extends Component
 
             return $plugin . '.' . $controller . '.' . $action;
         }, 'wasabi/core/guardian_paths');
+    }
+
+    /**
+     * Load defined permissions from Wasabi/Core, the app and other Plugins listening
+     * on the Guardian.Permission.initialize event.
+     *
+     * @return void
+     */
+    public function loadPermissions()
+    {
+        $this->eventManager()->dispatch(
+            new Event('Guardian.Permissions.initialize', $this->permissionManager)
+        );
     }
 
     /**
@@ -458,6 +479,9 @@ class GuardianComponent extends Component
         if (get_class($this->GroupPermissions) === 'GroupPermission') {
             return $this->GroupPermissions;
         }
-        return $this->GroupPermissions = TableRegistry::get('Wasabi/Core.GroupPermissions');
+
+        $this->GroupPermissions = TableRegistry::get('Wasabi/Core.GroupPermissions');
+
+        return $this->GroupPermissions;
     }
 }

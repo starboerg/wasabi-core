@@ -17,6 +17,8 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Wasabi\Core\Controller\Component\GuardianComponent;
+use Wasabi\Core\Permission\PermissionGroup;
+use Wasabi\Core\Permission\PermissionManager;
 
 class GuardianListener implements EventListenerInterface
 {
@@ -35,6 +37,9 @@ class GuardianListener implements EventListenerInterface
             ],
             'Guardian.GroupPermissions.afterSync' => [
                 'callable' => 'deleteGuardianPathCache'
+            ],
+            'Guardian.Permissions.initialize' => [
+                'callable' => 'initializePermissions'
             ]
         ];
     }
@@ -71,5 +76,146 @@ class GuardianListener implements EventListenerInterface
     public function deleteGuardianPathCache(Event $event)
     {
         Cache::clear(false, 'wasabi/core/guardian_paths');
+    }
+
+    /**
+     * Initialize all Wasabi/Core permissions.
+     *
+     * @param Event $event An event instance.
+     * @return void
+     */
+    public function initializePermissions(Event $event)
+    {
+        /** @var PermissionManager $pm */
+        $pm = $event->getSubject();
+
+        $dashboard = new PermissionGroup();
+        $dashboard
+            ->setId('dashboard')
+            ->setName(__d('wasabi_core', 'Dashboard'))
+            ->setPriority(1000)
+            ->addPermission(
+                $pm->createPermission(1000, 'dashboard.index', __d('wasabi_core', 'Dashboard'), [
+                    'Wasabi/Core.Dashboard.index'
+                ])
+            );
+
+        $users = new PermissionGroup();
+        $users
+            ->setId('administration.users')
+            ->setName(__d('wasabi_core', 'Administration &rsaquo; Users'))
+            ->setPriority(2000)
+            ->addPermissions([
+                $pm->createPermission(1000, 'users.index', __d('wasabi_core', 'Overview'), [
+                    'Wasabi/Core.Users.index'
+                ]),
+                $pm->createPermission(2000, 'users.add', __d('wasabi_core', 'Add'), [
+                    'Wasabi/Core.Users.add'
+                ]),
+                $pm->createPermission(3000, 'users.edit', __d('wasabi_core', 'Edit'), [
+                    'Wasabi/Core.Users.edit'
+                ]),
+                $pm->createPermission(4000, 'users.delete', __d('wasabi_core', 'Delete'), [
+                    'Wasabi/Core.Users.delete'
+                ]),
+                $pm->createPermission(5000, 'users.verify', __d('wasabi_core', 'Verify email address (via backend)'), [
+                    'Wasabi/Core.Users.verify'
+                ]),
+                $pm->createPermission(6000, 'users.activate', __d('wasabi_core', 'Activate'), [
+                    'Wasabi/Core.Users.activate'
+                ]),
+                $pm->createPermission(7000, 'users.deactivate', __d('wasabi_core', 'Deactivate'), [
+                    'Wasabi/Core.Users.deactivate'
+                ]),
+                $pm->createPermission(8000, 'users.profile', __d('wasabi_core', 'Profile'), [
+                    'Wasabi/Core.Users.profile'
+                ]),
+                $pm->createPermission(9000, 'users.heartBeat', __d('wasabi_core', 'HeartBeat'), [
+                    'Wasabi/Core.Users.heartBeat'
+                ])
+            ]);
+
+        $groups = new PermissionGroup();
+        $groups
+            ->setId('administration.groups')
+            ->setName(__d('wasabi_core', 'Administration &rsaquo; Groups'))
+            ->setPriority(3000)
+            ->addPermissions([
+                $pm->createPermission(1000, 'groups.index', __d('wasabi_core', 'Overview'), [
+                    'Wasabi/Core.Groups.index'
+                ]),
+                $pm->createPermission(2000, 'groups.add', __d('wasabi_core', 'Add'), [
+                    'Wasabi/Core.Groups.add'
+                ]),
+                $pm->createPermission(3000, 'groups.edit', __d('wasabi_core', 'Edit'), [
+                    'Wasabi/Core.Groups.edit'
+                ]),
+                $pm->createPermission(4000, 'groups.delete', __d('wasabi_core', 'Delete'), [
+                    'Wasabi/Core.Groups.delete'
+                ])
+            ]);
+
+        $languages = new PermissionGroup();
+        $languages
+            ->setId('administration.languages')
+            ->setName(__d('wasabi_core', 'Administration &rsaquo; Languages'))
+            ->setPriority(4000)
+            ->addPermissions([
+                $pm->createPermission(1000, 'languages.index', __d('wasabi_core', 'Overview'), [
+                    'Wasabi/Core.Languages.index'
+                ]),
+                $pm->createPermission(2000, 'languages.add', __d('wasabi_core', 'Add'), [
+                    'Wasabi/Core.Languages.add'
+                ]),
+                $pm->createPermission(3000, 'languages.edit', __d('wasabi_core', 'Edit'), [
+                    'Wasabi/Core.Languages.edit'
+                ]),
+                $pm->createPermission(4000, 'languages.delete', __d('wasabi_core', 'Delete'), [
+                    'Wasabi/Core.Languages.delete'
+                ]),
+                $pm->createPermission(5000, 'languages.sort', __d('wasabi_core', 'Update Order'), [
+                    'Wasabi/Core.Languages.sort'
+                ]),
+                $pm->createPermission(6000, 'languages.change', __d('wasabi_core', 'Change content language'), [
+                    'Wasabi/Core.Languages.change'
+                ])
+            ]);
+
+        $permissions = new PermissionGroup();
+        $permissions
+            ->setId('administration.permissions')
+            ->setName(__d('wasabi_core', 'Administration &rsaquo; Permissions'))
+            ->setPriority(5000)
+            ->addPermissions([
+                $pm->createPermission(1000, 'permissions.index', __d('wasabi_core', 'Overview'), [
+                    'Wasabi/Core.Permissions.index'
+                ]),
+                $pm->createPermission(2000, 'permissions.update', __d('wasabi_core', 'Update'), [
+                    'Wasabi/Core.Permissions.update'
+                ])
+            ]);
+
+        $settings = new PermissionGroup();
+        $settings
+            ->setId('administration.settings')
+            ->setName(__d('wasabi_core', 'Settings'))
+            ->setPriority(6000)
+            ->addPermissions([
+                $pm->createPermission(1000, 'settings.general', __d('wasabi_core', 'General'), [
+                    'Wasabi/Core.Settings.general'
+                ]),
+                $pm->createPermission(2000, 'settings.cache', __d('wasabi_core', 'Cache'), [
+                    'Wasabi/Core.Settings.cache'
+                ])
+            ]);
+
+        $pm->addPermissionGroups([
+            $dashboard,
+            $users,
+            $groups,
+            $permissions,
+            $languages,
+            $settings
+        ]);
     }
 }
