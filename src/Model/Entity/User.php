@@ -156,6 +156,36 @@ class User extends Entity
     }
 
     /**
+     * Check if the user can perform the given action on an entity.
+     * In addition to an entity the $params can take additional arguments that
+     * are passed through to the policy method.
+     *
+     * @param string $action
+     * @param Entity|array $params
+     * @return boolean
+     */
+    public function can($action, $params)
+    {
+        return Wasabi::getPolicyManager()
+            ->setUser($this)
+            ->checkPolicyFor($action, $params);
+    }
+
+    /**
+     * Check if the user cannot perform the given action on an entity.
+     * In addition to an entity the $params can take additional arguments that
+     * are passed through to the policy method.
+     *
+     * @param string $action
+     * @param Entity|array $params
+     * @return boolean
+     */
+    public function cant($action, $params)
+    {
+        return !$this->can($action, $params);
+    }
+
+    /**
      * Determine if the user has the provided access level.
      *
      * @param mixed $permissionConstant e.g. Permission::OWN
