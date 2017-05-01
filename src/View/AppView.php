@@ -28,6 +28,8 @@ use Cake\View\View;
  * @property \Wasabi\Core\View\Helper\HtmlHelper $Html
  * @property \Wasabi\Core\View\Helper\MenuHelper $Menu
  * @property \Wasabi\Core\View\Helper\EmailHelper $Email
+ * @property \Wasabi\Core\View\Helper\IconHelper $Icon
+ * @property \Wasabi\Core\View\Helper\RouteHelper $Route
  * @property array activeFilters
  * @property array filterFields
  * @property array activeSort
@@ -70,6 +72,9 @@ class AppView extends View
         $this->loadHelper('Html', [
             'className' => 'Wasabi/Core.Html'
         ]);
+        $this->loadHelper('Icon', [
+            'className' => 'Wasabi/Core.Icon'
+        ]);
         $this->loadHelper('Menu', [
             'className' => 'Wasabi/Core.Menu'
         ]);
@@ -81,6 +86,9 @@ class AppView extends View
         ]);
         $this->loadHelper('Email', [
             'className' => 'Wasabi/Core.Email'
+        ]);
+        $this->loadHelper('Route', [
+            'className' => 'Wasabi/Core.Route'
         ]);
 
         $defaultFormTemplateActions = Configure::read('defaultFormTemplateActions');
@@ -96,7 +104,7 @@ class AppView extends View
         ) {
             $this->loadHelper('Form', [
                 'className' => 'Wasabi/Core.Form',
-                'templates' => 'Wasabi/Core.form_templates',
+                'templates' => 'Wasabi/Core.FormTemplates/wasabi',
                 'widgets' => [
                     'section' => ['Wasabi\Core\View\Widget\SectionWidget'],
                     'info' => ['Wasabi\Core\View\Widget\InfoWidget'],
