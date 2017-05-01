@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var \Wasabi\Core\View\AppView $this
+ */
+?>
+
 <script id="wasabi-core-modal" type="text/template">
     <div class="modal-wrapper">
         <div class="<%= cssClasses.backdrop %>"></div>
@@ -22,7 +28,7 @@
                     <div class="<%= cssClasses.modalFooter %><% if (isConfirmModal) { %> <%= cssClasses.confirmFooter %><% } %>">
                         <form action="<%= action %>" method="<%= method %>">
                             <% if (isConfirmModal) { %>
-                                <button class="button" type="submit"><span><%= confirmYes %></span></button>
+                                <button class="button" type="submit" data-toggle="btn-loading"><span><%= confirmYes %></span></button>
                                 <a href="javascript:void(0)" data-dismiss="modal"><%= confirmNo %></a>
                             <% } %>
                         </form>
@@ -48,7 +54,7 @@
             <% } %>
             <div class="dialog-content"></div>
             <div class="dialog-controls form-controls">
-                <button type="submit" class="button green"><%= primaryAction %></button>
+                <button type="submit" class="button green" data-toggle="btn-loading"><%= primaryAction %></button>
             </div>
         </div>
     </div>
@@ -56,7 +62,7 @@
 
 <script id="wasabi-core-login-modal" type="text/template">
     <div class="modal-wrapper modal--login" tabindex="-1">
-        <?= $this->Form->create(null, ['url' => ['plugin' => 'Wasabi/Core', 'controller' => 'Users', 'action' => 'login'], 'novalidate' => 'novalidate']) ?>
+        <?= $this->Form->create(null, ['url' => $this->Route->login(), 'novalidate' => 'novalidate']) ?>
         <div class="modal-backdrop"></div>
         <div class="modal-scrollable">
             <div class="modal-container">
@@ -68,7 +74,7 @@
                     <?= $this->element('Wasabi/Core.login-form-ajax') ?>
                 </div>
                 <div class="modal-footer modal-confirm">
-                    <?= $this->Form->button('Login', ['class' => 'button blue']) ?>
+                    <?= $this->Form->button('Login', ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
                 </div>
             </div>
         </div>

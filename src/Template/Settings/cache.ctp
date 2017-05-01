@@ -25,11 +25,10 @@ echo $this->Form->input('cache_duration', [
     'options' => $cacheDurations
 ]);
 echo $this->Html->div('form-controls');
-echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
-echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
-    'plugin' => 'Wasabi/Core',
-    'controller' => 'Settings',
-    'action' => 'cache'
-]);
+echo $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button', 'data-toggle' => 'btn-loading']);
+echo $this->Guardian->protectedLink(
+    __d('wasabi_core', 'Cancel'),
+    $this->Route->settingsCache()
+);
 echo $this->Html->tag('/div');
 echo $this->Form->end();

@@ -23,6 +23,6 @@ $this->set('bodyCssClass', ['support', 'reset-password']);
         ]); ?>
     </div>
     <div class="form-controls">
-        <?= $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button blue']) ?>
+        <?= $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
     </div>
 <?= $this->Form->end() ?>

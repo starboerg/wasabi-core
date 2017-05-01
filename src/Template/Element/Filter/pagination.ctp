@@ -21,30 +21,50 @@
 <span class="item-count"><?php echo $from . ' - ' . $to . ' ' . __d('wasabi_core', 'of') . ' ' . $total . ' ' . $itemType ?></span>
 <nav>
     <ul class="row">
-        <li class="first"><?php
-            if ($first !== false) {
-                $url = $first;
-                $class = '';
-                $title = __d('wasabi_core', 'go to first page');
-            } else {
-                $url = 'javascript:void(0)';
-                $class = 'disabled';
-                $title = '';
-            }
-            echo $this->Html->link('<i class="icon-first"></i>', $url, array('title' => $title, 'escapeTitle' => false, 'class' => $class));
-        ?></li>
-        <li class="prev"><?php
-            if ($prev !== false) {
-                $url = $prev;
-                $class = '';
-                $title = __d('wasabi_core', 'go to previous page');
-            } else {
-                $url = 'javascript:void(0)';
-                $class = 'disabled';
-                $title = '';
-            }
-            echo $this->Html->link('<i class="icon-previous"></i>', $url, array('title' => $title, 'escapeTitle' => false, 'class' => $class));
-        ?></li>
+        <li class="first">
+            <?php
+                if ($first !== false) {
+                    $url = $first;
+                    $class = '';
+                    $title = __d('wasabi_core', 'go to first page');
+                } else {
+                    $url = 'javascript:void(0)';
+                    $class = 'disabled';
+                    $title = '';
+                }
+                echo $this->Html->link(
+                    $this->Icon->firstPage(),
+                    $url,
+                    [
+                        'title' => $title,
+                        'class' => $class,
+                        'escapeTitle' => false
+                    ]
+                );
+            ?>
+        </li>
+        <li class="prev">
+            <?php
+                if ($prev !== false) {
+                    $url = $prev;
+                    $class = '';
+                    $title = __d('wasabi_core', 'go to previous page');
+                } else {
+                    $url = 'javascript:void(0)';
+                    $class = 'disabled';
+                    $title = '';
+                }
+                echo $this->Html->link(
+                    $this->Icon->previousPage(),
+                    $url,
+                    [
+                        'title' => $title,
+                        'class' => $class,
+                        'escapeTitle' => false
+                    ]
+                );
+            ?>
+        </li>
         <li class="pages">
             <ul>
                 <?php foreach ($pages as $p): ?>
@@ -52,30 +72,50 @@
                 <?php endforeach; ?>
             </ul>
         </li>
-        <li class="next"><?php
-            if ($next !== false) {
-                $url = $next;
-                $class = '';
-                $title = __d('wasabi_core', 'go to next page');
-            } else {
-                $url = 'javascript:void(0)';
-                $class = 'disabled';
-                $title = '';
-            }
-            echo $this->Html->link('<i class="icon-next"></i>', $url, ['title' => $title, 'escapeTitle' => false, 'class' => $class]);
-        ?></li>
-        <li class="last"><?php
-            if ($last !== false) {
-                $url = $last;
-                $class = '';
-                $title = __d('wasabi_core', 'go to last page');
-            } else {
-                $url = 'javascript:void(0)';
-                $class = 'disabled';
-                $title = '';
-            }
-            echo $this->Html->link('<i class="icon-last"></i>', $url, ['title' => $title, 'escapeTitle' => false, 'class' => $class]);
-        ?></li>
+        <li class="next">
+            <?php
+                if ($next !== false) {
+                    $url = $next;
+                    $class = '';
+                    $title = __d('wasabi_core', 'go to next page');
+                } else {
+                    $url = 'javascript:void(0)';
+                    $class = 'disabled';
+                    $title = '';
+                }
+                echo $this->Html->link(
+                    $this->Icon->nextPage(),
+                    $url,
+                    [
+                        'title' => $title,
+                        'class' => $class,
+                        'escapeTitle' => false
+                    ]
+                );
+            ?>
+        </li>
+        <li class="last">
+            <?php
+                if ($last !== false) {
+                    $url = $last;
+                    $class = '';
+                    $title = __d('wasabi_core', 'go to last page');
+                } else {
+                    $url = 'javascript:void(0)';
+                    $class = 'disabled';
+                    $title = '';
+                }
+                echo $this->Html->link(
+                    $this->Icon->lastPage(),
+                    $url,
+                    [
+                        'title' => $title,
+                        'class' => $class,
+                        'escapeTitle' => false
+                    ]
+                );
+            ?>
+        </li>
     </ul>
 </nav>
 <?= $this->Form->input('l', [
@@ -85,5 +125,5 @@
     'class' => 'limit',
     'data-page' => $this->Filter->paginationParams['page'],
     'data-url' => $baseUrl,
-    'templates' => 'Wasabi/Core.form_templates_filter'
+    'templates' => 'Wasabi/Core.FormTemplates/filter'
 ]) ?>

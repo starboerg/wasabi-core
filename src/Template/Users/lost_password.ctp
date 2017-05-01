@@ -16,12 +16,13 @@ $this->set('bodyCssClass', ['support', 'lost-password']);
     </div>
     <div class="form-controls">
         <ul>
-            <li><?= $this->Html->link(__d('wasabi_core', 'Remember your password?'), [
-                'plugin' => 'Wasabi/Core',
-                'controller' => 'Users',
-                'action' => 'login'
-            ]) ?></li>
+            <li>
+                <?= $this->Html->link(
+                    __d('wasabi_core', 'Remember your password?'),
+                    $this->Route->login()
+                ) ?>
+            </li>
         </ul>
-        <?= $this->Form->button(__d('wasabi_core', 'Send'), ['class' => 'button blue']) ?>
+        <?= $this->Form->button(__d('wasabi_core', 'Send'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
     </div>
 <?= $this->Form->end() ?>

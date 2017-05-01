@@ -8,7 +8,7 @@ if ($this->request->params['action'] === 'add') {
     $this->Html->setTitle(__d('wasabi_core', 'Create a new Language'));
 } else {
     $this->Html->setTitle(__d('wasabi_core', 'Edit Language'));
-    $this->Html->setSubTitle($language->get('name'));
+    $this->Html->setSubTitle($language->name);
 }
 
 $isEdit = ($this->request->params['action'] === 'edit');
@@ -44,11 +44,10 @@ echo $this->Form->input('available_at_backend', [
     ]
 ]);
 echo $this->Html->div('form-controls');
-    echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
-    echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
-        'plugin' => 'Wasabi/Core',
-        'controller' => 'Languages',
-        'action' => 'index'
-    ]);
+    echo $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button', 'data-toggle' => 'btn-loading']);
+    echo $this->Guardian->protectedLink(
+        __d('wasabi_core', 'Cancel'),
+        $this->Route->languagesIndex()
+    );
 echo $this->Html->tag('/div');
 echo $this->Form->end();

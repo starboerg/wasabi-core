@@ -2,27 +2,24 @@
 /**
  * @var \Wasabi\Core\View\AppView $this
  * @var \Wasabi\Core\Model\Entity\Language $language
- * @var array $languages
+ * @var \Cake\ORM\ResultSet $languages
  */
 
 $this->Html->setTitle(__d('wasabi_core', 'Languages'));
 $this->Html->setSubTitle(__d('wasabi_core', 'for Frontend & Backend'));
 $this->Html->addAction(
     $this->Guardian->protectedLink(
-        '<i class="icon-plus"></i>',
-        [
-            'plugin' => 'Wasabi/Core',
-            'controller' => 'Languages',
-            'action' => 'add'
-        ],
+        $this->Icon->addPlus(),
+        $this->Route->languagesAdd(),
         [
             'title' => __d('wasabi_core', 'Create a new Language'),
             'class' => 'add',
             'escape' => false
-        ])
+        ]
+    )
 );
 ?>
-<?= $this->Form->create($language, ['url' => ['plugin' => 'Wasabi/Core', 'controller' => 'Languages', 'action' => 'sort']]) ?>
+<?= $this->Form->create($language, ['url' => $this->Route->languagesSort()]) ?>
 <div class="datatable-wrapper">
     <table class="datatable languages valign-middle">
         <thead>
@@ -41,7 +38,6 @@ $this->Html->addAction(
         <?php
         foreach ($languages as $key => $lang) {
             echo $this->element('../Languages/__language-row', [
-                'class' => (($key + 1) % 2 == 0) ? ' class="even"' : '',
                 'key' => $key,
                 'lang' => $lang
             ]);

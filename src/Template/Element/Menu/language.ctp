@@ -17,12 +17,7 @@ use \Cake\Core\Configure;
 					$class = ' class="active"';
 				}
                 echo '<li' . $class . ' data-language-id="' . $lang->id . '">'
-					. $this->Html->link($lang->iso2, [
-						'plugin' => 'Wasabi/Core',
-						'controller' => 'Languages',
-						'action' => 'change',
-						$lang->id
-					])
+					. $this->Html->link($lang->iso2, $this->Route->languagesChange($lang->id))
 				. '</li>';
 			}
 		}

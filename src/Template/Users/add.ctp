@@ -76,23 +76,23 @@ echo $this->Form->create($user, ['class' => 'no-top-section']);
     ]);
     echo $this->Form->input($groupField, $groupOptions);
     if ($isEdit) {
-        $inactiveOptions = [
+        $inactiveOption = [
             'value' => 0,
             'text' => __d('wasabi_core', 'inactive')
         ];
         if ($user->id === Wasabi::user()->id) {
-            $inactiveOptions['disabled'] = 'disabled';
+            $inactiveOption['disabled'] = 'disabled';
         }
-        $activeOptions = [
+        $activeOption = [
             'value' => 1,
             'text' => __d('wasabi_core', 'active')
         ];
         if (!$user->verified) {
-            $activeOptions['disabled'] = 'disabled';
+            $activeOption['disabled'] = 'disabled';
         }
         echo $this->Form->input('active', [
             'label' => __d('wasabi_core', 'Account Status'),
-            'options' => [$inactiveOptions, $activeOptions],
+            'options' => [$inactiveOption, $activeOption],
             'templateVars' => [
                 'info' => __d('wasabi_core', 'Please choose the account status for this user. An account activation requires a verfied email address.')
             ]
@@ -127,11 +127,10 @@ echo $this->Form->create($user, ['class' => 'no-top-section']);
         echo $this->Form->timeZoneSelect('timezone');
     }
     echo $this->Html->div('form-controls');
-        echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
-        echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), $this->Filter->getBacklink([
-            'plugin' => 'Wasabi/Core',
-            'controller' => 'Users',
-            'action' => 'index'
-        ]));
+        echo $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button', 'data-toggle' => 'btn-loading']);
+        echo $this->Guardian->protectedLink(
+            __d('wasabi_core', 'Cancel'),
+            $this->Filter->getBacklink($this->Route->usersIndex())
+        );
     echo $this->Html->tag('/div');
 echo $this->Form->end();

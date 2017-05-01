@@ -145,11 +145,10 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         ]
     ]);
     echo $this->Html->div('form-controls');
-        echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
-        echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
-            'plugin' => 'Wasabi/Core',
-            'controller' => 'Settings',
-            'action' => 'general'
-        ]);
+        echo $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button', 'data-toggle' => 'btn-loading']);
+        echo $this->Guardian->protectedLink(
+            __d('wasabi_core', 'Cancel'),
+            $this->Route->settingsGeneral()
+        );
     echo $this->Html->tag('/div');
 echo $this->Form->end();

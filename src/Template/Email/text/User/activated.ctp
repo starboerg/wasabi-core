@@ -13,10 +13,6 @@ echo __d(
     [
         'username' => $user->username,
         'nl' => "\n",
-        'loginLink' => 'Login using the following url:' . "\n" . $this->Email->Url->build([
-            'plugin' => 'Wasabi/Core',
-            'controller' => 'Users',
-            'action' => 'login'
-        ], true) . "\n"
+        'loginLink' => 'Login using the following url:' . "\n" . $this->Email->Url->build($this->Route->login(), true) . "\n"
     ]
 );

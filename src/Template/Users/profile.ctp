@@ -68,11 +68,10 @@ echo $this->Form->create($user, ['class' => 'no-top-section']);
     }
 
     echo $this->Html->div('form-controls');
-        echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
-        echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), $this->Filter->getBacklink([
-            'plugin' => 'Wasabi/Core',
-            'controller' => 'Users',
-            'action' => 'index'
-        ]));
+        echo $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button', 'data-toggle' => 'btn-loading']);
+        echo $this->Guardian->protectedLink(
+            __d('wasabi_core', 'Cancel'),
+            $this->request->referer(true)
+        );
     echo $this->Html->tag('/div');
 echo $this->Form->end();

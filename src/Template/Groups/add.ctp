@@ -24,11 +24,10 @@ echo $this->Form->create($group, ['class' => 'no-top-section']);
         'label' => __d('wasabi_core', 'Description')
     ]);
     echo $this->Html->div('form-controls');
-        echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
-        echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
-            'plugin' => 'Wasabi/Core',
-            'controller' => 'Groups',
-            'action' => 'index'
-        ]);
+        echo $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button', 'data-toggle' => 'btn-loading']);
+        echo $this->Guardian->protectedLink(
+            __d('wasabi_core', 'Cancel'),
+            $this->Filter->getBacklink($this->Route->groupsIndex())
+        );
     echo $this->Html->tag('/div');
 echo $this->Form->end();

@@ -15,11 +15,7 @@ echo __d(
         'nl' => '<br>',
         'loginLink' => $this->Email->bigActionButton(
             __d('wasabi_core', 'Login'),
-            [
-                'plugin' => 'Wasabi/Core',
-                'controller' => 'Users',
-                'action' => 'login'
-            ]
+            $this->Route->login()
         )
     ]
 );

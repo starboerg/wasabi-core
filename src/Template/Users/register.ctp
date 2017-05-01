@@ -31,12 +31,13 @@ $this->set('bodyCssClass', ['support', 'register']);
     </div>
     <div class="form-controls">
         <ul>
-            <li><?= $this->Html->link(__d('wasabi_core', 'Or log in.'), [
-                'plugin' => 'Wasabi/Core',
-                'controller' => 'Users',
-                'action' => 'login'
-            ]) ?></li>
+            <li>
+                <?= $this->Html->link(
+                    __d('wasabi_core', 'Or log in.'),
+                    $this->Route->login()
+                ) ?>
+            </li>
         </ul>
-        <?= $this->Form->button(__d('wasabi_core', 'Submit'), ['class' => 'button blue']) ?>
+        <?= $this->Form->button(__d('wasabi_core', 'Submit'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
     </div>
 <?= $this->Form->end() ?>

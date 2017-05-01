@@ -26,21 +26,23 @@ if (Configure::read('Settings.Core.Login.Message.show') === '1' && $message) {
 </div>
 <div class="form-controls">
     <ul>
-        <li><?= $this->Html->link(__d('wasabi_core', 'Create an account.'), [
-                'plugin' => 'Wasabi/Core',
-                'controller' => 'Users',
-                'action' => 'register'
-            ]) ?></li>
+        <li>
+            <?= $this->Html->link(
+                __d('wasabi_core', 'Create an account.'),
+                $this->Route->register()
+            ) ?>
+        </li>
     </ul>
-    <?= $this->Form->button(__d('wasabi_core', 'Login'), ['class' => 'button blue']) ?>
+    <?= $this->Form->button(__d('wasabi_core', 'Login'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
 </div>
 <?= $this->Form->end() ?>
 <div class="bottom-links">
     <ul>
-        <li><?= $this->Html->link(__d('wasabi_core', 'Lost your Password?'), [
-                'plugin' => 'Wasabi/Core',
-                'controller' => 'Users',
-                'action' => 'lostPassword'
-            ]) ?></li>
+        <li>
+            <?= $this->Html->link(
+                __d('wasabi_core', 'Lost your Password?'),
+                $this->Route->lostPassword()
+            ) ?>
+        </li>
     </ul>
 </div>

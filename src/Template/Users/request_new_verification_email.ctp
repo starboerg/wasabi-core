@@ -15,6 +15,6 @@ $this->set('bodyCssClass', ['support', 'request-verification-email']);
     <?= $this->Form->input('email', ['label' => __d('wasabi_core', 'Email') . ':']) ?>
 </div>
 <div class="form-controls">
-    <?= $this->Form->button(__d('wasabi_core', 'Send'), ['class' => 'button blue']) ?>
+    <?= $this->Form->button(__d('wasabi_core', 'Send'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
 </div>
 <?= $this->Form->end() ?>
