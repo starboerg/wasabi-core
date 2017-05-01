@@ -46,7 +46,7 @@ class LanguagesController extends BackendAppController
      */
     public function index()
     {
-        $languages = $this->Languages->find('allFrontendBackend')->hydrate(false);
+        $languages = $this->Languages->find('allFrontendBackend');
         $this->set([
             'languages' => $languages,
             'language' => $this->Languages->newEntity()
@@ -184,8 +184,6 @@ class LanguagesController extends BackendAppController
 
         $this->set(compact('status', 'flashMessage', 'frontendLanguages', 'backendLanguages'));
         $this->set('_serialize', ['status', 'flashMessage', 'frontendLanguages', 'backendLanguages']);
-
-        $this->RequestHandler->renderAs($this, 'json');
     }
 
     /**
