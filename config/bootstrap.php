@@ -25,6 +25,7 @@ use Wasabi\Core\Event\GuardianListener;
 use Wasabi\Core\Event\LanguagesListener;
 use Wasabi\Core\Event\MenuListener;
 use Wasabi\Core\Controller\Component\GuardianComponent;
+use Wasabi\Core\Event\PolicyListener;
 
 try {
     // Load Wasabi Core config.
@@ -49,10 +50,11 @@ try {
 // Configure plugin translation paths.
 Configure::write('App.paths.locales', array_merge((Configure::read('App.paths.locales') ?? []), [Plugin::path('Wasabi/Core') . 'src' . DS . 'Locale' . DS]));
 
-EventManager::instance()->on(new GuardianListener());
-EventManager::instance()->on(new AuthListener());
-EventManager::instance()->on(new MenuListener());
-EventManager::instance()->on(new LanguagesListener());
+EventManager::instance()->on(new GuardianListener);
+EventManager::instance()->on(new AuthListener);
+EventManager::instance()->on(new MenuListener);
+EventManager::instance()->on(new LanguagesListener);
+EventManager::instance()->on(new PolicyListener);
 
 if (!function_exists('guardian')) {
     /**
