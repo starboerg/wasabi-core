@@ -27,12 +27,12 @@ class Permission
     ];
 
     const OWN = [
-        'name' => 'E',
+        'name' => 'O',
         'value' => 1
     ];
 
-    const ALL = [
-        'name' => 'A',
+    const YES = [
+        'name' => 'Y',
         'value' => 2
     ];
 
@@ -65,12 +65,35 @@ class Permission
     protected $_priority;
 
     /**
+     * Determines the available permission options for this permission.
+     *
+     * @var array
+     */
+    protected $_availableOptions;
+
+    /**
+     * Holds translations for the permission options.
+     *
+     * @var array
+     */
+    protected $_permissionTranslations;
+
+    /**
      * Permission constructor.
      */
     public function __construct()
     {
-        $this->_paths = [];
-        $this->_priority = 999999;
+        $this->setPaths([]);
+        $this->setPriority(999999);
+        $this->setAvailableOptions([
+            self::NO['value'],
+            self::YES['value'],
+        ]);
+        $this->setPermissionTranslations([
+            self::NO['name'] => __d('wasabi_core', 'N'),
+            self::OWN['name'] => __d('wasabi_core', 'O'),
+            self::YES['name'] => __d('wasabi_core', 'Y'),
+        ]);
     }
 
     /**
@@ -193,6 +216,82 @@ class Permission
         foreach ($paths as $path) {
             $this->addPath($path);
         }
+
+        return $this;
+    }
+
+    /**
+     * Set the available permission options.
+     *
+     * @param array $options
+     * @return Permission
+     */
+    public function setAvailableOptions(array $options)
+    {
+        $this->_availableOptions = [];
+
+        foreach ($options as $option) {
+            if (!self::isValidValue($option)) {
+                throw new Exception(
+                    Text::insert('No permission constant with value ":value" exists.', ['value' => $option])
+                );
+            }
+            $this->_availableOptions[] = $option;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get the translated permission select options.
+     *
+     * @return array
+     */
+    public function getSelectOptions()
+    {
+        $allOptions = self::getSelect();
+        $options = [];
+        foreach ($allOptions as $value => $option) {
+            if (!in_array($value, $this->_availableOptions)) {
+                continue;
+            }
+            $options[$value] = $this->_permissionTranslations[$option];
+        }
+
+        ksort($options);
+
+        return $options;
+    }
+
+    /**
+     * Get the single highest permission option.
+     *
+     * @param boolean $valueOnly Wheter to only return the value of the highest permission option.
+     * @return array
+     */
+    public function getHighestPermissionOption($valueOnly = false)
+    {
+        $options = $this->getSelectOptions();
+        end($options);
+
+        if ($valueOnly === true) {
+            return key($options);
+        }
+
+        return [key($options) => $options[key($options)]];
+    }
+
+    /**
+     * Set the permission translations.
+     *
+     * permission.name => translated name
+     *
+     * @param array $translations
+     * @return Permission
+     */
+    public function setPermissionTranslations(array $translations)
+    {
+        $this->_permissionTranslations = $translations;
 
         return $this;
     }

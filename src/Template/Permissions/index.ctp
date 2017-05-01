@@ -10,31 +10,30 @@ use Wasabi\Core\Permission\Permission;
 use Wasabi\Core\Permission\PermissionGroup;
 
 $this->Html->setTitle(__d('wasabi_core', 'Permissions'));
-$this->Html->setSubTitle(__d('wasabi_core', 'N: No | O: Own | A: All'));
+$this->Html->setSubTitle(__d('wasabi_core', 'N: No | O: Own | Y: Yes'));
 $this->assign('title', __d('wasabi_core', 'Permissions'));
-$permissionOptions = Permission::getSelect();
 $groupCount = count($groups->toArray());
 ?>
 
-<?= $this->Form->create(null, ['url' => ['action' => 'update']]) ?>
+<?= $this->Form->create(null, ['url' => $this->Route->permissionsUpdate()]) ?>
 
 <div class="datatable-wrapper">
     <table class="datatable valign-middle">
         <thead>
         <tr>
-            <th class="section" colspan="2" rowspan="2"><?= __d('wasabi_core', 'Section/Action') ?></th>
+            <th class="section" colspan="2"><?= __d('wasabi_core', 'Section/Action') ?></th>
             <th class="groups" colspan="<?= $groupCount + 1 ?>"><?= __d('wasabi_core', 'User Groups') ?></th>
-        </tr>
-        <tr>
-            <th class="group"><div class="rotate"><span><?= $superAdminGroup->name ?></span></div></th>
-            <?php foreach ($groups as $group) { ?>
-                <th class="group"><div class="rotate"><span><?= $group ?></span></div></th>
-            <?php } ?>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($permissions as $permissionGroup) { /** @var PermissionGroup $permissionGroup */?>
-            <tr><td class="section" colspan="<?= 3 + $groupCount ?>"><?= $permissionGroup->getName() ?></td></tr>
+            <tr>
+                <td class="section" colspan="2"><?= $permissionGroup->getName() ?></td>
+                <td class="section group"><?= $superAdminGroup->name ?></td>
+                <?php foreach ($groups as $group) { ?>
+                    <td class="section group"><?= $group ?></td>
+                <?php } ?>
+            </tr>
             <?php foreach ($permissionGroup->getPermissions() as $permission) { /** @var Permission $permission */ ?>
                 <tr>
                     <td>&nbsp;</td>
@@ -44,10 +43,10 @@ $groupCount = count($groups->toArray());
                             <?= $this->Form->input('permissions.1.' . $permission->getId(), [
                                 'label' => false,
                                 'div' => false,
-                                'options' => array(end($permissionOptions)),
+                                'options' => $permission->getHighestPermissionOption(),
                                 'type' => 'radio',
                                 'templates' => 'Wasabi/Core.FormTemplates/btn_radio',
-                                'value' => (string)Permission::getValueForName(Permission::ALL['name']),
+                                'value' => (string)$permission->getHighestPermissionOption(true),
                                 'checked' => true
                             ]); ?>
                         </div>
@@ -59,7 +58,7 @@ $groupCount = count($groups->toArray());
                                 <?= $this->Form->input($field, [
                                     'label' => false,
                                     'div' => false,
-                                    'options' => $permissionOptions,
+                                    'options' => $permission->getSelectOptions(),
                                     'type' => 'radio',
                                     'templates' => 'Wasabi/Core.FormTemplates/btn_radio',
                                     'value' => (string)$this->request->data($field)
@@ -76,12 +75,11 @@ $groupCount = count($groups->toArray());
 
 <div class="form-controls">
     <?php
-    echo $this->Form->button(__d('wasabi_core', 'Save'), ['div' => false, 'class' => 'button']);
-    echo $this->Guardian->protectedLink(__d('wasabi_core', 'Cancel'), [
-        'plugin' => 'Wasabi/Core',
-        'controller' => 'GroupPermissions',
-        'action' => 'index'
-    ]);
+    echo $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button', 'data-toggle' => 'btn-loading']);
+    echo $this->Guardian->protectedLink(
+        __d('wasabi_core', 'Cancel'),
+        $this->Route->permissionsIndex()
+    );
     ?>
 </div>
 

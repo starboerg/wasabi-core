@@ -121,7 +121,7 @@ class PermissionManager
      */
     public function createPermission($priority, $id, $name, array $paths)
     {
-        return (new Permission())
+        return (new Permission)
             ->setPriority($priority)
             ->setId($id)
             ->setName($name)
