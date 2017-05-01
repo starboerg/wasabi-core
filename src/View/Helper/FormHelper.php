@@ -32,7 +32,7 @@ class FormHelper extends \Cake\View\Helper\FormHelper
         }
 
         return $this->formatTemplate($groupTemplate, [
-            'input' => $options['input'],
+            'input' => $options['input'] ?? '',
             'label' => $options['label'],
             'error' => $options['error'],
             'templateVars' => $this->_processTemplateVars($options)
