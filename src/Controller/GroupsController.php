@@ -15,10 +15,10 @@ namespace Wasabi\Core\Controller;
 
 use Cake\Database\Connection;
 use Cake\Database\Query;
-use Cake\Network\Exception\ForbiddenException;
 use Cake\Network\Exception\MethodNotAllowedException;
 use FrankFoerster\Filter\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Table\GroupsTable;
+use Wasabi\Core\Wasabi;
 
 /**
  * Class GroupsController
@@ -186,18 +186,20 @@ class GroupsController extends BackendAppController
      */
     public function delete($id)
     {
-        if ($id === '1') {
-            throw new ForbiddenException();
-        }
         if (!$this->request->is(['post'])) {
             throw new MethodNotAllowedException();
         }
 
         /** @var Connection $connection */
         $connection = $this->Groups->connection();
-
         $connection->begin();
+
         $group = $this->Groups->get($id);
+
+        if (Wasabi::user()->cant('delete', $group)) {
+            $this->redirect($this->Auth->getConfig('unauthorizedRedirect'));
+            return;
+        }
 
         $users = $this->Groups->UsersGroups->Users->find()
             ->matching('UsersGroups', function (Query $q) use ($id) {

@@ -25,10 +25,10 @@ use Cake\Utility\Text;
 use FrankFoerster\Filter\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Entity\Token;
 use Wasabi\Core\Model\Entity\User;
-use Wasabi\Core\Model\Enum\Permission;
 use Wasabi\Core\Model\Table\LoginLogsTable;
 use Wasabi\Core\Model\Table\TokensTable;
 use Wasabi\Core\Model\Table\UsersTable;
+use Wasabi\Core\Permission\Permission;
 use Wasabi\Core\View\AppView;
 use Wasabi\Core\Wasabi;
 
@@ -129,6 +129,10 @@ class UsersController extends BackendAppController
         ],
         'status' => [
             'modelField' => 'Users.active',
+            'custom' => [
+                'Users.verified :dir',
+                'Users.active :dir'
+            ],
             'actions' => ['index']
         ]
     ];
@@ -361,7 +365,9 @@ class UsersController extends BackendAppController
 
         $this->set([
             'users' => $this->Filter->paginate($this->Filter->filter($userQuery)),
-            'groups' => $groups
+            'groups' => $groups,
+            'displayUsername' => Wasabi::setting('Core.User.has_username', false),
+            'displayFirstnameLastname' => Wasabi::setting('Core.User.has_firstname_lastname', false),
         ]);
     }
 
@@ -399,7 +405,7 @@ class UsersController extends BackendAppController
         $groups = $this->Users->Groups->find('list')->order('id ASC');
 
         // users that are no admin, may not select the super admin group
-        if (Wasabi::user()->hasAccessLevel(Permission::OWN)) {
+        if (Wasabi::user()->hasAccessLevel(Permission::YES)) {
             $groups->where(['id <>' => 1]);
         }
 
@@ -477,7 +483,7 @@ class UsersController extends BackendAppController
         $groups = $this->Users->Groups->find('list')->order('id ASC');
 
         // users that are no admin, may not select the admin group
-        if (Wasabi::user()->hasAccessLevel(Permission::OWN)) {
+        if (Wasabi::user()->hasAccessLevel(Permission::YES)) {
             $groups->where(['id <>' => 1]);
         }
 
@@ -509,7 +515,13 @@ class UsersController extends BackendAppController
         }
 
         /** @var User $user */
-        $user = $this->Users->get($id);
+        $user = $this->Users->getUserAndGroups($id);
+
+        if (Wasabi::user()->cant('delete', $user)) {
+            $this->redirect($this->Auth->getConfig('unauthorizedRedirect'));
+            return;
+        }
+
         if ($this->Users->delete($user)) {
             $this->Flash->success(__d('wasabi_core', 'The user <strong>{0}</strong> has been deleted.', $user->username));
         } else {
