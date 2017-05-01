@@ -21,6 +21,7 @@ use Cake\Routing\Router;
 use Wasabi\Core\Model\Entity\Language;
 use Wasabi\Core\Model\Entity\User;
 use Wasabi\Core\Model\Table\LanguagesTable;
+use Wasabi\Core\Policy\PolicyManager;
 
 class Wasabi
 {
@@ -30,6 +31,13 @@ class Wasabi
      * @var User
      */
     protected static $_user;
+
+    /**
+     * Holds the policy manager instance.
+     *
+     * @var PolicyManager
+     */
+    protected static $_policyManager;
 
     /**
      * Get the currently active content language.
@@ -222,5 +230,25 @@ class Wasabi
     public static function getSenderName()
     {
         return self::setting('Core.Email.email_sender_name');
+    }
+
+    /**
+     * Set the polcicy manager instance.
+     *
+     * @param PolicyManager $policyManager
+     */
+    public static function setPolicyManager(PolicyManager $policyManager)
+    {
+        self::$_policyManager = $policyManager;
+    }
+
+    /**
+     * Get the policy manager instance.
+     *
+     * @return PolicyManager
+     */
+    public static function getPolicyManager()
+    {
+        return self::$_policyManager;
     }
 }
