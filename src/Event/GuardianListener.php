@@ -53,7 +53,7 @@ class GuardianListener implements EventListenerInterface
     public function getGuestActions(Event $event)
     {
         /** @var GuardianComponent $guardian */
-        $guardian = $event->subject();
+        $guardian = $event->getSubject();
 
         $guardian->addGuestActions([
             'Wasabi/Core.Users.login',
