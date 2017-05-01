@@ -1,7 +1,7 @@
 define(function(require) {
   var BaseView = require('common/BaseView');
   var WS = require('wasabi');
-  var LanguagesTable = require('../views/LanguagesTable');
+  var LanguagesTable = require('../components/LanguagesTable');
 
   return BaseView.extend({
 

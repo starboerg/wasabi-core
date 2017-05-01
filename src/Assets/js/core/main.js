@@ -1,14 +1,16 @@
 define(function(require) {
   var $ = require('jquery');
   var _ = require('underscore');
-  var MenuView = require('core/views/Menu');
-  var SidebarOpenHandleView = require('core/views/SidebarOpenHandle');
-  var SidebarToggleView = require('core/views/SidebarToggle');
-  var LangSwitchView = require('core/views/LangSwitch');
-  var PaginationView = require('core/views/Pagination');
-  var LoginModalView = require('core/views/LoginModal');
-  var ModalView = require('common/ModalView');
-  var TabView = require('common/TabView');
+  var BaseView = require('common/BaseView');
+  var Menu = require('core/components/Menu');
+  var SidebarOpenHandle = require('core/components/SidebarOpenHandle');
+  var SidebarToggle = require('core/components/SidebarToggle');
+  var LangSwitch = require('core/components/LangSwitch');
+  var Pagination = require('core/components/Pagination');
+  var LoginModal = require('core/components/LoginModal');
+  var LoadingButton = require('core/components/LoadingButton');
+  var Modal = require('common/ModalView');
+  var Tab = require('common/TabView');
   var WS = require('wasabi');
   var pace = require('pace');
 
@@ -50,7 +52,7 @@ define(function(require) {
    * @private
    */
   function _onAjaxSuccess(event, xhr) {
-    if (xhr.status == 200 && xhr.statusText == 'OK') {
+    if (xhr.status === 200 && xhr.statusText === 'OK') {
       var contentType = xhr.getResponseHeader('Content-Type');
       if (contentType.split('application/json').length === 2) {
         var data = $.parseJSON(xhr.responseText) || {};
@@ -76,7 +78,7 @@ define(function(require) {
    */
   function _onAjaxError(event, xhr) {
     var data;
-    if (xhr.status == 401) {
+    if (xhr.status === 401) {
       data = $.parseJSON(xhr.responseText) || {};
       if (typeof data.name !== 'undefined') {
         if (confirm(data.name)) {
@@ -86,10 +88,10 @@ define(function(require) {
         }
       }
     }
-    if (xhr.status == 403) {
+    if (xhr.status === 403) {
       _authError.call(this);
     }
-    if (xhr.status == 500) {
+    if (xhr.status === 500) {
       data = $.parseJSON(xhr.responseText) || {};
       if (typeof data.name !== 'undefined') {
         _flashMessage({
@@ -150,11 +152,11 @@ define(function(require) {
   }
 
   function _initializeBackendViews() {
-    WS.views.menu = WS.createView(MenuView);
-    WS.views.navigationToggle = WS.createView(SidebarToggleView);
-    WS.views.sidebarOpenHandle = WS.createView(SidebarOpenHandleView);
-    WS.views.langSwitch = WS.createView(LangSwitchView);
-    WS.views.paginations = WS.createViews($('.pagination'), PaginationView);
+    WS.views.menu = WS.createView(Menu);
+    WS.views.navigationToggle = WS.createView(SidebarToggle);
+    WS.views.sidebarOpenHandle = WS.createView(SidebarOpenHandle);
+    WS.views.langSwitch = WS.createView(LangSwitch);
+    WS.views.paginations = WS.createViews($('.pagination'), Pagination);
   }
 
   function _toggleEmptySelects() {
@@ -175,7 +177,7 @@ define(function(require) {
     var that = this;
     WS.views.modals = [];
     $('[data-toggle="modal"], [data-toggle="confirm"]').livequery(function() {
-      WS.views.modals.push(WS.createView(ModalView, {
+      WS.views.modals.push(WS.createView(Modal, {
         el: $(this),
         scrollbarWidth: WS.features.scrollbarWidth,
         confirmYes: that.options.translations.confirmYes,
@@ -186,7 +188,15 @@ define(function(require) {
 
   function _initTabs() {
     $('.tabs[data-tabify-id]').livequery(function() {
-      WS.views.push(WS.createView(TabView, {
+      WS.views.push(WS.createView(Tab, {
+        el: $(this)
+      }));
+    });
+  }
+
+  function _initLoadingButtons() {
+    $('button[data-toggle="btn-loading"]').livequery(function() {
+      WS.views.push(WS.createView(LoadingButton, {
         el: $(this)
       }));
     });
@@ -238,7 +248,7 @@ define(function(require) {
 
   function _initHeartBeat() {
     if (!this.loginModal) {
-      this.loginModal = WS.createView(LoginModalView, {});
+      this.loginModal = WS.createView(LoginModal, {});
     }
 
     clearTimeout(this.heartBeatTimeout);
@@ -363,6 +373,7 @@ define(function(require) {
       _toggleEmptySelects.call(this);
       _initModals.call(this);
       _initTabs.call(this);
+      _initLoadingButtons.call(this);
       _initSections.call(this);
       _initInteractionDropdownMenus.call(this);
       _initHeartBeat.call(this);

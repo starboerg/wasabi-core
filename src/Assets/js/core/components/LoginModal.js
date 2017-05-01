@@ -38,8 +38,6 @@ define(function (require) {
 
       var $form = this.$('form');
 
-      this.$button.prepend('<span class="spinner spinner-white"></span>').attr('disabled', 'disabled');
-
       $.ajax({
         url: $form.attr('action'),
         data: $form.serialize(),
@@ -48,8 +46,8 @@ define(function (require) {
           if (data.content) {
             this.$('.modal-body').html(data.content);
             this.$('#email').focus();
-            this.$button.find('.spinner').remove();
-            this.$button.attr('disabled', '').prop('disabled', false);
+            var loadingButton = this.$button.data('loadingButton');
+            loadingButton.toggleLoadingState();
           } else if (!data.redirect) {
             this.closeModal();
             WS.get('wasabi.core').initHeartBeat();
