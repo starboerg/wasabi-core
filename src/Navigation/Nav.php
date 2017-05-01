@@ -14,6 +14,7 @@
 namespace Wasabi\Core\Navigation;
 
 use Cake\Core\Exception\Exception;
+use Cake\Utility\Text;
 
 class Nav
 {
@@ -34,7 +35,7 @@ class Nav
     public static function createMenu($alias)
     {
         if (isset(self::$_menus[$alias])) {
-            throw new Exception(__d('wasabi_core', 'A Menu with alias "{0}" already exists.', $alias));
+            throw new Exception(Text::insert('A Menu with alias ":alias" already exists.', ['alias' => $alias]));
         }
         self::$_menus[$alias] = new Menu($alias);
 
@@ -53,7 +54,7 @@ class Nav
     public static function getMenu($alias, $ordered = false)
     {
         if (!isset(self::$_menus[$alias])) {
-            throw new Exception(__d('wasabi_core', 'No menu with alias "{0}" does exist.', $alias));
+            throw new Exception(Text::insert('No menu with alias ":alias" does exist.', ['alias' => $alias]));
         }
         if (!$ordered) {
             return self::$_menus[$alias];

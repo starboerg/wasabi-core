@@ -15,6 +15,7 @@ namespace Wasabi\Core\Navigation;
 
 use Cake\Core\Exception\Exception;
 use Cake\Utility\Hash;
+use Cake\Utility\Text;
 
 class Menu
 {
@@ -48,7 +49,7 @@ class Menu
      *
      * @param array $options The options of the menu item.
      * @throws Exception
-     * @return $this
+     * @return Menu
      */
     public function addMenuItem($options)
     {
@@ -90,12 +91,18 @@ class Menu
         }
 
         if (isset($options['doNotMatchAction'])) {
-            $menuItem['doNotMatchAction'] = is_array($options['doNotMatchAction']) ? $options['doNotMatchAction'] : [$options['doNotMatchAction']];
+            $menuItem['doNotMatchAction'] = is_array($options['doNotMatchAction'])
+                ? $options['doNotMatchAction']
+                : [$options['doNotMatchAction']];
         }
 
         if (isset($options['parent'])) {
             if (!isset($this->_menuItems[$options['parent']])) {
-                throw new Exception('No menu item with the alias specified in $options[\'parent\'] "' . $options['parent'] . '"exists.');
+                throw new Exception(
+                    Text::insert('No menu item with the alias specified in $options[\'parent\'] ":parent" exists.', [
+                        'parent' => $options['parent']
+                    ])
+                );
             }
             $menuItem['parent'] = $options['parent'];
             $this->_menuItems[$menuItem['parent']]['children'][$menuItem['alias']] = $menuItem;
