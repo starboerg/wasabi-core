@@ -18,6 +18,8 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Wasabi\Core\Model\Table\SettingsTable;
+use Wasabi\Core\Policy\PolicyManager;
+use Wasabi\Core\Wasabi;
 
 /**
  * Class AppController
@@ -36,6 +38,7 @@ class AppController extends Controller
         parent::initialize();
 
         $this->_loadSettings();
+        $this->_initializePolicies();
 
         $this->loadComponent('Wasabi/Core.Common');
     }
@@ -69,7 +72,7 @@ class AppController extends Controller
      * -----------
      * Configure::read('Settings.ScopeName.key1');
      *
-     * @return array
+     * @return void
      */
     protected function _loadSettings()
     {
@@ -87,5 +90,25 @@ class AppController extends Controller
         }
 
         Configure::write('Settings', $settings);
+    }
+
+    /**
+     * Initialize all app and plugin policies on a policy manager instance.
+     *
+     * Dispatches the Wasabi.Policies.register event.
+     *
+     * The app, Wasabi/Core and other plugins can listen to this event and register additionial
+     * policies.
+     *
+     * @return void
+     */
+    protected function _initializePolicies()
+    {
+        $policyManager = new PolicyManager($this->request);
+
+        $event = new Event('Wasabi.Policies.register', $policyManager);
+        $this->eventManager()->dispatch($event);
+
+        Wasabi::setPolicyManager($policyManager);
     }
 }
