@@ -520,8 +520,6 @@ th {
 }
 [class^="wicon-"],
 [class*=" wicon-"] {
-  position: relative;
-  top: 1px;
   background-image: url(../img/sprite2.png);
   display: inline-block;
   width: 20px;
@@ -1066,12 +1064,22 @@ strong {
 }
 .visuallyhidden {
   position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  height: 1px;
   width: 1px;
+  height: 1px;
   margin: -1px;
   padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
   border: 0;
 }
 #wrapper {
@@ -1283,6 +1291,23 @@ strong {
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
+}
+.button .spinner {
+  display: none;
+  top: 5px;
+  top: 0.3125rem;
+  left: 5px;
+  left: 0.3125rem;
+  margin-right: 0;
+}
+.button.btn-loading {
+  cursor: default !important;
+}
+.button.btn-loading .hide-when-loading {
+  display: none;
+}
+.button.btn-loading .spinner {
+  display: inline-block;
 }
 [class*="flash-message--"],
 [class*="message--"] {
@@ -1565,6 +1590,12 @@ div.error-message > ul {
 .form-row.form-row-toggleSwitch .field {
   padding-top: 23px;
   padding-top: 1.4375rem;
+}
+.form-row.form-row-select .field .checkbox:first-of-type {
+  padding-top: 7px;
+}
+.form-row.form-row-select .field .checkbox label:before {
+  display: none;
 }
 .form-row.last-of-section {
   border-bottom: 1px solid #d5d7d7;
@@ -1862,11 +1893,7 @@ form.bulk .button.small {
 }
 .modal-open.page-overflow #wrapper,
 .modal-open.page-overflow .modal-scrollable {
-  overflow-y: scroll;
-}
-.modal-open.page-overflow header {
-  padding-right: 37px;
-  padding-right: 2.3125rem;
+  overflow-y: auto;
 }
 .modal-container {
   background-color: #fff;
@@ -2999,6 +3026,27 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
 .datatable > tbody > tr.valign-top td {
   vertical-align: top;
 }
+.datatable > tbody > tr td.col-actions {
+  padding-top: 8px;
+  padding-top: 0.5rem;
+  padding-bottom: 8px;
+  padding-bottom: 0.5rem;
+}
+.datatable > tbody > tr td.col-actions > a {
+  position: relative;
+  top: 3px;
+  top: 0.1875rem;
+  display: inline-block;
+  margin-right: 3px;
+  margin-right: 0.1875rem;
+  width: 20px;
+  width: 1.25rem;
+  height: 20px;
+  height: 1.25rem;
+}
+.datatable > tbody > tr td.col-actions > a:last-child {
+  margin-right: 0;
+}
 .btn-group .btn + .btn,
 .btn-group .btn + .btn-group,
 .btn-group .btn-group + .btn,
@@ -3157,19 +3205,18 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
 .wasabi-core--permissions-index th.groups {
   text-align: center;
 }
-.wasabi-core--permissions-index th.group {
-  width: 108px;
-  font-size: 12px;
-  text-align: center;
-}
-.wasabi-core--permissions-index th.group:first-child {
-  border-left: none;
-}
-.wasabi-core--permissions-index th.group:last-child {
-  width: 109px;
-}
 .wasabi-core--permissions-index td.section {
   font-weight: 600;
+}
+.wasabi-core--permissions-index td.section:not(.group) {
+  width: 100%;
+}
+.wasabi-core--permissions-index td.section.group {
+  min-width: 108px;
+  min-width: 6.75rem;
+  font-size: 12px;
+  font-size: 0.75rem;
+  text-align: center;
 }
 .wasabi-core--permissions-index td.section,
 .wasabi-core--permissions-index tr:hover td.section {

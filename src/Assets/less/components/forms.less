@@ -217,6 +217,23 @@ span.error-message, div.error-message {
     }
   }
 
+  &.form-row-select {
+
+    .field {
+
+      .checkbox {
+
+        &:first-of-type {
+          padding-top: 7px;
+        }
+
+        label:before {
+          display: none;
+        }
+      }
+    }
+  }
+
   &.last-of-section {
     border-bottom: 1px solid @form-section-border-color;
   }

@@ -11,22 +11,18 @@
     text-align: center;
   }
 
-  th.group {
-    width: 108px;
-    font-size: 12px;
-    text-align: center;
-
-    &:first-child {
-      border-left: none;
-    }
-
-    &:last-child {
-      width: 109px;
-    }
-  }
-
   td.section {
     font-weight: 600;
+
+    &:not(.group) {
+      width: 100%;
+    }
+
+    &.group {
+      .rem(min-width, 108px);
+      .rem(font-size, 12px);
+      text-align: center;
+    }
   }
 
   td.section, tr:hover td.section {

@@ -157,5 +157,23 @@
     &.valign-top td {
       vertical-align: top;
     }
+
+    td.col-actions {
+      .rem(padding-top, 8px);
+      .rem(padding-bottom, 8px);
+
+      & > a {
+        position: relative;
+        .rem(top, 3px);
+        display: inline-block;
+        .rem(margin-right, 3px);
+        .rem(width, 20px);
+        .rem(height, 20px);
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
   }
 }
