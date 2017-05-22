@@ -6,8 +6,8 @@
 use Wasabi\Core\Wasabi;
 
 ?><tr>
-    <td class="col-id center"><?= $group->id ?></td>
-    <td class="col-name">
+    <td class="col-id center" data-title="<?= __d('wasabi_core', 'ID') ?>"><?= $group->id ?></td>
+    <td class="col-name" data-title="<?= __d('wasabi_core', 'Group') ?>">
         <?= $this->Guardian->protectedLink(
             $group->name,
             $this->Route->groupsEdit($group->id),
@@ -15,9 +15,9 @@ use Wasabi\Core\Wasabi;
             true
         ) ?>
     </td>
-    <td class="col-description"><?= $group->description ?></td>
-    <td class="col-user-count"><?= $group->user_count ?></td>
-    <td class="col-actions center">
+    <td class="col-description" data-title="<?= __d('wasabi_core', 'Description') ?>"><?= $group->description ?></td>
+    <td class="col-user-count" data-title="<?= __d('wasabi_core', '# Users') ?>"><?= $group->user_count ?></td>
+    <td class="col-actions center" data-title="<?= __d('wasabi_core', 'Actions') ?>">
         <?php
         echo $this->Guardian->protectedLink(
             $this->Icon->edit(),

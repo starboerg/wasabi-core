@@ -8,9 +8,9 @@
 use Wasabi\Core\Wasabi;
 
 ?><tr>
-    <td class="col-id center"><?= $user->id ?></td>
+    <td class="col-id center" data-title="<?= __d('wasabi_core', 'ID') ?>"><?= $user->id ?></td>
     <?php if ($displayUsername): ?>
-    <td class="col-username">
+    <td class="col-username" data-title="<?= __d('wasabi_core', 'Username') ?>">
         <?php
         if (Wasabi::user()->can('edit', $user)) {
             echo $this->Guardian->protectedLink(
@@ -28,7 +28,7 @@ use Wasabi\Core\Wasabi;
     </td>
     <?php endif; ?>
     <?php if ($displayFirstnameLastname): ?>
-    <td class="col-name">
+    <td class="col-name" data-title="<?= __d('wasabi_core', 'Name') ?>">
         <?php
         if ($displayUsername) {
             echo $user->fullName(true);
@@ -49,7 +49,7 @@ use Wasabi\Core\Wasabi;
         ?>
     </td>
     <?php endif; ?>
-    <td class="col-email">
+    <td class="col-email" data-title="<?= __d('wasabi_core', 'Email') ?>">
         <?php
         if (!$displayUsername && !$displayFirstnameLastname
             && Wasabi::user()->can('edit', $user)
@@ -67,7 +67,7 @@ use Wasabi\Core\Wasabi;
         }
         ?>
     </td>
-    <td class="col-groups">
+    <td class="col-groups" data-title="<?= __d('wasabi_core', 'Groups') ?>">
         <?php
         if (!empty($user->groups)) {
             echo join('<br>', $user->getGroupNames());
@@ -76,7 +76,7 @@ use Wasabi\Core\Wasabi;
         }
         ?>
     </td>
-    <td class="col-status"><?php
+    <td class="col-status" data-title="<?= __d('wasabi_core', 'Status') ?>"><?php
         if ($user->verified === false) {
             if (Wasabi::user()->can('verify', $user)) {
                 echo $this->Guardian->protectedConfirmationLink(
@@ -131,7 +131,7 @@ use Wasabi\Core\Wasabi;
             }
         }
     ?></td>
-    <td class="col-actions center"><?php
+    <td class="col-actions center" data-title="<?= __d('wasabi_core', 'Actions') ?>"><?php
         echo $this->Guardian->protectedLink(
             $this->Icon->edit(),
             $this->Route->usersEdit($user->id),
