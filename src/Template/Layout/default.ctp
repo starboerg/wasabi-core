@@ -16,7 +16,11 @@ use Wasabi\Core\Wasabi;
 <div id="wrapper">
     <nav class="sidebar">
         <a class="sidebar--open-handle" href="javascript:void(0)"><i class="sidebar--open-handle-icon icon-angle-double-left"></i></a>
-        <div class="sidebar--logo"><span class="sidebar--logo-short"><?= Wasabi::getInstanceShortName() ?></span><span class="sidebar--logo-full"><?= Wasabi::getInstanceName() ?></span></div>
+        <div class="sidebar--logo">
+            <button class="sidebar--navigation-toggle"><span class="sidebar--navigation-toggle-lines"></span></button>
+            <span class="sidebar--logo-short"><?= Wasabi::getInstanceShortName() ?></span>
+            <span class="sidebar--logo-full"><?= Wasabi::getInstanceName() ?></span>
+        </div>
         <div class="sidebar--menu-wrapper" data-init="gm-scrollbar">
             <div class="gm-scrollbar -vertical"><div class="thumb"></div></div>
             <div class="gm-scrollbar -horizontal"><div class="thumb"></div></div>
@@ -28,7 +32,6 @@ use Wasabi\Core\Wasabi;
         </div>
     </nav>
     <div id="content">
-        <button class="sidebar--navigation-toggle"><span class="sidebar--navigation-toggle-lines"></span></button>
         <div class="content--wrapper" data-init="gm-scrollbar">
             <div class="gm-scrollbar -vertical"><div class="thumb"></div></div>
             <div class="gm-scrollbar -horizontal"><div class="thumb"></div></div>

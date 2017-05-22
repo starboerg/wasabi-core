@@ -76,7 +76,7 @@
 }
 
 .sidebar--navigation-toggle {
-  position: fixed;
+  position: absolute;
   display: inline-block;
   padding: 0;
   background-color: rgba(0, 0, 0, 0.1);
@@ -127,6 +127,13 @@
 
   &:after {
     .rem(top, 6px);
+  }
+}
+
+.sidebar--logo {
+
+  .sidebar--navigation-toggle-lines {
+    .rem(top, -7px);
   }
 }
 
