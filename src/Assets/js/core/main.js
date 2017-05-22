@@ -168,6 +168,14 @@ define(function(require) {
     });
   }
 
+  function _initFlashMessages() {
+    this.$body.on('click', '.dismiss-flash', function(event) {
+      event.preventDefault();
+      var $target = $(event.currentTarget);
+      $target.closest('.flash-message').slideUp();
+    });
+  }
+
   /**
    * Initialize modal dialogs
    *
@@ -373,6 +381,7 @@ define(function(require) {
       _toggleEmptySelects.call(this);
       _initModals.call(this);
       _initTabs.call(this);
+      _initFlashMessages.call(this);
       _initLoadingButtons.call(this);
       _initSections.call(this);
       _initInteractionDropdownMenus.call(this);
