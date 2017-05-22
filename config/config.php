@@ -16,9 +16,7 @@ return [
     'Wasabi' => [
         'Auth' => [
             'identity_field' => 'email',
-            'identity_label' => __d('wasabi_core', 'Email'),
-            'password_field' => 'password',
-            'password_label' => __d('wasabi_core', 'Password')
+            'password_field' => 'password'
         ]
     ]
 ];
