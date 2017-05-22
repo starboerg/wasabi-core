@@ -13,7 +13,7 @@
                     <div class="<%= cssClasses.modalHeader %>">
                         <span><%= modalHeader %></span>
                         <% if (hasCloseLink) { %>
-                            <a href="javascript:void(0)" data-dismiss="modal"><i class="icon-delete"></i></a>
+                            <a href="javascript:void(0)" data-dismiss="modal"><i class="icon-cross"></i></a>
                         <% } %>
                     </div>
                 <% } %>
