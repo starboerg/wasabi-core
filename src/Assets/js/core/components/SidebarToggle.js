@@ -63,7 +63,10 @@ define(function(require) {
       if (!$body.hasClass(this.options.forceOpenClass)) {
         $body.addClass(this.options.forceOpenClass);
         setTimeout(_.bind(function() {
-          this.$sidebar.find('.gm-scrollbar-container').data('scrollbar').update();
+          var scrollbar = this.$sidebar.find('.gm-scrollbar-container').data('scrollbar');
+          if (typeof scrollbar !== 'undefined') {
+            scrollbar.update();
+          }
         }, this), 0);
       } else {
         this.$sidebar.css({
