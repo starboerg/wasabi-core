@@ -3,6 +3,7 @@
  * @var \Wasabi\Core\View\AppView $this
  * @var \Cake\ORM\Query $users
  * @var \Cake\ORM\Query $groups
+ * @var array $statusOptions
  * @var boolean $displayUsername
  * @var boolean $displayFirstnameLastname
  */
@@ -38,7 +39,7 @@ $this->Html->addAction(
             <?php endif; ?>
             <th><?= $this->Form->input('email', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for email'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
             <th><?= $this->Form->input('group_id', ['options' => $groups, 'label' => false, 'id' => false, 'empty' => __d('wasabi_core', 'Filter by group'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
-            <th></th>
+            <th><?= $this->Form->input('status', ['options' => $statusOptions, 'label' => false, 'id' => false, 'empty' => __d('wasabi_core', 'Filter by status'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
             <th class="center"><?= $this->Form->button(__d('wasabi_core', 'Search'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']); ?></th>
         </tr>
         <tr>

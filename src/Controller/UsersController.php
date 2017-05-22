@@ -80,6 +80,10 @@ class UsersController extends BackendAppController
         'group_id' => [
             'type' => 'custom',
             'actions' => ['index']
+        ],
+        'status' => [
+            'type' => 'custom',
+            'actions' => ['index']
         ]
     ];
 
@@ -188,6 +192,35 @@ class UsersController extends BackendAppController
                     ->extract('user_id')
                     ->toArray();
             }
+            if (!empty($userIds)) {
+                return ['Users.id IN' => $userIds];
+            } else {
+                return ['Users.id' => 0];
+            }
+        };
+
+        $this->filterFields['status']['customConditions'] = function ($value) {
+            switch ($value) {
+                case 'verified':
+                    $query = $this->Users->find('verified')->select(['id']);
+                    break;
+                case 'notverified':
+                    $query = $this->Users->find('notVerified')->select(['id']);
+                    break;
+                case 'active':
+                    $query = $this->Users->find('active')->select(['id']);
+                    break;
+                case 'inactive':
+                    $query = $this->Users->find('inactive')->select(['id']);
+                    break;
+            }
+
+            if (!isset($query)) {
+                return ['1 = 1'];
+            }
+
+            $userIds = $query->extract('id')->toArray();
+
             if (!empty($userIds)) {
                 return ['Users.id IN' => $userIds];
             } else {
@@ -363,9 +396,17 @@ class UsersController extends BackendAppController
         $groups = $this->Users->Groups->find('list')->order(['name' => 'ASC'])->toArray();
         $groups[0] = __d('wasabi_core', '--- (unassigned)');
 
+        $statusOptions = [
+            'verified' => __d('wasabi_core', 'verified'),
+            'notverified' => __d('wasabi_core', 'not verified'),
+            'active' => __d('wasabi_core', 'active'),
+            'inactive' => __d('wasabi_core', 'inactive'),
+        ];
+
         $this->set([
             'users' => $this->Filter->paginate($this->Filter->filter($userQuery)),
             'groups' => $groups,
+            'statusOptions' => $statusOptions,
             'displayUsername' => Wasabi::setting('Core.User.has_username', false),
             'displayFirstnameLastname' => Wasabi::setting('Core.User.has_firstname_lastname', false),
         ]);

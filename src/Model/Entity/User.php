@@ -45,6 +45,12 @@ use Wasabi\Core\Wasabi;
  */
 class User extends Entity
 {
+
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+    const STATUS_VERIFIED = 'verified';
+    const STATUS_NOTVERIFIED = 'notverified';
+
     /**
      * Holds the initialized user permissions.
      *
