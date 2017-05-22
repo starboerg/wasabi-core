@@ -21,6 +21,7 @@ use Cake\Event\EventManager;
 use Cake\Filesystem\Folder;
 use Cake\Routing\DispatcherFactory;
 use Wasabi\Core\Event\AuthListener;
+use Wasabi\Core\Event\DashboardListener;
 use Wasabi\Core\Event\GuardianListener;
 use Wasabi\Core\Event\LanguagesListener;
 use Wasabi\Core\Event\MenuListener;
@@ -55,6 +56,7 @@ EventManager::instance()->on(new AuthListener);
 EventManager::instance()->on(new MenuListener);
 EventManager::instance()->on(new LanguagesListener);
 EventManager::instance()->on(new PolicyListener);
+EventManager::instance()->on(new DashboardListener);
 
 if (!function_exists('guardian')) {
     /**

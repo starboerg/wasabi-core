@@ -2,7 +2,11 @@
 
 namespace Wasabi\Core\View\Helper;
 
+use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Cake\View\Helper;
+use FrankFoerster\Filter\Model\Table\FiltersTable;
+use Wasabi\Core\Model\Entity\User;
 
 class RouteHelper extends Helper
 {
@@ -102,6 +106,54 @@ class RouteHelper extends Helper
             'controller' => 'Users',
             'action' => 'index'
         ];
+    }
+
+    /**
+     * Users index route filtered by active users.
+     *
+     * @return array
+     */
+    public static function usersIndexActive()
+    {
+        return self::_filterUrl(self::usersIndex(), [
+            'status' => User::STATUS_ACTIVE
+        ]);
+    }
+
+    /**
+     * Users index route filtered by inactive users.
+     *
+     * @return array
+     */
+    public static function usersIndexInactive()
+    {
+        return self::_filterUrl(self::usersIndex(), [
+            'status' => User::STATUS_INACTIVE
+        ]);
+    }
+
+    /**
+     * Users index route filtered by verified users.
+     *
+     * @return array
+     */
+    public static function usersIndexVerified()
+    {
+        return self::_filterUrl(self::usersIndex(), [
+            'status' => User::STATUS_VERIFIED
+        ]);
+    }
+
+    /**
+     * Users index route filtered by not verified users.
+     *
+     * @return array
+     */
+    public static function usersIndexNotVerified()
+    {
+        return self::_filterUrl(self::usersIndex(), [
+            'status' => User::STATUS_NOTVERIFIED
+        ]);
     }
 
     /**
@@ -402,5 +454,37 @@ class RouteHelper extends Helper
             'controller' => 'Settings',
             'action' => 'general'
         ];
+    }
+
+    /**
+     * Create or get an existing filter url for the given $url array and the provided $filterData.
+     *
+     * @param array $url
+     * @param array $filterData
+     * @return array
+     */
+    protected static function _filterUrl(array $url, array $filterData)
+    {
+        // Find or create a filter slug for each category to link to Ideas::index() and only
+        // display a single category/topic.
+        $fakeRequest = clone Router::getRequest();
+        $fakeRequest->params = $url;
+
+        /** @var FiltersTable $FiltersTable */
+        $FiltersTable = TableRegistry::get('FrankFoerster/Filter.Filters');
+
+        $filter = $FiltersTable->find('slugForFilterData', [
+            'request' => $fakeRequest,
+            'filterData' => $filterData
+        ])->first();
+        if (!$filter) {
+            $slug = $FiltersTable->createFilterForFilterData($fakeRequest, $filterData);
+        } else {
+            $slug = $filter->slug;
+        }
+
+        $url['sluggedFilter'] = $slug;
+
+        return $url;
     }
 }

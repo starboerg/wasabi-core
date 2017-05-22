@@ -272,6 +272,34 @@ class UsersTable extends Table
     }
 
     /**
+     * Find verified users.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function findVerified(Query $query)
+    {
+        $query->where([
+            'Users.verified' => true
+        ]);
+        return $query;
+    }
+
+    /**
+     * Find unverified users.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function findNotVerified(Query $query)
+    {
+        $query->where([
+            'Users.verified' => false
+        ]);
+        return $query;
+    }
+
+    /**
      * Find all active users.
      *
      * @param Query $query The query to decorate.
@@ -281,6 +309,34 @@ class UsersTable extends Table
     {
         $query->where([
             'Users.active' => true
+        ]);
+        return $query;
+    }
+
+    /**
+     * Find all inactive users.
+     *
+     * @param Query $query The query to decorate.
+     * @return Query
+     */
+    public function findInactive(Query $query)
+    {
+        $query->where([
+            'Users.active' => false
+        ]);
+        return $query;
+    }
+
+    /**
+     * Find all users awaiting activation by an admin.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function findAwaitingActivation(Query $query)
+    {
+        $query->where([
+            'Users.activated_at IS' => null
         ]);
         return $query;
     }
@@ -363,7 +419,7 @@ class UsersTable extends Table
      * @param string $email The email to check for.
      * @return User mixed
      */
-    public function findNotVerified($email)
+    public function getNotVerified($email)
     {
         return $this->find()
             ->where([
