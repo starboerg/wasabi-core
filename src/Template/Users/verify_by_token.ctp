@@ -4,7 +4,7 @@
  * @var \Wasabi\Core\Model\Entity\User $user
  */
 
-$this->set('bodyCssClass', ['support', 'verify-by-token']);
+$this->set('bodyCssClass', ['wasabi-core--layout-support']);
 ?>
 <?= $this->element('Wasabi/Core.support-image') ?>
 <form>

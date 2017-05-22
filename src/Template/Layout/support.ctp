@@ -10,7 +10,7 @@ use Cake\Core\Configure;
 <head>
     <?= $this->element('Wasabi/Core.Layout/head') ?>
 </head>
-<body<?= $this->get('bodyCssClass') ? ' class="' . implode(' ', $this->get('bodyCssClass')) . '"' : '' ?>>
+<body class="<?= trim(join(' ', [$this->get('sectionCssClass', ''), join(' ', $this->get('bodyCssClass', ''))])) ?>">
 <div class="support-wrapper">
     <?= $this->fetch('content'); ?>
 </div>

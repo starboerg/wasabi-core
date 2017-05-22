@@ -6,7 +6,7 @@
 
 use Wasabi\Core\Wasabi;
 
-$this->set('bodyCssClass', ['support', 'register']);
+$this->set('bodyCssClass', ['wasabi-core--layout-support']);
 ?>
 <?= $this->element('Wasabi/Core.support-image') ?>
 <?= $this->Form->create($user, ['novalidate' => 'novalidate']) ?>
@@ -23,7 +23,7 @@ $this->set('bodyCssClass', ['support', 'register']);
         }
         echo $this->Form->input('email', ['label' => __d('wasabi_core', 'Email') . ':']);
         echo $this->Form->input('password', ['label' => __d('wasabi_core', 'Password') . ':']);
-        echo $this->Form->input('password_confirmation', ['label' => __d('wasabi_core', 'Password Confirmation') . ':']);
+        echo $this->Form->input('password_confirmation', ['type' => 'password', 'label' => __d('wasabi_core', 'Password Confirmation') . ':']);
         if (Wasabi::setting('Core.User.allow_timezone_change')) {
             echo $this->Form->timeZoneSelect('timezone', ['label' => __d('wasabi_core', 'Timezone')]);
         }
@@ -38,6 +38,8 @@ $this->set('bodyCssClass', ['support', 'register']);
                 ) ?>
             </li>
         </ul>
-        <?= $this->Form->button(__d('wasabi_core', 'Submit'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
+        <div class="form-control-buttons">
+            <?= $this->Form->button(__d('wasabi_core', 'Submit'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
+        </div>
     </div>
 <?= $this->Form->end() ?>

@@ -4,7 +4,7 @@
  * @var \Wasabi\Core\Model\Entity\User $user
  */
 
-$this->set('bodyCssClass', ['support', 'request-verification-email']);
+$this->set('bodyCssClass', ['wasabi-core--layout-support']);
 ?>
 <?= $this->element('Wasabi/Core.support-image') ?>
 <?= $this->Form->create($user, ['novalidate' => 'novalidate']) ?>
@@ -15,6 +15,8 @@ $this->set('bodyCssClass', ['support', 'request-verification-email']);
     <?= $this->Form->input('email', ['label' => __d('wasabi_core', 'Email') . ':']) ?>
 </div>
 <div class="form-controls">
-    <?= $this->Form->button(__d('wasabi_core', 'Send'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
+    <div class="form-control-buttons">
+        <?= $this->Form->button(__d('wasabi_core', 'Send'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
+    </div>
 </div>
 <?= $this->Form->end() ?>

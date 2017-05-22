@@ -4,7 +4,7 @@
  * @var \Wasabi\Core\Model\Entity\User $user
  */
 
-$this->set('bodyCssClass', ['support', 'reset-password']);
+$this->set('bodyCssClass', ['wasabi-core--layout-support']);
 ?>
 <?= $this->element('Wasabi/Core.support-image') ?>
 <?= $this->Form->create($user, ['novalidate' => 'novalidate']); ?>
@@ -23,6 +23,8 @@ $this->set('bodyCssClass', ['support', 'reset-password']);
         ]); ?>
     </div>
     <div class="form-controls">
-        <?= $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
+        <div class="form-control-buttons">
+            <?= $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
+        </div>
     </div>
 <?= $this->Form->end() ?>

@@ -5,7 +5,7 @@
 
 use Cake\Core\Configure;
 
-$this->set('bodyCssClass', ['support', 'login']);
+$this->set('bodyCssClass', ['wasabi-core--layout-support']);
 
 $message = Configure::read('Settings.Core.Login.Message.text');
 
@@ -33,7 +33,9 @@ if (Configure::read('Settings.Core.Login.Message.show') === '1' && $message) {
             ) ?>
         </li>
     </ul>
-    <?= $this->Form->button(__d('wasabi_core', 'Login'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
+    <div class="form-control-buttons">
+        <?= $this->Form->button(__d('wasabi_core', 'Login'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
+    </div>
 </div>
 <?= $this->Form->end() ?>
 <div class="bottom-links">
