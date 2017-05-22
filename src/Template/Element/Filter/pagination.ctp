@@ -3,18 +3,21 @@
  * @var Wasabi\Core\View\AppView $this
  *
  * // Set via FilterHelper
- * @var integer $total Total number of available pages
+ * @var integer $total The toal number of items that are paginated.
+ * @var string $itemType The plural item name of the items which are paginated.
  * @var array|boolean $first The url of the first page.
  * @var array|boolean $prev The url of the previous page.
  * @var array $pages The array of individual page links.
  * @var array $next The url of the next page.
  * @var array $last The url of the last page.
+ * @var array $class An optional css class for the pagination.
+ * @var int $currentPage The currently active page.
  * @var string $baseUrl The current url without query params.
- * @var integer $from
- * @var integer $to
+ * @var integer $from The item number the current page starts with.
+ * @var integer $to The item number the current page ends with.
+ * @var integer $nrOfPages The total number of available pages.
  *
  * // Set via controller action
- * @var string $itemType The plural item name of the items which are paginated.
  * @var array $limitOptions
  */
 ?>
@@ -65,13 +68,13 @@
                 );
             ?>
         </li>
-        <li class="pages">
-            <ul>
-                <?php foreach ($pages as $p): ?>
-                    <li<?= $p['active'] ? ' class="active"' : '' ?>><?= $this->Html->link($p['page'], $p['url'], ['title' => __d('wasabi_core', 'go to page {0}', $p['page'])]) ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </li>
+        <?php foreach ($pages as $p): ?>
+            <?php if ($p['active']): ?>
+                <li class="active"><?= $this->Html->link('<span class="current-page">' . $p['page'] . '</span> <span class="nr-of-pages">/ ' . $nrOfPages . '</span>', 'javascript:void(0)', ['escapeTitle' => false, 'title' => __d('wasabi_core', 'current page')]) ?></li>
+            <?php else: ?>
+                <li><?= $this->Html->link($p['page'], $p['url'], ['title' => __d('wasabi_core', 'go to page {0}', $p['page'])]) ?></li>
+            <?php endif; ?>
+        <?php endforeach; ?>
         <li class="next">
             <?php
                 if ($next !== false) {

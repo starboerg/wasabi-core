@@ -43,7 +43,7 @@ class IconHelper extends Helper
      */
     public function firstPage()
     {
-        return '<i class="icon-first"></i><span class="sr-only">' . __d('wasabi_core', 'First Page') . '</span>';
+        return '«';
     }
 
     /**
@@ -53,7 +53,7 @@ class IconHelper extends Helper
      */
     public function previousPage()
     {
-        return '<i class="icon-previous"></i><span class="sr-only">' . __d('wasabi_core', 'Previous Page') . '</span>';
+        return '‹';
     }
 
     /**
@@ -63,7 +63,7 @@ class IconHelper extends Helper
      */
     public function nextPage()
     {
-        return '<i class="icon-next"></i><span class="sr-only">' . __d('wasabi_core', 'Next Page') . '</span>';
+        return '›';
     }
 
     /**
@@ -73,6 +73,6 @@ class IconHelper extends Helper
      */
     public function lastPage()
     {
-        return '<i class="icon-last"></i><span class="sr-only">' . __d('wasabi_core', 'Last Page') . '</span>';
+        return '»';
     }
 }

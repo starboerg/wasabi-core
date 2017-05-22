@@ -2,24 +2,60 @@
 @import (reference) "../__mixins";
 
 .pagination {
-  .rem(margin, 15px,0);
-  background: @pagination-bg-color;
-  border: 1px solid darken(@pagination-bg-color, 6%);
-  .rem(line-height, 40px);
+  position: relative;
+  .rem(margin, 20px,0);
+
+  ul {
+    display: flex;
+    background-color: #fff;
+  }
 
   li {
-    display: inline-block;
+    display: none;
+    width: 100%;
 
-    &.active a {
-      background-color: @pagination-link-bg-color--active;
-      color: @pagination-link-color--active;
+    &.active {
+      display: block;
+
+      a {
+        cursor: default;
+
+        &, &:hover, &:focus {
+          color: #333;
+        }
+      }
+    }
+
+    &.first a {
+      border-left: 1px solid #eaeae6;
+      .border-radius(3px 0 0 3px);
+    }
+
+    &.last a {
+      .border-radius(0 3px 3px 0);
+    }
+
+    &.first,
+    &.prev,
+    &.next,
+    &.last {
+      display: block;
+      .rem(width, 40px);
+      .rem(min-width, 40px);
     }
   }
 
   a {
     display: inline-block;
-    .rem(min-width, 35px);
+    .rem(padding, 6px,0);
     text-align: center;
+    border: 1px solid #eaeae6;
+    border-left: none;
+    width: 100%;
+
+    &:not(.disabled):hover {
+      background-color: #eee;
+    }
 
     &.disabled {
       color: #ddd;
@@ -27,19 +63,91 @@
     }
   }
 
+  .current-page {
+    font-weight: 600;
+  }
+
+  .nr-of-pages {
+    .rem(font-size, 12px);
+  }
+
   .item-count {
     float: left;
-    .rem(padding, 0,20px);
+    .rem(padding, 0,20px,0,10px);
     .rem(font-size, 12px);
+    .rem(line-height, 35px);
     color: @pagination-item-count-color;
   }
 
   nav {
     float: left;
+    width: 100%;
+    .rem(margin-top, 10px);
   }
 
   .limit {
-    float: right;
-    .rem(margin, 4px,3px,0,0);
+    position: absolute;
+    .rem(top, 5px);
+    .rem(right, 5px);
+    .rem(height, 35px);
+  }
+
+  @media only screen and (max-width: 767px) {
+    background-color: #f2f3f4;
+    border: 1px solid #dddfdf;
+
+    ul {
+      margin: 0 -1px -1px;
+      width: calc(~'100% + 2px');
+    }
+
+    li.first a {
+      .border-radius(0 0 0 3px);
+    }
+
+    li.last a {
+      .border-radius(0 0 3px 0);
+    }
+
+    .item-count {
+      position: relative;
+      .rem(top, 6px);
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+
+    nav {
+      width: auto;
+      margin-top: 0;
+    }
+
+    li {
+      display: block;
+      width: auto;
+
+      &.active a {
+
+        &, &:hover, &:focus {
+          background-color: @pagination-link-bg-color--active;
+          color: @pagination-link-color--active;
+        }
+      }
+    }
+
+    a {
+      padding-left: 12px;
+      padding-right: 12px;
+      .transition(background-color 0.1s ease-in-out);
+    }
+
+    .nr-of-pages {
+      display: none;
+    }
+
+    .limit {
+      top: 0;
+      right: 0;
+    }
   }
 }
