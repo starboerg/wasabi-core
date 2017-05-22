@@ -2,6 +2,7 @@
 @import "__mixins";
 @import "vendor/normalize";
 @import "basic/icons"; //TODO: extract remaining colors to variables
+@import "basic/material-icons"; //TODO: extract remaining colors to variables
 @import "basic/cursor";
 @import "basic/xdebug";
 @import "basic/grid";
@@ -29,9 +30,15 @@
 @import "components/toggle-switch";
 @import "components/datatable";
 @import "components/btn-group";
+@import "components/summary-box";
 
-@import "basic/layout-support";
+@import "sections/wasabi-core--layout-support";
+@import "sections/wasabi-core--users-login";
+@import "sections/wasabi-core--users-lostpassword";
+@import "sections/wasabi-core--users-resetpassword";
+@import "sections/wasabi-core--users-register";
 
+@import "sections/wasabi-core--dashboard";
 @import "sections/wasabi-core--languages";
 @import "sections/wasabi-core--permissions-index";
 @import "sections/wasabi-core--settings-general";
