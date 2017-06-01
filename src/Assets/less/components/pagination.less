@@ -42,6 +42,11 @@
       display: block;
       .rem(width, 40px);
       .rem(min-width, 40px);
+
+      a {
+        .rem(padding-top, 5px);
+        .rem(padding-bottom, 7px);
+      }
     }
   }
 
@@ -132,6 +137,14 @@
           background-color: @pagination-link-bg-color--active;
           color: @pagination-link-color--active;
         }
+      }
+
+      &.first,
+      &.prev,
+      &.next,
+      &.last {
+        .rem(width, 40px);
+        .rem(min-width, 40px);
       }
     }
 
