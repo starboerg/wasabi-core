@@ -22,6 +22,7 @@ return [
     'section' => '<div class="form-section{{class}}"{{attrs}}><div class="form-section-title">{{title}}</div><div class="form-section-description">{{description}}</div></div>',
     'info' => '<div class="form-info"><div class="form-info-content{{class}}">{{text}}</div></div>',
     'checkboxFormGroup' => '<label{{formRowFor}}>{{formRowLabel}}{{formRowLabelInfo}}</label><div class="field">{{label}}{{formRowInfo}}</div>',
+    'radioWrapper' => '<div class="radio">{{label}}</div>',
     'select' => '<select name="{{name}}"{{attrs}}>{{content}}</select>',
     'selectMultiple' => '<select name="{{name}}[]" multiple="multiple"{{attrs}}>{{content}}</select>',
     'textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>',
