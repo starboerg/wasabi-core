@@ -9,7 +9,7 @@ use Wasabi\Core\Wasabi;
 $this->set('bodyCssClass', ['wasabi-core--layout-support']);
 ?>
 <?= $this->element('Wasabi/Core.support-image') ?>
-<?= $this->Form->create($user, ['novalidate' => 'novalidate']) ?>
+<?= $this->Form->create($user, ['novalidate' => 'novalidate', 'templates' => 'Wasabi/Core.FormTemplates/default']) ?>
     <div class="support-content">
         <h1><?= __d('wasabi_core', 'Register') ?></h1>
         <?php
