@@ -357,7 +357,7 @@ class UsersController extends BackendAppController
                 $this->redirect(['action' => 'login']);
                 return;
             }
-            $this->Flash->error($this->formErrorMessage);
+            $this->Flash->error($this->formErrorMessage, 'flash', false);
         }
         $this->set(['user' => $user]);
         $this->viewBuilder()->layout('Wasabi/Core.support');
@@ -831,7 +831,7 @@ class UsersController extends BackendAppController
                 return;
             } else {
                 $this->request->session()->write('data.lostPassword', $this->request->data());
-                $this->Flash->error($this->formErrorMessage);
+                $this->Flash->error($this->formErrorMessage, 'flash', false);
                 $this->redirect(['action' => 'lostPassword']);
                 return;
             }
@@ -883,7 +883,7 @@ class UsersController extends BackendAppController
                 return;
             } else {
                 $connection->rollback();
-                $this->Flash->error($this->formErrorMessage);
+                $this->Flash->error($this->formErrorMessage, 'flash', false);
             }
         }
         $this->set('user', $user);
