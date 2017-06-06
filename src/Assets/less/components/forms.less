@@ -2,15 +2,15 @@
 @import (reference) '../__mixins';
 
 label {
+  display: inline-block;
   font-weight: 700;
   color: #444;
   cursor: pointer;
+  .rem(margin-bottom, 3px);
 
-  .form-row.required &:before {
-    position: relative;
-    top: 0;
-    .rem(left, -10px);
-    .rem(margin-right, -7px);
+  .form-row.required > &:after {
+    display: inline-block;
+    .rem(padding-left, 3px);
     .rem(font-size, @font-size - 1px);
     content: "*";
     color: @brand-error-color;
@@ -71,230 +71,37 @@ textarea {
   }
 }
 
+textarea {
+  resize: vertical;
+}
+
 input[type="number"] {
   .rem(padding, 3px,2px,2px,3px);
+
+  &.without-spinner {
+    .rem(padding, 6px,6px,5px);
+    -moz-appearance:textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  }
 }
 
 input[type="checkbox"] {
   .rem(margin-right, 5px);
   cursor: pointer;
-}
 
-input[type="checkbox"] + label {
-  position: relative;
-  .rem(top, -1px);
-}
-
-input[type="number"].without-spinner {
-  .rem(padding, 6px,6px,5px);
-  -moz-appearance:textfield;
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
+  & + label {
+    position: relative;
+    .rem(top, -1px);
   }
 }
 
-span.error-message, div.error-message {
-  display: block;
-  .rem(padding-top, 2px);
-  color: @state-error-font-color;
-
-  & > ul {
-    margin: 0;
-    .rem(padding-left, 20px);
-  }
-}
-
-.input-group {
-  border-collapse: separate;
-
-  & > input.form-error {
-    border: 1px solid @brand-error-color;
-  }
-}
-
-.form-row {
-  display: table;
-  background-color: @form-row-bg-color;
-  border-style: solid;
-  border-color: @form-row-border-color;
-  border-width: 0 1px;
-
-  & > label {
-    .rem(padding, 27px,20px,20px);
-    float: left;
-    width: 100%;
-    .rem(min-width, 200px);
-    vertical-align: top;
-  }
-
-  & > .field {
-    float: none;
-    display: table-cell;
-    .rem(padding, 20px);
-    background-color: #fff;
-    vertical-align: top;
-    width: 100%;
-
-    &.no-input {
-      .rem(padding-top, 27px);
-      .rem(padding-bottom, 25px);
-    }
-
-    &.top-pd {
-      .rem(padding-top, 27px);
-    }
-
-    & > .sub-row {
-      .rem(padding-bottom, 20px);
-    }
-
-    &.small {
-
-      input {
-        .rem(max-width, 100px);
-      }
-    }
-
-    .form-row {
-      display: block;
-    }
-  }
-
-  .field.input-group {
-    input + .input-group-addon {
-      border-left: none;
-      .border-radius(0 5px 5px 0);
-    }
-  }
-
-  & > label + .field {
-    border-left: 1px solid @form-row-border-color;
-  }
-
-  & table.list {
-    .rem(max-width, 900px);
-    border: 1px solid @form-row-border-color;
-  }
-
-  &.form-row-checkbox, &.form-row-radio {
-
-    & > label {
-      .rem(padding-top, 20px);
-    }
-
-    .field > label {
-
-      input[type="checkbox"] {
-        position: relative;
-        .rem(top, 1px);
-      }
-    }
-  }
-
-  &.form-row-radio {
-
-    .field > label {
-      display: block;
-      .rem(max-width, 250px);
-      .rem(padding, 5px,0);
-
-      &:first-of-type {
-        .rem(margin-top, -5px);
-      }
-
-      &:before {
-        display: none;
-      }
-    }
-  }
-
-  &.form-row-toggleSwitch {
-
-    .field {
-      .rem(padding-top, 23px);
-    }
-  }
-
-  &.form-row-select {
-
-    .field {
-
-      .checkbox {
-
-        &:first-of-type {
-          padding-top: 7px;
-        }
-
-        label:before {
-          display: none;
-        }
-      }
-    }
-  }
-
-  &.last-of-section {
-    border-bottom: 1px solid @form-section-border-color;
-  }
-}
-
-.form-row.error, div.input.error {
-
-  input[type="text"], input[type="email"], input[type="password"], textarea, select {
-    border-color: @state-error-font-color;
-  }
-
-  & > label {
-    color: @state-error-font-color;
-  }
-}
-
-form.no-top-section {
-  border-top: 1px solid @form-row-border-color;
-}
-
-.form-section {
-  .rem(padding, 15px,20px);
-  background-color: @form-section-bg-color;
-  border-style: solid;
-  border-color: @form-section-border-color;
-  border-width: 1px;
-}
-
-.form-section-title {
-  .rem(font-size, 18px);
-}
-
-.form-section-description {
-  font-size: 80%;
-  color: @form-section-description-color;
-}
-
-textarea {
-  resize: vertical;
-}
-
-.form-controls {
-  .rem(padding, 20px);
-  background-color: @form-section-bg-color;
-  border: 1px solid @form-section-border-color;
-}
-
-.form-controls, .modal-confirm {
-  button {
-    .rem(margin-right, 15px);
-  }
-}
-
-.form-row .field small {
-  display: block;
-  color: @form-input-info-color;
-  .rem(padding-top, 2px);
-
-  & + .multi-fileupload {
-    .rem(margin-top, 5px);
-  }
+input[type="radio"] {
+  .rem(margin-right, 3px);
+  cursor: pointer;
 }
 
 select {
@@ -345,45 +152,119 @@ select {
   }
 }
 
-input[type="radio"] {
-  .rem(margin-right, 3px);
-  cursor: pointer;
+.input {
 
-  & + label {
-    position: relative;
-    .rem(top, -1px);
-    display: inline;
-    .rem(margin-right, 10px);
+  &.required {
+
+    label:after {
+      display: inline-block;
+      .rem(padding-left, 3px);
+      .rem(font-size, @font-size - 1px);
+      content: "*";
+      color: @brand-error-color;
+    }
+  }
+
+  &.error {
+
+    input:not([type="radio"]):not([type="checkbox"]),
+    textarea,
+    select {
+      border-color: @state-error-font-color;
+    }
   }
 }
 
-.no-btop {
-  border-top: none !important;
+.field {
+
+  input,
+  textarea,
+  select {
+
+    & ~ small {
+      display: block;
+      .rem(padding-top, 3px);
+      color: @form-input-info-color;
+    }
+  }
+}
+
+.radio,
+.checkbox {
+
+  & > label {
+    font-weight: normal;
+  }
+}
+
+span.error-message, div.error-message {
+  display: block;
+  .rem(padding-top, 2px);
+  color: @state-error-font-color;
+
+  & > ul {
+    margin: 0;
+    .rem(padding-left, 20px);
+  }
+}
+
+.form-row {
+  .rem(margin-bottom, 20px);
+
+  &.error {
+
+    input:not([type="radio"]):not([type="checkbox"]),
+    textarea,
+    select {
+      border-color: @state-error-font-color;
+    }
+
+    & > label {
+      color: @state-error-font-color;
+    }
+  }
+}
+
+.form-section {
+  .rem(margin, 0,-10px,10px);
+  .rem(padding, 15px,10px);
+  background-color: @form-section-bg-color;
+  border-style: solid;
+  border-color: @form-section-border-color;
+  border-width: 1px 0;
+}
+
+.form-section-title {
+  .rem(font-size, 18px);
+}
+
+.form-section-description {
+  font-size: 80%;
+  color: @form-section-description-color;
+}
+
+.form-controls {
+  .rem(padding, 10px);
+  background-color: @form-section-bg-color;
+  border-style: solid;
+  border-color: @form-section-border-color;
+  border-width: 1px 0;
+
+  button {
+    .rem(margin-right, 15px);
+  }
+
+  .content--padding form:last-child > &:last-child {
+    .rem(margin-bottom, -11px);
+  }
+
+  body:not(.wasabi-core--layout-support) & {
+    .rem(margin, 0,-10px);
+  }
 }
 
 .bottom-links {
   .rem(padding, 10px,10px,0);
-}
-
-form.bulk {
-  float: left;
-
-  &.top {
-    .rem(padding-bottom, 10px);
-  }
-
-  &.bottom {
-    .rem(padding, 10px,0);
-  }
-
-  .select-small {
-    .rem(margin-right, 8px);
-  }
-
-  .button.small {
-    position: relative;
-    .rem(top, -1px);
-  }
 }
 
 .form-info {
@@ -409,6 +290,112 @@ form.bulk {
 
     &.form-info-error {
       color: @state-error-font-color;
+    }
+  }
+}
+
+
+@media only screen and (min-width: 768px) {
+
+  form.no-top-section {
+    border-top: 1px solid @form-row-border-color;
+  }
+
+  .checkbox > label > input[type="checkbox"] {
+    position: relative;
+    .rem(top, 1px);
+  }
+
+  .form-section {
+    margin: 0;
+    border-width: 1px 1px 2px;
+  }
+
+  .form-row {
+    margin: 0;
+    .rem(padding, 20px);
+    border-style: solid;
+    border-color: @form-row-border-color;
+    border-width: 0 1px;
+
+    & + .form-row {
+      padding-top: 0;
+    }
+  }
+
+  body:not(.wasabi-core--layout-support) .form-controls {
+    .rem(margin, 0,0,10px);
+    border-width: 1px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+
+  .form-row {
+    padding: 0;
+    display: table;
+    background-color: @form-row-bg-color;
+
+    & > label {
+      .rem(padding, 27px,20px,20px);
+      float: left;
+      width: 100%;
+      .rem(min-width, 200px);
+      vertical-align: top;
+
+      &  + .field {
+        border-left: 1px solid @form-row-border-color;
+      }
+    }
+
+    & > .field {
+      display: table-cell;
+      .rem(padding, 20px);
+      background-color: #fff;
+      vertical-align: top;
+      width: 100%;
+
+      &.small {
+
+        input {
+          .rem(max-width, 100px);
+        }
+      }
+    }
+
+    &.form-row-radio {
+
+      .field > .radio:first-of-type {
+        .rem(margin-top, 7px);
+      }
+    }
+
+    &.form-row-select {
+
+      .field {
+
+        & > .checkbox:first-of-type {
+          .rem(margin-top, 7px);
+        }
+
+        & > select:first-of-type {
+          .rem(margin-top, 1px);
+        }
+      }
+    }
+  }
+
+  .form-section {
+    .rem(padding, 20px);
+  }
+
+  .form-controls {
+    .rem(padding, 20px);
+    border-width: 1px;
+
+    .content--padding form:last-child > &:last-child {
+      margin-bottom: 0;
+      border-bottom-width: 1px;
     }
   }
 }
