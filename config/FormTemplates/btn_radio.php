@@ -5,6 +5,7 @@ return [
     'inputContainer' => '{{content}}',
     'inputContainerError' => '{{content}}',
     'formGroup' => '{{label}}{{input}}{{error}}',
+    'radioWrapper' => '{{label}}',
     'checkboxFormGroup' => '<label>{{formRowLabel}}</label><div class="field">{{label}}</div>',
     'nestingLabel' => '{{hidden}}<label class="btn btn-primary"{{attrs}}>{{input}}{{text}}</label>'
 ];
