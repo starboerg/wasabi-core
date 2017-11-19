@@ -1,15 +1,18 @@
-define(function(require) {
+import $ from 'jquery';
+import {View} from 'backbone.marionette';
+import "../vendor/bootstrap/button";
 
-  var BaseView = require('common/BaseView');
+const PermissionsIndex = View.extend({
 
-  require('bootstrap.button');
+  template: false,
 
-  return BaseView.extend({
+  initialize () {
+    this.render();
+  },
 
-    el: '.wasabi-core--permissions-index',
-
-    initialize: function () {
-      this.$('.datatable').find('input[type="radio"][checked="checked"]').parent().addClass('active');
-    }
-  });
+  onRender () {
+    $('.datatable').find('input[type="radio"][checked="checked"]').parent().addClass('active');
+  }
 });
+
+export default PermissionsIndex;

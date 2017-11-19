@@ -55,7 +55,7 @@ class MenuHelper extends Helper
         // Css class applied to any child ul of a parent menu item.
         'subnavClass' => 'menu--item-subnav level-{{level}} collapse',
         // The additional css class to add to open sub navigation uls.
-        'subnavOpenClass' => 'in',
+        'subnavOpenClass' => 'show',
         // Css class for menu item links (a).
         'linkClass' => 'menu--item-link',
         // Css class applied to nested links in sub menus.

@@ -1,15 +1,10 @@
-// The dropdown wrapper (div)
+// The dropdown wrapper (`<div>`)
 .dropup,
 .dropdown {
   position: relative;
 }
 
-// Prevent the focus on the dropdown toggle when closing dropdowns
-.dropdown-toggle:focus {
-  outline: 0;
-}
-
-// The dropdown menu (ul)
+// The dropdown menu
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -18,48 +13,47 @@
   display: none; // none by default, but block on "open" of the menu
   float: left;
   min-width: 140px;
-  list-style: none;
+  padding: 0;
+  margin: 0; // override default ul
   text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
+  list-style: none;
+  //background-color: $dropdown-bg;
 
   // Links within the dropdown menu
-  > li > a {
+  & > li > a {
     display: block;
     padding: 5px 15px 7px;
     clear: both;
     font-weight: normal;
     white-space: nowrap; // prevent links from randomly breaking onto new lines
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+
+  & > .active > a {
+    &,
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      outline: 0;
+    }
   }
 }
 
-// Hover/Focus state
-.dropdown-menu > li > a {
-  &:hover,
-  &:focus {
-    text-decoration: none;
+// Allow for dropdowns to go bottom up (aka, dropup-menu)
+// Just add .dropup after the standard .dropdown class and you're set.
+.dropup {
+  .dropdown-menu {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 }
 
-// Active state
-.dropdown-menu > .active > a {
-  &,
-  &:hover,
-  &:focus {
-    text-decoration: none;
-    outline: 0;
-  }
-}
-
-// Open state for the dropdown
-.open {
-  // Show the menu
-  > .dropdown-menu {
-    display: block;
-  }
-
-  // Remove the outline when :focus is triggered
-  > a {
-    outline: 0;
-  }
+.dropdown-menu.show {
+  display: block;
 }
 
 // Menu positioning
@@ -70,6 +64,7 @@
   left: auto; // Reset the default from `.dropdown-menu`
   right: 0;
 }
+
 // With v3, we enabled auto-flipping if you have a dropdown within a right
 // aligned nav component. To enable the undoing of that, we provide an override
 // to restore the default dropdown menu alignment.

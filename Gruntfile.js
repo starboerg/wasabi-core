@@ -1,31 +1,9 @@
 module.exports = function(grunt) {
   "use strict";
 
-  // measures the time each task takes
+  require('jit-grunt')(grunt);
   require('time-grunt')(grunt);
-
-  var vendorModules = [
-    'jquery',
-    'underscore',
-    'backbone',
-    'marionette',
-    'purl',
-    'bootstrap.dropdown',
-    'common/BaseView',
-    'jquery.eventMagic',
-    'jquery.scrollParent',
-    'jquery.livequery',
-    'jquery.nSortable',
-    'jquery.tSortable',
-    'jquery.color',
-    'bootstrap.button',
-    'bootstrap.collapse',
-    'bootstrap.dropdown',
-    'bootstrap.transition',
-    'tether',
-    'js-cookie',
-    'pace'
-  ];
+  require('babelify');
 
   grunt.initConfig({
 
@@ -54,77 +32,43 @@ module.exports = function(grunt) {
     },
 
     //--------------------------------------------- JS PROCESSING -----------------------------------------------------//
-    jshint: {
-      core: [
-        'package.json',
-        'Gruntfile.js',
-        'src/Assets/js/**/*.js'
-      ]
-    },
-    requirejs: {
-      compile: {
+    browserify: {
+      wasabi: {
+        src: [
+          'src/Assets/js/wasabi.js',
+          'src/Assets/js/core/module.js'
+        ],
+        dest: 'src/Assets/_build/js/wasabi.js',
         options: {
-          // Define our base URL - all module paths are relative to this
-          // base directory.
-          baseUrl: 'src/Assets/js',
-
-          // Define our build directory. All files in the base URL will be
-          // COPIED OVER into the build directory as part of the
-          // concatentation and optimization process.
-          dir: 'src/Assets/_build/js/',
-
-          // Load the RequireJS config() definition from the config.js file.
-          // Otherwise, we'd have to redefine all of our paths again here.
-          mainConfigFile: 'src/Assets/js/common.js',
-          findNestedDependencies: true,
-
-          fileExclusionRegExp: /^\.|\.md$|^LICENSE$|\.json$|^src$|\.map$|^demo$|^test$|^tests$|\.TXT$|\.txt$|^fonts$|^css$|\.css$|^less$|\.less$|^grunt$|\.sh$|^r.js$/,
-
-          // Define the modules to compile.
-          modules: [
-            {
-              name: 'common',
-              include: vendorModules
-            },
-            // Main application module.
-            // All basic resources, vendor files will be included here automatically.
-            // We also merge all other modules that are used in different frontend parts
-            // of the app e.g. for the Catalog and Accident plugins.
-            {
-              name: 'wasabi',
-              include: [
-                'wasabi',
-                'wasabi.core'
+          debug: true,
+          transform: [
+            ['babelify', {
+              presets: [
+                ['es2015'/*, { modules: 'commonjs' }*/]
               ],
-              exclude: [
-                'common'
-              ]
-            }
-          ],
-
-          // Minify all js files via uglify2 and set DEBUG to false during the build.
-          // This way you can use statements like:
-          //      if (DEBUG) {
-          //        console.log('foobar')
-          //      }
-          // during development (Configure::write('debug', 2))
-          // which will be excluded from the build.
-          optimize: 'uglify2',
-          uglify2: {
-            compress:{
-              global_defs: {
-                DEBUG: false
+              parserOpts: {
+                sourceType: 'module'
               }
-            }
-          }
+            }]
+          ]
+        }
+      }
+    },
+    uglify: {
+      options: {
+        mangle: true
+      },
+      wasabi: {
+        files: {
+          'src/Assets/_build/js/wasabi.min.js': ['src/Assets/_build/js/wasabi.js']
         }
       }
     },
     copy: {
       js: {
         files: [
-          { src: 'src/Assets/_build/js/common.js', dest: 'webroot/js/common.js' },
-          { src: 'src/Assets/_build/js/wasabi.js', dest: 'webroot/js/wasabi.js' }
+          { src: 'src/Assets/_build/js/wasabi.js', dest: 'webroot/js/wasabi.js' },
+          { src: 'src/Assets/_build/js/wasabi.min.js', dest: 'webroot/js/wasabi.min.js' }
         ]
       }
     },
@@ -151,8 +95,14 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'less:compile',
     'cssmin:core',
-    'jshint:core',
-    'requirejs:compile',
+    'browserify:wasabi',
+    'uglify:wasabi',
+    'copy:js'
+  ]);
+
+  grunt.registerTask('build-js', [
+    'browserify:wasabi',
+    'uglify:wasabi',
     'copy:js'
   ]);
 

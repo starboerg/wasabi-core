@@ -1,18 +1,46 @@
 {
   "name": "wasabi-cms.core",
   "devDependencies": {
-    "bower": "^1.8.0",
-    "grunt": "1.*",
-    "grunt-bytesize": "0.*",
-    "grunt-contrib-copy": "1.*",
-    "grunt-contrib-cssmin": "1.*",
-    "grunt-contrib-jshint": "1.*",
+    "autoprefixer": "^7.1.6",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.5.0",
+    "eslint": "^4.7.2",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.2.0",
+    "grunt-bytesize": "^0.2.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^2.2.1",
     "grunt-contrib-less": "1.*",
-    "grunt-contrib-requirejs": "1.*",
-    "grunt-contrib-uglify": "1.*",
-    "grunt-contrib-watch": "1.*",
-    "jit-grunt": "0.*",
-    "modernizr": "^3.0.0-alpha.4",
-    "time-grunt": "^1.2.0"
-  }
+    "grunt-contrib-uglify": "^3.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^20.1.0",
+    "grunt-postcss": "^0.8.0",
+    "grunt-shell": "^2.1.0",
+    "jit-grunt": "^0.10.0",
+    "postcss": "^6.0.12",
+    "time-grunt": "^1.4.0"
+  },
+  "dependencies": {
+    "backbone": "^1.3.3",
+    "backbone.marionette": "^3.5.0",
+    "bootstrap": "^4.0.0-beta.2",
+    "gemini-scrollbar": "^1.5.3",
+    "jquery": "^3.2.1",
+    "js-cookie": "^2.2.0",
+    "pace-progress": "^1.0.2",
+    "scrollparent": "^2.0.1",
+    "tether": "^1.4.1",
+    "underscore": "^1.8.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Frank Förster <github@frankfoerster.com>"
 }

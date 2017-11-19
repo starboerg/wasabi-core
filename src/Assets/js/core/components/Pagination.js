@@ -1,41 +1,46 @@
-define(function(require) {
-  var $ = require('jquery');
-  var BaseView = require('common/BaseView');
-  var purl = require('purl');
+import $ from 'jquery';
+import purl from '../vendor/purl';
+import {View} from 'backbone.marionette';
 
-  return BaseView.extend({
-    el: '.pagination',
+const Pagination = View.extend({
 
-    events: {
-      'change .limit': 'onChangeLimit'
-    },
+  template: false,
 
-    onChangeLimit: function(event) {
-      var $target = $(event.target);
-      var limit = $target.val();
-      var targetUrl = $target.attr('data-url');
-      var currentUrl = purl(window.location);
-      var limitParamName = $target.attr('name').split('data[').join('').split(']').join('');
+  events: {
+    'change .limit': 'onChangeLimit'
+  },
 
-      var params = currentUrl.data.param.query;
-      params[limitParamName] = limit.toString();
+  initialize () {
+    this.render();
+  },
 
-      var queryString = '';
-      var parts = [];
-      for (var param in params) {
-        if (!params.hasOwnProperty(param)) {
-          continue;
-        }
-        parts.push(param + '=' + params[param]);
+  onChangeLimit (event) {
+    let $target = $(event.target);
+    let limit = $target.val();
+    let targetUrl = $target.attr('data-url');
+    let currentUrl = purl(window.location);
+    let limitParamName = $target.attr('name').split('data[').join('').split(']').join('');
+
+    let params = currentUrl.data.param.query;
+    params[limitParamName] = limit.toString();
+
+    let queryString = '';
+    let parts = [];
+    for (let param in params) {
+      if (!params.hasOwnProperty(param)) {
+        continue;
       }
-
-      queryString = parts.join('&');
-
-      if (queryString !== '') {
-        queryString = '?' + queryString;
-      }
-
-      window.location = targetUrl + queryString;
+      parts.push(param + '=' + params[param]);
     }
-  });
+
+    queryString = parts.join('&');
+
+    if (queryString !== '') {
+      queryString = '?' + queryString;
+    }
+
+    window.location = targetUrl + queryString;
+  }
 });
+
+export default Pagination;

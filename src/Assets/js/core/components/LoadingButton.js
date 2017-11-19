@@ -1,43 +1,45 @@
-define(function(require) {
-  var _ = require('underscore');
-  var BaseView = require('common/BaseView');
+import $ from 'jquery';
+import {View} from 'backbone.marionette';
 
-  return BaseView.extend({
+const LoadingButton = View.extend({
 
-    /**
-     * The element of this view.
-     *
-     * @type {string} CSS selector
-     */
-    el: '[data-toggle="btn-loading"]',
+  template: false,
 
-    loading: false,
+  loading: false,
 
-    initialize: function() {
-      var innerContent = this.$el.html();
-      this.$el.html($('<span class="hide-when-loading" />').html(innerContent));
-      this.$el.append($('<div class="spinner spinner-white" />'));
+  initialize () {
+    this.toggleLoadingState = this.toggleLoadingState.bind(this);
 
-      this.$el.closest('form')
-        .off('submit', _.bind(function(event) { this.toggleLoadingState(event); }, this))
-        .on('submit', _.bind(function(event) { this.toggleLoadingState(event); }, this));
+    this.render();
+  },
 
-      this.$el.data('loadingButton', this);
-    },
+  onRender () {
+    let innerContent = this.$el.html();
+    this.$el.html($('<span class="hide-when-loading" />').html(innerContent));
+    this.$el.append($('<div class="spinner spinner-white" />'));
 
-    toggleLoadingState: function(event) {
-      if (!this.loading) {
-        this.loading = true;
-        var width = this.$el.outerWidth();
-        this.$el.css('min-width', width + 'px');
-        this.$el.addClass('btn-loading');
-        this.$el.attr('disabled', 'disabled');
-      } else {
-        this.loading = false;
-        this.$el.css('min-width', '');
-        this.$el.removeClass('btn-loading');
-        this.$el.prop('disabled', false);
-      }
+    this.$el.closest('form')
+      .off('submit', this.toggleLoadingState)
+      .on('submit', this.toggleLoadingState);
+
+    this.$el.data('loadingButton', this);
+  },
+
+  toggleLoadingState (event) {
+    if (!this.loading) {
+      this.loading = true;
+      let width = this.$el.outerWidth();
+      this.$el.css('min-width', width + 'px');
+      this.$el.addClass('btn-loading');
+      this.$el.attr('disabled', 'disabled');
+    } else {
+      this.loading = false;
+      this.$el.css('min-width', '');
+      this.$el.removeClass('btn-loading');
+      this.$el.prop('disabled', false);
     }
-  });
+  }
+
 });
+
+export default LoadingButton;

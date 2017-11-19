@@ -1,188 +1,219 @@
-define(function(require) {
-  var $ = require('jquery');
-  var _ = require('underscore');
-  var Backbone = require('backbone');
-  var BaseViewFactory = require('./common/BaseViewFactory');
-  require('bootstrap.dropdown');
+/**
+ * @author       Frank Förster <github@frankfoerster.com>
+ * @copyright    Copyright (c) 2017 Frank Förster
+ */
+import Marionette from 'backbone.marionette';
+import $ from 'jquery';
+import _ from 'underscore';
+import Backbone from 'backbone';
+import WasabiCore from "./core/module";
+import './core/vendor/jquery.livequery';
+import Pace from 'pace-progress';
 
-  var eventBus = _.extend({}, Backbone.Events);
-  var viewFactory = new BaseViewFactory(eventBus);
-  var resizeTimeout = 0;
-  var strundefined = 'undefined';
+class Wasabi {
 
-  if (typeof window.WS !== strundefined) {
-    return window.WS;
-  }
-
-  var WS = {
-    features: {},
-
-    modules: {
-      registered: []
-    },
-
-    initialized: false,
-
-    messages: {},
-
-    views: [],
+  /**
+   * Constructor
+   */
+  constructor () {
 
     /**
      * Global event bus.
-     *
      * @type {Backbone.Events}
      */
-    eventBus: eventBus,
+    this.eventBus = _.extend({}, Backbone.Events);
 
     /**
-     * Global view factory to instantiate new views.
-     *
-     * @type {BaseViewFactory}
+     * Holds all registered modules.
+     * @type {Array}
      */
-    viewFactory: viewFactory,
-
-    boot: function () {
-      var that = this;
-
-      function loadModule(module) {
-        var name = module.name;
-        var r = module.require;
-        var options = module.options;
-        if (typeof that.modules[name] !== "undefined") {
-          return;
-        }
-        that.modules[name] = name;
-        require([r], function(module) {
-          that.modules[name] = module;
-          that.modules[name].initialize(options);
-        });
-      }
-
-      for (var i = 0, len = this.modules.registered.length; i < len; i++) {
-        loadModule(this.modules.registered[i]);
-      }
-
-      if (!this.initialized) {
-        $(window).on('resize', function() {
-          clearTimeout(resizeTimeout);
-          resizeTimeout = setTimeout(function() {
-            WS.eventBus.trigger('window.resize');
-          }, 100);
-        });
-      }
-    },
-
-    registerModule: function (name, options) {
-      this.modules.registered.push({
-        name: name,
-        require: name,
-        options: options || {}
-      });
-    },
-
-    get: function (name) {
-      if (this.modules[name]) {
-        return this.modules[name];
-      }
-      console.debug('module "' + name + " is not registered.");
-    },
-
-    createView: function(viewClass, options) {
-      return this.viewFactory.create(viewClass, options || {});
-    },
-
-    createViews: function($elements, ViewClass, options) {
-      var views = [];
-      if ($elements.length > 0) {
-        $elements.each(function(index, el) {
-          views.push(WS.createView(ViewClass, _.extend({el: el}, options || {})));
-        });
-      }
-      return views;
-    },
-
-    blockElement: function($el, options) {
-      options = $.extend({}, {
-        deltaWidth: 0,
-        deltaHeight: 0,
-        backgroundColor: '#fff',
-        opacity: 0.6,
-        cursor: 'wait',
-        zIndex: 9997,
-        whiteSpinner: false
-      }, options);
-      var $blockBackdrop = $('<div class="block-backdrop"><div class="spinner"></div></div>');
-      var offset = $el.offset();
-      var borderLeft = $el.css('borderLeftWidth');
-      var borderTop = $el.css('borderTopWidth');
-      var width = $el.innerWidth() + options.deltaWidth;
-      var height = $el.innerHeight() + options.deltaHeight;
-
-      if (borderLeft !== '') {
-        borderLeft = parseInt(borderLeft.split('px')[0]);
-        offset.left += borderLeft;
-      }
-
-      if (borderTop !== '') {
-        borderTop = parseInt(borderTop.split('px')[0]);
-        offset.top += borderTop;
-      }
-
-      $blockBackdrop
-        .css({
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: width,
-          height: height,
-          backgroundColor: options.backgroundColor,
-          opacity: options.opacity,
-          cursor: options.cursor,
-          zIndex: options.zIndex
-        })
-        .hide()
-        .appendTo($el);
-
-      if (options.whiteSpinner) {
-        $blockBackdrop.find('.spinner').addClass('spinner-white');
-      }
-
-      $blockBackdrop.fadeIn(100, function() {
-        $blockBackdrop.on('mousedown mouseup keydown keypress keyup touchstart touchend touchmove', this.handleBlockedEvent);
-      });
-    },
+    this.registeredModules = [];
 
     /**
-     * Unblock a view.
-     *
-     * @param {jQuery} $el
-     * @param callback
+     * Holds all initialized module instances.
+     * @type {Object}
      */
-    unblockElement: function($el, callback) {
-      callback = callback || function() {};
-      if (this.spinner) {
-        this.spinner.stop();
-      }
-      $el.find('.block-backdrop')
-        .off('mousedown mouseup keydown keypress keyup touchstart touchend touchmove', this.handleBlockedEvent)
-        .remove();
-      if (typeof callback === 'function') {
-        callback.call(this);
-      }
-    },
+    this.modules = {};
 
     /**
-     * Catch all event handler for blocked views.
-     *
-     * @param event
+     * Holds all initialized components.
+     * @type {Object}
      */
-    handleBlockedEvent: function(event) {
-      event.preventDefault();
-      event.stopPropagation();
+    this.components = {};
+
+    /**
+     * Holds all initialized sections.
+     * @type {Object}
+     */
+    this.sections = {};
+
+    console.info('Wasabi instance initialized.');
+  }
+
+  /**
+   * Register a module.
+   *
+   * @param {String} name
+   * @param {Marionette.Application} module
+   */
+  registerModule (name, module) {
+    this.registeredModules.push({
+      name: name,
+      module: module,
+      options: {}
+    });
+    console.info('Module "' + name + '" registered.');
+  }
+
+  configureModule (name, options) {
+    this.registeredModules.forEach((m) => {
+      if (m.name === name) {
+        m.options = options;
+        console.info('Module "' + name + '" configured.');
+      }
+    });
+  }
+
+  /**
+   * Boot the application.
+   */
+  boot () {
+    console.info('--- Bootstrap [STARTED] ---');
+    this.registeredModules.forEach((m) => {
+      let module = new m.module(_.extend({}, m.options, { WS: this }));
+      this.modules[m.name] = module;
+      module.start();
+      console.info('Bootstrapped module "' + m.name + '".');
+    });
+    console.info('--- Bootstrap [FINISHED] ---');
+  }
+
+  /**
+   * Get an initialized module instance by name.
+   *
+   * @param {String} name
+   * @returns {*}
+   */
+  getModule (name) {
+    if (typeof this.modules[name] === 'undefined') {
+      throw new Error('Module "' + name + '" not found.');
     }
-  };
+    return this.modules[name];
+  }
 
-  window.WS = WS;
+  /**
+   * Initialize the given components.
+   *
+   * @param {Object} components
+   */
+  initComponents (components) {
+    let component;
 
-  return WS;
-});
+    const initComponent = (componentName, $el = false) => {
+      let options;
+      if (typeof component.options === 'function') {
+        options = component.options($el);
+      } else {
+        options = component.options;
+      }
+      if (typeof this.components[componentName] === 'undefined') {
+        this.components[componentName] = {};
+      }
+      if (typeof this.components[componentName]['instances'] === 'undefined') {
+        this.components[componentName]['instances'] = [];
+      }
+
+      let ViewClass = component.viewClass;
+      this.components[componentName]['instances'].push(
+        new ViewClass(_.extend({}, {
+          el: $el,
+          eventBus: this.eventBus,
+          WS: this
+        }, options))
+      );
+    };
+
+    for (let componentName in components) {
+      if (!components.hasOwnProperty(componentName)) {
+        continue;
+      }
+      component = components[componentName];
+      component.options = component.options || {};
+      component.liveQuery = component.liveQuery || false;
+
+      if (component.selector !== false) {
+        if (component.liveQuery) {
+          $(component.selector).livequery(function() {
+            initComponent(componentName, $(this));
+          });
+        }
+        $(component.selector).each((index, el) => {
+          initComponent(componentName, $(el));
+        });
+      } else {
+        initComponent(componentName);
+      }
+    }
+  }
+
+  getComponent (name, all = false) {
+    if (
+      typeof this.components[name] === 'undefined' ||
+      typeof this.components[name]['instances'] === 'undefined' ||
+      typeof this.components[name]['instances'][0] === 'undefined'
+    ) {
+      throw new Error('Component instance "' + name + '" not found.');
+    }
+
+    if (all) {
+      return typeof this.components[name]['instances'];
+    }
+
+    return typeof this.components[name]['instances'][0];
+  }
+
+  /**
+   * Initialize the given sections.
+   *
+   * @param {Object} sections
+   */
+  initSections (sections) {
+    let section;
+    for (let sectionName in sections) {
+      if (!sections.hasOwnProperty(sectionName)) {
+        continue;
+      }
+      section = sections[sectionName];
+      section.options = section.options || {};
+      $(section.selector).each((el, index) => {
+        let options;
+        if (typeof section.options === 'function') {
+          options = section.options($(el));
+        } else {
+          options = section.options;
+        }
+        if (typeof this.sections[sectionName] === 'undefined') {
+          this.sections[sectionName] = {};
+        }
+        if (typeof this.sections[sectionName]['instances'] === 'undefined') {
+          this.sections[sectionName]['instances'] = [];
+        }
+
+        let ViewClass = section.viewClass;
+        this.sections[sectionName]['instances'].push(
+          new ViewClass(_.extend({}, {
+            el: $(el),
+            eventBus: this.eventBus,
+            WS: this
+          }, options))
+        );
+      });
+    }
+  }
+}
+
+Pace.start();
+window.WS = new Wasabi();
+window.WS.registerModule('Wasabi/Core', WasabiCore);
+
+export default Wasabi;

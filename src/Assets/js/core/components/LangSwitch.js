@@ -1,31 +1,28 @@
-define(function(require) {
-  var _ = require('underscore');
-  var BaseView = require('common/BaseView');
+import _ from 'underscore';
+import {View} from 'backbone.marionette';
 
-  return BaseView.extend({
+const LangSwitch = View.extend({
 
-    /**
-     * The element of this view.
-     *
-     * @type {string} CSS selector
-     */
-    el: '.lang-switch',
+  template: false,
 
-    /**
-     * global event listeners
-     */
-    globalEvents: {
-      'wasabi-core--languages-sort': 'updateLanguageLinkPositions'
-    },
+  initialize (options) {
+    this.eventBus = options.eventBus;
+    this.updateLanguageLinkPositions = this.updateLanguageLinkPositions.bind(this);
 
-    updateLanguageLinkPositions: function(event, data) {
-      var frontendLanguages = data.frontendLanguages;
-      var $sortedLi = [];
-      var $li = this.$('li');
-      _.each(frontendLanguages, function(el) {
-        $sortedLi.push($li.filter('[data-language-id="' + el.id + '"]'));
-      });
-      this.$el.html($sortedLi);
-    }
-  });
+    this.eventBus.on('wasabi-core--languages-sort', this.updateLanguageLinkPositions);
+
+    this.render();
+  },
+
+  updateLanguageLinkPositions (event, data) {
+    let frontendLanguages = data.frontendLanguages;
+    let $sortedLi = [];
+    let $li = this.$('li');
+    _.each(frontendLanguages, function(el) {
+      $sortedLi.push($li.filter('[data-language-id="' + el.id + '"]'));
+    });
+    this.$el.html($sortedLi);
+  }
 });
+
+export default LangSwitch;
