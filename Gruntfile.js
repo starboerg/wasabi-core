@@ -35,8 +35,8 @@ module.exports = function(grunt) {
     browserify: {
       wasabi: {
         src: [
-          'src/Assets/js/wasabi.js',
-          'src/Assets/js/core/module.js'
+          'src/Assets/js/Wasabi.js',
+          'src/Assets/js/core/WasabiCore.js'
         ],
         dest: 'src/Assets/_build/js/wasabi.js',
         options: {

@@ -279,13 +279,9 @@ const Modal = View.extend({
     let needsVerticalCentering = ((screenHeight - modalHeight - modalOffsetTop) < this.options.offsetTop);
 
     if ($window.height() < $document.height()) {
-      $body
-        .addClass('page-overflow')
-        .addClass('fix-scroll-' + this.options.scrollbarWidth);
+      $body.addClass('page-overflow');
     } else {
-      $body
-        .removeClass('page-overflow')
-        .removeClass('fix-scroll-' + this.options.scrollbarWidth);
+      $body.removeClass('page-overflow');
     }
 
     if (needsVerticalCentering) {

@@ -4,6 +4,8 @@
  * @var int $heartBeatFrequency
  */
 
+use Cake\Core\Configure;
+
 $options = [
     'baseUrl' => $this->Url->build('/backend', true),
     'translations' => [
@@ -15,10 +17,10 @@ $options = [
     'cookiePath' => $this->request->getAttribute('base')
 ];
 ?>
-<?= $this->Asset->js('js/wasabi.js', 'Wasabi/Core') ?>
+<?= $this->Asset->js('js/wasabi' . ((Configure::read('debug') === false) ? '.min' : '') .'.js', 'Wasabi/Core') ?>
 <?= $this->fetch('backend-js-assets') ?>
 <script>
     window.WS.configureModule('Wasabi/Core', <?= json_encode($options) ?>);
-    <?= $this->fetch('backend-js'); ?>
+<?= $this->fetch('backend-js'); ?>
     window.WS.boot();
 </script>

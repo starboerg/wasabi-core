@@ -24582,6 +24582,706 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _backbone = require('backbone');
+
+var _backbone2 = _interopRequireDefault(_backbone);
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var strundefined = 'undefined';
+
+var Module = function () {
+
+  /**
+   * Constructor
+   *
+   * @param {Wasabi} WS
+   * @param {Backbone.Events} eventBus
+   * @param {Object} options
+   */
+  function Module(WS, eventBus, options) {
+    _classCallCheck(this, Module);
+
+    /**
+     * Holds a reference to the global Wasabi instance.
+     *
+     * @type {Wasabi}
+     */
+    this.WS = WS;
+
+    /**
+     * Holds a reference to the global event bus.
+     *
+     * @type {Backbone.Events}
+     */
+    this.eventBus = eventBus;
+
+    this.initialize.apply(this, [options]);
+  }
+
+  /**
+   * Start the module by triggering the onStart method.
+   */
+
+
+  _createClass(Module, [{
+    key: 'start',
+    value: function start() {
+      if (typeof this.onStart === 'function') {
+        this.onStart();
+      }
+    }
+
+    /**
+     * Initialize the module components.
+     */
+
+  }, {
+    key: 'initComponents',
+    value: function initComponents() {
+      var _this = this;
+
+      var component = void 0;
+
+      var initComponent = function initComponent(componentName) {
+        var $el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+        var options = void 0;
+        if (typeof component.options === 'function') {
+          options = component.options($el);
+        } else {
+          options = component.options;
+        }
+        if (_typeof(_this.components[componentName]) === strundefined) {
+          _this.components[componentName] = {};
+        }
+        if (_typeof(_this.components[componentName]['instances']) === strundefined) {
+          _this.components[componentName]['instances'] = [];
+        }
+
+        var ViewClass = component.viewClass;
+        _this.components[componentName]['instances'].push(new ViewClass(_underscore2.default.extend({}, {
+          el: $el,
+          eventBus: _this.eventBus,
+          WS: _this.WS
+        }, options)));
+      };
+
+      if (_typeof(this.components) === strundefined) {
+        this.components = {};
+      }
+
+      var _loop = function _loop(componentName) {
+        if (!_this.components.hasOwnProperty(componentName)) {
+          return 'continue';
+        }
+        component = _this.components[componentName];
+        component.options = component.options || {};
+        component.liveQuery = component.liveQuery || false;
+
+        if (component.selector !== false) {
+          if (component.liveQuery) {
+            (0, _jquery2.default)(component.selector).livequery(function () {
+              initComponent(componentName, (0, _jquery2.default)(this));
+            });
+          }
+          (0, _jquery2.default)(component.selector).each(function (index, el) {
+            initComponent(componentName, (0, _jquery2.default)(el));
+          });
+        } else {
+          initComponent(componentName);
+        }
+      };
+
+      for (var componentName in this.components) {
+        var _ret = _loop(componentName);
+
+        if (_ret === 'continue') continue;
+      }
+    }
+
+    /**
+     * Initialize the module sections.
+     */
+
+  }, {
+    key: 'initSections',
+    value: function initSections() {
+      var _this2 = this;
+
+      var section = void 0;
+
+      if (_typeof(this.sections) === strundefined) {
+        this.sections = {};
+      }
+
+      var _loop2 = function _loop2(sectionName) {
+        if (!_this2.sections.hasOwnProperty(sectionName)) {
+          return 'continue';
+        }
+        section = _this2.sections[sectionName];
+        section.options = section.options || {};
+        (0, _jquery2.default)(section.selector).each(function (el, index) {
+          var options = void 0;
+          if (typeof section.options === 'function') {
+            options = section.options((0, _jquery2.default)(el));
+          } else {
+            options = section.options;
+          }
+          if (_typeof(_this2.sections[sectionName]) === strundefined) {
+            _this2.sections[sectionName] = {};
+          }
+          if (_typeof(_this2.sections[sectionName]['instances']) === strundefined) {
+            _this2.sections[sectionName]['instances'] = [];
+          }
+
+          var ViewClass = section.viewClass;
+          _this2.sections[sectionName]['instances'].push(new ViewClass(_underscore2.default.extend({}, {
+            el: (0, _jquery2.default)(el),
+            eventBus: _this2.eventBus,
+            WS: _this2.WS
+          }, options)));
+        });
+      };
+
+      for (var sectionName in this.sections) {
+        var _ret2 = _loop2(sectionName);
+
+        if (_ret2 === 'continue') continue;
+      }
+    }
+  }, {
+    key: 'getComponent',
+    value: function getComponent(name) {
+      if (_typeof(this.components[name]) === strundefined || _typeof(this.components[name]['instances']) === strundefined || _typeof(this.components[name]['instances'][0]) === strundefined) {
+        throw new Error('Component instance "' + name + '" not found in module "' + this.getName() + '".');
+      }
+
+      return this.components[name]['instances'][0];
+    }
+  }]);
+
+  return Module;
+}();
+
+Module.extend = _backbone2.default.Model.extend;
+
+exports.default = Module;
+
+},{"backbone":4,"jquery":6,"underscore":11}],13:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author       Frank Förster <github@frankfoerster.com>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @copyright    Copyright (c) 2017 Frank Förster
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+
+var _backbone = require('backbone.marionette');
+
+var _backbone2 = _interopRequireDefault(_backbone);
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var _backbone3 = require('backbone');
+
+var _backbone4 = _interopRequireDefault(_backbone3);
+
+var _Module = require('./Module');
+
+var _Module2 = _interopRequireDefault(_Module);
+
+require('./core/vendor/jquery.livequery');
+
+var _paceProgress = require('pace-progress');
+
+var _paceProgress2 = _interopRequireDefault(_paceProgress);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * 'undefined' string for typeof comparisons.
+ *
+ * @type {string}
+ */
+var strundefined = 'undefined';
+
+/**
+ * Holds all registered modules.
+ * @type {Array}
+ */
+var registeredModules = [];
+
+var Wasabi = function () {
+
+  /**
+   * Constructor
+   */
+  function Wasabi() {
+    _classCallCheck(this, Wasabi);
+
+    /**
+     * Global event bus.
+     * @type {Backbone.Events}
+     */
+    this.eventBus = _underscore2.default.extend({}, _backbone4.default.Events);
+
+    /**
+     * Holds all initialized module instances.
+     * @type {Object}
+     */
+    this.modules = {};
+
+    /**
+     * Holds all ES6 modules and libaries that should be available to other Wasabi modules (e.g. in an individual app).
+     *
+     * @type {*}
+     */
+    this.exports = {
+      $: _jquery2.default,
+      _: _underscore2.default,
+      Backbone: _backbone4.default,
+      Marionette: _backbone2.default,
+      Module: _Module2.default,
+      Pace: _paceProgress2.default
+    };
+
+    _paceProgress2.default.start();
+    console.info('Wasabi instance initialized.');
+  }
+
+  /**
+   * Register a module.
+   *
+   * @param {String} name
+   * @param {Module} module
+   */
+
+
+  _createClass(Wasabi, [{
+    key: 'registerModule',
+    value: function registerModule(name, module) {
+      registeredModules.push({
+        name: name,
+        module: module,
+        options: {}
+      });
+      console.info('Module "' + name + '" registered.');
+    }
+
+    /**
+     * Configure the module with the given options.
+     *
+     * @param {String} name
+     * @param {Object} options
+     */
+
+  }, {
+    key: 'configureModule',
+    value: function configureModule(name, options) {
+      registeredModules.forEach(function (m) {
+        if (m.name === name) {
+          m.options = options;
+          console.info('Module "' + name + '" configured.');
+        }
+      });
+    }
+
+    /**
+     * Boot the application.
+     */
+
+  }, {
+    key: 'boot',
+    value: function boot() {
+      var _this = this;
+
+      console.info('--- Bootstrap [STARTED] ---');
+      registeredModules.forEach(function (m) {
+        var module = new m.module(_this, _this.eventBus, _underscore2.default.extend({}, m.options));
+        _this.modules[m.name] = module;
+        module.start();
+        console.info('Bootstrapped module "' + m.name + '".');
+      });
+      console.info('--- Bootstrap [FINISHED] ---');
+    }
+
+    /**
+     * Get an initialized module instance by name.
+     *
+     * @param {String} name
+     * @returns {*}
+     */
+
+  }, {
+    key: 'getModule',
+    value: function getModule(name) {
+      if (_typeof(this.modules[name]) === strundefined) {
+        throw new Error('Module "' + name + '" not found.');
+      }
+      return this.modules[name];
+    }
+  }]);
+
+  return Wasabi;
+}();
+
+window.WS = new Wasabi();
+
+exports.default = Wasabi;
+
+},{"./Module":12,"./core/vendor/jquery.livequery":34,"backbone":4,"backbone.marionette":2,"jquery":6,"pace-progress":8,"underscore":11}],14:[function(require,module,exports){
+'use strict';
+
+var _backbone = require('backbone.marionette');
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var _Wasabi = require('../Wasabi');
+
+var _Wasabi2 = _interopRequireDefault(_Wasabi);
+
+var _Module = require('../Module');
+
+var _Module2 = _interopRequireDefault(_Module);
+
+var _Menu = require('./components/Menu');
+
+var _Menu2 = _interopRequireDefault(_Menu);
+
+var _SidebarNavigationToggle = require('./components/SidebarNavigationToggle');
+
+var _SidebarNavigationToggle2 = _interopRequireDefault(_SidebarNavigationToggle);
+
+var _SidebarOpenHandle = require('./components/SidebarOpenHandle');
+
+var _SidebarOpenHandle2 = _interopRequireDefault(_SidebarOpenHandle);
+
+var _Pagination = require('./components/Pagination');
+
+var _Pagination2 = _interopRequireDefault(_Pagination);
+
+var _LoadingButton = require('./components/LoadingButton');
+
+var _LoadingButton2 = _interopRequireDefault(_LoadingButton);
+
+var _LangSwitch = require('./components/LangSwitch');
+
+var _LangSwitch2 = _interopRequireDefault(_LangSwitch);
+
+var _LoginModal = require('./components/LoginModal');
+
+var _LoginModal2 = _interopRequireDefault(_LoginModal);
+
+var _FlashMessage = require('./components/FlashMessage');
+
+var _FlashMessage2 = _interopRequireDefault(_FlashMessage);
+
+var _EmptySelect = require('./components/EmptySelect');
+
+var _EmptySelect2 = _interopRequireDefault(_EmptySelect);
+
+var _Modal = require('./components/Modal');
+
+var _Modal2 = _interopRequireDefault(_Modal);
+
+require('./vendor/bootstrap/dropdown');
+
+var _TabContainer = require('./components/TabContainer');
+
+var _TabContainer2 = _interopRequireDefault(_TabContainer);
+
+var _ScrollbarContainer = require('./components/ScrollbarContainer');
+
+var _ScrollbarContainer2 = _interopRequireDefault(_ScrollbarContainer);
+
+var _LanguagesIndex = require('./sections/LanguagesIndex');
+
+var _LanguagesIndex2 = _interopRequireDefault(_LanguagesIndex);
+
+var _PermissionsIndex = require('./sections/PermissionsIndex');
+
+var _PermissionsIndex2 = _interopRequireDefault(_PermissionsIndex);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var WasabiCore = _Module2.default.extend({
+
+  /**
+   * Holds all components that should be initialized.
+   */
+  components: {
+    sidebarMenu: {
+      selector: '.sidebar--menu',
+      viewClass: _Menu2.default
+    },
+    sidebarOpenHandle: {
+      selector: '.sidebar--open-handle',
+      viewClass: _SidebarOpenHandle2.default
+    },
+    sidebarNavigationToggle: {
+      selector: '.sidebar--navigation-toggle',
+      viewClass: _SidebarNavigationToggle2.default
+    },
+    pagination: {
+      selector: '.pagination',
+      viewClass: _Pagination2.default
+    },
+    loadingButton: {
+      selector: '[data-toggle="btn-loading"]',
+      viewClass: _LoadingButton2.default,
+      liveQuery: true
+    },
+    langSwitch: {
+      selector: '.lang-switch',
+      viewClass: _LangSwitch2.default
+    },
+    loginModal: {
+      selector: false,
+      viewClass: _LoginModal2.default
+    },
+    flashMessage: {
+      selector: '.flash-message',
+      viewClass: _FlashMessage2.default,
+      liveQuery: true
+    },
+    emptySelect: {
+      selector: 'select',
+      viewClass: _EmptySelect2.default,
+      liveQuery: true
+    },
+    modal: {
+      selector: '[data-toggle="modal"], [data-toggle="confirm"]',
+      viewClass: _Modal2.default,
+      liveQuery: true
+    },
+    tabContainer: {
+      selector: '.tabs[data-tabify-id]',
+      viewClass: _TabContainer2.default,
+      liveQuery: true
+    },
+    scrollbarContainer: {
+      selector: '[data-init="gm-scrollbar"]',
+      viewClass: _ScrollbarContainer2.default
+    }
+  },
+
+  /**
+   * Holds all sections that should be initialized.
+   */
+  sections: {
+    languagesIndex: {
+      selector: '.wasabi-core--languages-index',
+      viewClass: _LanguagesIndex2.default
+    },
+    permissionsIndex: {
+      selector: '.wasabi-core--permissions-index',
+      viewClass: _PermissionsIndex2.default
+    }
+  },
+
+  /**
+   * Initialize the module with the given options.
+   * Triggered when the module instance is initialized by wasabi.
+   */
+  initialize: function initialize(options) {
+    this.options = options;
+
+    this.onAjaxSuccess = this.onAjaxSuccess.bind(this);
+    this.onAjaxError = this.onAjaxError.bind(this);
+    this.setupAjax();
+
+    this.components.modal.options = {
+      confirmYes: this.options.translations.confirmYes,
+      confirmNo: this.options.translations.confirmNo
+    };
+  },
+
+
+  /**
+   * Start the module.
+   *
+   * Triggered when the module is started by wasabi.
+   */
+  onStart: function onStart() {
+    this.initComponents();
+    this.initSections();
+    this.initEvents();
+  },
+
+
+  /**
+   * Apply default ajax configuration.
+   */
+  setupAjax: function setupAjax() {
+    var _this = this;
+
+    _jquery2.default.ajaxSetup({
+      dataType: 'json',
+      beforeSend: function beforeSend(xhr, options) {
+        if (!options.heartBeat) {
+          _this.eventBus.trigger('init-heartbeat', _this.options.heartbeat);
+        }
+      }
+    });
+
+    (0, _jquery2.default)(document).ajaxSuccess(this.onAjaxSuccess).ajaxError(this.onAjaxError);
+  },
+
+
+  /**
+   * Global success handler for all ajax responses.
+   *
+   * @param {Event} event
+   * @param {XMLHttpRequest} xhr
+   */
+  onAjaxSuccess: function onAjaxSuccess(event, xhr) {
+    if (xhr.status === 200 && xhr.statusText === 'OK') {
+      var contentType = xhr.getResponseHeader('Content-Type');
+      if (contentType.split('application/json').length === 2) {
+        var data = _jquery2.default.parseJSON(xhr.responseText) || {};
+
+        if (typeof data.status !== 'undefined') {
+          if (typeof data.flash !== 'undefined') {
+            this.flashMessage(data.flash);
+          }
+          if (typeof data.redirect !== 'undefined') {
+            window.location = data.redirect;
+          }
+        }
+      }
+    }
+  },
+
+
+  /**
+   * Global error handler for all ajax responses.
+   *
+   * @param {Event} event
+   * @param {XMLHttpRequest} xhr
+   */
+  onAjaxError: function onAjaxError(event, xhr) {
+    var data = void 0;
+    if (xhr.status === 401) {
+      data = _jquery2.default.parseJSON(xhr.responseText) || {};
+      if (typeof data.name !== 'undefined') {
+        if (confirm(data.name)) {
+          window.location.reload();
+        } else {
+          window.location.reload();
+        }
+      }
+    }
+    if (xhr.status === 403) {
+      this.WS.eventBus.trigger('auth-error');
+    }
+    if (xhr.status === 500) {
+      data = _jquery2.default.parseJSON(xhr.responseText) || {};
+      if (typeof data.name !== 'undefined') {
+        this.flashMessage({
+          before: 'div.title-pad',
+          class: 'error',
+          message: data.name
+        });
+      }
+    }
+  },
+
+
+  /**
+   * Render a flash message after a specific element.
+   *
+   * @param {Object} flash The flash object returned by the ajax request.
+   * @private
+   */
+  flashMessage: function flashMessage(flash) {
+    var insertBefore = flash.before || false;
+    var insertAfter = flash.after || false;
+    var message = flash.message;
+    var cls = flash.class ? 'flash-' + flash.class : 'flash-success';
+    var $target = false;
+    var $flash = (0, _jquery2.default)('<div/>').addClass(cls).html(message);
+
+    if (insertBefore) {
+      $target = (0, _jquery2.default)(insertBefore);
+      $target.prev('.' + cls).remove();
+      $flash.insertBefore($target);
+    } else if (insertAfter) {
+      $target = (0, _jquery2.default)(insertAfter);
+      $target.next('.' + cls).remove();
+      $flash.insertAfter($target);
+    }
+  },
+
+
+  /**
+   * Initialize global events like scroll and resize that are debounced and triggered on the eventBus.
+   */
+  initEvents: function initEvents() {
+    var _this2 = this;
+
+    var $window = (0, _jquery2.default)(window);
+    var $body = (0, _jquery2.default)('body');
+
+    $window.on('scroll', _underscore2.default.debounce(function () {
+      _this2.eventBus.trigger('window-scroll');
+    }, 50));
+
+    $window.on('resize', _underscore2.default.debounce(function () {
+      _this2.eventBus.trigger('window-resize');
+    }, 50));
+
+    $body.on('click', '.dropdown-interaction', function (event) {
+      event.stopPropagation();
+    });
+
+    this.eventBus.trigger('init-heartbeat', this.options.heartbeat);
+  }
+});
+
+window.WS.registerModule('Wasabi/Core', WasabiCore);
+
+},{"../Module":12,"../Wasabi":13,"./components/EmptySelect":15,"./components/FlashMessage":16,"./components/LangSwitch":17,"./components/LoadingButton":18,"./components/LoginModal":19,"./components/Menu":20,"./components/Modal":21,"./components/Pagination":22,"./components/ScrollbarContainer":23,"./components/SidebarNavigationToggle":24,"./components/SidebarOpenHandle":25,"./components/TabContainer":26,"./sections/LanguagesIndex":27,"./sections/PermissionsIndex":28,"./vendor/bootstrap/dropdown":31,"backbone.marionette":2,"jquery":6,"underscore":11}],15:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _backbone = require('backbone.marionette');
 
 var EmptySelect = _backbone.View.extend({
@@ -24605,7 +25305,7 @@ var EmptySelect = _backbone.View.extend({
 
 exports.default = EmptySelect;
 
-},{"backbone.marionette":2}],13:[function(require,module,exports){
+},{"backbone.marionette":2}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24637,7 +25337,7 @@ var FlashMessage = _backbone.View.extend({
 
 exports.default = FlashMessage;
 
-},{"backbone.marionette":2}],14:[function(require,module,exports){
+},{"backbone.marionette":2}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24677,7 +25377,7 @@ var LangSwitch = _backbone.View.extend({
 
 exports.default = LangSwitch;
 
-},{"backbone.marionette":2,"underscore":11}],15:[function(require,module,exports){
+},{"backbone.marionette":2,"underscore":11}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24730,7 +25430,7 @@ var LoadingButton = _backbone.View.extend({
 
 exports.default = LoadingButton;
 
-},{"backbone.marionette":2,"jquery":6}],16:[function(require,module,exports){
+},{"backbone.marionette":2,"jquery":6}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24852,7 +25552,7 @@ var LoginModal = _backbone.View.extend({
 
 exports.default = LoginModal;
 
-},{"backbone.marionette":2,"jquery":6,"underscore":11}],17:[function(require,module,exports){
+},{"backbone.marionette":2,"jquery":6,"underscore":11}],20:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25100,7 +25800,7 @@ var Menu = _backbone.View.extend({
 
 exports.default = Menu;
 
-},{"../vendor/bootstrap/collapse":28,"backbone.marionette":2,"jquery":6,"tether":10,"underscore":11}],18:[function(require,module,exports){
+},{"../vendor/bootstrap/collapse":30,"backbone.marionette":2,"jquery":6,"tether":10,"underscore":11}],21:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25403,9 +26103,9 @@ var Modal = _backbone.View.extend({
     var needsVerticalCentering = screenHeight - modalHeight - modalOffsetTop < this.options.offsetTop;
 
     if ($window.height() < $document.height()) {
-      $body.addClass('page-overflow').addClass('fix-scroll-' + this.options.scrollbarWidth);
+      $body.addClass('page-overflow');
     } else {
-      $body.removeClass('page-overflow').removeClass('fix-scroll-' + this.options.scrollbarWidth);
+      $body.removeClass('page-overflow');
     }
 
     if (needsVerticalCentering) {
@@ -25597,7 +26297,7 @@ var Modal = _backbone.View.extend({
 
 exports.default = Modal;
 
-},{"backbone.marionette":2,"jquery":6,"underscore":11}],19:[function(require,module,exports){
+},{"backbone.marionette":2,"jquery":6,"underscore":11}],22:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25658,7 +26358,7 @@ var Pagination = _backbone.View.extend({
 
 exports.default = Pagination;
 
-},{"../vendor/purl":34,"backbone.marionette":2,"jquery":6}],20:[function(require,module,exports){
+},{"../vendor/purl":36,"backbone.marionette":2,"jquery":6}],23:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25694,7 +26394,7 @@ var ScrollbarContainer = _backbone.View.extend({
 
 exports.default = ScrollbarContainer;
 
-},{"backbone.marionette":2,"gemini-scrollbar":5}],21:[function(require,module,exports){
+},{"backbone.marionette":2,"gemini-scrollbar":5}],24:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25784,7 +26484,7 @@ var SidebarNavigationToggle = _backbone.View.extend({
 
 exports.default = SidebarNavigationToggle;
 
-},{"backbone.marionette":2,"jquery":6,"underscore":11}],22:[function(require,module,exports){
+},{"backbone.marionette":2,"jquery":6,"underscore":11}],25:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25864,7 +26564,7 @@ var SidebarOpenHandle = _backbone.View.extend({
 
 exports.default = SidebarOpenHandle;
 
-},{"backbone.marionette":2,"jquery":6,"js-cookie":7}],23:[function(require,module,exports){
+},{"backbone.marionette":2,"jquery":6,"js-cookie":7}],26:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25942,342 +26642,7 @@ var TabContainer = _backbone.View.extend({
 
 exports.default = TabContainer;
 
-},{"backbone.marionette":2,"jquery":6}],24:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _backbone = require('backbone.marionette');
-
-var _jquery = require('jquery');
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _underscore = require('underscore');
-
-var _underscore2 = _interopRequireDefault(_underscore);
-
-var _wasabi = require('../wasabi');
-
-var _wasabi2 = _interopRequireDefault(_wasabi);
-
-var _Menu = require('./components/Menu');
-
-var _Menu2 = _interopRequireDefault(_Menu);
-
-var _SidebarNavigationToggle = require('./components/SidebarNavigationToggle');
-
-var _SidebarNavigationToggle2 = _interopRequireDefault(_SidebarNavigationToggle);
-
-var _SidebarOpenHandle = require('./components/SidebarOpenHandle');
-
-var _SidebarOpenHandle2 = _interopRequireDefault(_SidebarOpenHandle);
-
-var _Pagination = require('./components/Pagination');
-
-var _Pagination2 = _interopRequireDefault(_Pagination);
-
-var _LoadingButton = require('./components/LoadingButton');
-
-var _LoadingButton2 = _interopRequireDefault(_LoadingButton);
-
-var _LangSwitch = require('./components/LangSwitch');
-
-var _LangSwitch2 = _interopRequireDefault(_LangSwitch);
-
-var _LoginModal = require('./components/LoginModal');
-
-var _LoginModal2 = _interopRequireDefault(_LoginModal);
-
-var _FlashMessage = require('./components/FlashMessage');
-
-var _FlashMessage2 = _interopRequireDefault(_FlashMessage);
-
-var _EmptySelect = require('./components/EmptySelect');
-
-var _EmptySelect2 = _interopRequireDefault(_EmptySelect);
-
-var _Modal = require('./components/Modal');
-
-var _Modal2 = _interopRequireDefault(_Modal);
-
-require('./vendor/bootstrap/dropdown');
-
-var _TabContainer = require('./components/TabContainer');
-
-var _TabContainer2 = _interopRequireDefault(_TabContainer);
-
-var _ScrollbarContainer = require('./components/ScrollbarContainer');
-
-var _ScrollbarContainer2 = _interopRequireDefault(_ScrollbarContainer);
-
-var _LanguagesIndex = require('./sections/LanguagesIndex');
-
-var _LanguagesIndex2 = _interopRequireDefault(_LanguagesIndex);
-
-var _PermissionsIndex = require('./sections/PermissionsIndex');
-
-var _PermissionsIndex2 = _interopRequireDefault(_PermissionsIndex);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var WasabiCore = _backbone.Application.extend({
-
-  /**
-   * Holds a reference to the Wasabi application instance.
-   * @type {Wasabi}
-   */
-  WS: null,
-
-  /**
-   * Holds all components that should be initialized.
-   */
-  components: {
-    sidebarMenu: {
-      selector: '.sidebar--menu',
-      viewClass: _Menu2.default
-    },
-    sidebarOpenHandle: {
-      selector: '.sidebar--open-handle',
-      viewClass: _SidebarOpenHandle2.default
-    },
-    sidebarNavigationToggle: {
-      selector: '.sidebar--navigation-toggle',
-      viewClass: _SidebarNavigationToggle2.default
-    },
-    pagination: {
-      selector: '.pagination',
-      viewClass: _Pagination2.default
-    },
-    loadingButton: {
-      selector: '[data-toggle="btn-loading"]',
-      viewClass: _LoadingButton2.default,
-      liveQuery: true
-    },
-    langSwitch: {
-      selector: '.lang-switch',
-      viewClass: _LangSwitch2.default
-    },
-    loginModal: {
-      selector: false,
-      viewClass: _LoginModal2.default
-    },
-    flashMessage: {
-      selector: '.flash-message',
-      viewClass: _FlashMessage2.default,
-      liveQuery: true
-    },
-    emptySelect: {
-      selector: 'select',
-      viewClass: _EmptySelect2.default,
-      liveQuery: true
-    },
-    modal: {
-      selector: '[data-toggle="modal"], [data-toggle="confirm"]',
-      viewClass: _Modal2.default,
-      liveQuery: true
-    },
-    tabContainer: {
-      selector: '.tabs[data-tabify-id]',
-      viewClass: _TabContainer2.default,
-      liveQuery: true
-    },
-    scrollbarContainer: {
-      selector: '[data-init="gm-scrollbar"]',
-      viewClass: _ScrollbarContainer2.default
-    }
-  },
-
-  /**
-   * Holds all sections that should be initialized.
-   */
-  sections: {
-    languagesIndex: {
-      selector: '.wasabi-core--languages-index',
-      viewClass: _LanguagesIndex2.default
-    },
-    permissionsIndex: {
-      selector: '.wasabi-core--permissions-index',
-      viewClass: _PermissionsIndex2.default
-    }
-  },
-
-  /**
-   * Initialize the module.
-   */
-  initialize: function initialize(options) {
-    this.options = options;
-    this.options.scrollbarWidth = this.detectScrollbarWidth();
-    this.WS = options.WS;
-
-    this.onAjaxSuccess = this.onAjaxSuccess.bind(this);
-    this.onAjaxError = this.onAjaxError.bind(this);
-
-    this.setupAjax();
-    this.components.modal.options = {
-      scrollbarWidth: this.options.scrollbarWidth,
-      confirmYes: this.options.translations.confirmYes,
-      confirmNo: this.options.translations.confirmNo
-    };
-    this.WS.initComponents(this.components);
-    this.WS.initSections(this.sections);
-    this.initEvents();
-  },
-
-
-  /**
-   * Apply default ajax configuration.
-   */
-  setupAjax: function setupAjax() {
-    var _this = this;
-
-    _jquery2.default.ajaxSetup({
-      dataType: 'json',
-      beforeSend: function beforeSend(xhr, options) {
-        if (!options.heartBeat) {
-          _this.WS.eventBus.trigger('init-heartbeat', _this.options.heartbeat);
-        }
-      }
-    });
-
-    (0, _jquery2.default)(document).ajaxSuccess(this.onAjaxSuccess).ajaxError(this.onAjaxError);
-  },
-
-
-  /**
-   * Global success handler for all ajax responses.
-   *
-   * @param {Event} event
-   * @param {XMLHttpRequest} xhr
-   */
-  onAjaxSuccess: function onAjaxSuccess(event, xhr) {
-    if (xhr.status === 200 && xhr.statusText === 'OK') {
-      var contentType = xhr.getResponseHeader('Content-Type');
-      if (contentType.split('application/json').length === 2) {
-        var data = _jquery2.default.parseJSON(xhr.responseText) || {};
-
-        if (typeof data.status !== 'undefined') {
-          if (typeof data.flash !== 'undefined') {
-            this.flashMessage(data.flash);
-          }
-          if (typeof data.redirect !== 'undefined') {
-            window.location = data.redirect;
-          }
-        }
-      }
-    }
-  },
-
-
-  /**
-   * Global error handler for all ajax responses.
-   *
-   * @param {Event} event
-   * @param {XMLHttpRequest} xhr
-   */
-  onAjaxError: function onAjaxError(event, xhr) {
-    var data = void 0;
-    if (xhr.status === 401) {
-      data = _jquery2.default.parseJSON(xhr.responseText) || {};
-      if (typeof data.name !== 'undefined') {
-        if (confirm(data.name)) {
-          window.location.reload();
-        } else {
-          window.location.reload();
-        }
-      }
-    }
-    if (xhr.status === 403) {
-      this.WS.eventBus.trigger('auth-error');
-    }
-    if (xhr.status === 500) {
-      data = _jquery2.default.parseJSON(xhr.responseText) || {};
-      if (typeof data.name !== 'undefined') {
-        this.flashMessage({
-          before: 'div.title-pad',
-          class: 'error',
-          message: data.name
-        });
-      }
-    }
-  },
-  detectScrollbarWidth: function detectScrollbarWidth() {
-    var $scrollDetector = (0, _jquery2.default)('<div/>').css({
-      width: '100px',
-      height: '100px',
-      overflow: 'scroll',
-      position: 'absolute',
-      top: '-9999px'
-    });
-
-    var $body = (0, _jquery2.default)('body');
-    $scrollDetector.prependTo($body);
-    var scrollbarWidth = 0;
-    setTimeout(function () {
-      scrollbarWidth = $scrollDetector[0].offsetWidth - $scrollDetector[0].clientWidth;
-    }, 0);
-    $scrollDetector.remove();
-
-    return scrollbarWidth;
-  },
-
-
-  /**
-   * Render a flash message after a specific element.
-   *
-   * @param {Object} flash The flash object returned by the ajax request.
-   * @private
-   */
-  flashMessage: function flashMessage(flash) {
-    var insertBefore = flash.before || false;
-    var insertAfter = flash.after || false;
-    var message = flash.message;
-    var cls = flash.class ? 'flash-' + flash.class : 'flash-success';
-    var $target = false;
-    var $flash = (0, _jquery2.default)('<div/>').addClass(cls).html(message);
-
-    if (insertBefore) {
-      $target = (0, _jquery2.default)(insertBefore);
-      $target.prev('.' + cls).remove();
-      $flash.insertBefore($target);
-    } else if (insertAfter) {
-      $target = (0, _jquery2.default)(insertAfter);
-      $target.next('.' + cls).remove();
-      $flash.insertAfter($target);
-    }
-  },
-
-
-  /**
-   * Initialize global events like scroll and resize that are debounced and triggered on the eventBus.
-   */
-  initEvents: function initEvents() {
-    var _this2 = this;
-
-    var $window = (0, _jquery2.default)(window);
-    var $body = (0, _jquery2.default)('body');
-
-    $window.on('scroll', _underscore2.default.debounce(function () {
-      _this2.WS.eventBus.trigger('window-scroll');
-    }, 50));
-
-    $window.on('resize', _underscore2.default.debounce(function () {
-      _this2.WS.eventBus.trigger('window-resize');
-    }, 50));
-
-    $body.on('click', '.dropdown-interaction', function (event) {
-      event.stopPropagation();
-    });
-
-    this.WS.eventBus.trigger('init-heartbeat', this.options.heartbeat);
-  }
-});
-
-exports.default = WasabiCore;
-
-},{"../wasabi":35,"./components/EmptySelect":12,"./components/FlashMessage":13,"./components/LangSwitch":14,"./components/LoadingButton":15,"./components/LoginModal":16,"./components/Menu":17,"./components/Modal":18,"./components/Pagination":19,"./components/ScrollbarContainer":20,"./components/SidebarNavigationToggle":21,"./components/SidebarOpenHandle":22,"./components/TabContainer":23,"./sections/LanguagesIndex":25,"./sections/PermissionsIndex":26,"./vendor/bootstrap/dropdown":29,"backbone.marionette":2,"jquery":6,"underscore":11}],25:[function(require,module,exports){
+},{"backbone.marionette":2,"jquery":6}],27:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26345,7 +26710,7 @@ var LanguagesIndex = _backbone.View.extend({
 
 exports.default = LanguagesIndex;
 
-},{"../vendor/jquery.tSortable":33,"backbone.marionette":2,"jquery":6}],26:[function(require,module,exports){
+},{"../vendor/jquery.tSortable":35,"backbone.marionette":2,"jquery":6}],28:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26376,7 +26741,7 @@ var PermissionsIndex = _backbone.View.extend({
 
 exports.default = PermissionsIndex;
 
-},{"../vendor/bootstrap/button":27,"backbone.marionette":2,"jquery":6}],27:[function(require,module,exports){
+},{"../vendor/bootstrap/button":29,"backbone.marionette":2,"jquery":6}],29:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26571,7 +26936,7 @@ var Button = function () {
 
 exports.default = Button;
 
-},{"jquery":6}],28:[function(require,module,exports){
+},{"jquery":6}],30:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26984,7 +27349,7 @@ var Collapse = function () {
 
 exports.default = Collapse;
 
-},{"./util":30,"jquery":6}],29:[function(require,module,exports){
+},{"./util":32,"jquery":6}],31:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27457,7 +27822,7 @@ var Dropdown = function () {
 
 exports.default = Dropdown;
 
-},{"./util":30,"jquery":6,"popper.js":1}],30:[function(require,module,exports){
+},{"./util":32,"jquery":6,"popper.js":1}],32:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -27623,7 +27988,7 @@ var Util = function () {
 
 exports.default = Util;
 
-},{"jquery":6}],31:[function(require,module,exports){
+},{"jquery":6}],33:[function(require,module,exports){
 'use strict';
 
 var _jquery = require('jquery');
@@ -27677,7 +28042,7 @@ _jquery2.default.extend({
   }
 });
 
-},{"jquery":6}],32:[function(require,module,exports){
+},{"jquery":6}],34:[function(require,module,exports){
 'use strict';
 
 var _jquery = require('jquery');
@@ -27909,7 +28274,7 @@ $jQlq.registerPlugin('append', 'prepend', 'after', 'before', 'wrap', 'attr', 're
   $jQlq.play();
 });
 
-},{"jquery":6}],33:[function(require,module,exports){
+},{"jquery":6}],35:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /*!
@@ -28211,7 +28576,7 @@ _jquery2.default.fn.tSortable.defaults = {
   }
 };
 
-},{"./jquery.eventMagic":31,"jquery":6,"scrollparent":9}],34:[function(require,module,exports){
+},{"./jquery.eventMagic":33,"jquery":6,"scrollparent":9}],36:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -28463,294 +28828,4 @@ function purl(url, strictMode) {
 
 exports.default = purl;
 
-},{}],35:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author       Frank Förster <github@frankfoerster.com>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @copyright    Copyright (c) 2017 Frank Förster
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-
-
-var _backbone = require('backbone.marionette');
-
-var _backbone2 = _interopRequireDefault(_backbone);
-
-var _jquery = require('jquery');
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _underscore = require('underscore');
-
-var _underscore2 = _interopRequireDefault(_underscore);
-
-var _backbone3 = require('backbone');
-
-var _backbone4 = _interopRequireDefault(_backbone3);
-
-var _module = require('./core/module');
-
-var _module2 = _interopRequireDefault(_module);
-
-require('./core/vendor/jquery.livequery');
-
-var _paceProgress = require('pace-progress');
-
-var _paceProgress2 = _interopRequireDefault(_paceProgress);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Wasabi = function () {
-
-  /**
-   * Constructor
-   */
-  function Wasabi() {
-    _classCallCheck(this, Wasabi);
-
-    /**
-     * Global event bus.
-     * @type {Backbone.Events}
-     */
-    this.eventBus = _underscore2.default.extend({}, _backbone4.default.Events);
-
-    /**
-     * Holds all registered modules.
-     * @type {Array}
-     */
-    this.registeredModules = [];
-
-    /**
-     * Holds all initialized module instances.
-     * @type {Object}
-     */
-    this.modules = {};
-
-    /**
-     * Holds all initialized components.
-     * @type {Object}
-     */
-    this.components = {};
-
-    /**
-     * Holds all initialized sections.
-     * @type {Object}
-     */
-    this.sections = {};
-
-    console.info('Wasabi instance initialized.');
-  }
-
-  /**
-   * Register a module.
-   *
-   * @param {String} name
-   * @param {Marionette.Application} module
-   */
-
-
-  _createClass(Wasabi, [{
-    key: 'registerModule',
-    value: function registerModule(name, module) {
-      this.registeredModules.push({
-        name: name,
-        module: module,
-        options: {}
-      });
-      console.info('Module "' + name + '" registered.');
-    }
-  }, {
-    key: 'configureModule',
-    value: function configureModule(name, options) {
-      this.registeredModules.forEach(function (m) {
-        if (m.name === name) {
-          m.options = options;
-          console.info('Module "' + name + '" configured.');
-        }
-      });
-    }
-
-    /**
-     * Boot the application.
-     */
-
-  }, {
-    key: 'boot',
-    value: function boot() {
-      var _this = this;
-
-      console.info('--- Bootstrap [STARTED] ---');
-      this.registeredModules.forEach(function (m) {
-        var module = new m.module(_underscore2.default.extend({}, m.options, { WS: _this }));
-        _this.modules[m.name] = module;
-        module.start();
-        console.info('Bootstrapped module "' + m.name + '".');
-      });
-      console.info('--- Bootstrap [FINISHED] ---');
-    }
-
-    /**
-     * Get an initialized module instance by name.
-     *
-     * @param {String} name
-     * @returns {*}
-     */
-
-  }, {
-    key: 'getModule',
-    value: function getModule(name) {
-      if (typeof this.modules[name] === 'undefined') {
-        throw new Error('Module "' + name + '" not found.');
-      }
-      return this.modules[name];
-    }
-
-    /**
-     * Initialize the given components.
-     *
-     * @param {Object} components
-     */
-
-  }, {
-    key: 'initComponents',
-    value: function initComponents(components) {
-      var _this2 = this;
-
-      var component = void 0;
-
-      var initComponent = function initComponent(componentName) {
-        var $el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-        var options = void 0;
-        if (typeof component.options === 'function') {
-          options = component.options($el);
-        } else {
-          options = component.options;
-        }
-        if (typeof _this2.components[componentName] === 'undefined') {
-          _this2.components[componentName] = {};
-        }
-        if (typeof _this2.components[componentName]['instances'] === 'undefined') {
-          _this2.components[componentName]['instances'] = [];
-        }
-
-        var ViewClass = component.viewClass;
-        _this2.components[componentName]['instances'].push(new ViewClass(_underscore2.default.extend({}, {
-          el: $el,
-          eventBus: _this2.eventBus,
-          WS: _this2
-        }, options)));
-      };
-
-      var _loop = function _loop(componentName) {
-        if (!components.hasOwnProperty(componentName)) {
-          return 'continue';
-        }
-        component = components[componentName];
-        component.options = component.options || {};
-        component.liveQuery = component.liveQuery || false;
-
-        if (component.selector !== false) {
-          if (component.liveQuery) {
-            (0, _jquery2.default)(component.selector).livequery(function () {
-              initComponent(componentName, (0, _jquery2.default)(this));
-            });
-          }
-          (0, _jquery2.default)(component.selector).each(function (index, el) {
-            initComponent(componentName, (0, _jquery2.default)(el));
-          });
-        } else {
-          initComponent(componentName);
-        }
-      };
-
-      for (var componentName in components) {
-        var _ret = _loop(componentName);
-
-        if (_ret === 'continue') continue;
-      }
-    }
-  }, {
-    key: 'getComponent',
-    value: function getComponent(name) {
-      var all = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-      if (typeof this.components[name] === 'undefined' || typeof this.components[name]['instances'] === 'undefined' || typeof this.components[name]['instances'][0] === 'undefined') {
-        throw new Error('Component instance "' + name + '" not found.');
-      }
-
-      if (all) {
-        return _typeof(this.components[name]['instances']);
-      }
-
-      return _typeof(this.components[name]['instances'][0]);
-    }
-
-    /**
-     * Initialize the given sections.
-     *
-     * @param {Object} sections
-     */
-
-  }, {
-    key: 'initSections',
-    value: function initSections(sections) {
-      var _this3 = this;
-
-      var section = void 0;
-
-      var _loop2 = function _loop2(sectionName) {
-        if (!sections.hasOwnProperty(sectionName)) {
-          return 'continue';
-        }
-        section = sections[sectionName];
-        section.options = section.options || {};
-        (0, _jquery2.default)(section.selector).each(function (el, index) {
-          var options = void 0;
-          if (typeof section.options === 'function') {
-            options = section.options((0, _jquery2.default)(el));
-          } else {
-            options = section.options;
-          }
-          if (typeof _this3.sections[sectionName] === 'undefined') {
-            _this3.sections[sectionName] = {};
-          }
-          if (typeof _this3.sections[sectionName]['instances'] === 'undefined') {
-            _this3.sections[sectionName]['instances'] = [];
-          }
-
-          var ViewClass = section.viewClass;
-          _this3.sections[sectionName]['instances'].push(new ViewClass(_underscore2.default.extend({}, {
-            el: (0, _jquery2.default)(el),
-            eventBus: _this3.eventBus,
-            WS: _this3
-          }, options)));
-        });
-      };
-
-      for (var sectionName in sections) {
-        var _ret2 = _loop2(sectionName);
-
-        if (_ret2 === 'continue') continue;
-      }
-    }
-  }]);
-
-  return Wasabi;
-}();
-
-_paceProgress2.default.start();
-window.WS = new Wasabi();
-window.WS.registerModule('Wasabi/Core', _module2.default);
-
-exports.default = Wasabi;
-
-},{"./core/module":24,"./core/vendor/jquery.livequery":32,"backbone":4,"backbone.marionette":2,"jquery":6,"pace-progress":8,"underscore":11}]},{},[35,24]);
+},{}]},{},[13,14]);

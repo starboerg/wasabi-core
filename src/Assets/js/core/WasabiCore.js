@@ -1,7 +1,8 @@
 import {Application} from 'backbone.marionette';
 import $ from 'jquery';
 import _ from 'underscore';
-import Wasabi from '../wasabi';
+import Wasabi from '../Wasabi';
+import Module from "../Module";
 import Menu from "./components/Menu";
 import SidebarNavigationToggle from "./components/SidebarNavigationToggle";
 import SidebarOpenHandle from "./components/SidebarOpenHandle";
@@ -18,13 +19,7 @@ import ScrollbarContainer from "./components/ScrollbarContainer";
 import LanguagesIndex from "./sections/LanguagesIndex";
 import PermissionsIndex from "./sections/PermissionsIndex";
 
-let WasabiCore = Application.extend({
-
-  /**
-   * Holds a reference to the Wasabi application instance.
-   * @type {Wasabi}
-   */
-  WS: null,
+let WasabiCore = Module.extend({
 
   /**
    * Holds all components that should be initialized.
@@ -100,24 +95,30 @@ let WasabiCore = Application.extend({
   },
 
   /**
-   * Initialize the module.
+   * Initialize the module with the given options.
+   * Triggered when the module instance is initialized by wasabi.
    */
   initialize (options) {
     this.options = options;
-    this.options.scrollbarWidth = this.detectScrollbarWidth();
-    this.WS = options.WS;
 
     this.onAjaxSuccess = this.onAjaxSuccess.bind(this);
     this.onAjaxError = this.onAjaxError.bind(this);
-
     this.setupAjax();
+
     this.components.modal.options = {
-      scrollbarWidth: this.options.scrollbarWidth,
       confirmYes: this.options.translations.confirmYes,
       confirmNo: this.options.translations.confirmNo
     };
-    this.WS.initComponents(this.components);
-    this.WS.initSections(this.sections);
+  },
+
+  /**
+   * Start the module.
+   *
+   * Triggered when the module is started by wasabi.
+   */
+  onStart () {
+    this.initComponents();
+    this.initSections();
     this.initEvents();
   },
 
@@ -129,7 +130,7 @@ let WasabiCore = Application.extend({
       dataType: 'json',
       beforeSend: (xhr, options) => {
         if (!options.heartBeat) {
-          this.WS.eventBus.trigger('init-heartbeat', this.options.heartbeat);
+          this.eventBus.trigger('init-heartbeat', this.options.heartbeat);
         }
       }
     });
@@ -196,26 +197,6 @@ let WasabiCore = Application.extend({
     }
   },
 
-  detectScrollbarWidth () {
-    let $scrollDetector = $('<div/>').css({
-      width: '100px',
-      height: '100px',
-      overflow: 'scroll',
-      position: 'absolute',
-      top: '-9999px'
-    });
-
-    let $body = $('body');
-    $scrollDetector.prependTo($body);
-    let scrollbarWidth = 0;
-    setTimeout(function() {
-      scrollbarWidth = $scrollDetector[0].offsetWidth - $scrollDetector[0].clientWidth;
-    }, 0);
-    $scrollDetector.remove();
-
-    return scrollbarWidth;
-  },
-
   /**
    * Render a flash message after a specific element.
    *
@@ -249,19 +230,19 @@ let WasabiCore = Application.extend({
     let $body = $('body');
 
     $window.on('scroll', _.debounce(() => {
-      this.WS.eventBus.trigger('window-scroll')
+      this.eventBus.trigger('window-scroll')
     }, 50));
 
     $window.on('resize', _.debounce(() => {
-      this.WS.eventBus.trigger('window-resize')
+      this.eventBus.trigger('window-resize')
     }, 50));
 
     $body.on('click', '.dropdown-interaction', function(event) {
       event.stopPropagation();
     });
 
-    this.WS.eventBus.trigger('init-heartbeat', this.options.heartbeat);
+    this.eventBus.trigger('init-heartbeat', this.options.heartbeat);
   }
 });
 
-export default WasabiCore;
+window.WS.registerModule('Wasabi/Core', WasabiCore);
