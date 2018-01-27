@@ -48,6 +48,6 @@ use Wasabi\Core\Wasabi;
 </div>
 <?= $this->element('Wasabi/Core.JavaScript/templates.hbs') ?>
 <?= $this->fetch('js-templates') ?>
-<?= $this->element('Wasabi/Core.JavaScript/setup-new') ?>
+<?= $this->element('Wasabi/Core.JavaScript/setup') ?>
 </body>
 </html>
