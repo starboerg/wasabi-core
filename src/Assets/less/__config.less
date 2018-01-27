@@ -63,7 +63,8 @@
 @zindex-tooltip:           1070;
 
 //----------------------------------------- BODY AND GENERIC ELEMENTS ------------------------------------------------//
-@body-bg-color:       #fff;
+//@body-bg-color:       #fff;
+@body-bg-color:       #fcfcfd;
 
 @font-os:             'Open Sans', sans-serif;
 @font-os-light:       'Open Sans', sans-serif;
@@ -86,7 +87,7 @@
 @lang-switch-link-color:              #fff;
 @lang-switch-link-color--active:      @brand-primary;
 @lang-switch-link-bg-color--hover:    lighten(@brand-primary, 10%);
-@lang-switch-link-bg-color--active:   #fff;
+@lang-switch-link-bg-color--active:   @body-bg-color;
 
 @user-menu-link-color:                  #fff;
 @user-menu-link-color--hover:           lighten(@brand-primary, 10%);
@@ -97,7 +98,7 @@
 //------------------------------------------------ SIDEBAR -----------------------------------------------------------//
 @sidebar-width:         240px;
 @sidebar-width--collapsed: 65px;
-@sidebar-bg-color:      #f2f3f4;
+@sidebar-bg-color:      @brand-primary;
 @sidebar-border-color:  #d5d7d7;
 
 @sidebar-link-color:             @brand-primary;
@@ -110,22 +111,22 @@
 
 //-------------------------------------------- TITLE PAD -------------------------------------------------------------//
 @titlepad-title-font-size:       2 * @font-size;
-@titlepad-title-font-color:      #0d0d0d;
+@titlepad-title-font-color:      #0c0d0d;
 @titlepad-title-letter-spacing:  -1px;
 
 @titlepad-small-font-size:       14px;
-@titlepad-small-font-color:      @gray-light;
+@titlepad-small-font-color:      #84888b;
 @titlepad-small-letter-spacing:  0;
 
 @titlepad-lang-font-size:   16px;
 @titlepad-lang-font-color:  #fff;
-@titlepad-lang-bg-color:    @gray-light;
+@titlepad-lang-bg-color:    #84888b;
 
 //--------------------------------------------- FORMS ----------------------------------------------------------------//
 @form-input-color:                @gray-darker;
 @form-input-bg-color:             #fff;
 @form-input-border-color:         #e2e2e2;
-@form-input-border-color--focus:  @gray-lighter;
+@form-input-border-color--focus:  #bfc2c5;
 @form-input-disabled-color:       #6d6d6d;
 @form-input-disabled-bg-color:    #f0f0f0;
 @form-input-info-color:           #545454;
@@ -133,7 +134,7 @@
 @form-row-bg-color:       #fcfcfc;
 @form-row-border-color:   @border-light;
 
-@form-section-bg-color: @sidebar-bg-color;
+@form-section-bg-color: @table-th-bg-color;
 @form-section-border-color:       @border-dark;
 @form-section-description-color:  @gray-light;
 
@@ -149,14 +150,14 @@
 
 //-------------------------------------------- TABLES ----------------------------------------------------------------//
 @table-th-border-color: @border-dark;
-@table-th-bg-color: @sidebar-bg-color;
-@table-th-link-color: @gray-dark;
+@table-th-bg-color: #eef0f1;
+@table-th-link-color: #393232;
 
 @table-td-border-color: #e6e6e3;
 
-@table-filters-bg-color: #f0f1f2;
+@table-filters-bg-color: @table-th-bg-color;
 
-@table-row--hover: #f8f8f8;
+@table-row--hover: #f9fafa;
 @table-row--selected: #fff5c4;
 @table-row--selected--hover: #ffefa0;
 

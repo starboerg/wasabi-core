@@ -3492,6 +3492,9 @@ tbody.collapse.show {
   z-index: -1;
   opacity: 0;
 }
+.gm-prevented {
+  overflow-y: scroll;
+}
 *,
 *:before,
 *:after {
@@ -3512,7 +3515,7 @@ body {
   font-size: 1rem;
   line-height: 1.5;
   color: #333333;
-  background-color: #fff;
+  background-color: #fcfcfd;
   overflow: hidden;
 }
 @media only screen and (min-width: 768px) {
@@ -3859,12 +3862,12 @@ strong {
 label {
   display: inline-block;
   font-weight: 700;
-  color: #444;
+  color: #393232;
   cursor: pointer;
   margin-bottom: 3px;
   margin-bottom: 0.1875rem;
 }
-.form-row.required > label:after {
+.form-row.required > label span:after {
   display: inline-block;
   padding-left: 3px;
   padding-left: 0.1875rem;
@@ -3920,7 +3923,7 @@ input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="number"]:focus,
 textarea:focus {
-  border-color: #999999;
+  border-color: #bfc2c5;
   outline: none;
   -webkit-box-shadow: none;
   /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
@@ -3956,11 +3959,9 @@ input[type="checkbox"] {
   margin-right: 5px;
   margin-right: 0.3125rem;
   cursor: pointer;
-}
-input[type="checkbox"] + label {
   position: relative;
-  top: -1px;
-  top: -0.0625rem;
+  top: 2px;
+  top: 0.125rem;
 }
 input[type="radio"] {
   margin-right: 3px;
@@ -3975,7 +3976,7 @@ select {
   font-weight: 400;
 }
 select:focus {
-  border-color: #999999;
+  border-color: #bfc2c5;
   outline: none;
 }
 select.full {
@@ -4064,7 +4065,7 @@ div.error-message > ul {
   margin: 0rem -0.625rem 0.625rem;
   padding: 15px 10px;
   padding: 0.9375rem 0.625rem;
-  background-color: #f2f3f4;
+  background-color: #eef0f1;
   border-style: solid;
   border-color: #dddfdf;
   border-width: 1px 0;
@@ -4080,7 +4081,7 @@ div.error-message > ul {
 .form-controls {
   padding: 10px;
   padding: 0.625rem;
-  background-color: #f2f3f4;
+  background-color: #eef0f1;
   border-style: solid;
   border-color: #dddfdf;
   border-width: 1px 0;
@@ -4125,11 +4126,6 @@ body:not(.wasabi-core--layout-support) .form-controls {
   form.no-top-section {
     border-top: 1px solid #e3e5e6;
   }
-  .checkbox > label > input[type="checkbox"] {
-    position: relative;
-    top: 1px;
-    top: 0.0625rem;
-  }
   .form-section {
     margin: 0;
     border-width: 1px 1px 2px;
@@ -4141,6 +4137,7 @@ body:not(.wasabi-core--layout-support) .form-controls {
     border-style: solid;
     border-color: #e3e5e6;
     border-width: 0 1px;
+    background-color: #fff;
   }
   .form-row + .form-row {
     padding-top: 0;
@@ -4192,6 +4189,10 @@ body:not(.wasabi-core--layout-support) .form-controls {
   .form-row.form-row-select .field > select:first-of-type {
     margin-top: 1px;
     margin-top: 0.0625rem;
+  }
+  .form-row.form-row-checkbox .field {
+    padding-top: 26px;
+    padding-top: 1.625rem;
   }
   .form-section {
     padding: 20px;
@@ -4257,7 +4258,7 @@ body:not(.wasabi-core--layout-support) .form-controls {
 #page-header .lang-switch li.active a,
 #page-header .lang-switch li.active a:hover {
   color: #223648;
-  background-color: #fff;
+  background-color: #fcfcfd;
 }
 #page-header .user-menu {
   float: right;
@@ -4379,7 +4380,7 @@ body:not(.wasabi-core--layout-support) .form-controls {
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
   border-top: 1px solid #dddfdf;
-  background-color: #f2f3f4;
+  background-color: #eef0f1;
   text-align: right;
 }
 .modal-confirm button {
@@ -4546,12 +4547,11 @@ body:not(.wasabi-core--layout-support) .form-controls {
 }
 .pagination {
   position: relative;
-  margin: 20px 0px;
-  margin: 1.25rem 0rem;
+  margin: 20px 0px 15px;
+  margin: 1.25rem 0rem 0.9375rem;
 }
 .pagination ul {
   display: flex;
-  background-color: #fff;
 }
 .pagination li {
   display: none;
@@ -4601,10 +4601,14 @@ body:not(.wasabi-core--layout-support) .form-controls {
 .pagination li.prev a,
 .pagination li.next a,
 .pagination li.last a {
-  padding-top: 5px;
-  padding-top: 0.3125rem;
-  padding-bottom: 7px;
-  padding-bottom: 0.4375rem;
+  padding-top: 7px;
+  padding-top: 0.4375rem;
+  padding-bottom: 8px;
+  padding-bottom: 0.5rem;
+  font-size: 19px;
+  font-size: 1.1875rem;
+  line-height: 21px;
+  line-height: 1.3125rem;
 }
 .pagination a {
   display: inline-block;
@@ -4614,9 +4618,11 @@ body:not(.wasabi-core--layout-support) .form-controls {
   border: 1px solid #eaeae6;
   border-left: none;
   width: 100%;
+  background-color: #fff;
+  color: #687178;
 }
 .pagination a:not(.disabled):hover {
-  background-color: #eee;
+  background-color: #f9fafa;
 }
 .pagination a.disabled {
   color: #ddd;
@@ -4699,8 +4705,8 @@ body:not(.wasabi-core--layout-support) .form-controls {
   .pagination li.active a,
   .pagination li.active a:hover,
   .pagination li.active a:focus {
-    background-color: #32506b;
-    color: #fff;
+    background-color: #f5f8fa;
+    color: #1f3648;
   }
   .pagination li.first,
   .pagination li.prev,
@@ -4711,9 +4717,22 @@ body:not(.wasabi-core--layout-support) .form-controls {
     min-width: 40px;
     min-width: 2.5rem;
   }
+  .pagination li.first a,
+  .pagination li.prev a,
+  .pagination li.next a,
+  .pagination li.last a {
+    padding-top: 5px;
+    padding-top: 0.3125rem;
+    padding-bottom: 7px;
+    padding-bottom: 0.4375rem;
+  }
   .pagination a {
     padding-left: 12px;
+    padding-left: 0.75rem;
     padding-right: 12px;
+    padding-right: 0.75rem;
+    margin-bottom: 5px;
+    margin-bottom: 0.3125rem;
     -webkit-transition: background-color 0.1s ease-in-out;
     -moz-transition: background-color 0.1s ease-in-out;
     -o-transition: background-color 0.1s ease-in-out;
@@ -4725,6 +4744,10 @@ body:not(.wasabi-core--layout-support) .form-controls {
   .pagination .limit {
     top: 0;
     right: 0;
+  }
+  .pagination .item-count {
+    min-width: 197px;
+    min-width: 12.3125rem;
   }
 }
 .sidebar {
@@ -5025,7 +5048,7 @@ body:not(.wasabi-core--layout-support) .form-controls {
   position: relative;
 }
 .menu--item.active {
-  background-color: #fff;
+  background-color: #fcfcfd;
 }
 .menu--item-link {
   position: relative;
@@ -5070,12 +5093,12 @@ body:not(.wasabi-core--layout-support) .form-controls {
 .active .menu--item-link:focus,
 .active .menu--item-link:hover {
   color: #333;
-  background-color: #e6e6e6;
+  background-color: #ecedee;
 }
 .active > .menu--item-link,
 .active > .menu--item-link:focus,
 .active > .menu--item-link:hover {
-  color: #333;
+  color: #2f3337;
 }
 .active > .menu--item-link:not(.is-nested) {
   border-left: 9px solid #436a8d;
@@ -5242,7 +5265,7 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
   outline: none;
 }
 .tabs > li > a:hover {
-  background-color: #f2f3f4;
+  background-color: #223648;
 }
 .tabs > li.active > a {
   cursor: default;
@@ -5267,12 +5290,12 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
   margin: 0;
   font-size: 28px;
   font-weight: normal;
-  color: #0d0d0d;
+  color: #0c0d0d;
   letter-spacing: -1px;
 }
 .titlepad-title small {
   font-size: 14px;
-  color: #878787;
+  color: #84888b;
   letter-spacing: 0;
 }
 .titlepad-title .lang {
@@ -5285,7 +5308,7 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
   padding: 0.0625rem 0.3125rem 0.0625rem 0.25rem;
   font-size: 16px;
   color: #fff;
-  background-color: #878787;
+  background-color: #84888b;
   vertical-align: top;
 }
 .titlepad-actions {
@@ -5488,6 +5511,12 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
 .datatable-wrapper {
   overflow-x: auto;
 }
+@media only screen and (min-width: 768px) {
+  .datatable-wrapper {
+    background-color: #fff;
+    border-bottom: 1px solid #dddfdf;
+  }
+}
 .datatable {
   width: 100%;
   vertical-align: top;
@@ -5512,7 +5541,7 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
   font-weight: 600;
   color: #444;
   text-align: left;
-  background-color: #f2f3f4;
+  background-color: #eef0f1;
 }
 .datatable > thead > tr > th:first-child,
 .datatable > tfoot > tr > th:first-child {
@@ -5524,7 +5553,7 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
 }
 .datatable > thead > tr > th a,
 .datatable > tfoot > tr > th a {
-  color: #424242;
+  color: #393232;
 }
 .datatable > thead > tr > th a span,
 .datatable > tfoot > tr > th a span {
@@ -5532,7 +5561,7 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
 }
 .datatable > thead > tr > th a:hover span,
 .datatable > tfoot > tr > th a:hover span {
-  border-color: #424242;
+  border-color: #393232;
 }
 .datatable > thead > tr > th a [class*="icon-sortable-"],
 .datatable > tfoot > tr > th a [class*="icon-sortable-"] {
@@ -5553,7 +5582,7 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
   padding: 0.5rem 0.5rem 0.125rem;
   line-height: 34px;
   line-height: 2.125rem;
-  background-color: #f0f1f2;
+  background-color: #eef0f1;
 }
 .datatable > thead > tr.datatable-filters input[type="text"],
 .datatable > tfoot > tr.datatable-filters input[type="text"],
@@ -5613,7 +5642,7 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
   display: none;
 }
 .datatable > tbody > tr:hover td {
-  background-color: #f8f8f8;
+  background-color: #f9fafa;
 }
 .datatable > tbody > tr.selected td {
   background-color: #fff5c4;
@@ -5652,11 +5681,9 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
   }
   .datatable > tbody > tr {
     display: block;
-    padding-bottom: 10px;
-    padding-bottom: 0.625rem;
-    margin-bottom: 10px;
-    margin-bottom: 0.625rem;
-    border-bottom: 1px solid #f3f3f1;
+    margin-bottom: 15px;
+    margin-bottom: 0.9375rem;
+    border: 1px solid #f3f3f1;
   }
   .datatable > tbody > tr > td {
     display: block;
@@ -5664,11 +5691,20 @@ body:not(.sidebar-is-collapsed) .menu--item-subnav.tether-element {
     padding: 0.3125rem 0.625rem;
     text-align: left !important;
     border-bottom: none !important;
+    background-color: #fff;
   }
   .datatable > tbody > tr > td:before {
     margin-right: 5px;
     content: attr(data-title) ":";
     font-weight: 600;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .datatable > tbody > tr > td:first-child {
+    border-left: 1px solid #dddfdf;
+  }
+  .datatable > tbody > tr > td:last-child {
+    border-right: 1px solid #dddfdf;
   }
 }
 .btn-group .btn + .btn,

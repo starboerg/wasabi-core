@@ -4,16 +4,19 @@
 label {
   display: inline-block;
   font-weight: 700;
-  color: #444;
+  color: #393232;
   cursor: pointer;
   .rem(margin-bottom, 3px);
 
-  .form-row.required > &:after {
-    display: inline-block;
-    .rem(padding-left, 3px);
-    .rem(font-size, @font-size - 1px);
-    content: "*";
-    color: @brand-error-color;
+  span {
+
+    .form-row.required > &:after {
+      display: inline-block;
+      .rem(padding-left, 3px);
+      .rem(font-size, @font-size - 1px);
+      content: "*";
+      color: @brand-error-color;
+    }
   }
 
   small {
@@ -92,11 +95,8 @@ input[type="number"] {
 input[type="checkbox"] {
   .rem(margin-right, 5px);
   cursor: pointer;
-
-  & + label {
-    position: relative;
-    .rem(top, -1px);
-  }
+  position: relative;
+  .rem(top, 2px);
 }
 
 input[type="radio"] {
@@ -301,11 +301,6 @@ span.error-message, div.error-message {
     border-top: 1px solid @form-row-border-color;
   }
 
-  .checkbox > label > input[type="checkbox"] {
-    position: relative;
-    .rem(top, 1px);
-  }
-
   .form-section {
     margin: 0;
     border-width: 1px 1px 2px;
@@ -317,6 +312,7 @@ span.error-message, div.error-message {
     border-style: solid;
     border-color: @form-row-border-color;
     border-width: 0 1px;
+    background-color: #fff;
 
     & + .form-row {
       padding-top: 0;
@@ -381,6 +377,13 @@ span.error-message, div.error-message {
         & > select:first-of-type {
           .rem(margin-top, 1px);
         }
+      }
+    }
+
+    &.form-row-checkbox {
+
+      .field {
+        .rem(padding-top, 26px);
       }
     }
   }

@@ -3,11 +3,10 @@
 
 .pagination {
   position: relative;
-  .rem(margin, 20px,0);
+  .rem(margin, 20px,0,15px);
 
   ul {
     display: flex;
-    background-color: #fff;
   }
 
   li {
@@ -44,8 +43,10 @@
       .rem(min-width, 40px);
 
       a {
-        .rem(padding-top, 5px);
-        .rem(padding-bottom, 7px);
+        .rem(padding-top, 7px);
+        .rem(padding-bottom, 8px);
+        .rem(font-size, 19px);
+        .rem(line-height, 21px);
       }
     }
   }
@@ -57,9 +58,11 @@
     border: 1px solid #eaeae6;
     border-left: none;
     width: 100%;
+    background-color: #fff;
+    color: #687178;
 
     &:not(.disabled):hover {
-      background-color: #eee;
+      background-color: #f9fafa;
     }
 
     &.disabled {
@@ -134,8 +137,10 @@
       &.active a {
 
         &, &:hover, &:focus {
-          background-color: @pagination-link-bg-color--active;
-          color: @pagination-link-color--active;
+          //background-color: @pagination-link-bg-color--active;
+          //color: @pagination-link-color--active;
+          background-color: #f5f8fa;
+          color: #1f3648;
         }
       }
 
@@ -145,12 +150,18 @@
       &.last {
         .rem(width, 40px);
         .rem(min-width, 40px);
+
+        a {
+          .rem(padding-top, 5px);
+          .rem(padding-bottom, 7px);
+        }
       }
     }
 
     a {
-      padding-left: 12px;
-      padding-right: 12px;
+      .rem(padding-left, 12px);
+      .rem(padding-right, 12px);
+      .rem(margin-bottom, 5px);
       .transition(background-color 0.1s ease-in-out);
     }
 
@@ -161,6 +172,10 @@
     .limit {
       top: 0;
       right: 0;
+    }
+
+    .item-count {
+      .rem(min-width, 197px);
     }
   }
 }

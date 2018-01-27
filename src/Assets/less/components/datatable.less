@@ -3,6 +3,11 @@
 
 .datatable-wrapper {
   overflow-x: auto;
+
+  @media only screen and (min-width: 768px) {
+    background-color: #fff;
+    border-bottom: 1px solid @table-th-border-color;
+  }
 }
 
 .datatable {
@@ -180,21 +185,34 @@
 
     & > tbody > tr {
       display: block;
-      .rem(padding-bottom, 10px);
-      .rem(margin-bottom, 10px);
-      border-bottom: 1px solid #f3f3f1;
+      .rem(margin-bottom, 15px);
+      border: 1px solid #f3f3f1;
 
       & > td {
         display: block;
         .rem(padding, 5px,10px);
         text-align: left !important;
         border-bottom: none !important;
+        background-color: #fff;
 
         &:before {
           margin-right: 5px;
           content: attr(data-title) ":";
           font-weight: 600;
         }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+
+    & > tbody > tr > td {
+      &:first-child {
+        border-left: 1px solid @table-th-border-color;
+      }
+
+      &:last-child {
+        border-right: 1px solid @table-th-border-color;
       }
     }
   }
