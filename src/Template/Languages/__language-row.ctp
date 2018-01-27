@@ -5,13 +5,13 @@
  * @var integer $key
  */
 ?><tr>
-    <td class="col-id center">
+    <td class="col-id center" data-title="<?= __d('wasabi_core', 'ID') ?>">
         <?= $this->Form->input($key . '.id', ['type' => 'hidden', 'value' => $lang->id]) ?>
         <?= $this->Form->input($key . '.position', ['type' => 'hidden', 'value' => $lang->position, 'class' => 'position']) ?>
         <?= $lang['id'] ?>
     </td>
-    <td class="col-pos center"><?= $this->Html->link('<i class="icon-grab"></i>', 'javascript:void(0)', ['title' => __d('wasabi_core', 'Change the position of this Language'), 'class' => 'action-sort', 'escapeTitle' => false]) ?></td>
-    <td class="col-name">
+    <td class="col-pos center" data-title="<?= __d('wasabi_core', 'Sort') ?>"><?= $this->Html->link('<i class="icon-grab"></i>', 'javascript:void(0)', ['title' => __d('wasabi_core', 'Change the position of this Language'), 'class' => 'action-sort', 'escapeTitle' => false]) ?></td>
+    <td class="col-name" data-title="<?= __d('wasabi_core', 'Language') ?>">
         <?= $this->Guardian->protectedLink(
             $lang->name,
             $this->Route->languagesEdit($lang->id),
@@ -20,10 +20,10 @@
             ]
         ) ?>
     </td>
-    <td class="col-iso2"><?= $lang->iso2 ?></td>
-    <td class="col-iso3"><?= $lang->iso3 ?></td>
-    <td class="col-lang"><?= $lang->lang ?></td>
-    <td>
+    <td class="col-iso2" data-title="<?= __d('wasabi_core', 'ISO 639-1') ?>"><?= $lang->iso2 ?></td>
+    <td class="col-iso3" data-title="<?= __d('wasabi_core', 'ISO 639-2/T') ?>"><?= $lang->iso3 ?></td>
+    <td class="col-lang" data-title="<?= __d('wasabi_core', 'HTML lang') ?>"><?= $lang->lang ?></td>
+    <td data-title="<?= __d('wasabi_core', 'Availablitiy') ?>">
         <?php
         $cls = '';
         if ($lang->available_at_frontend === true) {
@@ -39,7 +39,7 @@
         ?>
         <span class="label<?php echo $cls; ?>">Backend</span>
     </td>
-    <td class="col-actions center">
+    <td class="col-actions center" data-title="<?= __d('wasabi_core', 'Actions') ?>">
         <?php
         if (!in_array($lang->id, [1, 2])) {
             echo $this->Guardian->protectedConfirmationLink(
