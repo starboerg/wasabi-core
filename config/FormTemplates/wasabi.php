@@ -14,7 +14,7 @@
 
 return [
     'formStart' => '<form {{attrs}} novalidate>',
-    'label' => '<label {{attrs}}>{{text}}{{labelInfo}}</label>',
+    'label' => '<label {{attrs}}><span>{{text}}</span>{{labelInfo}}</label>',
     'input' => '<input type="{{type}}" name="{{name}}"{{attrs}}>',
     'inputContainer' => '<div class="form-row form-row-{{type}}{{required}}{{formRowClass}}">{{content}}</div>',
     'inputContainerError' => '<div class="form-row form-row-{{type}}{{required}}{{formRowClass}} error">{{content}}</div>',
