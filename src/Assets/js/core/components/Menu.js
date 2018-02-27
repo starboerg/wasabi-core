@@ -102,7 +102,7 @@ const Menu = View.extend({
     this.$document = $(document);
     this.$scrollContainer = this.$el.closest('.gm-scrollbar-container');
 
-    this.eventBus.on('window.resize', this.onWindowResize.bind(this));
+    this.eventBus.on('window-resize', this.onWindowResize.bind(this));
     this.eventBus.on('sidebar.toggle-collapse', this.onToggleCollapse.bind(this));
 
     this.render();
@@ -123,19 +123,10 @@ const Menu = View.extend({
    * The visuals of the collapsed navigation are done via media queries and not via JS.
    */
   collapseMenu () {
-    let selector = this.$el
-      .parents()
-      .map(function() { return this.tagName; })
-      .get()
-      .reverse()
-      .concat([this.el.nodeName])
-      .join(">");
-
-    let content = window.getComputedStyle(document.querySelector(selector), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
     this.isCollapsed = (
       this.isForceCollapsed ||
       this.$document.find('body').hasClass('sidebar-is-collapsed') ||
-      content === 'collapsed'
+      this.getStyledContent() === 'collapsed'
     );
 
     if (!this.isCollapsed && this.subnavTether !== null) {
@@ -181,7 +172,7 @@ const Menu = View.extend({
 
     $otherOpened.removeClass(this.options.selectedClass);
 
-    if (this.isCollapsed && !this.$document.find('body').hasClass('sidebar-is-open')) {
+    if (this.isCollapsed && this.getStyledContent() !== 'open') {
       if ($target.hasClass(this.options.selectedClass)) {
         this.hideSubnav();
       } else {
@@ -234,6 +225,18 @@ const Menu = View.extend({
       this.$subnavClone.remove();
       this.$document.off('click', _.bind(this.hideSubnav, this));
     }
+  },
+
+  getStyledContent () {
+    let selector = this.$el
+      .parents()
+      .map(function() { return this.tagName; })
+      .get()
+      .reverse()
+      .concat([this.el.nodeName])
+      .join(">");
+
+    return window.getComputedStyle(document.querySelector(selector), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "")
   }
 });
 

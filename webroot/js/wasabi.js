@@ -25675,7 +25675,7 @@ var Menu = _backbone.View.extend({
     this.$document = (0, _jquery2.default)(document);
     this.$scrollContainer = this.$el.closest('.gm-scrollbar-container');
 
-    this.eventBus.on('window.resize', this.onWindowResize.bind(this));
+    this.eventBus.on('window-resize', this.onWindowResize.bind(this));
     this.eventBus.on('sidebar.toggle-collapse', this.onToggleCollapse.bind(this));
 
     this.render();
@@ -25695,12 +25695,7 @@ var Menu = _backbone.View.extend({
    * The visuals of the collapsed navigation are done via media queries and not via JS.
    */
   collapseMenu: function collapseMenu() {
-    var selector = this.$el.parents().map(function () {
-      return this.tagName;
-    }).get().reverse().concat([this.el.nodeName]).join(">");
-
-    var content = window.getComputedStyle(document.querySelector(selector), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
-    this.isCollapsed = this.isForceCollapsed || this.$document.find('body').hasClass('sidebar-is-collapsed') || content === 'collapsed';
+    this.isCollapsed = this.isForceCollapsed || this.$document.find('body').hasClass('sidebar-is-collapsed') || this.getStyledContent() === 'collapsed';
 
     if (!this.isCollapsed && this.subnavTether !== null) {
       this.subnavTether.destroy();
@@ -25745,7 +25740,7 @@ var Menu = _backbone.View.extend({
 
     $otherOpened.removeClass(this.options.selectedClass);
 
-    if (this.isCollapsed && !this.$document.find('body').hasClass('sidebar-is-open')) {
+    if (this.isCollapsed && this.getStyledContent() !== 'open') {
       if ($target.hasClass(this.options.selectedClass)) {
         this.hideSubnav();
       } else {
@@ -25795,6 +25790,13 @@ var Menu = _backbone.View.extend({
       this.$subnavClone.remove();
       this.$document.off('click', _underscore2.default.bind(this.hideSubnav, this));
     }
+  },
+  getStyledContent: function getStyledContent() {
+    var selector = this.$el.parents().map(function () {
+      return this.tagName;
+    }).get().reverse().concat([this.el.nodeName]).join(">");
+
+    return window.getComputedStyle(document.querySelector(selector), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
   }
 });
 
