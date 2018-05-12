@@ -26,3 +26,4 @@ $debugJavascript = (Configure::read('debug') && Configure::read('debugJS'));
     <?= $this->fetch('backend-js'); ?>
     window.WS.boot();
 </script>
+<?= $this->fetch('backend-js-assets-after-init') ?>
