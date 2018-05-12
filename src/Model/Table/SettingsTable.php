@@ -51,6 +51,6 @@ class SettingsTable extends Table
     public function afterSave(Event $event, Setting $entity, ArrayObject $options)
     {
         Cache::delete('settings', 'wasabi/core/longterm');
-        $this->eventManager()->dispatch(new Event('Wasabi.Settings.changed'));
+        $this->getEventManager()->dispatch(new Event('Wasabi.Settings.changed'));
     }
 }

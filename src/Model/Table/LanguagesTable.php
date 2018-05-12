@@ -15,7 +15,7 @@ namespace Wasabi\Core\Model\Table;
 
 use ArrayObject;
 use Cake\Collection\CollectionInterface;
-use Cake\Collection\Iterator\FilterIterator;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
@@ -75,7 +75,7 @@ class LanguagesTable extends Table
      */
     public function afterSave(Event $event, Language $entity, ArrayObject $options)
     {
-        $this->eventManager()->dispatch(new Event('LanguagesTable.afterSave', $this, compact('entity', 'options', 'event')));
+        $this->getEventManager()->dispatch(new Event('LanguagesTable.afterSave', $this, compact('entity', 'options', 'event')));
     }
 
     /**
@@ -89,7 +89,37 @@ class LanguagesTable extends Table
      */
     public function afterDelete(Event $event, Language $entity, ArrayObject $options)
     {
-        $this->eventManager()->dispatch(new Event('LanguagesTable.afterDelete', $this, compact('entity', 'options', 'event')));
+        $this->getEventManager()->dispatch(new Event('LanguagesTable.afterDelete', $this, compact('entity', 'options', 'event')));
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return Language
+     */
+    public function newEntity($data = null, array $options = [])
+    {
+        return parent::newEntity($data, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return Language
+     */
+    public function patchEntity(EntityInterface $entity, array $data, array $options = [])
+    {
+        return parent::patchEntity($entity, $data, $options);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array|Language
+     */
+    public function get($primaryKey, $options = [])
+    {
+        return parent::get($primaryKey, $options);
     }
 
     /**
@@ -97,7 +127,7 @@ class LanguagesTable extends Table
      *
      * @param Query $query The query to decorate.
      * @param array $options Optional options.
-     * @return $this
+     * @return Query
      */
     public function findAllFrontendBackend(Query $query, array $options)
     {
@@ -119,7 +149,7 @@ class LanguagesTable extends Table
      * Filter the provided result set by languages that are available at the frontend.
      *
      * @param CollectionInterface $results The collection to filter.
-     * @return FilterIterator
+     * @return CollectionInterface
      */
     public function filterFrontend(CollectionInterface $results)
     {
@@ -132,7 +162,7 @@ class LanguagesTable extends Table
      * Filter the provided result set by languages that are available at the backend.
      *
      * @param CollectionInterface $results The collection to filter.
-     * @return FilterIterator
+     * @return CollectionInterface
      */
     public function filterBackend(CollectionInterface $results)
     {

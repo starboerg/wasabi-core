@@ -17,13 +17,12 @@ use Cake\Collection\Collection;
 use Cake\Database\Connection;
 use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\MethodNotAllowedException;
-use Cake\Network\Session;
-use Wasabi\Core\Model\Entity\Language;
+use Wasabi\Core\Model\Table\LanguagesTable;
 
 /**
  * Class LanguagesController
  *
- * @property \Wasabi\Core\Model\Table\LanguagesTable $Languages
+ * @property LanguagesTable $Languages
  */
 class LanguagesController extends BackendAppController
 {
@@ -47,6 +46,7 @@ class LanguagesController extends BackendAppController
     public function index()
     {
         $languages = $this->Languages->find('allFrontendBackend');
+
         $this->set([
             'languages' => $languages,
             'language' => $this->Languages->newEntity()
@@ -61,10 +61,10 @@ class LanguagesController extends BackendAppController
      */
     public function add()
     {
-        /** @var Language $language */
         $language = $this->Languages->newEntity();
-        if ($this->request->is('post') && !empty($this->request->data)) {
-            $this->Languages->patchEntity($language, $this->request->data);
+
+        if ($this->request->is('post')) {
+            $this->Languages->patchEntity($language, $this->request->getData());
             if ($this->Languages->save($language)) {
                 $this->Flash->success(__d('wasabi_core', 'The language <strong>{0}</strong> has been created.', $language->name));
                 $this->redirect(['action' => 'index']);
@@ -73,6 +73,7 @@ class LanguagesController extends BackendAppController
                 $this->Flash->error($this->formErrorMessage);
             }
         }
+
         $this->set('language', $language);
     }
 
@@ -89,10 +90,10 @@ class LanguagesController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        /** @var Language $language */
         $language = $this->Languages->get($id);
+
         if ($this->request->is('put')) {
-            $this->Languages->patchEntity($language, $this->request->data);
+            $this->Languages->patchEntity($language, $this->request->getData());
             if ($this->Languages->save($language)) {
                 $this->Flash->success(__d('wasabi_core', 'The language <strong>{0}</strong> has been saved.', $language->name));
             } else {
@@ -103,6 +104,7 @@ class LanguagesController extends BackendAppController
         }
 
         $this->set('language', $language);
+
         $this->render('add');
     }
 
@@ -119,13 +121,14 @@ class LanguagesController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        /** @var Language $language */
         $language = $this->Languages->get($id);
+
         if ($this->Languages->delete($language)) {
             $this->Flash->success(__d('wasabi_core', 'The language <strong>{0}</strong> has been deleted.', $language->name));
         } else {
             $this->Flash->error($this->dbErrorMessage);
         }
+
         $this->redirect(['action' => 'index']);
         //@codingStandardIgnoreStart
         return;
@@ -145,17 +148,17 @@ class LanguagesController extends BackendAppController
         if (!$this->request->is('ajax') || !$this->request->is('post')) {
             throw new MethodNotAllowedException();
         }
-        if (empty($this->request->data)) {
+        if (empty($this->request->getData())) {
             throw new BadRequestException();
         }
 
         // save the new language positions
         $languages = $this->Languages->patchEntities(
             $this->Languages->find('allFrontendBackend'),
-            $this->request->data
+            $this->request->getData()
         );
         /** @var Connection $connection */
-        $connection = $this->Languages->connection();
+        $connection = $this->Languages->getConnection();
         $connection->begin();
         foreach ($languages as $language) {
             if (!$this->Languages->save($language)) {
@@ -202,7 +205,8 @@ class LanguagesController extends BackendAppController
             $this->redirect($this->referer());
             return;
         }
-        $this->request->session()->write('contentLanguageId', (int)$id);
+
+        $this->request->getSession()->write('contentLanguageId', (int)$id);
         $this->redirect($this->referer());
     }
 }

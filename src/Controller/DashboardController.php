@@ -30,7 +30,7 @@ class DashboardController extends BackendAppController
     public function index()
     {
         $event = new Event('Dashboard.SummaryBoxes.init');
-        $this->eventManager()->dispatch($event);
+        $this->getEventManager()->dispatch($event);
         $summaryBoxes = $event->getResult();
 
         $summaryBoxes = Hash::sort($summaryBoxes, '{*}.priority');

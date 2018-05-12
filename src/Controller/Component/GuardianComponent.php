@@ -120,11 +120,11 @@ class GuardianComponent extends Component
     {
         $this->request = $this->getController()->request;
         $this->response = $this->getController()->response;
-        $this->session = $this->request->session();
+        $this->session = $this->request->getSession();
         $this->permissionManager = new PermissionManager();
 
-        $this->eventManager($this->getController()->eventManager());
-        $this->eventManager()->dispatch(new Event('Guardian.getGuestActions', $this));
+        $this->setEventManager($this->getController()->getEventManager());
+        $this->getEventManager()->dispatch(new Event('Guardian.getGuestActions', $this));
 
         if (!self::$_instance) {
             self::$_instance = &$this;
@@ -242,7 +242,7 @@ class GuardianComponent extends Component
             $plugin = 'App';
             $action = 'index';
 
-            $parsedUrl = !is_array($url) ? Router::parse($url) : $url;
+            $parsedUrl = !is_array($url) ? Router::parse((string)$url) : $url;
 
             if (isset($parsedUrl['plugin']) && !empty($parsedUrl['plugin'])) {
                 $plugin = $parsedUrl['plugin'];
@@ -264,7 +264,7 @@ class GuardianComponent extends Component
      */
     public function loadPermissions()
     {
-        $this->eventManager()->dispatch(
+        $this->getEventManager()->dispatch(
             new Event('Guardian.Permissions.initialize', $this->permissionManager)
         );
     }
@@ -354,7 +354,6 @@ class GuardianComponent extends Component
 
         $plugins = Plugin::loaded() ?? [];
         foreach ($plugins as $p) {
-            // @TODO load active plugins from plugin manager
             if (in_array($p, ['DebugKit', 'Migrations'])) {
                 continue;
             }

@@ -14,9 +14,11 @@
 namespace Wasabi\Core\Model\Table;
 
 use ArrayObject;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\Validation\Validator;
+use Wasabi\Core\Model\Entity\GeneralSetting;
 use Wasabi\Core\Model\Entity\Setting;
 
 /**
@@ -125,5 +127,35 @@ class GeneralSettingsTable extends SettingsTable
             $allowed = '<b><strong><a><br>';
             $setting->value = strip_tags($setting->value, $allowed);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return GeneralSetting
+     */
+    public function newEntity($data = null, array $options = [])
+    {
+        return parent::newEntity($data, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return GeneralSetting
+     */
+    public function patchEntity(EntityInterface $entity, array $data, array $options = [])
+    {
+        return parent::patchEntity($entity, $data, $options);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array|GeneralSetting
+     */
+    public function get($primaryKey, $options = [])
+    {
+        return parent::get($primaryKey, $options);
     }
 }

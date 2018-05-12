@@ -15,6 +15,7 @@ namespace Wasabi\Core\Model\Table;
 
 use ArrayObject;
 use Cake\Cache\Cache;
+use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
@@ -74,7 +75,37 @@ class RoutesTable extends Table
     public function afterSave(Event $event, Route $entity, ArrayObject $options)
     {
         Cache::clear(false, 'wasabi/core/routes');
-        $this->eventManager()->dispatch(new Event('Wasabi.Routes.changed'));
+        $this->getEventManager()->dispatch(new Event('Wasabi.Routes.changed'));
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return Route
+     */
+    public function newEntity($data = null, array $options = [])
+    {
+        return parent::newEntity($data, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return Route
+     */
+    public function patchEntity(EntityInterface $entity, array $data, array $options = [])
+    {
+        return parent::patchEntity($entity, $data, $options);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array|Route
+     */
+    public function get($primaryKey, $options = [])
+    {
+        return parent::get($primaryKey, $options);
     }
 
     /**
@@ -88,7 +119,7 @@ class RoutesTable extends Table
         $route = $this->find()
             ->select([$this->aliasField('id')])
             ->where([$this->aliasField('url') => $url])
-            ->hydrate(false)
+            ->enableHydration(false)
             ->first();
 
         return !empty($route);
@@ -112,7 +143,7 @@ class RoutesTable extends Table
                 $this->aliasField('language_id') => $languageId,
                 $this->aliasField('redirect_to') . ' IS' => null
             ])
-            ->hydrate(false)
+            ->enableHydration(false)
             ->first();
 
         return $defaultRoute;

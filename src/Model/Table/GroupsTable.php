@@ -13,8 +13,7 @@
  */
 namespace Wasabi\Core\Model\Table;
 
-use Cake\Core\Configure;
-use Cake\Database\Expression\QueryExpression;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -77,6 +76,36 @@ class GroupsTable extends Table
     {
         $rules->add($rules->isUnique(['name'], __d('wasabi_core', 'Another group with this name already exists.')));
         return $rules;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return Group
+     */
+    public function newEntity($data = null, array $options = [])
+    {
+        return parent::newEntity($data, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return Group
+     */
+    public function patchEntity(EntityInterface $entity, array $data, array $options = [])
+    {
+        return parent::patchEntity($entity, $data, $options);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array|Group
+     */
+    public function get($primaryKey, $options = [])
+    {
+        return parent::get($primaryKey, $options);
     }
 
     /**

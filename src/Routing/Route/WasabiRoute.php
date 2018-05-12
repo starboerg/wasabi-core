@@ -65,9 +65,10 @@ class WasabiRoute extends Route
      * Parse a requested url and create routing parameters from the routes table.
      *
      * @param string $url The url to parse.
+     * @param string $method The HTTP method of the request being parsed.
      * @return array|bool|mixed
      */
-    public function parse($url)
+    public function parse($url, $method = '')
     {
         if (!$url) {
             $url = '/';
@@ -75,10 +76,17 @@ class WasabiRoute extends Route
 
         $Routes = TableRegistry::get('Wasabi/Core.Routes');
 
+        /** @var \Wasabi\Core\Model\Entity\Route $route */
         $route = $Routes->find()
-            ->orWhere([$Routes->aliasField('page_type') => 'collection'])
-            ->orWhere([$Routes->aliasField('page_type') => 'simple'])
-            ->andWhere([$Routes->aliasField('url') => $url])
+            ->where([
+                'and' => [
+                    'or' => [
+                        [$Routes->aliasField('page_type') => 'collection'],
+                        [$Routes->aliasField('page_type') => 'simple']
+                    ],
+                    [$Routes->aliasField('url') => $url]
+                ]
+            ])
             ->first();
 
         $pageNumber = false;

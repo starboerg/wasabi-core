@@ -56,9 +56,10 @@ class SettingsController extends BackendAppController
         ];
         $this->GeneralSettings = $this->loadModel('Wasabi/Core.GeneralSettings');
         $settings = $this->GeneralSettings->getKeyValues(new GeneralSetting(), $keys);
-        if ($this->request->is('post') && !empty($this->request->data)) {
-            $settings = $this->GeneralSettings->newEntity($this->request->data);
-            if (!$settings->errors()) {
+
+        if ($this->request->is('post')) {
+            $settings = $this->GeneralSettings->newEntity($this->request->getData());
+            if (!$settings->getErrors()) {
                 if ($this->GeneralSettings->saveKeyValues($settings, $keys)) {
                     $this->Flash->success(__d('wasabi_core', 'The general settings have been updated.'));
                     $this->redirect(['action' => 'general']);
@@ -70,6 +71,7 @@ class SettingsController extends BackendAppController
                 $this->Flash->error($this->formErrorMessage);
             }
         }
+
         $this->set('settings', $settings);
     }
 
@@ -89,9 +91,10 @@ class SettingsController extends BackendAppController
         ];
         $this->CacheSettings = $this->loadModel('Wasabi/Core.CacheSettings');
         $settings = $this->CacheSettings->getKeyValues(new CacheSetting(), $keys);
-        if ($this->request->is('post') && !empty($this->request->data)) {
+
+        if ($this->request->is('post')) {
             $settings = $this->CacheSettings->newEntity($this->request->data);
-            if (!$settings->errors()) {
+            if (!$settings->getErrors()) {
                 if ($this->CacheSettings->saveKeyValues($settings, $keys)) {
                     $this->Flash->success(__d('wasabi_core', 'The cache settings have been updated.'));
                     $this->redirect(['action' => 'cache']);
@@ -103,6 +106,7 @@ class SettingsController extends BackendAppController
                 $this->Flash->error($this->formErrorMessage);
             }
         }
+
         $this->set([
             'settings' => $settings,
             'cacheDurations' => $this->CacheSettings->cacheDurations

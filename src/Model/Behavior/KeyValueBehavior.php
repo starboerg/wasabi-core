@@ -17,6 +17,7 @@ use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
+use Exception;
 use Wasabi\Core\Model\Entity\Setting;
 
 /**
@@ -66,7 +67,7 @@ class KeyValueBehavior extends Behavior
 
         foreach ($query->all() as $row) {
             $key = $row['scope'] . '__' . $row[$this->config('fields.key')];
-            $value = $row[$this->config('fields.value')];
+            $value = $row[$this->getConfig('fields.value')];
             $settings[$key] = $value;
         }
 
@@ -86,15 +87,15 @@ class KeyValueBehavior extends Behavior
      */
     public function getKeyValues(Entity $entity, array $keys)
     {
-        $scope = $this->config('scope');
+        $scope = $this->getConfig('scope');
         $query = $this->_table->query();
 
         $query
             ->where([
                 'scope' => $scope,
-                $this->config('fields.key') . ' IN' => $keys
+                $this->getConfig('fields.key') . ' IN' => $keys
             ])
-            ->hydrate(false);
+            ->enableHydration(false);
 
         // unserialize serialized fields
         $query->formatResults(function (ResultSet $results) {
@@ -107,7 +108,7 @@ class KeyValueBehavior extends Behavior
         });
 
         foreach ($query->all() as $row) {
-            $entity->{$row[$this->config('fields.key')]} = $row[$this->config('fields.value')];
+            $entity->{$row[$this->getConfig('fields.key')]} = $row[$this->getConfig('fields.value')];
         }
 
         return $entity;
@@ -132,7 +133,7 @@ class KeyValueBehavior extends Behavior
             $entity = $event->result;
         }
 
-        $fields = $this->config('fields');
+        $fields = $this->getConfig('fields');
 
         if ($entity->has($fields['key']) && $entity->has($fields['value'])) {
             return true;
@@ -147,16 +148,16 @@ class KeyValueBehavior extends Behavior
             }
 
             $serialized = false;
-            if (in_array($key, $this->config('serializeFields'))) {
+            if (in_array($key, $this->getConfig('serializeFields'))) {
                 $value = serialize($value);
                 $serialized = true;
             }
 
             /** @var Setting $kvEntity */
             $kvEntity = $this->_table->newEntity([
-                'scope' => $this->config('scope'),
-                $this->config('fields.key') => $key,
-                $this->config('fields.value') => $value,
+                'scope' => $this->getConfig('scope'),
+                $this->getConfig('fields.key') => $key,
+                $this->getConfig('fields.value') => $value,
                 'serialized' => $serialized
             ]);
 
@@ -167,11 +168,15 @@ class KeyValueBehavior extends Behavior
             $entities[] = $kvEntity;
         }
 
-        $result = $this->_table->connection()->transactional(function () use ($entities) {
-            foreach ($entities as $e) {
-                $this->_table->save($e);
-            }
-        });
+        $result = false;
+
+        try {
+            $result = $this->_table->getConnection()->transactional(function () use ($entities) {
+                foreach ($entities as $entity) {
+                    $this->_table->save($entity);
+                }
+            });
+        } catch (Exception $e) {}
 
         return ($result !== false);
     }
@@ -187,12 +192,12 @@ class KeyValueBehavior extends Behavior
     {
         return $this->_table
             ->find('list', [
-                'keyField' => $this->config('fields.key'),
+                'keyField' => $this->getConfig('fields.key'),
                 'valueField' => 'id'
             ])
             ->where([
-                'scope' => $this->config('scope'),
-                $this->config('fields.key') . ' IN' => $keys
+                $this->_table->aliasField('scope') => $this->getConfig('scope'),
+                $this->_table->getAlias() . '.' . $this->getConfig('fields.key') . ' IN' => $keys
             ])
             ->toArray();
     }

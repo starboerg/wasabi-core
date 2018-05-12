@@ -18,6 +18,7 @@ use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
+use Cake\Utility\Hash;
 use Wasabi\Core\Model\Entity\Language;
 use Wasabi\Core\Model\Entity\User;
 use Wasabi\Core\Model\Table\LanguagesTable;
@@ -117,8 +118,8 @@ class Wasabi
             // Setup the users backend language.
             /** @var Language $backendLanguage */
             $backendLanguage = $languages['backend'][0];
-            if ($request->session()->check('Auth.User.language_id')) {
-                $backendLanguageId = $request->session()->read('Auth.User.language_id');
+            if ($request->getSession()->check('Auth.User.language_id')) {
+                $backendLanguageId = $request->getSession()->read('Auth.User.language_id');
 
                 if ($backendLanguageId !== null) {
                     foreach ($languages['backend'] as $lang) {
@@ -133,8 +134,8 @@ class Wasabi
             // Setup the users content language.
             /** @var Language $contentLanguage */
             $contentLanguage = $languages['frontend'][0];
-            if ($request->session()->check('contentLanguageId')) {
-                $contentLanguageId = $request->session()->read('contentLanguageId');
+            if ($request->getSession()->check('contentLanguageId')) {
+                $contentLanguageId = $request->getSession()->read('contentLanguageId');
                 foreach ($languages['frontend'] as $lang) {
                     if ($lang->id === $contentLanguageId) {
                         $contentLanguage = $lang;
@@ -142,24 +143,24 @@ class Wasabi
                     }
                 }
             } else {
-                $request->session()->write('contentLanguageId', $contentLanguage->id);
+                $request->getSession()->write('contentLanguageId', $contentLanguage->id);
             }
             Configure::write('contentLanguage', $contentLanguage);
             Configure::write('backendLanguage', $backendLanguage);
-            I18n::locale($backendLanguage->iso2);
+            I18n::setLocale($backendLanguage->iso2);
         } else {
             // Frontend
             if ($langId !== null) {
                 foreach ($languages['frontend'] as $frontendLanguage) {
                     if ($frontendLanguage->id === $langId) {
                         Configure::write('contentLanguage', $frontendLanguage);
-                        I18n::locale($frontendLanguage->iso2);
+                        I18n::setLocale($frontendLanguage->iso2);
                         break;
                     }
                 }
             } else {
                 Configure::write('contentLanguage', $languages['frontend'][0]);
-                I18n::locale($languages['frontend'][0]->iso2);
+                I18n::setLocale($languages['frontend'][0]->iso2);
             }
         }
     }
@@ -204,9 +205,9 @@ class Wasabi
         $request = Router::getRequest();
 
         return [
-            'plugin' => $request->params['plugin'],
-            'controller' => $request->params['controller'],
-            'action' => $request->params['action']
+            'plugin' => $request->getParam('plugin'),
+            'controller' => $request->getParam('controller'),
+            'action' => $request->getParam('action')
         ];
     }
 

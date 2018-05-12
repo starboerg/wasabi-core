@@ -77,7 +77,7 @@ class GroupPermissionsTable extends Table
                     'allowed >' => 0
                 ])
                 ->order('allowed DESC')
-                ->hydrate(false)
+                ->enableHydration(false)
                 ->toArray();
         }, 'wasabi/core/group_permissions');
 
@@ -95,7 +95,7 @@ class GroupPermissionsTable extends Table
         $groupPermissions = $this->find('all')
             ->select('path')
             ->where(['group_id' => $groupId])
-            ->hydrate(false)
+            ->enableHydration(false)
             ->toArray();
 
         return Hash::extract($groupPermissions, '{n}.path');
@@ -119,7 +119,7 @@ class GroupPermissionsTable extends Table
             return;
         }
 
-        $this->connection()->transactional(function () use ($missingPaths, $actionMap, $groupId) {
+        $this->getConnection()->transactional(function () use ($missingPaths, $actionMap, $groupId) {
             foreach ($missingPaths as $missingPath) {
                 $action = $actionMap[$missingPath];
                 $this->save(

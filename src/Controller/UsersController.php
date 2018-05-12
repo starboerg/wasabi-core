@@ -14,7 +14,6 @@
 namespace Wasabi\Core\Controller;
 
 use Cake\Core\Configure;
-use Cake\Database\Connection;
 use Cake\Event\EventDispatcherTrait;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Network\Exception\MethodNotAllowedException;
@@ -267,7 +266,7 @@ class UsersController extends BackendAppController
                     $this->Flash->warning($message, 'auth', false);
                 } else {
                     $this->Auth->setUser($user);
-                    $this->request->session()->write('loginTime', time());
+                    $this->request->getSession()->write('loginTime', time());
                     if (!$this->request->is('ajax')) {
                         $this->Flash->success(__d('wasabi_core', 'Welcome back.'), 'auth');
                         if (($redirectUrl = $this->Auth->redirectUrl()) === '/backend/heartbeat') {
@@ -280,10 +279,10 @@ class UsersController extends BackendAppController
                 }
             } else {
                 unset($this->request->data['password']);
-                $this->request->session()->write('data.login', $this->request->data());
+                $this->request->getSession()->write('data.login', $this->request->getData());
                 if (!$ipIsBlocked) {
                     $identityField = Wasabi::setting('Auth.identity_field');
-                    $this->dispatchEvent('Auth.failedLogin', [$clientIp, $identityField, $this->request->data[$identityField]]);
+                    $this->dispatchEvent('Auth.failedLogin', [$clientIp, $identityField, $this->request->getData($identityField)]);
                     $errorMsg = __d('wasabi_core', 'Email or password is incorrect.');
                 }
 
@@ -301,20 +300,20 @@ class UsersController extends BackendAppController
                     'status' => 200,
                     '_serialize' => ['status']
                 ]);
-                $flashType = $this->request->session()->read('Flash.auth.0.params.type');
+                $flashType = $this->request->getSession()->read('Flash.auth.0.params.type');
                 if ($flashType === 'warning') {
                     $this->set('redirect', Router::url('/' . $this->request->url, true));
                     $this->viewVars['_serialize'][] = 'redirect';
                 }
                 if ($flashType === 'error') {
-                    $this->set('content', (new AppView($this->request, $this->response, $this->eventManager()))->element('Wasabi/Core.login-form-ajax'));
+                    $this->set('content', (new AppView($this->request, $this->response, $this->getEventManager()))->element('Wasabi/Core.login-form-ajax'));
                     $this->viewVars['_serialize'][] = 'content';
                 }
             }
         } else {
-            if ($this->request->session()->check('data.login')) {
-                $this->request->data = (array)$this->request->session()->read('data.login');
-                $this->request->session()->delete('data.login');
+            if ($this->request->getSession()->check('data.login')) {
+                $this->request->data = (array)$this->request->getSession()->read('data.login');
+                $this->request->getSession()->delete('data.login');
             }
         }
 
@@ -346,8 +345,8 @@ class UsersController extends BackendAppController
     public function register()
     {
         /** @var User $user */
-        $user = $this->Users->newEntity($this->request->data);
-        if ($this->request->is('post') && !empty($this->request->data)) {
+        $user = $this->Users->newEntity($this->request->getData());
+        if ($this->request->is('post')) {
             if ($this->Users->save($user)) {
                 $this->loadModel('Wasabi/Core.Tokens');
                 $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_EMAIL_VERIFICATION);
@@ -360,7 +359,7 @@ class UsersController extends BackendAppController
             $this->Flash->error($this->formErrorMessage, 'flash', false);
         }
         $this->set(['user' => $user]);
-        $this->viewBuilder()->layout('Wasabi/Core.support');
+        $this->viewBuilder()->setLayout('Wasabi/Core.support');
     }
 
     /**
@@ -424,11 +423,10 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        /** @var User $user */
         $user = $this->Users->newEntity(null, ['associated' => 'Groups']);
 
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data, ['associated' => 'Groups']);
+            $user = $this->Users->patchEntity($user, $this->request->getData(), ['associated' => 'Groups']);
             $user->set('password', Text::uuid());
 
             if ($this->Users->save($user, ['associated' => 'Groups'])) {
@@ -475,12 +473,11 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        /** @var User $user */
         $user = $this->Users->getUserAndGroups($id);
 
         if ($this->request->is('put')) {
-            $user = $this->Users->patchEntity($user, $this->request->data, ['associated' => 'Groups']);
-            $userActivated = ($user->dirty('active') && $user->active);
+            $user = $this->Users->patchEntity($user, $this->request->getData(), ['associated' => 'Groups']);
+            $userActivated = ($user->isDirty('active') && $user->active);
             if ($userActivated) {
                 // do not allow a user to be activated if his email address is not verified
                 if (!$user->verified) {
@@ -490,7 +487,7 @@ class UsersController extends BackendAppController
                     $user->activate();
                 }
             }
-            $userDeactivated = ($user->dirty('active') && !$user->active);
+            $userDeactivated = ($user->isDirty('active') && !$user->active);
             if ($userDeactivated) {
                 // do not allow a user to deactivate his own account
                 if ($user->id === Wasabi::user()->id) {
@@ -503,7 +500,7 @@ class UsersController extends BackendAppController
             if ($this->Users->save($user, ['associated' => 'Groups'])) {
                 if ($user->id === Wasabi::user()->id) {
                     $updateUser = $this->Users->get($user->id);
-                    $updateUser->group_id = $this->Users->UsersGroups->getGroupIds($updateUser->id);
+                    $updateUser->set('group_id', $this->Users->UsersGroups->getGroupIds($updateUser->id));
                     $this->Auth->setUser($updateUser->toArray());
                     Wasabi::user($updateUser);
                 }
@@ -555,7 +552,6 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        /** @var User $user */
         $user = $this->Users->getUserAndGroups($id);
 
         if (Wasabi::user()->cant('delete', $user)) {
@@ -588,7 +584,6 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        /** @var User $user */
         $user = $this->Users->get($id);
 
         if ($this->request->is(['post', 'put'])) {
@@ -624,7 +619,7 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        $loginTime = $this->request->session()->check('loginTime') ? $this->request->session()->read('loginTime') : 0;
+        $loginTime = $this->request->getSession()->check('loginTime') ? $this->request->getSession()->read('loginTime') : 0;
         $maxLoggedInTime = (int)Wasabi::setting('Core.Login.HeartBeat.max_login_time', 0) / 1000;
         $logoutTime = $loginTime + $maxLoggedInTime;
 
@@ -653,9 +648,9 @@ class UsersController extends BackendAppController
     {
         $user = $this->Users->get($this->Auth->user('id'));
 
-        if ($this->request->is('put') && !empty($this->request->data)) {
+        if ($this->request->is('put')) {
             /** @var User $user */
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
                 $this->Auth->setUser(Hash::merge($this->Auth->user(), $user->toArray()));
                 $this->Flash->success(__d('wasabi_core', 'Your profile has been updated.'));
@@ -690,7 +685,6 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        /** @var User $user */
         $user = $this->Users->get($id);
 
         if ($this->request->is(['post', 'put'])) {
@@ -732,7 +726,6 @@ class UsersController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        /** @var User $user */
         $user = $this->Users->get($id);
 
         if ($this->request->is(['post', 'put'])) {
@@ -776,10 +769,9 @@ class UsersController extends BackendAppController
      */
     public function requestNewVerificationEmail()
     {
-        if ($this->request->is('post') && !empty($this->request->data)) {
-            /** @var User $user */
-            $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
-            if (!$user->errors()) {
+        if ($this->request->is('post')) {
+            $user = $this->Users->newEntity($this->request->getData(), ['validate' => 'emailOnly']);
+            if (!$user->getErrors()) {
                 if (($user = $this->Users->existsWithEmail($user->email))) {
                     $this->loadModel('Wasabi/Core.Tokens');
 
@@ -791,17 +783,17 @@ class UsersController extends BackendAppController
                 $this->redirect(['action' => 'login']);
                 return;
             } else {
-                $this->request->session()->write('data.requestNewVerificationEmail', $this->request->data());
+                $this->request->getSession()->write('data.requestNewVerificationEmail', $this->request->getData());
                 $this->Flash->error($this->formErrorMessage);
                 $this->redirect(['action' => 'requestNewVerificationEmail']);
                 return;
             }
         } else {
-            if ($this->request->session()->check('data.requestNewVerificationEmail')) {
-                $this->request->data = (array)$this->request->session()->read('data.requestNewVerificationEmail');
-                $this->request->session()->delete('data.requestNewVerificationEmail');
+            if ($this->request->getSession()->check('data.requestNewVerificationEmail')) {
+                $this->request->data = (array)$this->request->getSession()->read('data.requestNewVerificationEmail');
+                $this->request->getSession()->delete('data.requestNewVerificationEmail');
             }
-            $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
+            $user = $this->Users->newEntity($this->request->getData(), ['validate' => 'emailOnly']);
         }
         $this->set('user', $user);
         $this->render(null, 'Wasabi/Core.support');
@@ -815,10 +807,10 @@ class UsersController extends BackendAppController
      */
     public function lostPassword()
     {
-        if ($this->request->is('post') && !empty($this->request->data)) {
+        if ($this->request->is('post')) {
             /** @var User $user */
-            $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
-            if (!$user->errors()) {
+            $user = $this->Users->newEntity($this->request->getData(), ['validate' => 'emailOnly']);
+            if (!$user->getErrors()) {
                 if (($user = $this->Users->existsWithEmail($user->email))) {
                     $this->loadModel('Wasabi/Core.Tokens');
 
@@ -830,17 +822,17 @@ class UsersController extends BackendAppController
                 $this->redirect(['action' => 'login']);
                 return;
             } else {
-                $this->request->session()->write('data.lostPassword', $this->request->data());
+                $this->request->getSession()->write('data.lostPassword', $this->request->getData());
                 $this->Flash->error($this->formErrorMessage, 'flash', false);
                 $this->redirect(['action' => 'lostPassword']);
                 return;
             }
         } else {
-            if ($this->request->session()->check('data.lostPassword')) {
-                $this->request->data = (array)$this->request->session()->read('data.lostPassword');
-                $this->request->session()->delete('data.lostPassword');
+            if ($this->request->getSession()->check('data.lostPassword')) {
+                $this->request->data = (array)$this->request->getSession()->read('data.lostPassword');
+                $this->request->getSession()->delete('data.lostPassword');
             }
-            $user = $this->Users->newEntity($this->request->data, ['validate' => 'emailOnly']);
+            $user = $this->Users->newEntity($this->request->getData(), ['validate' => 'emailOnly']);
         }
         $this->set('user', $user);
         $this->render(null, 'Wasabi/Core.support');
@@ -868,11 +860,9 @@ class UsersController extends BackendAppController
             'fields' => ['id']
         ]);
 
-        if ($this->request->is('put') && !empty($this->request->data)) {
-            /** @var User $user */
-            $user = $this->Users->patchEntity($user, $this->request->data, ['validate' => 'passwordOnly']);
-            /** @var Connection $connection */
-            $connection = $this->Users->connection();
+        if ($this->request->is('put')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData(), ['validate' => 'passwordOnly']);
+            $connection = $this->Users->getConnection();
             $connection->begin();
             if ($this->Users->save($user)) {
                 $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_LOST_PASSWORD);
@@ -909,11 +899,9 @@ class UsersController extends BackendAppController
         if ($tokenString && (bool)($token = $this->Tokens->findByToken($tokenString)) &&
             !$token->hasExpired() && !$token->used
         ) {
-            /** @var User $user */
             $user = $this->Users->get($token->user_id);
 
-            /** @var Connection $connection */
-            $connection = $this->Users->connection();
+            $connection = $this->Users->getConnection();
             $connection->begin();
             if ($this->Users->verify($user)) {
                 $this->Tokens->invalidateExistingTokens($user->id, TokensTable::TYPE_EMAIL_VERIFICATION);

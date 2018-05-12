@@ -15,6 +15,7 @@ namespace Wasabi\Core\Model\Table;
 
 use ArrayObject;
 use Cake\Core\Configure;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -247,6 +248,36 @@ class UsersTable extends Table
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @return User
+     */
+    public function newEntity($data = null, array $options = [])
+    {
+        return parent::newEntity($data, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return User
+     */
+    public function patchEntity(EntityInterface $entity, array $data, array $options = [])
+    {
+        return parent::patchEntity($entity, $data, $options);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array|User
+     */
+    public function get($primaryKey, $options = [])
+    {
+        return parent::get($primaryKey, $options);
+    }
+
+    /**
      * Default finder for authenticated users.
      *
      * @param Query $query
@@ -417,7 +448,7 @@ class UsersTable extends Table
      * Find a user by unverified email address.
      *
      * @param string $email The email to check for.
-     * @return User mixed
+     * @return mixed
      */
     public function getNotVerified($email)
     {
@@ -454,7 +485,7 @@ class UsersTable extends Table
      * Get a user by $id including all user groups the user is assigned to.
      *
      * @param int|string $id The id of the user.
-     * @return Query
+     * @return User
      */
     public function getUserAndGroups($id)
     {

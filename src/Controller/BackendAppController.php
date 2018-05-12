@@ -126,7 +126,7 @@ class BackendAppController extends AppController
         $this->Auth->deny();
 
         if (!$this->Auth->user()) {
-            $this->Auth->config('authError', false);
+            $this->Auth->getConfig('authError', false);
         } else {
             Wasabi::user(new User($this->Auth->user()));
 
@@ -138,7 +138,7 @@ class BackendAppController extends AppController
             ]);
 
             if (!$this->request->is('ajax') || $currentRequestPath !== 'Wasabi/Core.Users.heartBeat') {
-                $this->request->session()->write('loginTime', time());
+                $this->request->getSession()->write('loginTime', time());
             }
         }
 
@@ -147,7 +147,7 @@ class BackendAppController extends AppController
         Wasabi::loadLanguages(null, true);
 
         // Load all menu items from all plugins.
-        $this->eventManager()->dispatch(new Event('Wasabi.Backend.Menu.initMain', Nav::createMenu('backend.main')));
+        $this->getEventManager()->dispatch(new Event('Wasabi.Backend.Menu.initMain', Nav::createMenu('backend.main')));
 
         $this->_setSectionCssClass();
 
@@ -197,7 +197,7 @@ class BackendAppController extends AppController
     {
         $url = Wasabi::getCurrentUrlArray();
         if ($this->Guardian->isGuestAction($url)) {
-            $this->Auth->allow($this->request->params['action']);
+            $this->Auth->allow($this->request->getParam('action'));
         }
     }
 
@@ -209,14 +209,14 @@ class BackendAppController extends AppController
      */
     protected function _setSectionCssClass()
     {
-        $plugin = $this->request->params['plugin'];
+        $plugin = $this->request->getParam('plugin');
         $prefix = ($plugin !== null) ? $plugin : 'app';
         $this->set(
             'sectionCssClass',
             strtolower(
                 Text::slug($prefix) . '--' .
-                preg_replace('/\\//', '--', $this->request->params['controller']) . '-' .
-                $this->request->params['action']
+                preg_replace('/\\//', '--', $this->request->getParam('controller')) . '-' .
+                $this->request->getParam('action')
             )
         );
     }

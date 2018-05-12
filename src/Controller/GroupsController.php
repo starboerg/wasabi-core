@@ -135,16 +135,18 @@ class GroupsController extends BackendAppController
     public function add()
     {
         $group = $this->Groups->newEntity();
-        if ($this->request->is('post') && !empty($this->request->data)) {
-            $this->Groups->patchEntity($group, $this->request->data);
+
+        if ($this->request->is('post')) {
+            $this->Groups->patchEntity($group, $this->request->getData());
             if ($this->Groups->save($group)) {
-                $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been created.', $this->request->data['name']));
+                $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been created.', $group->name));
                 $this->redirect(['action' => 'index']);
                 return;
             } else {
                 $this->Flash->error($this->formErrorMessage);
             }
         }
+
         $this->set('group', $group);
     }
 
@@ -164,16 +166,18 @@ class GroupsController extends BackendAppController
         $group = $this->Groups->get($id);
 
         if ($this->request->is('put')) {
-            $group = $this->Groups->patchEntity($group, $this->request->data);
+            $group = $this->Groups->patchEntity($group, $this->request->getData());
             if ($this->Groups->save($group)) {
-                $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been saved.', $this->request->data['name']));
+                $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been saved.', $group->name));
                 $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
                 return;
             } else {
                 $this->Flash->error($this->formErrorMessage);
             }
         }
+
         $this->set('group', $group);
+
         $this->render('add');
     }
 
@@ -191,7 +195,7 @@ class GroupsController extends BackendAppController
         }
 
         /** @var Connection $connection */
-        $connection = $this->Groups->connection();
+        $connection = $this->Groups->getConnection();
         $connection->begin();
 
         $group = $this->Groups->get($id);
@@ -217,7 +221,7 @@ class GroupsController extends BackendAppController
         $userCount = $users->all()->count();
         $groupCanBeDeleted = ($userCount === 0);
 
-        if (($alternativeGroupIds = $this->request->data('alternative_group_id')) !== null) {
+        if (($alternativeGroupIds = $this->request->getData('alternative_group_id')) !== null) {
             // check if a valid alternative group has been selected for every user
             $valid = true;
             $validAlternativeGroupIds = [];

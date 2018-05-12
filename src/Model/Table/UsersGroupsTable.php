@@ -42,7 +42,7 @@ class UsersGroupsTable extends Table
         $groups = $this->find()
             ->select(['group_id'])
             ->where(['user_id' => $userId])
-            ->hydrate(false)
+            ->enableHydration(false)
             ->toArray();
 
         return Hash::extract($groups, '{n}.group_id');

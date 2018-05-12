@@ -83,7 +83,7 @@ class AppController extends Controller
         }, 'wasabi/core/longterm');
 
         $event = new Event('Settings.afterLoad', $settings);
-        $this->eventManager()->dispatch($event);
+        $this->getEventManager()->dispatch($event);
 
         if ($event->result !== null) {
             $settings = $event->result;
@@ -107,7 +107,7 @@ class AppController extends Controller
         $policyManager = new PolicyManager($this->request);
 
         $event = new Event('Wasabi.Policies.register', $policyManager);
-        $this->eventManager()->dispatch($event);
+        $this->getEventManager()->dispatch($event);
 
         Wasabi::setPolicyManager($policyManager);
     }

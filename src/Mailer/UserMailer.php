@@ -13,7 +13,6 @@
  */
 namespace Wasabi\Core\Mailer;
 
-use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
 use Wasabi\Core\Model\Entity\User;
@@ -31,8 +30,8 @@ class UserMailer extends Mailer
     public function verifyEmail(User $user, $token)
     {
         $this->_prepareEmail($user, __d('wasabi_core', 'Verify your email address'));
-        $this->_email->template('Wasabi/Core.User/verify');
-        $this->_email->viewVars([
+        $this->_email->setTemplate('Wasabi/Core.User/verify');
+        $this->_email->setViewVars([
             'user' => $user,
             'verifyEmailLink' => [
                 'plugin' => 'Wasabi/Core',
@@ -55,8 +54,8 @@ class UserMailer extends Mailer
     public function verifyAndResetPasswordEmail(User $user, $token)
     {
         $this->_prepareEmail($user, __d('wasabi_core', 'Verify your email address'));
-        $this->_email->template('Wasabi/Core.User/verify');
-        $this->_email->viewVars([
+        $this->_email->setTemplate('Wasabi/Core.User/verify');
+        $this->_email->setViewVars([
             'user' => $user,
             'verifyEmailLink' => [
                 'plugin' => null,
@@ -77,8 +76,8 @@ class UserMailer extends Mailer
     public function verifiedEmail(User $user)
     {
         $this->_prepareEmail($user, __d('wasabi_core', 'Email address verified'));
-        $this->_email->template('Wasabi/Core.User/verfied');
-        $this->_email->viewVars([
+        $this->_email->setTemplate('Wasabi/Core.User/verfied');
+        $this->_email->setViewVars([
             'user' => $user,
             'instanceName' => Wasabi::getInstanceName()
         ]);
@@ -93,8 +92,8 @@ class UserMailer extends Mailer
     public function verifiedByAdminEmail(User $user)
     {
         $this->_prepareEmail($user, __d('wasabi_core', 'Email address verified'));
-        $this->_email->template('Wasabi/Core.User/verified-by-admin');
-        $this->_email->viewVars([
+        $this->_email->setTemplate('Wasabi/Core.User/verified-by-admin');
+        $this->_email->setViewVars([
             'user' => $user,
             'instanceName' => Wasabi::getInstanceName()
         ]);
@@ -109,8 +108,8 @@ class UserMailer extends Mailer
     public function activatedEmail(User $user)
     {
         $this->_prepareEmail($user, __d('wasabi_core', 'Your account has been activated'));
-        $this->_email->template('Wasabi/Core.User/activated');
-        $this->_email->viewVars([
+        $this->_email->setTemplate('Wasabi/Core.User/activated');
+        $this->_email->setViewVars([
             'user' => $user,
             'instanceName' => Wasabi::getInstanceName()
         ]);
@@ -125,8 +124,8 @@ class UserMailer extends Mailer
     public function deactivatedEmail(User $user)
     {
         $this->_prepareEmail($user, __d('wasabi_core', 'Your account has been deactivated'));
-        $this->_email->template('Wasabi/Core.User/deactivated');
-        $this->_email->viewVars([
+        $this->_email->setTemplate('Wasabi/Core.User/deactivated');
+        $this->_email->setViewVars([
             'user' => $user,
             'instanceName' => Wasabi::getInstanceName()
         ]);
@@ -142,8 +141,8 @@ class UserMailer extends Mailer
     public function lostPasswordEmail(User $user, $token)
     {
         $this->_prepareEmail($user, __d('wasabi_core', 'Password Reset'));
-        $this->_email->template('Wasabi/Core.User/lost-password');
-        $this->_email->viewVars([
+        $this->_email->setTemplate('Wasabi/Core.User/lost-password');
+        $this->_email->setViewVars([
             'user' => $user,
             'resetPasswordLink' => [
                 'plugin' => 'Wasabi/Core',
@@ -164,13 +163,13 @@ class UserMailer extends Mailer
      */
     protected function _prepareEmail(User $user, $subject)
     {
-        $this->layout('Wasabi/Core.responsive');
-        $this->_email->transport('default');
-        $this->_email->emailFormat('both');
-        $this->_email->from(Wasabi::getSenderEmail(), Wasabi::getSenderName());
-        $this->_email->to($user->email, $user->username);
-        $this->_email->subject($subject);
-        $this->_email->helpers([
+        $this->setLayout('Wasabi/Core.responsive');
+        $this->_email->setTransport('default');
+        $this->_email->setEmailFormat('both');
+        $this->_email->setFrom(Wasabi::getSenderEmail(), Wasabi::getSenderName());
+        $this->_email->setTo($user->email, $user->username);
+        $this->_email->setSubject($subject);
+        $this->_email->setHelpers([
             'Email' => [
                 'className' => 'Wasabi/Core.Email'
             ]

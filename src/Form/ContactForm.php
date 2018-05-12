@@ -25,7 +25,7 @@ class ContactForm extends Form
      * The schema definition for the fields of this form.
      *
      * @param Schema $schema The schema to customize.
-     * @return $this
+     * @return Schema
      */
     protected function _buildSchema(Schema $schema)
     {
@@ -39,11 +39,11 @@ class ContactForm extends Form
      * Validation rules for the submitted fields of this form.
      *
      * @param Validator $validator The validator to customize.
-     * @return $this
+     * @return Validator
      */
     protected function _buildValidator(Validator $validator)
     {
-        $validator->provider('googleRecaptcha', 'Wasabi\Core\Model\Validation\GoogleRecaptchaValidationProvider');
+        $validator->setProvider('googleRecaptcha', 'Wasabi\Core\Model\Validation\GoogleRecaptchaValidationProvider');
 
         return $validator
             ->notEmpty('name', __d('wasabi_core', 'Please enter your name.'))

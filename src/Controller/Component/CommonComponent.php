@@ -24,9 +24,10 @@ class CommonComponent extends Component
      */
     public function startup(Event $event)
     {
-        $controller = $event->subject();
-        if (!empty($controller->request->data) && !Configure::read('DataPreparation.notrimRequestData')) {
-            $controller->request->data = $this->_trimDeep($controller->request->data);
+        /** @var Controller $controller */
+        $controller = $event->getSubject();
+        if (!empty($controller->request->getData()) && !Configure::read('DataPreparation.notrimRequestData')) {
+            $controller->request->data = $this->_trimDeep($controller->request->getData());
         }
         if (!empty($controller->request->query) && !Configure::read('DataPreparation.notrimRequestQuery')) {
             $controller->request->query = $this->_trimDeep($controller->request->query);

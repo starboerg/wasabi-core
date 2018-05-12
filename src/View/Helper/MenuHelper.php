@@ -159,15 +159,15 @@ class MenuHelper extends Helper
     protected function _buildItemClasses($item)
     {
         $cls = [
-            $this->config('itemClass')
+            $this->getConfig('itemClass')
         ];
 
         if ($this->_isActive($item)) {
-            $cls[] = $this->config('itemActiveClass');
+            $cls[] = $this->getConfig('itemActiveClass');
         }
 
         if ($this->_isOpen($item)) {
-            $cls[] = $this->config('itemOpenClass');
+            $cls[] = $this->getConfig('itemOpenClass');
         }
 
         return $cls;
@@ -176,11 +176,11 @@ class MenuHelper extends Helper
     protected function _buildLinkClasses($level)
     {
         $cls = [
-            $this->config('linkClass')
+            $this->getConfig('linkClass')
         ];
 
         if ($level > 0) {
-            $cls[] = $this->config('nestedLinkClass');
+            $cls[] = $this->getConfig('nestedLinkClass');
         }
 
         return $cls;
@@ -189,11 +189,11 @@ class MenuHelper extends Helper
     protected function _buildSubnavClasses($item, $level)
     {
         $cls = [
-            str_replace('{{level}}', (string)$level, $this->config('subnavClass'))
+            str_replace('{{level}}', (string)$level, $this->getConfig('subnavClass'))
         ];
 
         if ($this->_isOpen($item)) {
-            $cls[] = $this->config('subnavOpenClass');
+            $cls[] = $this->getConfig('subnavOpenClass');
         }
 
         return $cls;
@@ -274,7 +274,7 @@ class MenuHelper extends Helper
         if ($item['icon'] ?? false) {
             $attrs = [
                 'class' => [
-                    $this->config('iconClass'),
+                    $this->getConfig('iconClass'),
                     $item['icon']
                 ]
             ];
@@ -288,7 +288,7 @@ class MenuHelper extends Helper
 
         if ($item['name_short'] ?? false) {
             $attrs = [
-                'class' => $this->config('nameShortClass')
+                'class' => $this->getConfig('nameShortClass')
             ];
             $shortName = $this->formatTemplate('name', [
                 'attrs' => $templater->formatAttributes($attrs),
@@ -300,7 +300,7 @@ class MenuHelper extends Helper
 
         if ($item['name'] ?? false) {
             $attrs = [
-                'class' => $this->config('nameClass')
+                'class' => $this->getConfig('nameClass')
             ];
             $name = $this->formatTemplate('name', [
                 'attrs' => $templater->formatAttributes($attrs),
@@ -312,7 +312,7 @@ class MenuHelper extends Helper
 
         if ($this->_hasChildren($item)) {
             $attrs = [
-                'class' => $this->config('caretClass')
+                'class' => $this->getConfig('caretClass')
             ];
             $caret = $this->formatTemplate('caret', [
                 'attrs' => $templater->formatAttributes($attrs)

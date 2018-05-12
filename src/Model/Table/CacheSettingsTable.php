@@ -13,8 +13,10 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Entity;
 use Cake\Validation\Validator;
+use Wasabi\Core\Model\Entity\CacheSetting;
 
 /**
  * Class CacheSettingsTable
@@ -88,5 +90,35 @@ class CacheSettingsTable extends SettingsTable
                 },
                 'message' => __d('wasabi_core', 'Please select a valid cache duration.')
             ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return CacheSetting
+     */
+    public function newEntity($data = null, array $options = [])
+    {
+        return parent::newEntity($data, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return CacheSetting
+     */
+    public function patchEntity(EntityInterface $entity, array $data, array $options = [])
+    {
+        return parent::patchEntity($entity, $data, $options);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array|CacheSetting
+     */
+    public function get($primaryKey, $options = [])
+    {
+        return parent::get($primaryKey, $options);
     }
 }

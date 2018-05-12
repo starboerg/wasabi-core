@@ -68,7 +68,7 @@ class PermissionsController extends BackendAppController
             $permission = Hash::expand($permission);
         }
 
-        $this->request->data['permissions'] = $permissions;
+        $this->request = $this->request->withData('permissions', $permissions);
 
         $this->set([
             'superAdminGroup' => $this->Groups->find()->where(['id' => 1])->first(),
@@ -87,7 +87,6 @@ class PermissionsController extends BackendAppController
     {
         $groups = $this->Groups->find('list')->where(['id <>' => 1]);
 
-        /** @var  Connection $ds */
         $ds = $this->Groups->GroupPermissions->getConnection();
         $ds->begin();
 
@@ -108,7 +107,6 @@ class PermissionsController extends BackendAppController
                             continue;
                         }
 
-                        /** @var GroupPermission $existingGroupPermission */
                         if (($existingGroupPermission = $this->_getExistingGroupPermission($groupId, $path)) !== false) {
                             // existing entity
                             if ($existingGroupPermission->allowed !== (int)$allowed) {

@@ -45,12 +45,12 @@ class RoutesController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        $model = $this->request->data('model');
-        $foreignKey = (int)$this->request->data('foreign_key');
+        $model = $this->request->getData('model');
+        $foreignKey = (int)$this->request->getData('foreign_key');
         $languageId = Wasabi::contentLanguage()->id;
-        $url = $this->_formatUrl($this->request->data('url'));
-        $routeType = (int)$this->request->data('route_type');
-        $element = $this->request->data('element');
+        $url = $this->_formatUrl($this->request->getData('url'));
+        $routeType = (int)$this->request->getData('route_type');
+        $element = $this->request->getData('element');
 
         $routeData = [
             'url' => $url,
@@ -77,11 +77,9 @@ class RoutesController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        /** @var Route $route */
         $route = $this->Routes->get($id);
 
-        /** @var Connection $connection */
-        $connection = $this->Routes->connection();
+        $connection = $this->Routes->getConnection();
         $connection->begin();
 
         $route->set([
@@ -115,15 +113,13 @@ class RoutesController extends BackendAppController
             throw new MethodNotAllowedException();
         }
 
-        /** @var Route $route */
         $route = $this->Routes->get($id);
 
         /** @var ResultSet $otherRoutes */
         $otherRoutes = $this->Routes->getOtherRoutesExcept($route->id, $route->model, $route->foreign_key, $route->language_id);
 
         if (!empty($otherRoutes) && $otherRoutes->count() >= 1) {
-            /** @var Connection $connection */
-            $connection = $this->Routes->connection();
+            $connection = $this->Routes->getConnection();
             $connection->begin();
 
             $this->Routes->delete($route);
@@ -152,7 +148,7 @@ class RoutesController extends BackendAppController
             $this->Flash->error(__d('wasabi_core', 'The URL <strong>{0}</strong> cannot be deleted. Please create another URL first.', $route->url), 'routes');
         }
 
-        $this->_render($route, $this->request->query('element'));
+        $this->_render($route, $this->request->getQuery('element'));
     }
 
     /**
