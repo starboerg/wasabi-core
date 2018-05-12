@@ -100,7 +100,14 @@ class BackendAppController extends AppController
                 'action' => 'unauthorized'
             ],
             'authorize' => 'Controller',
-            'authError' => __d('wasabi_core', 'You are not authorized to access that location.')
+            'authError' => __d('wasabi_core', 'You are not authorized to access that location.'),
+            'flash' => [
+                'key' => 'auth',
+                'element' => 'Wasabi/Core.default',
+                'params' => [
+                    'type' => 'error'
+                ]
+            ]
         ]);
 
         $this->loadComponent('Wasabi/Core.Guardian');
