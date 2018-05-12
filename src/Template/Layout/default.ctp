@@ -32,6 +32,9 @@ use Wasabi\Core\Wasabi;
         </div>
     </nav>
     <div id="content">
+        <?php if (in_array('content-area', $this->blocks())): ?>
+            <?= $this->fetch('content-area') ?>
+        <?php else: ?>
         <div class="content--wrapper" data-init="gm-scrollbar">
             <div class="gm-scrollbar -vertical"><div class="thumb"></div></div>
             <div class="gm-scrollbar -horizontal"><div class="thumb"></div></div>
@@ -44,6 +47,7 @@ use Wasabi\Core\Wasabi;
                 </div>
             </div>
         </div>
+        <?php endif; ?>
     </div>
 </div>
 <?= $this->element('Wasabi/Core.JavaScript/templates.hbs') ?>
