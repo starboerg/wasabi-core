@@ -7,7 +7,6 @@
 use Cake\Core\Configure;
 
 $options = [
-    'baseUrl' => $this->Url->build('/backend', true),
     'translations' => [
         'confirmYes' => __d('wasabi_core', 'Yes'),
         'confirmNo' => __d('wasabi_core', 'No')
