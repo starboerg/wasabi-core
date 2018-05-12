@@ -14,12 +14,10 @@
 namespace Wasabi\Core\Event;
 
 use Cake\Database\Expression\QueryExpression;
-use Wasabi\Core\Model\Entity\User;
 use Wasabi\Core\Model\Table\UsersGroupsTable;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\TableRegistry;
-use Wasabi\Core\Model\Table\UsersTable;
 use Wasabi\Core\Wasabi;
 
 class AuthListener implements EventListenerInterface

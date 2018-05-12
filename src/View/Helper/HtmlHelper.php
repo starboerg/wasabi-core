@@ -13,7 +13,6 @@
  */
 namespace Wasabi\Core\View\Helper;
 
-use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 
