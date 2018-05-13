@@ -51,6 +51,22 @@ class Wasabi
     }
 
     /**
+     * Get a specific frontend language by id.
+     *
+     * @param int $languageId
+     * @return Language|null
+     */
+    public static function getFrontendLanguageById($languageId)
+    {
+        $language = Hash::extract(Configure::read('languages.frontend'), '{n}[id=' . $languageId . ']');
+        if (!empty($language)) {
+            return $language[0];
+        }
+
+        return null;
+    }
+
+    /**
      * Get or set the currently logged in user.
      *
      * @param User $user The user to set (optional).
