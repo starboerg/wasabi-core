@@ -24582,8 +24582,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _backbone = require('backbone');
@@ -24602,10 +24600,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var strundefined = 'undefined';
-
 var Module = function () {
-
   /**
    * Constructor
    *
@@ -24630,7 +24625,9 @@ var Module = function () {
      */
     this.eventBus = eventBus;
 
-    this.initialize.apply(this, [options]);
+    if (typeof this['initialize'] === 'function') {
+      this['initialize'](options);
+    }
   }
 
   /**
@@ -24666,10 +24663,10 @@ var Module = function () {
         } else {
           options = component.options;
         }
-        if (_typeof(_this.components[componentName]) === strundefined) {
+        if (typeof _this.components[componentName] === 'undefined') {
           _this.components[componentName] = {};
         }
-        if (_typeof(_this.components[componentName]['instances']) === strundefined) {
+        if (typeof _this.components[componentName]['instances'] === 'undefined') {
           _this.components[componentName]['instances'] = [];
         }
 
@@ -24681,7 +24678,7 @@ var Module = function () {
         }, options)));
       };
 
-      if (_typeof(this.components) === strundefined) {
+      if (typeof this.components === 'undefined') {
         this.components = {};
       }
 
@@ -24725,7 +24722,7 @@ var Module = function () {
 
       var section = void 0;
 
-      if (_typeof(this.sections) === strundefined) {
+      if (typeof this.sections === 'undefined') {
         this.sections = {};
       }
 
@@ -24742,10 +24739,10 @@ var Module = function () {
           } else {
             options = section.options;
           }
-          if (_typeof(_this2.sections[sectionName]) === strundefined) {
+          if (typeof _this2.sections[sectionName] === 'undefined') {
             _this2.sections[sectionName] = {};
           }
-          if (_typeof(_this2.sections[sectionName]['instances']) === strundefined) {
+          if (typeof _this2.sections[sectionName]['instances'] === 'undefined') {
             _this2.sections[sectionName]['instances'] = [];
           }
 
@@ -24767,7 +24764,7 @@ var Module = function () {
   }, {
     key: 'getComponent',
     value: function getComponent(name) {
-      if (_typeof(this.components[name]) === strundefined || _typeof(this.components[name]['instances']) === strundefined || _typeof(this.components[name]['instances'][0]) === strundefined) {
+      if (typeof this.components[name] === 'undefined' || typeof this.components[name]['instances'] === 'undefined' || typeof this.components[name]['instances'][0] === 'undefined') {
         throw new Error('Component instance "' + name + '" not found in module "' + this.getName() + '".');
       }
 
@@ -24788,8 +24785,6 @@ exports.default = Module;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * @author       Frank Förster <github@frankfoerster.com>
@@ -24817,22 +24812,23 @@ var _Module = require('./Module');
 
 var _Module2 = _interopRequireDefault(_Module);
 
+var _jsCookie = require('js-cookie');
+
+var _jsCookie2 = _interopRequireDefault(_jsCookie);
+
 require('./core/vendor/jquery.livequery');
 
 var _paceProgress = require('pace-progress');
 
 var _paceProgress2 = _interopRequireDefault(_paceProgress);
 
+var _geminiScrollbar = require('gemini-scrollbar');
+
+var _geminiScrollbar2 = _interopRequireDefault(_geminiScrollbar);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * 'undefined' string for typeof comparisons.
- *
- * @type {string}
- */
-var strundefined = 'undefined';
 
 /**
  * Holds all registered modules.
@@ -24841,7 +24837,6 @@ var strundefined = 'undefined';
 var registeredModules = [];
 
 var Wasabi = function () {
-
   /**
    * Constructor
    */
@@ -24871,7 +24866,9 @@ var Wasabi = function () {
       Backbone: _backbone4.default,
       Marionette: _backbone2.default,
       Module: _Module2.default,
-      Pace: _paceProgress2.default
+      Pace: _paceProgress2.default,
+      Cookies: _jsCookie2.default,
+      GeminiScrollbar: _geminiScrollbar2.default
     };
 
     _paceProgress2.default.start();
@@ -24926,7 +24923,9 @@ var Wasabi = function () {
 
       console.info('--- Bootstrap [STARTED] ---');
       registeredModules.forEach(function (m) {
+        /* eslint-disable new-cap */
         var module = new m.module(_this, _this.eventBus, _underscore2.default.extend({}, m.options));
+        /* eslint-enable new-cap */
         _this.modules[m.name] = module;
         module.start();
         console.info('Bootstrapped module "' + m.name + '".');
@@ -24944,7 +24943,7 @@ var Wasabi = function () {
   }, {
     key: 'getModule',
     value: function getModule(name) {
-      if (_typeof(this.modules[name]) === strundefined) {
+      if (typeof this.modules[name] === 'undefined') {
         throw new Error('Module "' + name + '" not found.');
       }
       return this.modules[name];
@@ -24958,10 +24957,8 @@ window.WS = new Wasabi();
 
 exports.default = Wasabi;
 
-},{"./Module":12,"./core/vendor/jquery.livequery":34,"backbone":4,"backbone.marionette":2,"jquery":6,"pace-progress":8,"underscore":11}],14:[function(require,module,exports){
+},{"./Module":12,"./core/vendor/jquery.livequery":34,"backbone":4,"backbone.marionette":2,"gemini-scrollbar":5,"jquery":6,"js-cookie":7,"pace-progress":8,"underscore":11}],14:[function(require,module,exports){
 'use strict';
-
-var _backbone = require('backbone.marionette');
 
 var _jquery = require('jquery');
 
@@ -24970,10 +24967,6 @@ var _jquery2 = _interopRequireDefault(_jquery);
 var _underscore = require('underscore');
 
 var _underscore2 = _interopRequireDefault(_underscore);
-
-var _Wasabi = require('../Wasabi');
-
-var _Wasabi2 = _interopRequireDefault(_Wasabi);
 
 var _Module = require('../Module');
 
@@ -25199,7 +25192,7 @@ var WasabiCore = _Module2.default.extend({
     if (xhr.status === 401) {
       data = _jquery2.default.parseJSON(xhr.responseText) || {};
       if (typeof data.name !== 'undefined') {
-        if (confirm(data.name)) {
+        if (window.confirm(data.name)) {
           window.location.reload();
         } else {
           window.location.reload();
@@ -25275,7 +25268,7 @@ var WasabiCore = _Module2.default.extend({
 
 window.WS.registerModule('Wasabi/Core', WasabiCore);
 
-},{"../Module":12,"../Wasabi":13,"./components/EmptySelect":15,"./components/FlashMessage":16,"./components/LangSwitch":17,"./components/LoadingButton":18,"./components/LoginModal":19,"./components/Menu":20,"./components/Modal":21,"./components/Pagination":22,"./components/ScrollbarContainer":23,"./components/SidebarNavigationToggle":24,"./components/SidebarOpenHandle":25,"./components/TabContainer":26,"./sections/LanguagesIndex":27,"./sections/PermissionsIndex":28,"./vendor/bootstrap/dropdown":31,"backbone.marionette":2,"jquery":6,"underscore":11}],15:[function(require,module,exports){
+},{"../Module":12,"./components/EmptySelect":15,"./components/FlashMessage":16,"./components/LangSwitch":17,"./components/LoadingButton":18,"./components/LoginModal":19,"./components/Menu":20,"./components/Modal":21,"./components/Pagination":22,"./components/ScrollbarContainer":23,"./components/SidebarNavigationToggle":24,"./components/SidebarOpenHandle":25,"./components/TabContainer":26,"./sections/LanguagesIndex":27,"./sections/PermissionsIndex":28,"./vendor/bootstrap/dropdown":31,"jquery":6,"underscore":11}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -25794,9 +25787,9 @@ var Menu = _backbone.View.extend({
   getStyledContent: function getStyledContent() {
     var selector = this.$el.parents().map(function () {
       return this.tagName;
-    }).get().reverse().concat([this.el.nodeName]).join(">");
+    }).get().reverse().concat([this.el.nodeName]).join('>');
 
-    return window.getComputedStyle(document.querySelector(selector), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
+    return window.getComputedStyle(document.querySelector(selector), '::before').getPropertyValue('content').replace(/'/g, '').replace(/"/g, '');
   }
 });
 
@@ -26027,9 +26020,9 @@ var Modal = _backbone.View.extend({
    * @returns {Object}
    */
   createTemplateOptions: function createTemplateOptions() {
-    var options = {},
-        hasTarget = void 0,
-        $target = void 0;
+    var options = {};
+    var hasTarget = void 0;
+    var $target = void 0;
 
     options.modalHeader = this.$el.attr('data-modal-header') || this.options.modalHeader;
     options.hasHeader = options.modalHeader !== undefined;
@@ -26167,8 +26160,8 @@ var Modal = _backbone.View.extend({
    * @param {Object} event
    */
   submit: function submit(event) {
-    var $target = (0, _jquery2.default)(event.target),
-        that = this;
+    var $target = (0, _jquery2.default)(event.target);
+    var that = this;
 
     if ($target.attr('disabled') !== undefined) {
       return;
@@ -26178,8 +26171,8 @@ var Modal = _backbone.View.extend({
       event.preventDefault();
       $target.prop('disabled', true);
       this.$notify.trigger('modal:beforeAjax');
-      var $form = this.$modal.find('form'),
-          data = void 0;
+      var $form = this.$modal.find('form');
+      var data = void 0;
       if ($form.length > 0) {
         data = this.$modal.find('form').serialize();
       }
@@ -26367,6 +26360,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _backbone = require('backbone.marionette');
 
 var _geminiScrollbar = require('gemini-scrollbar');
@@ -26383,12 +26378,13 @@ var ScrollbarContainer = _backbone.View.extend({
     this.render();
   },
   onRender: function onRender() {
-    this.instance = new _geminiScrollbar2.default({
+    var options = JSON.parse(this.$el.attr('data-scrollbar') || '{}');
+    this.instance = new _geminiScrollbar2.default(_extends({
       element: this.el,
       autoshow: false,
       createElements: false,
       forceGemini: false
-    });
+    }, options));
     this.instance.create();
     this.$el.data('scrollbar', this.instance);
   }
