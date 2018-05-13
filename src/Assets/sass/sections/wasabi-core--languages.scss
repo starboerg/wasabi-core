@@ -1,0 +1,15 @@
+.wasabi-core--languages-index {
+
+  .languages {
+
+    .action-sort {
+      color: #bbb;
+      cursor: row-resize;
+
+      i {
+        position: relative;
+        @include rem(top, 1px);
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+@mixin fixIE11Only() {
+    _:-ms-fullscreen,
+    :root & {
+        @content;
+    }
+}

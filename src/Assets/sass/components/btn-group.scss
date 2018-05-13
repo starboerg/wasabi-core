@@ -1,0 +1,42 @@
+.btn-group .btn + .btn,
+.btn-group .btn + .btn-group,
+.btn-group .btn-group + .btn,
+.btn-group .btn-group + .btn-group {
+  margin-left: -1px;
+}
+
+.btn-group {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+
+  & > .btn {
+    float: left;
+    position: relative;
+  }
+
+  & > label.btn {
+    display: inline-block;
+    width: 30px;
+    padding: 2px 0;
+    color: #c3c3c3;
+    background-color: #fbfbfb;
+    text-align: center;
+
+    &:hover {
+      background-color: #ececec;
+    }
+
+    &.active, &.active:hover {
+      color: #fff;
+      background-color: #005ab5;
+    }
+  }
+}
+
+[data-toggle="buttons"] > .btn input[type="checkbox"], [data-toggle="buttons"] > .btn input[type="radio"], [data-toggle="buttons"] > .btn-group > .btn input[type="checkbox"], [data-toggle="buttons"] > .btn-group > .btn input[type="radio"] {
+  clip: rect(0px, 0px, 0px, 0px);
+  pointer-events: none;
+  position: absolute;
+}
+

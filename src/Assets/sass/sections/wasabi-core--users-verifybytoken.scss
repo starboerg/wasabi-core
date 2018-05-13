@@ -1,0 +1,13 @@
+.wasabi-core--users-verifybytoken {
+
+  .support-content {
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .form-controls {
+    @include rem(min-height, 65px);
+  }
+}

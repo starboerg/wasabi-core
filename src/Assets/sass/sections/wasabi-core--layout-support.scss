@@ -1,0 +1,110 @@
+.wasabi-core--layout-support {
+  background-color: $support-body-bg-color;
+  overflow: auto;
+
+  .support-wrapper {
+    margin: 0 auto;
+    @include rem(padding, 20px 10px);
+    @include rem(max-width, 600px);
+  }
+
+  .support-image {
+    @include rem(margin-bottom, 20px);
+    text-align: center;
+
+    img {
+      @include rem(margin-left, -40px);
+    }
+  }
+
+  .flash-message {
+    @include rem(margin, -20px -20px 20px);
+    @include rem(padding, 15px 20px 14px);
+    border-width: 0 0 1px 0;
+  }
+
+  h1 {
+    @include rem(margin, -20px -20px 20px);
+    @include rem(padding, 20px 20px 18px);
+    @include rem(font-size, 18px);
+    background-color: #f2f3f4;
+    border-bottom: 1px solid #d5d7d7;
+  }
+
+  p {
+    @include rem(margin, 0 0 20px);
+  }
+
+  .support-wrapper {
+    @include rem(max-width, 400px);
+  }
+
+  .support-content {
+    @include rem(padding, 20px);
+    background-color: #fff;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    & > .input {
+      @include rem(margin-bottom, 10px);
+    }
+
+    .dismiss-flash {
+      @include rem(top, 16px);
+      @include rem(right, 20px);
+    }
+  }
+
+  form {
+    border-left: 1px solid $border-dark;
+    border-top: 1px solid $border-dark;
+    box-shadow: 3px 3px 4px #bbb;
+  }
+
+  .form-controls {
+    display: flex;
+    border-width: 1px 0 0;
+    @include rem(padding, 15px 20px);
+
+    ul {
+      @include rem(margin, 7px 0 0);
+      padding: 0;
+      list-style: none;
+      width: 100%;
+    }
+
+    button {
+      margin-right: 0;
+    }
+  }
+
+  .bottom-links {
+    @include rem(padding, 20px);
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        text-align: center;
+      }
+
+      a {
+        color: $gray-lighter;
+        @include rem(font-size, 12px);
+      }
+    }
+  }
+
+  @include respond-to-min($breakpoint-menu-slide-in) {
+
+    .support-wrapper {
+      @include rem(padding-top, 60px);
+      @include rem(padding-left, 10px);
+      @include rem(padding-right, 10px);
+    }
+  }
+}

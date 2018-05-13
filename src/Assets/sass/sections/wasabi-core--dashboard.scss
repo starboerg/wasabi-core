@@ -1,0 +1,6 @@
+.wasabi-core--dashboard-index {
+
+  .summary-boxes {
+    @include rem(margin, 0 -10px);
+  }
+}

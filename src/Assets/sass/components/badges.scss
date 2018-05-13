@@ -1,0 +1,41 @@
+.label, .badge {
+  display: inline-block;
+  @include rem(padding, 0 5px 1px);
+  font-size: 84.6%;
+  font-weight: 600;
+  color: #fff;
+  vertical-align: baseline;
+  white-space: nowrap;
+  background-color: $badge-base-color;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+}
+
+.label {
+  @include rem(border-radius, 3px);
+}
+
+.badge {
+  @include rem(padding-left, 9px);
+  @include rem(padding-right, 9px);
+  @include rem(border-radius, 9px);
+}
+
+.label--important {
+  background-color: $badge-important-color;
+}
+
+.label--info {
+  background-color: $badge-info-color;
+}
+
+.label--warning {
+  background-color: $badge-warning-color;
+}
+
+.label--error {
+  background-color: $badge-error-color;
+}
+
+.label--success {
+  background-color: $badge-success-color;
+}

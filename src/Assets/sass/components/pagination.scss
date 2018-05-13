@@ -1,0 +1,176 @@
+.pagination {
+  position: relative;
+  @include rem(margin, 20px 0 15px);
+
+  ul {
+    display: flex;
+  }
+
+  li {
+    display: none;
+    width: 100%;
+
+    &.active {
+      display: block;
+
+      a {
+        cursor: default;
+
+        &, &:hover, &:focus {
+          color: #333;
+        }
+      }
+    }
+
+    &.first a {
+      border-left: 1px solid #eaeae6;
+      border-radius: 3px 0 0 3px;
+    }
+
+    &.last a {
+      border-radius: 0 3px 3px 0;
+    }
+
+    &.first,
+    &.prev,
+    &.next,
+    &.last {
+      display: block;
+      @include rem(width, 40px);
+      @include rem(min-width, 40px);
+
+      a {
+        @include rem(padding-top, 7px);
+        @include rem(padding-bottom, 8px);
+        @include rem(font-size, 19px);
+        @include rem(line-height, 21px);
+      }
+    }
+  }
+
+  a {
+    display: inline-block;
+    @include rem(padding, 6px 0);
+    text-align: center;
+    border: 1px solid #eaeae6;
+    border-left: none;
+    width: 100%;
+    background-color: #fff;
+    color: #687178;
+
+    &:not(.disabled):hover {
+      background-color: #f9fafa;
+    }
+
+    &.disabled {
+      color: #ddd;
+      cursor: default;
+    }
+  }
+
+  .current-page {
+    font-weight: 600;
+  }
+
+  .nr-of-pages {
+    @include rem(font-size, 12px);
+  }
+
+  .item-count {
+    float: left;
+    @include rem(padding, 0 20px 0 10px);
+    @include rem(font-size, 12px);
+    @include rem(line-height, 35px);
+    color: $pagination-item-count-color;
+  }
+
+  nav {
+    float: left;
+    width: 100%;
+    @include rem(margin-top, 10px);
+  }
+
+  .limit {
+    position: absolute;
+    @include rem(top, 5px);
+    @include rem(right, 5px);
+    @include rem(height, 35px);
+  }
+
+  @include respond-to-max($breakpoint-menu-slide-in - 1px) {
+    background-color: #f2f3f4;
+    border: 1px solid #dddfdf;
+
+    ul {
+      margin: 0 -1px -1px;
+      width: calc(100% + 2px);
+    }
+
+    li.first a {
+      border-radius: 0 0 0 3px;
+    }
+
+    li.last a {
+      border-radius: 0 0 3px 0;
+    }
+
+    .item-count {
+      position: relative;
+      @include rem(top, 6px);
+    }
+  }
+
+  @include respond-to-min($breakpoint-menu-slide-in) {
+
+    nav {
+      width: auto;
+      margin-top: 0;
+    }
+
+    li {
+      display: block;
+      width: auto;
+
+      &.active a {
+
+        &, &:hover, &:focus {
+          background-color: #f5f8fa;
+          color: #1f3648;
+        }
+      }
+
+      &.first,
+      &.prev,
+      &.next,
+      &.last {
+        @include rem(width, 40px);
+        @include rem(min-width, 40px);
+
+        a {
+          @include rem(padding-top, 5px);
+          @include rem(padding-bottom, 7px);
+        }
+      }
+    }
+
+    a {
+      @include rem(padding-left, 12px);
+      @include rem(padding-right, 12px);
+      @include rem(margin-bottom, 5px);
+      transition: background-color 0.1s ease-in-out;
+    }
+
+    .nr-of-pages {
+      display: none;
+    }
+
+    .limit {
+      top: 0;
+      right: 0;
+    }
+
+    .item-count {
+      @include rem(min-width, 197px);
+    }
+  }
+}

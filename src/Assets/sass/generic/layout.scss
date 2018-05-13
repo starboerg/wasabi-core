@@ -1,0 +1,105 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: $font-os;
+  @include rem(font-size, 16px);
+  line-height: $line-height;
+  color: $font-color;
+  background-color: $body-bg-color;
+
+  @include respond-to-min($breakpoint-menu-slide-in) {
+    @include rem(font-size, 14px);
+  }
+}
+
+nav {
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $link-color--hover;
+  }
+}
+
+b, strong {
+  font-weight: 600;
+}
+
+.center {
+  text-align: center;
+}
+
+.valign-middle {
+  vertical-align: middle;
+}
+
+.hidden {
+  display: none;
+}
+
+.visuallyhidden {
+  @include visuallyhidden();
+}
+
+.sr-only {
+  @include visuallyhidden();
+}
+
+#wrapper {
+  width: 100%;
+  min-height: 100%;
+}
+
+#content {
+  position: relative;
+  margin-left: 0;
+
+  .content--wrapper {
+    position: relative;
+    height: calc(100vh - #{rem-convert(px, 42px)});
+    height: calc(100vh - #{rem-convert(rem, 42px)});
+    @include rem(margin-top, 42px);
+  }
+}
+
+.content--padding {
+  @include rem(padding, 20px 10px 10px);
+}
+
+@include respond-to-min($breakpoint-menu-slide-in) {
+
+  #content {
+    @include rem(margin-left, $sidebar-width--collapsed);
+  }
+
+  .content--padding {
+    @include rem(padding, 20px);
+  }
+}
+
+@include respond-to-min($breakpoint-menu-collapsed) {
+
+  #content {
+    @include rem(margin-left, $sidebar-width);
+  }
+
+  .content--padding {
+    @include rem(padding, 30px);
+  }
+}

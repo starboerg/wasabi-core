@@ -1,0 +1,13 @@
+.wasabi-core--users-register {
+
+  .support-wrapper {
+    @include rem(max-width, 600px);
+  }
+
+  .support-content {
+
+    .form-row {
+      border-width: 0;
+    }
+  }
+}

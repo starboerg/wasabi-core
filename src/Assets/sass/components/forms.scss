@@ -1,0 +1,406 @@
+label {
+  display: inline-block;
+  font-weight: 700;
+  color: #393232;
+  cursor: pointer;
+  @include rem(margin-bottom, 3px);
+
+  span {
+
+    .form-row.required > &:after {
+      display: inline-block;
+      @include rem(padding-left, 3px);
+      @include rem(font-size, $font-size - 1px);
+      content: "*";
+      color: $brand-error-color;
+    }
+  }
+
+  small {
+    color: $gray-light;
+    display: block;
+    font-weight: 400;
+    font-size: 80%;
+  }
+
+  code {
+    @include rem(margin, 0 1px);
+    @include rem(padding, 3px 5px 2px);
+    @include rem(font-size, 13px);
+    background: rgba(0, 0, 0, 0.07);
+  }
+
+  &:empty {
+    visibility: hidden;
+  }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: $form-input-bg-color;
+  background-image: none !important;
+  background-origin: padding-box;
+  background-position: 0 0;
+  background-repeat: repeat;
+  background-size: auto auto;
+  box-shadow: none !important;
+  color: $form-input-color;
+  filter: none !important;
+  font-weight: normal;
+  outline: 0 none;
+  @include rem(padding, 8px 6px 7px);
+  vertical-align: top;
+  border: 1px solid $form-input-border-color;
+  width: 100%;
+  font-family: $font-os;
+  font-weight: 400;
+
+  &:focus {
+    border-color: $form-input-border-color--focus;
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: $form-input-disabled-color;
+    background-color: $form-input-disabled-bg-color;
+  }
+
+  @include placeholder() {
+    color: $form-placeholder-color;
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="number"] {
+  @include rem(padding, 3px 2px 2px 3px);
+
+  &.without-spinner {
+    @include rem(padding, 6px 6px 5px);
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  }
+}
+
+input[type="checkbox"] {
+  @include rem(margin-right, 5px);
+  cursor: pointer;
+  position: relative;
+  @include rem(top, 2px);
+}
+
+input[type="radio"] {
+  @include rem(margin-right, 3px);
+  cursor: pointer;
+}
+
+select {
+  @include rem(padding, 5px 5px 4px);
+  border: 1px solid $form-input-border-color;
+  font-family: $font-os;
+  font-weight: 400;
+
+  &:focus {
+    border-color: $form-input-border-color--focus;
+    outline: none;
+  }
+
+  &.full {
+    width: 100%;
+  }
+
+  optgroup {
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  &.select-small {
+    @include rem(padding, 3px 4px);
+    @include rem(font-size, 13px);
+  }
+
+  option {
+    color: $gray-darker;
+
+    &[disabled] {
+      color: $gray-lighter;
+    }
+  }
+
+  &.empty {
+    color: $form-placeholder-color;
+
+    optgroup {
+      color: $gray-darker;
+    }
+  }
+
+  &[disabled="disabled"] {
+    cursor: not-allowed;
+    color: $form-input-disabled-color;
+    background-color: $form-input-disabled-bg-color;
+  }
+}
+
+.input {
+
+  &.required {
+
+    label:after {
+      display: inline-block;
+      @include rem(padding-left, 3px);
+      @include rem(font-size, $font-size - 1px);
+      content: "*";
+      color: $brand-error-color;
+    }
+  }
+
+  &.error {
+
+    input:not([type="radio"]):not([type="checkbox"]),
+    textarea,
+    select {
+      border-color: $state-error-font-color;
+    }
+  }
+}
+
+.field {
+
+  input,
+  textarea,
+  select {
+
+    & ~ small {
+      display: block;
+      @include rem(padding-top, 3px);
+      color: $form-input-info-color;
+    }
+  }
+}
+
+.radio,
+.checkbox {
+
+  & > label {
+    font-weight: normal;
+  }
+}
+
+span.error-message, div.error-message {
+  display: block;
+  @include rem(padding-top, 2px);
+  color: $state-error-font-color;
+
+  & > ul {
+    margin: 0;
+    @include rem(padding-left, 20px);
+  }
+}
+
+.form-row {
+  @include rem(margin-bottom, 20px);
+
+  &.error {
+
+    input:not([type="radio"]):not([type="checkbox"]),
+    textarea,
+    select {
+      border-color: $state-error-font-color;
+    }
+
+    & > label {
+      color: $state-error-font-color;
+    }
+  }
+}
+
+.form-section {
+  @include rem(margin, 0 -10px 10px);
+  @include rem(padding, 15px 10px);
+  background-color: $form-section-bg-color;
+  border-style: solid;
+  border-color: $form-section-border-color;
+  border-width: 1px 0;
+}
+
+.form-section-title {
+  @include rem(font-size, 18px);
+}
+
+.form-section-description {
+  font-size: 80%;
+  color: $form-section-description-color;
+}
+
+.form-controls {
+  @include rem(padding, 10px);
+  background-color: $form-section-bg-color;
+  border-style: solid;
+  border-color: $form-section-border-color;
+  border-width: 1px 0;
+
+  button {
+    @include rem(margin-right, 15px);
+  }
+
+  .content--padding form:last-child > &:last-child {
+    @include rem(margin-bottom, -11px);
+  }
+
+  body:not(.wasabi-core--layout-support) & {
+    @include rem(margin, 0 -10px);
+  }
+}
+
+.bottom-links {
+  @include rem(padding, 10px 10px 0);
+}
+
+.form-info {
+
+  .form-info-content {
+    @include rem(padding, 20px);
+    background-color: $form-row-bg-color;
+    border-width: 0 1px;
+    border-style: solid;
+    border-color: $form-row-border-color;
+
+    &.form-info-success {
+      color: $state-success-font-color;
+    }
+
+    &.form-info-warning {
+      color: $state-warning-font-color;
+    }
+
+    &.form-info-info {
+      color: $state-info-font-color;
+    }
+
+    &.form-info-error {
+      color: $state-error-font-color;
+    }
+  }
+}
+
+@include respond-to-min($breakpoint-menu-slide-in) {
+
+  form.no-top-section {
+    border-top: 1px solid $form-row-border-color;
+  }
+
+  .form-section {
+    margin: 0;
+    border-width: 1px 1px 2px;
+  }
+
+  .form-row {
+    margin: 0;
+    @include rem(padding, 20px);
+    border-style: solid;
+    border-color: $form-row-border-color;
+    border-width: 0 1px;
+    background-color: #fff;
+
+    & + .form-row {
+      padding-top: 0;
+    }
+  }
+
+  body:not(.wasabi-core--layout-support) .form-controls {
+    @include rem(margin, 0 0 10px);
+    border-width: 1px;
+  }
+}
+
+@include respond-to-min($breakpoint-menu-collapsed) {
+
+  .form-row {
+    padding: 0;
+    display: table;
+    background-color: $form-row-bg-color;
+
+    & > label {
+      @include rem(padding, 27px 20px 20px);
+      float: left;
+      width: 100%;
+      @include rem(min-width, 200px);
+      vertical-align: top;
+
+      &  + .field {
+        border-left: 1px solid $form-row-border-color;
+      }
+    }
+
+    & > .field {
+      display: table-cell;
+      @include rem(padding, 20px);
+      background-color: #fff;
+      vertical-align: top;
+      width: 100%;
+
+      &.small {
+
+        input {
+          @include rem(max-width, 100px);
+        }
+      }
+    }
+
+    &.form-row-radio {
+
+      .field > .radio:first-of-type {
+        @include rem(margin-top, 7px);
+      }
+    }
+
+    &.form-row-select {
+
+      .field {
+
+        & > .checkbox:first-of-type {
+          @include rem(margin-top, 7px);
+        }
+
+        & > select:first-of-type {
+          @include rem(margin-top, 1px);
+        }
+      }
+    }
+
+    &.form-row-checkbox {
+
+      .field {
+        @include rem(padding-top, 26px);
+      }
+    }
+  }
+
+  .form-section {
+    @include rem(padding, 20px);
+  }
+
+  .form-controls {
+    @include rem(padding, 20px);
+    border-width: 1px;
+
+    .content--padding form:last-child > &:last-child {
+      margin-bottom: 0;
+      border-bottom-width: 1px;
+    }
+  }
+}

@@ -1,0 +1,115 @@
+.button {
+  $buttonBg: $brand-success-color;
+  @include rem(padding, 6px 16px 7px);
+  display: inline-block;
+  outline: none;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  background-color: $buttonBg;
+  @include rem(border-radius, 3px);
+  box-shadow: 0 -2px 0 fade(darken($buttonBg, 10%), 40%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.1s linear;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    color: #fff;
+    background-color: hsl(hue($buttonBg) - 1, saturation($buttonBg), lightness($buttonBg) + 3);
+  }
+
+  &:active {
+    box-shadow: 0 2px 1px fade(darken($buttonBg, 20%), 40%) inset;
+  }
+
+  &.disabled,
+  &[disabled="disabled"] {
+    $buttonBg: #ddd;
+    background-color: $buttonBg !important;
+    cursor: not-allowed !important;
+    box-shadow: 0 -2px 0 fade(darken($buttonBg, 10%), 40%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  & > .spinner {
+    position: relative;
+    @include rem(top, 4px);
+    @include rem(left, 2px);
+    display: inline-block;
+    @include rem(margin-right, 6px);
+  }
+}
+
+.button.blue {
+  $buttonBg: $brand-link;
+  background-color: $buttonBg;
+  box-shadow: 0 -2px 0 fade(darken($buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
+
+  &:hover,
+  &:focus {
+    background-color: hsl(hue($buttonBg) - 4, saturation($buttonBg) + 3, lightness($buttonBg) + 5);
+  }
+
+  &:active {
+    box-shadow: 0 2px 1px fade(darken($buttonBg, 30%), 30%) inset;
+  }
+}
+
+.button.red {
+  $buttonBg: #c22d2d;
+  background-color: $buttonBg;
+  box-shadow: 0 -2px 0 fade(darken($buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
+
+  &:hover,
+  &:focus {
+    background-color: hsl(hue($buttonBg) - 4, saturation($buttonBg) + 3, lightness($buttonBg) + 5);
+  }
+
+  &:active {
+    box-shadow: 0 2px 1px fade(darken($buttonBg, 30%), 30%) inset;
+  }
+}
+
+.button.gray {
+  $buttonBg: $border-dark;
+  color: $gray-dark;
+  background-color: $buttonBg;
+  box-shadow: 0 -2px 0 fade(darken($buttonBg, 30%), 30%) inset, inset 0 1px 0 rgba(255, 255, 255, 0.3);
+
+  &:hover,
+  &:focus {
+    background-color: hsl(hue($buttonBg) - 4, saturation($buttonBg) + 3, lightness($buttonBg) + 5);
+  }
+
+  &:active {
+    box-shadow: 0 2px 1px fade(darken($buttonBg, 30%), 30%) inset;
+  }
+}
+
+.button.small {
+  @include rem(padding, 4px 8px);
+  @include rem(font-size, 12px);
+  font-weight: 600;
+  @include rem(border-radius, 3px);
+}
+
+.button {
+
+  .spinner {
+    display: none;
+    @include rem(top, 5px);
+    @include rem(left, 5px);
+    margin-right: 0;
+  }
+
+  &.btn-loading {
+    cursor: default !important;
+
+    .hide-when-loading {
+      display: none;
+    }
+
+    .spinner {
+      display: inline-block;
+    }
+  }
+}

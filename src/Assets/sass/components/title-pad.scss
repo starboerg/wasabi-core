@@ -1,0 +1,59 @@
+.titlepad {
+  display: flex;
+  margin: 0 0 $computed-height;
+}
+
+.titlepad-title {
+  flex: 1;
+  margin: 0;
+  @include rem(font-size, $titlepad-title-font-size);
+  font-weight: normal;
+  color: $titlepad-title-font-color;
+  @include rem(letter-spacing, $titlepad-title-letter-spacing);
+
+  small {
+    @include rem(font-size, $titlepad-small-font-size);
+    color: $titlepad-small-font-color;
+    @include rem(letter-spacing, $titlepad-small-letter-spacing);
+  }
+
+  .lang {
+    display: inline-block;
+    @include rem(margin-left, 10px);
+    @include rem(margin-top, 9px);
+    @include rem(padding, 1px 5px 1px 4px);
+    @include rem(font-size, $titlepad-lang-font-size);
+    color: $titlepad-lang-font-color;
+    background-color: $titlepad-lang-bg-color;
+    vertical-align: top;
+  }
+}
+
+.titlepad-actions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a.add {
+    display: block;
+    @include rem(width, 61px);
+    @include rem(height, 2 * $computed-height);
+    @include rem(line-height, 2 * $computed-height);
+    @include rem(font-size, 20px);
+    color: #fff;
+    text-align: center;
+    transition: background-color .1s linear .0s;
+  }
+
+  a.add {
+    background-color: #9cb800;
+
+    &:hover {
+      background-color: #aac600;
+    }
+
+    i {
+      @include rem(font-size, 16px);
+    }
+  }
+}
