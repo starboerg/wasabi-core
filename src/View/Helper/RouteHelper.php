@@ -5,6 +5,7 @@ namespace Wasabi\Core\View\Helper;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\View\Helper;
+use FrankFoerster\Filter\Model\Entity\Filter;
 use FrankFoerster\Filter\Model\Table\FiltersTable;
 use Wasabi\Core\Model\Entity\User;
 
@@ -473,10 +474,12 @@ class RouteHelper extends Helper
         /** @var FiltersTable $FiltersTable */
         $FiltersTable = TableRegistry::get('FrankFoerster/Filter.Filters');
 
+        /** @var Filter $filter */
         $filter = $FiltersTable->find('slugForFilterData', [
             'request' => $fakeRequest,
             'filterData' => $filterData
         ])->first();
+
         if (!$filter) {
             $slug = $FiltersTable->createFilterForFilterData($fakeRequest, $filterData);
         } else {
