@@ -8,14 +8,40 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     //-------------------------------------------- STYLE PROCESSING --------------------------------------------------//
-    less: {
-      compile: {
+    sass: {
+      dev: {
         options: {
           sourceMap: true,
-          sourceMapURL: 'core.css.map'
+          sourceMapEmbed: true
         },
         files: {
-          'webroot/css/core.css': 'src/Assets/less/core.less'
+          'src/Assets/_build/css/core.compiled.dev.css': 'src/Assets/sass/styles.scss'
+        }
+      },
+      prod: {
+        options: {
+          sourceMap: false
+        },
+        files: {
+          'src/Assets/_build/css/core.compiled.prod.css': 'src/Assets/sass/styles.scss'
+        }
+      }
+    },
+    postcss: {
+      options: {
+        map: false,
+        processors: [
+          require('autoprefixer')()
+        ]
+      },
+      dev: {
+        files: {
+          'src/Assets/_build/css/core.dev.css': 'src/Assets/_build/css/core.compiled.dev.css'
+        }
+      },
+      prod: {
+        files: {
+          'src/Assets/_build/css/core.prod.css': 'src/Assets/_build/css/core.compiled.prod.css'
         }
       }
     },
@@ -24,16 +50,24 @@ module.exports = function(grunt) {
         shorthandCompacting: false,
         roundingPrecision: -1
       },
-      core: {
+      default: {
         files: {
-          'webroot/css/core.min.css': 'webroot/css/core.css'
+          'src/Assets/_build/css/core.min.css': 'src/Assets/_build/css/core.prod.css'
         }
       }
     },
 
-    //--------------------------------------------- JS PROCESSING -----------------------------------------------------//
+    //--------------------------------------------- JS PROCESSING ----------------------------------------------------//
+    eslint: {
+      app: {
+        src: ['src/Assets/js/**/*.js'],
+        options: {
+          quiet: true
+        }
+      }
+    },
     browserify: {
-      wasabi: {
+      app: {
         src: [
           'src/Assets/js/Wasabi.js',
           'src/Assets/js/core/WasabiCore.js'
@@ -43,12 +77,11 @@ module.exports = function(grunt) {
           debug: true,
           transform: [
             ['babelify', {
-              presets: [
-                ['es2015'/*, { modules: 'commonjs' }*/]
-              ],
+              presets: ['es2015'],
               parserOpts: {
                 sourceType: 'module'
-              }
+              },
+              plugins: ['transform-object-rest-spread']
             }]
           ]
         }
@@ -58,7 +91,7 @@ module.exports = function(grunt) {
       options: {
         mangle: true
       },
-      wasabi: {
+      app: {
         files: {
           'src/Assets/_build/js/wasabi.min.js': ['src/Assets/_build/js/wasabi.js']
         }
@@ -70,47 +103,51 @@ module.exports = function(grunt) {
           { src: 'src/Assets/_build/js/wasabi.js', dest: 'webroot/js/wasabi.js' },
           { src: 'src/Assets/_build/js/wasabi.min.js', dest: 'webroot/js/wasabi.min.js' }
         ]
+      },
+      css: {
+        files: [
+          { src: 'src/Assets/_build/css/core.dev.css', dest: 'webroot/css/core.css' },
+          { src: 'src/Assets/_build/css/core.min.css', dest: 'webroot/css/core.min.css' }
+        ]
       }
     },
 
     //----------------------------------------------- WATCHERS -------------------------------------------------------//
     watch: {
-      less: {
-        files: ['src/Assets/less/**/*.less'],
-        tasks: ['less:compile', 'cssmin:core']
+      sass: {
+        files: ['src/Assets/sass/**/*.scss'],
+        tasks: ['sass', 'postcss', 'cssmin', 'copy:css']
       },
-      commonjs: {
-        files: ['src/vendor/**/*.js'],
-        tasks: ['browserifyResolve:common']
-      },
-      appjs: {
+      js: {
         files: ['src/Assets/js/**/*.js'],
-        tasks: ['jshint:core', 'requirejs:compile']
+        tasks: ['browserify', 'uglify', 'copy:js']
       }
     }
 
   });
 
   //--------------------------------------------- REGISTERED TASKS ---------------------------------------------------//
-  grunt.registerTask('default', [
-    'less:compile',
-    'cssmin:core',
-    'browserify:wasabi',
-    'uglify:wasabi',
-    'copy:js'
+  grunt.registerTask('eslint-run', [
+    'eslint'
+  ]);
+
+  grunt.registerTask('watch-sass', [
+    'watch:sass'
+  ]);
+
+  grunt.registerTask('watch-js', [
+    'watch:js'
   ]);
 
   grunt.registerTask('build-js', [
-    'browserify:wasabi',
-    'uglify:wasabi',
+    'eslint-run',
+    'browserify',
+    'uglify',
     'copy:js'
   ]);
 
-  grunt.registerTask('watch2', [
-    'watch:less',
-    'watch:commonjs',
-    'watch:appjs'
+  grunt.registerTask('dev-js', [
+    'browserify',
+    'copy:js'
   ]);
-
-  require('jit-grunt')(grunt);
 };
