@@ -10,11 +10,13 @@ const ScrollbarContainer = View.extend({
   },
 
   onRender () {
+    const options = JSON.parse(this.$el.attr('data-scrollbar') || '{}');
     this.instance = new GeminiScrollbar({
       element: this.el,
       autoshow: false,
       createElements: false,
-      forceGemini: false
+      forceGemini: false,
+      ...options
     });
     this.instance.create();
     this.$el.data('scrollbar', this.instance);
