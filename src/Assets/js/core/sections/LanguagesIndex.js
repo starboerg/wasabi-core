@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import {View} from 'backbone.marionette';
-import "../vendor/jquery.tSortable";
+import '../vendor/jquery.tSortable';
 
 const LanguagesIndex = View.extend({
 

@@ -7,29 +7,22 @@ import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 import Module from './Module';
+import Cookies from 'js-cookie';
 import './core/vendor/jquery.livequery';
 import Pace from 'pace-progress';
-
-/**
- * 'undefined' string for typeof comparisons.
- *
- * @type {string}
- */
-const strundefined = 'undefined';
+import GeminiScrollbar from 'gemini-scrollbar';
 
 /**
  * Holds all registered modules.
  * @type {Array}
  */
-let registeredModules = []
+let registeredModules = [];
 
 class Wasabi {
-
   /**
    * Constructor
    */
   constructor () {
-
     /**
      * Global event bus.
      * @type {Backbone.Events}
@@ -53,7 +46,9 @@ class Wasabi {
       Backbone: Backbone,
       Marionette: Marionette,
       Module: Module,
-      Pace: Pace
+      Pace: Pace,
+      Cookies: Cookies,
+      GeminiScrollbar: GeminiScrollbar
     };
 
     Pace.start();
@@ -96,7 +91,9 @@ class Wasabi {
   boot () {
     console.info('--- Bootstrap [STARTED] ---');
     registeredModules.forEach((m) => {
+      /* eslint-disable new-cap */
       let module = new m.module(this, this.eventBus, _.extend({}, m.options));
+      /* eslint-enable new-cap */
       this.modules[m.name] = module;
       module.start();
       console.info('Bootstrapped module "' + m.name + '".');
@@ -111,7 +108,7 @@ class Wasabi {
    * @returns {*}
    */
   getModule (name) {
-    if (typeof this.modules[name] === strundefined) {
+    if (typeof this.modules[name] === 'undefined') {
       throw new Error('Module "' + name + '" not found.');
     }
     return this.modules[name];

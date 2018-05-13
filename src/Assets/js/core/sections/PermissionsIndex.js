@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import {View} from 'backbone.marionette';
-import "../vendor/bootstrap/button";
+import '../vendor/bootstrap/button';
 
 const PermissionsIndex = View.extend({
 

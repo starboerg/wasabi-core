@@ -2,10 +2,7 @@ import Backbone from 'backbone';
 import $ from 'jquery';
 import _ from 'underscore';
 
-const strundefined = 'undefined';
-
 class Module {
-
   /**
    * Constructor
    *
@@ -28,7 +25,9 @@ class Module {
      */
     this.eventBus = eventBus;
 
-    this.initialize.apply(this, [options]);
+    if (typeof this['initialize'] === 'function') {
+      this['initialize'](options);
+    }
   }
 
   /**
@@ -53,10 +52,10 @@ class Module {
       } else {
         options = component.options;
       }
-      if (typeof this.components[componentName] === strundefined) {
+      if (typeof this.components[componentName] === 'undefined') {
         this.components[componentName] = {};
       }
-      if (typeof this.components[componentName]['instances'] === strundefined) {
+      if (typeof this.components[componentName]['instances'] === 'undefined') {
         this.components[componentName]['instances'] = [];
       }
 
@@ -70,7 +69,7 @@ class Module {
       );
     };
 
-    if (typeof this.components === strundefined) {
+    if (typeof this.components === 'undefined') {
       this.components = {};
     }
 
@@ -103,7 +102,7 @@ class Module {
   initSections () {
     let section;
 
-    if (typeof this.sections === strundefined) {
+    if (typeof this.sections === 'undefined') {
       this.sections = {};
     }
 
@@ -120,10 +119,10 @@ class Module {
         } else {
           options = section.options;
         }
-        if (typeof this.sections[sectionName] === strundefined) {
+        if (typeof this.sections[sectionName] === 'undefined') {
           this.sections[sectionName] = {};
         }
-        if (typeof this.sections[sectionName]['instances'] === strundefined) {
+        if (typeof this.sections[sectionName]['instances'] === 'undefined') {
           this.sections[sectionName]['instances'] = [];
         }
 
@@ -141,9 +140,9 @@ class Module {
 
   getComponent (name) {
     if (
-      typeof this.components[name] === strundefined ||
-      typeof this.components[name]['instances'] === strundefined ||
-      typeof this.components[name]['instances'][0] === strundefined
+      typeof this.components[name] === 'undefined' ||
+      typeof this.components[name]['instances'] === 'undefined' ||
+      typeof this.components[name]['instances'][0] === 'undefined'
     ) {
       throw new Error('Component instance "' + name + '" not found in module "' + this.getName() + '".');
     }

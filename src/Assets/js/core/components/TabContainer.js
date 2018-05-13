@@ -50,7 +50,7 @@ const TabContainer = View.extend({
     let disabled = $$.attr('data-tabify-disabled');
     let active = $$.hasClass('active');
 
-    if (typeof disabled !== 'undefined' && disabled === '1' || active === true) {
+    if ((typeof disabled !== 'undefined' && disabled === '1') || active === true) {
       return false;
     }
 

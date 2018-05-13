@@ -1,23 +1,21 @@
-import {Application} from 'backbone.marionette';
 import $ from 'jquery';
 import _ from 'underscore';
-import Wasabi from '../Wasabi';
-import Module from "../Module";
-import Menu from "./components/Menu";
-import SidebarNavigationToggle from "./components/SidebarNavigationToggle";
-import SidebarOpenHandle from "./components/SidebarOpenHandle";
-import Pagination from "./components/Pagination";
-import LoadingButton from "./components/LoadingButton";
-import LangSwitch from "./components/LangSwitch";
-import LoginModal from "./components/LoginModal";
-import FlashMessage from "./components/FlashMessage";
-import EmptySelect from "./components/EmptySelect";
-import Modal from "./components/Modal";
-import "./vendor/bootstrap/dropdown";
-import TabContainer from "./components/TabContainer";
-import ScrollbarContainer from "./components/ScrollbarContainer";
-import LanguagesIndex from "./sections/LanguagesIndex";
-import PermissionsIndex from "./sections/PermissionsIndex";
+import Module from '../Module';
+import Menu from './components/Menu';
+import SidebarNavigationToggle from './components/SidebarNavigationToggle';
+import SidebarOpenHandle from './components/SidebarOpenHandle';
+import Pagination from './components/Pagination';
+import LoadingButton from './components/LoadingButton';
+import LangSwitch from './components/LangSwitch';
+import LoginModal from './components/LoginModal';
+import FlashMessage from './components/FlashMessage';
+import EmptySelect from './components/EmptySelect';
+import Modal from './components/Modal';
+import './vendor/bootstrap/dropdown';
+import TabContainer from './components/TabContainer';
+import ScrollbarContainer from './components/ScrollbarContainer';
+import LanguagesIndex from './sections/LanguagesIndex';
+import PermissionsIndex from './sections/PermissionsIndex';
 
 let WasabiCore = Module.extend({
 
@@ -175,7 +173,7 @@ let WasabiCore = Module.extend({
     if (xhr.status === 401) {
       data = $.parseJSON(xhr.responseText) || {};
       if (typeof data.name !== 'undefined') {
-        if (confirm(data.name)) {
+        if (window.confirm(data.name)) {
           window.location.reload();
         } else {
           window.location.reload();

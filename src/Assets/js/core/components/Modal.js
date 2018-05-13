@@ -205,7 +205,9 @@ const Modal = View.extend({
    * @returns {Object}
    */
   createTemplateOptions () {
-    let options = {}, hasTarget, $target;
+    let options = {};
+    let hasTarget;
+    let $target;
 
     options.modalHeader = this.$el.attr('data-modal-header') || this.options.modalHeader;
     options.hasHeader = (options.modalHeader !== undefined);
@@ -338,7 +340,8 @@ const Modal = View.extend({
    * @param {Object} event
    */
   submit (event) {
-    let $target = $(event.target), that = this;
+    let $target = $(event.target);
+    let that = this;
 
     if ($target.attr('disabled') !== undefined) {
       return;
@@ -348,7 +351,8 @@ const Modal = View.extend({
       event.preventDefault();
       $target.prop('disabled', true);
       this.$notify.trigger('modal:beforeAjax');
-      let $form = this.$modal.find('form'), data;
+      let $form = this.$modal.find('form');
+      let data;
       if ($form.length > 0) {
         data = this.$modal.find('form').serialize();
       }

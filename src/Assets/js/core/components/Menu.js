@@ -234,9 +234,9 @@ const Menu = View.extend({
       .get()
       .reverse()
       .concat([this.el.nodeName])
-      .join(">");
+      .join('>');
 
-    return window.getComputedStyle(document.querySelector(selector), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "")
+    return window.getComputedStyle(document.querySelector(selector), '::before').getPropertyValue('content').replace(/'/g, '').replace(/"/g, '')
   }
 });
 
