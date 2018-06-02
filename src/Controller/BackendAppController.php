@@ -87,17 +87,20 @@ class BackendAppController extends AppController
             'loginAction' => [
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Users',
-                'action' => 'login'
+                'action' => 'login',
+                'prefix' => false
             ],
             'loginRedirect' => [
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Dashboard',
-                'action' => 'index'
+                'action' => 'index',
+                'prefix' => false
             ],
             'unauthorizedRedirect' => [
                 'plugin' => 'Wasabi/Core',
                 'controller' => 'Users',
-                'action' => 'unauthorized'
+                'action' => 'unauthorized',
+                'prefix' => false
             ],
             'authorize' => 'Controller',
             'authError' => __d('wasabi_core', 'You are not authorized to access that location.'),

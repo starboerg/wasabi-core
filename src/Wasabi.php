@@ -223,7 +223,8 @@ class Wasabi
         return [
             'plugin' => $request->getParam('plugin'),
             'controller' => $request->getParam('controller'),
-            'action' => $request->getParam('action')
+            'action' => $request->getParam('action'),
+            'prefix' => $request->getParam('prefix')
         ];
     }
 

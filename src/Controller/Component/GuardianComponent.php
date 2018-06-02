@@ -251,8 +251,19 @@ class GuardianComponent extends Component
             if (isset($parsedUrl['action']) && $parsedUrl['action'] !== '') {
                 $action = $parsedUrl['action'];
             }
+            $prefix = '';
+            if (isset($parsedUrl['prefix'])) {
+                $prefixes = array_map(
+                    'Cake\Utility\Inflector::camelize',
+                    explode('/', $parsedUrl['prefix'])
+                );
+                $prefix = implode('/', $prefixes);
+                if (!empty($prefix)) {
+                    $prefix .= '/';
+                }
+            }
 
-            return $plugin . '.' . $controller . '.' . $action;
+            return $plugin . '.' . $prefix . $controller . '.' . $action;
         }, 'wasabi/core/guardian_paths');
     }
 
