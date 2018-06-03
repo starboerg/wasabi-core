@@ -64,6 +64,7 @@ class BackendAppController extends AppController
      * Initialization hook method.
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -103,7 +104,7 @@ class BackendAppController extends AppController
                 'prefix' => false
             ],
             'authorize' => 'Controller',
-            'authError' => __d('wasabi_core', 'You are not authorized to access that location.'),
+            'authError' => __d('wasabi_core', 'Please login using the form below.'),
             'flash' => [
                 'key' => 'auth',
                 'element' => 'Wasabi/Core.default',

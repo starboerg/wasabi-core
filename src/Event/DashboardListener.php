@@ -36,6 +36,11 @@ class DashboardListener implements EventListenerInterface
         ];
     }
 
+    /**
+     * @param Event $event
+     * @return array
+     * @throws \Aura\Intl\Exception
+     */
     public function initSummaryBoxes(Event $event)
     {
         return [

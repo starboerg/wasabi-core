@@ -80,6 +80,8 @@ class Permission
 
     /**
      * Permission constructor.
+     * @throws \Aura\Intl\Exception
+     * @throws \ReflectionException
      */
     public function __construct()
     {
@@ -225,6 +227,7 @@ class Permission
      *
      * @param array $options
      * @return Permission
+     * @throws \ReflectionException
      */
     public function setAvailableOptions(array $options)
     {
@@ -246,6 +249,7 @@ class Permission
      * Get the translated permission select options.
      *
      * @return array
+     * @throws \ReflectionException
      */
     public function getSelectOptions()
     {
@@ -268,6 +272,7 @@ class Permission
      *
      * @param boolean $valueOnly Wheter to only return the value of the highest permission option.
      * @return array
+     * @throws \ReflectionException
      */
     public function getHighestPermissionOption($valueOnly = false)
     {

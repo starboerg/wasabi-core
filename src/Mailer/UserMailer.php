@@ -26,6 +26,7 @@ class UserMailer extends Mailer
      * @param User $user The user who should verify his email address.
      * @param string $token The verification token.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function verifyEmail(User $user, $token)
     {
@@ -50,6 +51,7 @@ class UserMailer extends Mailer
      * @param User $user The user who wants to reset his password.
      * @param string $token The verify and reset token.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function verifyAndResetPasswordEmail(User $user, $token)
     {
@@ -72,6 +74,7 @@ class UserMailer extends Mailer
      *
      * @param User $user The user who has verified his email address.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function verifiedEmail(User $user)
     {
@@ -88,6 +91,7 @@ class UserMailer extends Mailer
      *
      * @param User $user The user who has been verified by an administrator.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function verifiedByAdminEmail(User $user)
     {
@@ -104,6 +108,7 @@ class UserMailer extends Mailer
      *
      * @param User $user The user that has been activated.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function activatedEmail(User $user)
     {
@@ -120,6 +125,7 @@ class UserMailer extends Mailer
      *
      * @param User $user The user who has been deactivated.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function deactivatedEmail(User $user)
     {
@@ -137,6 +143,7 @@ class UserMailer extends Mailer
      * @param User $user The user who want to reset his password.
      * @param string $token The lost password token.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function lostPasswordEmail(User $user, $token)
     {

@@ -33,6 +33,7 @@ class RoutesController extends BackendAppController
      * Initialization hook method.
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -81,6 +82,7 @@ class RoutesController extends BackendAppController
      *
      * @param int|string $id The route id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function makeDefault($id)
     {
@@ -117,6 +119,7 @@ class RoutesController extends BackendAppController
      *
      * @param int|string $id The route id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function delete($id)
     {
@@ -207,6 +210,7 @@ class RoutesController extends BackendAppController
      * @param array $routeData The route data.
      * @throws BadRequestException
      * @return Route
+     * @throws \Aura\Intl\Exception
      */
     protected function _addRoute($routeType, $routeData)
     {
@@ -228,11 +232,12 @@ class RoutesController extends BackendAppController
      *
      * @param array $routeData The route data.
      * @return Route
+     * @throws \Aura\Intl\Exception
      */
     protected function _addDefaultRoute(array $routeData)
     {
         /** @var Connection $connection */
-        $connection = $this->Routes->connection();
+        $connection = $this->Routes->getConnection();
         $connection->begin();
 
         // Save the new default route.
@@ -262,6 +267,7 @@ class RoutesController extends BackendAppController
      *
      * @param array $routeData The route data.
      * @return Route
+     * @throws \Aura\Intl\Exception
      */
     protected function _addRedirectRoute($routeData)
     {

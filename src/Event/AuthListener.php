@@ -53,7 +53,7 @@ class AuthListener implements EventListenerInterface
     public function setupUser(Event $event, $user)
     {
         /** @var UsersGroupsTable $UsersGroups */
-        $UsersGroups = TableRegistry::get('Wasabi/Core.UsersGroups');
+        $UsersGroups = TableRegistry::getTableLocator()->get('Wasabi/Core.UsersGroups');
 
         // setup the group ids for the given user
         $user['group_id'] = $UsersGroups->getGroupIds($user['id']);
@@ -77,7 +77,7 @@ class AuthListener implements EventListenerInterface
         $maxLoginAttempts = Wasabi::setting('Core.Auth.max_login_attempts');
         $past = (new \DateTime())->modify('-' . $recognitionTime . ' minutes');
 
-        $LoginLogs = TableRegistry::get('Wasabi/Core.LoginLogs');
+        $LoginLogs = TableRegistry::getTableLocator()->get('Wasabi/Core.LoginLogs');
 
         $loginLog = $LoginLogs->newEntity([
             'client_ip' => $clientIp,

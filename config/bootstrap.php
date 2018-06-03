@@ -19,7 +19,6 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\EventManager;
 use Cake\Filesystem\Folder;
-use Cake\Routing\DispatcherFactory;
 use Wasabi\Core\Event\AuthListener;
 use Wasabi\Core\Event\DashboardListener;
 use Wasabi\Core\Event\GuardianListener;
@@ -41,7 +40,7 @@ try {
         if (isset($config['path'])) {
             new Folder($config['path'], true, 0775);
         }
-        Cache::config($key, $config);
+        Cache::setConfig($key, $config);
     }
     unset($key, $config);
 } catch (\Exception $e) {
@@ -72,4 +71,3 @@ if (!function_exists('guardian')) {
 
 Plugin::load('FrankFoerster/Filter');
 
-DispatcherFactory::add('FrankFoerster/Asset.Asset');

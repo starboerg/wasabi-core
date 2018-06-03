@@ -39,6 +39,7 @@ class RouteTypes
      * Initialization
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     protected static function _init()
     {
@@ -55,6 +56,7 @@ class RouteTypes
      *
      * @param int|string $routeTypeId The route type id.
      * @return bool|string
+     * @throws \Aura\Intl\Exception
      */
     public static function get($routeTypeId)
     {
@@ -75,6 +77,7 @@ class RouteTypes
      * Get all route types for a select.
      *
      * @return array
+     * @throws \Aura\Intl\Exception
      */
     public static function getForSelect()
     {

@@ -66,7 +66,7 @@ class KeyValueBehavior extends Behavior
         $settings = [];
 
         foreach ($query->all() as $row) {
-            $key = $row['scope'] . '__' . $row[$this->config('fields.key')];
+            $key = $row['scope'] . '__' . $row[$this->getConfig('fields.key')];
             $value = $row[$this->getConfig('fields.value')];
             $settings[$key] = $value;
         }

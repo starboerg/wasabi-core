@@ -33,6 +33,7 @@ class SettingsController extends BackendAppController
      * Edit general settings.
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function general()
     {
@@ -82,6 +83,7 @@ class SettingsController extends BackendAppController
      * Edit cache settings.
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function cache()
     {
@@ -93,7 +95,7 @@ class SettingsController extends BackendAppController
         $settings = $this->CacheSettings->getKeyValues(new CacheSetting(), $keys);
 
         if ($this->request->is('post')) {
-            $settings = $this->CacheSettings->newEntity($this->request->data);
+            $settings = $this->CacheSettings->newEntity($this->request->getData());
             if (!$settings->getErrors()) {
                 if ($this->CacheSettings->saveKeyValues($settings, $keys)) {
                     $this->Flash->success(__d('wasabi_core', 'The cache settings have been updated.'));

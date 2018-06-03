@@ -105,6 +105,7 @@ class GroupsController extends BackendAppController
      * Initialization hook method.
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -131,6 +132,7 @@ class GroupsController extends BackendAppController
      * GET | POST
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function add()
     {
@@ -156,6 +158,7 @@ class GroupsController extends BackendAppController
      *
      * @param string $id The group id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function edit($id)
     {
@@ -187,6 +190,7 @@ class GroupsController extends BackendAppController
      *
      * @param string $id The group id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function delete($id)
     {

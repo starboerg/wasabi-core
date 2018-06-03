@@ -63,7 +63,7 @@ class TokensTable extends Table
      *
      * @param string $token The token to check for.
      * @param bool $returnQuery Whether to return or execute the query.
-     * @return Query The Token Query or an empty Entity if none is found
+     * @return Query|EntityInterface The Token Query or an empty Entity if none is found
      */
     public function tokenExists($token, $returnQuery = false)
     {

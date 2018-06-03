@@ -58,6 +58,7 @@ class GroupsTable extends Table
      *
      * @param Validator $validator The validator to customize.
      * @return Validator
+     * @throws \Aura\Intl\Exception
      */
     public function validationDefault(Validator $validator)
     {

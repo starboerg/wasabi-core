@@ -108,6 +108,7 @@ class GroupPermissionsTable extends Table
      * @param string $groupId The group id to create missing permissions for.
      * @param array $actionMap The action map.
      * @return void
+     * @throws \Exception
      */
     public function createMissingPermissions($groupId, array $actionMap)
     {

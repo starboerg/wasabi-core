@@ -83,6 +83,7 @@ class GuardianListener implements EventListenerInterface
      *
      * @param Event $event An event instance.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function initializePermissions(Event $event)
     {

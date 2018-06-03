@@ -38,6 +38,7 @@ class CacheSettingsTable extends SettingsTable
      *
      * @param array $config Configuration options passed to the constructor.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function initialize(array $config)
     {
@@ -74,6 +75,7 @@ class CacheSettingsTable extends SettingsTable
      *
      * @param Validator $validator The validator to customize.
      * @return Validator
+     * @throws \Aura\Intl\Exception
      */
     public function validationDefault(Validator $validator)
     {

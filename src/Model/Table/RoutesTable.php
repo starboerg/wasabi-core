@@ -45,6 +45,7 @@ class RoutesTable extends Table
      *
      * @param Validator $validator The validator to customize.
      * @return Validator
+     * @throws \Aura\Intl\Exception
      */
     public function validationDefault(Validator $validator)
     {
@@ -57,6 +58,7 @@ class RoutesTable extends Table
      *
      * @param RulesChecker $rules The rules checker to customize.
      * @return RulesChecker
+     * @throws \Aura\Intl\Exception
      */
     public function buildRules(RulesChecker $rules)
     {

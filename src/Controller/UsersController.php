@@ -158,6 +158,7 @@ class UsersController extends BackendAppController
      * Initialization hook method.
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -236,6 +237,7 @@ class UsersController extends BackendAppController
      * GET | POST
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function login()
     {
@@ -341,6 +343,7 @@ class UsersController extends BackendAppController
      * GET | POST
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function register()
     {
@@ -367,6 +370,7 @@ class UsersController extends BackendAppController
      * GET
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function index()
     {
@@ -416,6 +420,7 @@ class UsersController extends BackendAppController
      * GET | POST
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function add()
     {
@@ -466,6 +471,7 @@ class UsersController extends BackendAppController
      *
      * @param string $id The user id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function edit($id)
     {
@@ -510,7 +516,7 @@ class UsersController extends BackendAppController
                 if ($userDeactivated && $user->verified) {
                     $this->getMailer('Wasabi/Core.User')->send('deactivatedEmail', [$user]);
                 }
-                $this->Flash->success(__d('pb', 'The user <strong>{0}</strong> has been updated.', $user->fullName()));
+                $this->Flash->success(__d('wasabi_core', 'The user <strong>{0}</strong> has been updated.', $user->fullName()));
                 $this->redirect($this->Filter->getBacklink(['action' => 'index'], $this->request));
                 return;
             } else {
@@ -545,6 +551,7 @@ class UsersController extends BackendAppController
      *
      * @param string $id The user id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function delete($id)
     {
@@ -577,6 +584,7 @@ class UsersController extends BackendAppController
      *
      * @param string $id The user id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function verify($id)
     {
@@ -643,6 +651,7 @@ class UsersController extends BackendAppController
      * GET | PUT
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function profile()
     {
@@ -678,6 +687,7 @@ class UsersController extends BackendAppController
      *
      * @param string $id The user id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function activate($id)
     {
@@ -719,6 +729,7 @@ class UsersController extends BackendAppController
      *
      * @param string $id The user id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function deactivate($id)
     {
@@ -766,6 +777,7 @@ class UsersController extends BackendAppController
      * GET | POST
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function requestNewVerificationEmail()
     {
@@ -804,6 +816,7 @@ class UsersController extends BackendAppController
      * GET | POST
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function lostPassword()
     {
@@ -844,6 +857,7 @@ class UsersController extends BackendAppController
      *
      * @param string $tokenString The reset password token.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function resetPassword($tokenString)
     {

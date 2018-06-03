@@ -40,6 +40,7 @@ class ContactForm extends Form
      *
      * @param Validator $validator The validator to customize.
      * @return Validator
+     * @throws \Aura\Intl\Exception
      */
     protected function _buildValidator(Validator $validator)
     {

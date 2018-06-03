@@ -15,8 +15,8 @@ namespace Wasabi\Core\Controller;
 
 use Cake\Collection\Collection;
 use Cake\Database\Connection;
-use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\MethodNotAllowedException;
 use Wasabi\Core\Model\Table\LanguagesTable;
 
 /**
@@ -30,6 +30,7 @@ class LanguagesController extends BackendAppController
      * Initialization hook method.
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -58,6 +59,7 @@ class LanguagesController extends BackendAppController
      * GET | POST
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function add()
     {
@@ -83,6 +85,7 @@ class LanguagesController extends BackendAppController
      *
      * @param string $id The language id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function edit($id)
     {
@@ -114,6 +117,7 @@ class LanguagesController extends BackendAppController
      *
      * @param string $id The language id.
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function delete($id)
     {
@@ -142,6 +146,7 @@ class LanguagesController extends BackendAppController
      * Save the order of languages.
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function sort()
     {

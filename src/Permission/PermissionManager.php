@@ -118,6 +118,8 @@ class PermissionManager
      * @param string $name
      * @param array $paths
      * @return Permission
+     * @throws \Aura\Intl\Exception
+     * @throws \ReflectionException
      */
     public function createPermission($priority, $id, $name, array $paths)
     {

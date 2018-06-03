@@ -30,6 +30,7 @@ trait EnumTrait
      * Get and cache all constants of for this enum.
      *
      * @return array
+     * @throws \ReflectionException
      */
     public static function getConstants()
     {
@@ -44,6 +45,7 @@ trait EnumTrait
      * Get an array of key -> values for a select.
      *
      * @return array
+     * @throws \ReflectionException
      */
     public static function getSelect()
     {
@@ -54,6 +56,7 @@ trait EnumTrait
      * Get all available values for this enum.
      *
      * @return array
+     * @throws \ReflectionException
      */
     public static function getValues()
     {
@@ -65,6 +68,7 @@ trait EnumTrait
      *
      * @param int|string $value The value to find a constant config for.
      * @return array|bool
+     * @throws \ReflectionException
      */
     public static function getConstantConfigByValue($value)
     {
@@ -81,6 +85,7 @@ trait EnumTrait
      *
      * @param int|string $value The value to get the name of a constant for.
      * @return bool|string
+     * @throws \ReflectionException
      */
     public static function getNameForValue($value)
     {
@@ -97,6 +102,7 @@ trait EnumTrait
      *
      * @param int|string $name The name to get the value of a constant for.
      * @return bool|string
+     * @throws \ReflectionException
      */
     public static function getValueForName($name)
     {
@@ -113,6 +119,7 @@ trait EnumTrait
      *
      * @param int|string $value The value to check.
      * @return bool
+     * @throws \ReflectionException
      */
     public static function isValidValue($value)
     {
@@ -125,6 +132,7 @@ trait EnumTrait
      * @param string $attribute The name of the attribute.
      * @param int|string $value The value of the enum entry.
      * @return mixed
+     * @throws \ReflectionException
      */
     public static function getAttributeByValue($attribute, $value)
     {

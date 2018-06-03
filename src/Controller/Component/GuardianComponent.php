@@ -20,6 +20,8 @@ use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Event\EventDispatcherTrait;
 use Cake\Filesystem\Folder;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\Network\Session;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
@@ -47,14 +49,14 @@ class GuardianComponent extends Component
     /**
      * Request object
      *
-     * @var \Cake\Network\Request
+     * @var ServerRequest
      */
     public $request;
 
     /**
      * Response object
      *
-     * @var \Cake\Network\Response
+     * @var Response
      */
     public $response;
 

@@ -14,7 +14,6 @@
 namespace Wasabi\Core\Controller;
 
 use Cake\Cache\Cache;
-use Cake\Database\Connection;
 use Cake\Utility\Hash;
 use Wasabi\Core\Model\Entity\GroupPermission;
 use Wasabi\Core\Model\Table\GroupsTable;
@@ -37,6 +36,7 @@ class PermissionsController extends BackendAppController
      * Initialization hook method.
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize()
     {
@@ -82,6 +82,7 @@ class PermissionsController extends BackendAppController
      * POST
      *
      * @return void
+     * @throws \Aura\Intl\Exception
      */
     public function update()
     {

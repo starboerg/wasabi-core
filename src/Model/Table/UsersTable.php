@@ -62,6 +62,7 @@ class UsersTable extends Table
      *
      * @param Validator $validator The validator to customize.
      * @return Validator
+     * @throws \Aura\Intl\Exception
      */
     public function validationDefault(Validator $validator)
     {
@@ -159,6 +160,7 @@ class UsersTable extends Table
      *
      * @param Validator $validator The validator to customize.
      * @return Validator
+     * @throws \Aura\Intl\Exception
      */
     public function validationEmailOnly(Validator $validator)
     {
@@ -179,6 +181,7 @@ class UsersTable extends Table
      *
      * @param Validator $validator The validator to customize.
      * @return Validator
+     * @throws \Aura\Intl\Exception
      */
     public function validationPasswordOnly(Validator $validator)
     {
@@ -216,6 +219,7 @@ class UsersTable extends Table
      *
      * @param RulesChecker $rules The rules checker to customize.
      * @return RulesChecker
+     * @throws \Aura\Intl\Exception
      */
     public function buildRules(RulesChecker $rules)
     {
@@ -433,13 +437,13 @@ class UsersTable extends Table
      * Check if user with email exists and return the result
      *
      * @param string $email The email to check for.
-     * @return User The User Entity or an empty Entity if none is found
+     * @return array|EntityInterface|User The User Entity or an empty Entity if none is found
      */
     public function existsWithEmail($email)
     {
         return $this->find()
             ->where([
-                $this->alias() . '.email' => $email
+                $this->getAlias() . '.email' => $email
             ])
             ->first();
     }
@@ -470,7 +474,7 @@ class UsersTable extends Table
         $query = $this->find();
 
         return $query->leftJoin(
-                [$this->UsersGroups->alias() => $this->UsersGroups->table()],
+                [$this->UsersGroups->getAlias() => $this->UsersGroups->getTable()],
                 [$this->aliasField('id') . ' = ' . $this->UsersGroups->aliasField('user_id')]
             )
             ->select([
