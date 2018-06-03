@@ -97,9 +97,9 @@ class AppView extends View
         }
 
         if (!in_array(join('.', [
-            $this->request->params['plugin'] ? $this->request->params['plugin'] : 'App',
-            $this->request->params['controller'],
-            $this->request->params['action']
+            $this->request->getParam('plugin') ? $this->request->getParam('plugin') : 'App',
+            $this->request->getParam('controller'),
+            $this->request->getParam('action')
         ]), $this->defaultFormTemplateActions)
         ) {
             $this->loadHelper('Form', [

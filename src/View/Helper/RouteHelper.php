@@ -3,6 +3,7 @@
 namespace Wasabi\Core\View\Helper;
 
 use Cake\ORM\TableRegistry;
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\View\Helper;
 use FrankFoerster\Filter\Model\Entity\Filter;
@@ -469,7 +470,9 @@ class RouteHelper extends Helper
         // Find or create a filter slug for each category to link to Ideas::index() and only
         // display a single category/topic.
         $fakeRequest = clone Router::getRequest();
-        $fakeRequest->params = $url;
+        foreach ($url as $param => $value) {
+            $fakeRequest = $fakeRequest->withParam($param, $value);
+        }
 
         /** @var FiltersTable $FiltersTable */
         $FiltersTable = TableRegistry::get('FrankFoerster/Filter.Filters');

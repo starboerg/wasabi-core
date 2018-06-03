@@ -4,39 +4,39 @@
  * @var \Wasabi\Core\Model\Entity\Language $language
  */
 
-if ($this->request->params['action'] === 'add') {
+if ($this->request->getParam('action') === 'add') {
     $this->Html->setTitle(__d('wasabi_core', 'Create a new Language'));
 } else {
     $this->Html->setTitle(__d('wasabi_core', 'Edit Language'));
     $this->Html->setSubTitle($language->name);
 }
 
-$isEdit = ($this->request->params['action'] === 'edit');
+$isEdit = ($this->request->getParam('action') === 'edit');
 
 echo $this->Form->create($language, ['class' => 'no-top-section']);
 if ($isEdit) {
-    echo $this->Form->input('id', ['type' => 'hidden']);
+    echo $this->Form->control('id', ['type' => 'hidden']);
 }
-echo $this->Form->input('name', [
+echo $this->Form->control('name', [
     'label' => __d('wasabi_core', 'Language Name')
 ]);
-echo $this->Form->input('iso2', [
+echo $this->Form->control('iso2', [
     'label' => __d('wasabi_core', 'ISO 639-1')
 ]);
-echo $this->Form->input('iso3', [
+echo $this->Form->control('iso3', [
     'label' => __d('wasabi_core', 'ISO 639-2/T')
 ]);
-echo $this->Form->input('lang', [
+echo $this->Form->control('lang', [
     'label' => __d('wasabi_core', 'HTML lang')
 ]);
-echo $this->Form->input('available_at_frontend', [
+echo $this->Form->control('available_at_frontend', [
     'label' => __d('wasabi_core', 'available at Frontend'),
     'type' => 'checkbox',
     'templateVars' => [
         'formRowLabel' => 'Frontend'
     ]
 ]);
-echo $this->Form->input('available_at_backend', [
+echo $this->Form->control('available_at_backend', [
     'label' => __d('wasabi_core', 'available at Backend'),
     'type' => 'checkbox',
     'templateVars' => [

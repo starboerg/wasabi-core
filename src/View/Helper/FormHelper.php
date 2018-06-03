@@ -129,7 +129,7 @@ class FormHelper extends \Cake\View\Helper\FormHelper
             }
         }
         $options['options'] = $timezones;
-        return $this->input($field, $options);
+        return $this->control($field, $options);
     }
 
     /**

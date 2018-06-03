@@ -12,7 +12,7 @@ $this->set('bodyCssClass', ['wasabi-core--layout-support']);
     <h1><?= __d('wasabi_core', 'Request Verification Email') ?></h1>
     <?= $this->Flash->render() ?>
     <p><?= __d('wasabi_core', 'If you did not verify your email address yet, you can request a new verification email below. After submitting this form you will receive an email with further instruction on how to verify your email address.') ?></p>
-    <?= $this->Form->input('email', ['label' => __d('wasabi_core', 'Email') . ':']) ?>
+    <?= $this->Form->control('email', ['label' => __d('wasabi_core', 'Email') . ':']) ?>
 </div>
 <div class="form-controls">
     <div class="form-control-buttons">

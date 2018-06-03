@@ -27,9 +27,9 @@ $this->Html->addAction(
     <table class="datatable valign-middle">
         <thead>
         <tr class="datatable-filters">
-            <th><?= $this->Form->input('id', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'ID'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
-            <th><?= $this->Form->input('group', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for Group'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
-            <th><?= $this->Form->input('description', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search in Description'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
+            <th><?= $this->Form->control('id', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'ID'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
+            <th><?= $this->Form->control('group', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for Group'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
+            <th><?= $this->Form->control('description', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search in Description'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
             <th></th>
             <th class="center"><?= $this->Form->button(__d('wasabi_core', 'Search'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']); ?></th>
         </tr>

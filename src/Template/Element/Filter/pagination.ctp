@@ -121,7 +121,7 @@
         </li>
     </ul>
 </nav>
-<?= $this->Form->input('l', [
+<?= $this->Form->control('l', [
     'id' => false,
     'label' => false,
     'options' => $this->Filter->paginationParams['limits'],

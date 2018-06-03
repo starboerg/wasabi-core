@@ -15,15 +15,15 @@ $this->set('bodyCssClass', ['wasabi-core--layout-support']);
         <?php
         echo $this->Flash->render();
         if (Wasabi::setting('Core.User.has_username')) {
-            echo $this->Form->input('username', ['label' => __d('wasabi_core', 'Username') . ':']);
+            echo $this->Form->control('username', ['label' => __d('wasabi_core', 'Username') . ':']);
         }
         if (Wasabi::setting('Core.User.has_firstname_lastname')) {
-            echo $this->Form->input('firstname', ['label' => __d('wasabi_core', 'First Name') . ':']);
-            echo $this->Form->input('lastname', ['label' => __d('wasabi_core', 'Last Name') . ':']);
+            echo $this->Form->control('firstname', ['label' => __d('wasabi_core', 'First Name') . ':']);
+            echo $this->Form->control('lastname', ['label' => __d('wasabi_core', 'Last Name') . ':']);
         }
-        echo $this->Form->input('email', ['label' => __d('wasabi_core', 'Email') . ':']);
-        echo $this->Form->input('password', ['label' => __d('wasabi_core', 'Password') . ':']);
-        echo $this->Form->input('password_confirmation', ['type' => 'password', 'label' => __d('wasabi_core', 'Password Confirmation') . ':']);
+        echo $this->Form->control('email', ['label' => __d('wasabi_core', 'Email') . ':']);
+        echo $this->Form->control('password', ['label' => __d('wasabi_core', 'Password') . ':']);
+        echo $this->Form->control('password_confirmation', ['type' => 'password', 'label' => __d('wasabi_core', 'Password Confirmation') . ':']);
         if (Wasabi::setting('Core.User.allow_timezone_change')) {
             echo $this->Form->timeZoneSelect('timezone', ['label' => __d('wasabi_core', 'Timezone')]);
         }

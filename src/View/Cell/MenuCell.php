@@ -30,7 +30,12 @@ class MenuCell extends Cell
     public function display($alias)
     {
         $items = Nav::getMenu($alias, true);
-        $this->set('menuItems', $this->_processMenuItems($items, $this->request->params));
+        $params = [
+            'plugin' => $this->request->getParam('plugin'),
+            'controller' => $this->request->getParam('controller'),
+            'action' => $this->request->getParam('action')
+        ];
+        $this->set('menuItems', $this->_processMenuItems($items, $params));
     }
 
     /**

@@ -37,14 +37,27 @@ class CommonComponent extends Component
     {
         /** @var Controller $controller */
         $controller = $event->getSubject();
-        if (!empty($controller->request->getData()) && !Configure::read('DataPreparation.notrimRequestData')) {
-            $controller->request->data = $this->_trimDeep($controller->request->getData());
+
+        $data = $controller->request->getData();
+        if (!empty($data) && !Configure::read('DataPreparation.notrimRequestData')) {
+            $data = $this->_trimDeep($data);
+            foreach ($data as $key => $value) {
+                $controller->request = $controller->request->withData($key, $value);
+            }
         }
-        if (!empty($controller->request->query) && !Configure::read('DataPreparation.notrimRequestQuery')) {
-            $controller->request->query = $this->_trimDeep($controller->request->query);
+
+        $query = $controller->request->getQuery();
+        if (!empty($query) && !Configure::read('DataPreparation.notrimRequestQuery')) {
+            $query = $this->_trimDeep($query);
+            $controller->request = $controller->request->withQueryParams($query);
         }
-        if (!empty($controller->request->params['pass']) && !Configure::read('DataPreparation.notrimRequestParams')) {
-            $controller->request->params['pass'] = $this->_trimDeep($controller->request->params['pass']);
+
+        $pass = $controller->request->getParam('pass');
+        if (!empty($pass) && !Configure::read('DataPreparation.notrimRequestParams')) {
+            $pass = $this->_trimDeep($pass);
+            foreach ($pass as $key => $value) {
+                $controller->request = $controller->request->withParam($key, $value);
+            }
         }
     }
 

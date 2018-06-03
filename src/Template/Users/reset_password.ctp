@@ -12,11 +12,11 @@ $this->set('bodyCssClass', ['wasabi-core--layout-support']);
         <h1><?= __d('wasabi_core', 'Reset Password') ?></h1>
         <?= $this->Flash->render() ?>
         <p><?= __d('wasabi_core', 'Please enter your new password.') ?> <?= __d('wasabi_core', 'The password should consist of 6 to 50 characters. All numbers, letters and special characters are allowed.') ?></p>
-        <?= $this->Form->input('password', [
+        <?= $this->Form->control('password', [
             'label' => __d('wasabi_core', 'Password'),
             'autocomplete' => 'off'
         ]); ?>
-        <?= $this->Form->input('password_confirmation', [
+        <?= $this->Form->control('password_confirmation', [
             'label' => __d('wasabi_core', 'Password Confirmation'),
             'type' => 'password',
             'autocomplete' => 'off'

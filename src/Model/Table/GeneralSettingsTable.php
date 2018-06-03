@@ -37,7 +37,7 @@ class GeneralSettingsTable extends SettingsTable
      */
     public function initialize(array $config)
     {
-        $this->table('settings');
+        $this->setTable('settings');
 
         $this->addBehavior('Wasabi/Core.KeyValue', [
             'scope' => 'Core'

@@ -13,7 +13,7 @@ $this->assign('title', __d('wasabi_core', 'Move existing Member(s)'));
 echo $this->Form->create($group, ['class' => 'no-top-section', 'type' => 'post']);
     /** @var \Wasabi\Core\Model\Entity\User $user */
     foreach ($users as $user) {
-        echo $this->Form->input('alternative_group_id.' . $user->id, [
+        echo $this->Form->control('alternative_group_id.' . $user->id, [
             'label' => $user->fullName(),
             'options' => $groups,
             'empty' => __d('wasabi_core', 'Please choose...'),

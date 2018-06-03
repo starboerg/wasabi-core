@@ -30,16 +30,16 @@ $this->Html->addAction(
     <table class="datatable valign-middle">
         <thead>
         <tr class="datatable-filters">
-            <th><?= $this->Form->input('user_id', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'ID'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
+            <th><?= $this->Form->control('user_id', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'ID'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
             <?php if ($displayUsername): ?>
-            <th><?= $this->Form->input('username', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search by username'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
+            <th><?= $this->Form->control('username', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search by username'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
             <?php endif; ?>
             <?php if ($displayFirstnameLastname): ?>
-                <th><?= $this->Form->input('name', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search by name'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
+                <th><?= $this->Form->control('name', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search by name'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
             <?php endif; ?>
-            <th><?= $this->Form->input('email', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for email'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
-            <th><?= $this->Form->input('group_id', ['options' => $groups, 'label' => false, 'id' => false, 'empty' => __d('wasabi_core', 'Filter by group'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
-            <th><?= $this->Form->input('status', ['options' => $statusOptions, 'label' => false, 'id' => false, 'empty' => __d('wasabi_core', 'Filter by status'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
+            <th><?= $this->Form->control('email', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for email'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
+            <th><?= $this->Form->control('group_id', ['options' => $groups, 'label' => false, 'id' => false, 'empty' => __d('wasabi_core', 'Filter by group'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
+            <th><?= $this->Form->control('status', ['options' => $statusOptions, 'label' => false, 'id' => false, 'empty' => __d('wasabi_core', 'Filter by status'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
             <th class="center"><?= $this->Form->button(__d('wasabi_core', 'Search'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']); ?></th>
         </tr>
         <tr>

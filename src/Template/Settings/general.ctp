@@ -10,19 +10,19 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         'title' => __d('wasabi_core', 'Instance'),
         'description' => __d('wasabi_core', 'General instance settings')
     ]);
-    echo $this->Form->input('instance_name', [
+    echo $this->Form->control('instance_name', [
         'label' => __d('wasabi_core', 'Instance Name'),
         'templateVars' => [
             'info' => __d('wasabi_core', 'The name of your app.')
         ]
     ]);
-    echo $this->Form->input('instance_short_name', [
+    echo $this->Form->control('instance_short_name', [
         'label' => __d('wasabi_core', 'Instance Short Name'),
         'templateVars' => [
             'info' => __d('wasabi_core', 'The short name of your app (preferably only 1 character).')
         ]
     ]);
-    echo $this->Form->input('html_title_suffix', [
+    echo $this->Form->control('html_title_suffix', [
         'label' => __d('wasabi_core', 'Html Title Suffix'),
         'templateVars' => [
             'info' => __d('wasabi_core', 'The Html title suffix of your CMS instance.')
@@ -32,14 +32,14 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         'title' => __d('wasabi_core', 'Login Message'),
         'description' => __d('wasabi_core', 'An optional message that is displayed on top of the login page.')
     ]);
-    echo $this->Form->input('Login__Message__show', [
+    echo $this->Form->control('Login__Message__show', [
         'label' => __d('wasabi_core', 'Display Login Message?'),
         'options' => [
             '0' => __d('wasabi_core', 'No'),
             '1' => __d('wasabi_core', 'Yes')
         ]
     ]);
-    echo $this->Form->input('Login__Message__text', [
+    echo $this->Form->control('Login__Message__text', [
         'label' => __d('wasabi_core', 'Login Message Text'),
         'templateVars' => [
             'info' =>
@@ -49,7 +49,7 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         'type' => 'textarea',
         'rows' => 2
     ]);
-    echo $this->Form->input('Login__Message__class', [
+    echo $this->Form->control('Login__Message__class', [
         'label' => __d('wasabi_core', 'Login Message Class'),
         'templateVars' => [
             'info' => __d('wasabi_core', 'The CSS class that is applied to the message box.')
@@ -64,7 +64,7 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         'title' => __d('wasabi_core', 'Session Configuration'),
         'description' => __d('wasabi_core', 'Control the duration of a user’s login session.')
     ]);
-    echo $this->Form->input('Login__HeartBeat__max_login_time', [
+    echo $this->Form->control('Login__HeartBeat__max_login_time', [
         'label' => __d('wasabi_core', 'Maximum Login Time'),
         'options' => [
             '900000' => __d('wasabi_core', '15 minutes'),
@@ -78,13 +78,13 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         'title' => __d('wasabi_core', 'Email Configuration'),
         'description' => __d('wasabi_core', 'Configure how backend emails are sent to users.')
     ]);
-    echo $this->Form->input('Email__email_sender_name', [
+    echo $this->Form->control('Email__email_sender_name', [
         'label' => __d('wasabi_core', 'Email Sender Name'),
         'templateVars' => [
             'info' => __d('wasabi_core', 'The name used as sender for all backend emails.')
         ]
     ]);
-    echo $this->Form->input('Email__email_sender', [
+    echo $this->Form->control('Email__email_sender', [
         'label' => __d('wasabi_core', 'Email Sender Address'),
         'templateVars' => [
             'info' => __d('wasabi_core', 'The email address used as sender for all backend emails.')
@@ -94,18 +94,18 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         'title' => __d('wasabi_core', 'Authentication'),
         'description' => __d('wasabi_core', 'Configure the authentication mechanism.')
     ]);
-    echo $this->Form->input('Auth__max_login_attempts', [
+    echo $this->Form->control('Auth__max_login_attempts', [
         'label' => __d('wasabi_core', 'Maximum number of failed login attempts'),
         'default' => 5
     ]);
-    echo $this->Form->input('Auth__failed_login_recognition_time', [
+    echo $this->Form->control('Auth__failed_login_recognition_time', [
         'label' => __d('wasabi_core', 'within x Minutes'),
         'default' => 5,
         'templateVars' => [
             'info' => __d('wasabi_core', 'The number of minutes failed logins are collected.')
         ]
     ]);
-    echo $this->Form->input('Auth__block_time', [
+    echo $this->Form->control('Auth__block_time', [
         'label' => __d('wasabi_core', 'Block Time'),
         'default' => 30,
         'templateVars' => [
@@ -116,28 +116,28 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
         'title' => __d('wasabi_core', 'User Configuration'),
         'description' => __d('wasabi_core', 'Modify user specific settings.')
     ]);
-    echo $this->Form->input('User__has_username', [
+    echo $this->Form->control('User__has_username', [
         'label' => __d('wasabi_core', 'User has username?'),
         'options' => [
             '0' => __d('wasabi_core', 'No'),
             '1' => __d('wasabi_core', 'Yes')
         ]
     ]);
-    echo $this->Form->input('User__has_firstname_lastname', [
+    echo $this->Form->control('User__has_firstname_lastname', [
         'label' => __d('wasabi_core', 'User has firstname and lastname?'),
         'options' => [
             '0' => __d('wasabi_core', 'No'),
             '1' => __d('wasabi_core', 'Yes')
         ]
     ]);
-    echo $this->Form->input('User__allow_timezone_change', [
+    echo $this->Form->control('User__allow_timezone_change', [
         'label' => __d('wasabi_core', 'User may change his timezone?'),
         'options' => [
             '0' => __d('wasabi_core', 'No'),
             '1' => __d('wasabi_core', 'Yes')
         ]
     ]);
-    echo $this->Form->input('User__belongs_to_many_groups', [
+    echo $this->Form->control('User__belongs_to_many_groups', [
         'label' => __d('wasabi_core', 'User may belong to multiple groups?'),
         'options' => [
             '0' => __d('wasabi_core', 'No'),

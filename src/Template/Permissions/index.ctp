@@ -40,7 +40,7 @@ $groupCount = count($groups->toArray());
                     <td><?= $permission->getName() ?></td>
                     <td class="permission">
                         <div class="btn-group" data-toggle="buttons">
-                            <?= $this->Form->input('permissions.1.' . $permission->getId(), [
+                            <?= $this->Form->control('permissions.1.' . $permission->getId(), [
                                 'label' => false,
                                 'div' => false,
                                 'options' => $permission->getHighestPermissionOption(),
@@ -55,13 +55,13 @@ $groupCount = count($groups->toArray());
                         $field = 'permissions.' . $groupId . '.' . $permission->getId(); ?>
                         <td class="permission">
                             <div class="btn-group" data-toggle="buttons">
-                                <?= $this->Form->input($field, [
+                                <?= $this->Form->control($field, [
                                     'label' => false,
                                     'div' => false,
                                     'options' => $permission->getSelectOptions(),
                                     'type' => 'radio',
                                     'templates' => 'Wasabi/Core.FormTemplates/btn_radio',
-                                    'value' => (string)$this->request->data($field)
+                                    'value' => (string)$this->request->getData($field)
                                 ]); ?>
                             </div>
                         </td>
