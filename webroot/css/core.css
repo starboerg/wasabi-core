@@ -5060,6 +5060,17 @@ span.error-message, div.error-message {
   top: -1px;
   top: -0.0625rem; }
 
+.sidebar--menu-wrapper {
+  overflow-y: hidden;
+  height: calc(100vh - 2.625rem);
+  height: calc(100vh - 42px); }
+
+.sidebar--menu {
+  padding-bottom: 30px;
+  padding-bottom: 1.875rem;
+  max-width: 240px;
+  max-width: 15rem; }
+
 @media only screen and (max-width: 47.9375em) {
   .sidebar-is-open .sidebar {
     left: 0;
@@ -5086,13 +5097,6 @@ span.error-message, div.error-message {
     .sidebar-is-open .sidebar--menu:before {
       content: 'open';
       display: none; } }
-
-.sidebar--menu-wrapper {
-  overflow-y: hidden;
-  height: calc(100vh - 42px); }
-
-.sidebar--menu {
-  padding-bottom: 30px; }
 
 @media only screen and (min-width: 48em) and (max-width: 74.9375em) {
   .sidebar {
