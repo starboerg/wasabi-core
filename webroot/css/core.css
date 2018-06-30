@@ -5081,9 +5081,11 @@ span.error-message, div.error-message {
               transform: rotate3d(0, 0, 1, -45deg);
       -webkit-transform-origin: 7px 0;
               transform-origin: 7px 0; }
-  .sidebar-is-open .sidebar--menu:before {
-    content: 'open';
-    display: none; } }
+  .sidebar-is-open .sidebar--menu {
+    max-width: 100vw; }
+    .sidebar-is-open .sidebar--menu:before {
+      content: 'open';
+      display: none; } }
 
 .sidebar--menu-wrapper {
   overflow-y: hidden;

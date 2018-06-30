@@ -160,6 +160,7 @@
     }
 
     .sidebar--menu {
+      max-width: 100vw;
 
       &:before {
         content: 'open';
