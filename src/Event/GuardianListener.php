@@ -64,6 +64,7 @@ class GuardianListener implements EventListenerInterface
             'Wasabi/Core.Users.resetPassword',
             'Wasabi/Core.Users.requestNewVerificationEmail',
             'Wasabi/Core.Users.verifyByToken',
+            'Wasabi/Core.Api/Authentication.login'
         ]);
     }
 
@@ -84,6 +85,7 @@ class GuardianListener implements EventListenerInterface
      * @param Event $event An event instance.
      * @return void
      * @throws \Aura\Intl\Exception
+     * @throws \ReflectionException
      */
     public function initializePermissions(Event $event)
     {

@@ -50,13 +50,13 @@ const LoginModal = View.extend({
       data: $form.serialize(),
       method: 'post',
       dataType: 'json',
-      success: (data) => {
-        if (data.content) {
-          this.$('.modal-body').html(data.content);
+      success: (responseData) => {
+        if (responseData.error) {
+          this.$('.modal-body').html(responseData.data.content || '');
           this.$('#email').focus();
           let loadingButton = this.$button.data('loadingButton');
           loadingButton.toggleLoadingState();
-        } else if (!data.redirect) {
+        } else {
           this.closeModal();
           this.initHeartBeat();
         }
@@ -94,8 +94,8 @@ const LoginModal = View.extend({
     }, this.heartbeat);
   },
 
-  handleHeartBeatResponse (data) {
-    if (data.status === 401) {
+  handleHeartBeatResponse (responseData) {
+    if (responseData.error) {
       this.authError();
     } else {
       this.initHeartBeat();

@@ -3,12 +3,10 @@
 namespace Wasabi\Core\View\Helper;
 
 use Cake\ORM\TableRegistry;
-use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\View\Helper;
-use FrankFoerster\Filter\Model\Entity\Filter;
-use FrankFoerster\Filter\Model\Table\FiltersTable;
 use Wasabi\Core\Model\Entity\User;
+use Wasabi\Core\Model\Table\FiltersTable;
 
 class RouteHelper extends Helper
 {
@@ -22,7 +20,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',
-            'action' => 'register'
+            'action' => 'register',
+            'prefix' => null
         ];
     }
 
@@ -35,8 +34,9 @@ class RouteHelper extends Helper
     {
         return [
             'plugin' => 'Wasabi/Core',
-            'controller' => 'Users',
-            'action' => 'login'
+            'controller' => 'Authentication',
+            'action' => 'login',
+            'prefix' => null
         ];
     }
 
@@ -49,8 +49,9 @@ class RouteHelper extends Helper
     {
         return [
             'plugin' => 'Wasabi/Core',
-            'controller' => 'Users',
-            'action' => 'logout'
+            'controller' => 'Authentication',
+            'action' => 'logout',
+            'prefix' => null
         ];
     }
 
@@ -64,7 +65,18 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',
-            'action' => 'lostPassword'
+            'action' => 'lostPassword',
+            'prefix' => null
+        ];
+    }
+
+    public static function requestNewVerificationEmail()
+    {
+        return [
+            'plugin' => 'Wasabi/Core',
+            'controller' => 'Users',
+            'action' => 'requestNewVerificationEmail',
+            'prefix' => null
         ];
     }
 
@@ -78,7 +90,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',
-            'action' => 'profile'
+            'action' => 'profile',
+            'prefix' => null
         ];
     }
 
@@ -92,7 +105,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Dashboard',
-            'action' => 'index'
+            'action' => 'index',
+            'prefix' => null
         ];
     }
 
@@ -106,7 +120,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',
-            'action' => 'index'
+            'action' => 'index',
+            'prefix' => null
         ];
     }
 
@@ -117,7 +132,7 @@ class RouteHelper extends Helper
      */
     public static function usersIndexActive()
     {
-        return self::_filterUrl(self::usersIndex(), [
+        return self::filterUrl(self::usersIndex(), [
             'status' => User::STATUS_ACTIVE
         ]);
     }
@@ -129,7 +144,7 @@ class RouteHelper extends Helper
      */
     public static function usersIndexInactive()
     {
-        return self::_filterUrl(self::usersIndex(), [
+        return self::filterUrl(self::usersIndex(), [
             'status' => User::STATUS_INACTIVE
         ]);
     }
@@ -141,7 +156,7 @@ class RouteHelper extends Helper
      */
     public static function usersIndexVerified()
     {
-        return self::_filterUrl(self::usersIndex(), [
+        return self::filterUrl(self::usersIndex(), [
             'status' => User::STATUS_VERIFIED
         ]);
     }
@@ -153,7 +168,7 @@ class RouteHelper extends Helper
      */
     public static function usersIndexNotVerified()
     {
-        return self::_filterUrl(self::usersIndex(), [
+        return self::filterUrl(self::usersIndex(), [
             'status' => User::STATUS_NOTVERIFIED
         ]);
     }
@@ -168,7 +183,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',
-            'action' => 'add'
+            'action' => 'add',
+            'prefix' => null
         ];
     }
 
@@ -184,7 +200,8 @@ class RouteHelper extends Helper
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',
             'action' => 'edit',
-            'id' => $id
+            'id' => $id,
+            'prefix' => null
         ];
     }
 
@@ -200,7 +217,8 @@ class RouteHelper extends Helper
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',
             'action' => 'delete',
-            'id' => $id
+            'id' => $id,
+            'prefix' => null
         ];
     }
 
@@ -216,7 +234,8 @@ class RouteHelper extends Helper
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',
             'action' => 'verify',
-            'id' => $id
+            'id' => $id,
+            'prefix' => null
         ];
     }
 
@@ -232,7 +251,8 @@ class RouteHelper extends Helper
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',
             'action' => 'activate',
-            'id' => $id
+            'id' => $id,
+            'prefix' => null
         ];
     }
 
@@ -248,7 +268,8 @@ class RouteHelper extends Helper
             'plugin' => 'Wasabi/Core',
             'controller' => 'Users',
             'action' => 'deactivate',
-            'id' => $id
+            'id' => $id,
+            'prefix' => null
         ];
     }
 
@@ -262,7 +283,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Groups',
-            'action' => 'index'
+            'action' => 'index',
+            'prefix' => null
         ];
     }
 
@@ -276,7 +298,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Groups',
-            'action' => 'add'
+            'action' => 'add',
+            'prefix' => null
         ];
     }
 
@@ -292,7 +315,8 @@ class RouteHelper extends Helper
             'plugin' => 'Wasabi/Core',
             'controller' => 'Groups',
             'action' => 'edit',
-            'id' => $id
+            'id' => $id,
+            'prefix' => null
         ];
     }
 
@@ -308,7 +332,8 @@ class RouteHelper extends Helper
             'plugin' => 'Wasabi/Core',
             'controller' => 'Groups',
             'action' => 'delete',
-            'id' => $id
+            'id' => $id,
+            'prefix' => null
         ];
     }
 
@@ -322,7 +347,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Languages',
-            'action' => 'index'
+            'action' => 'index',
+            'prefix' => null
         ];
     }
 
@@ -336,7 +362,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Languages',
-            'action' => 'add'
+            'action' => 'add',
+            'prefix' => null
         ];
     }
 
@@ -352,7 +379,8 @@ class RouteHelper extends Helper
             'plugin' => 'Wasabi/Core',
             'controller' => 'Languages',
             'action' => 'edit',
-            'id' => $id
+            'id' => $id,
+            'prefix' => null
         ];
     }
 
@@ -368,7 +396,8 @@ class RouteHelper extends Helper
             'plugin' => 'Wasabi/Core',
             'controller' => 'Languages',
             'action' => 'delete',
-            'id' => $id
+            'id' => $id,
+            'prefix' => null
         ];
     }
 
@@ -384,21 +413,8 @@ class RouteHelper extends Helper
             'plugin' => 'Wasabi/Core',
             'controller' => 'Languages',
             'action' => 'change',
-            'id' => $id
-        ];
-    }
-
-    /**
-     * Sort languages route.
-     *
-     * @return array
-     */
-    public static function languagesSort()
-    {
-        return [
-            'plugin' => 'Wasabi/Core',
-            'controller' => 'Languages',
-            'action' => 'sort'
+            'id' => $id,
+            'prefix' => null
         ];
     }
 
@@ -412,7 +428,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Permissions',
-            'action' => 'index'
+            'action' => 'index',
+            'prefix' => null
         ];
     }
 
@@ -426,7 +443,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Permissions',
-            'action' => 'update'
+            'action' => 'update',
+            'prefix' => null
         ];
     }
 
@@ -440,7 +458,8 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Settings',
-            'action' => 'cache'
+            'action' => 'cache',
+            'prefix' => null
         ];
     }
 
@@ -454,7 +473,53 @@ class RouteHelper extends Helper
         return [
             'plugin' => 'Wasabi/Core',
             'controller' => 'Settings',
-            'action' => 'general'
+            'action' => 'general',
+            'prefix' => null
+        ];
+    }
+
+    /**
+     * API login route.
+     *
+     * @return array
+     */
+    public static function apiLogin()
+    {
+        return [
+            'plugin' => 'Wasabi/Core',
+            'controller' => 'Authentication',
+            'action' => 'login',
+            'prefix' => 'api'
+        ];
+    }
+
+    /**
+     * API heartbeat route.
+     *
+     * @return array
+     */
+    public static function apiHeartbeat()
+    {
+        return [
+            'plugin' => 'Wasabi/Core',
+            'controller' => 'Authentication',
+            'action' => 'heartbeat',
+            'prefix' => 'api'
+        ];
+    }
+
+    /**
+     * API sort languages route.
+     *
+     * @return array
+     */
+    public static function apiLanguagesSort()
+    {
+        return [
+            'plugin' => 'Wasabi/Core',
+            'controller' => 'Languages',
+            'action' => 'sort',
+            'prefix' => 'api'
         ];
     }
 
@@ -465,7 +530,7 @@ class RouteHelper extends Helper
      * @param array $filterData
      * @return array
      */
-    protected static function _filterUrl(array $url, array $filterData)
+    protected static function filterUrl(array $url, array $filterData)
     {
         // Find or create a filter slug for each category to link to Ideas::index() and only
         // display a single category/topic.
@@ -475,21 +540,11 @@ class RouteHelper extends Helper
         }
 
         /** @var FiltersTable $FiltersTable */
-        $FiltersTable = TableRegistry::get('FrankFoerster/Filter.Filters');
+        $FiltersTable = TableRegistry::getTableLocator()->get('Wasabi/Core.Filters');
 
-        /** @var Filter $filter */
-        $filter = $FiltersTable->find('slugForFilterData', [
-            'request' => $fakeRequest,
-            'filterData' => $filterData
-        ])->first();
+        $slug = $FiltersTable->findOrCreateSlugForFilterData($fakeRequest, $filterData);
 
-        if (!$filter) {
-            $slug = $FiltersTable->createFilterForFilterData($fakeRequest, $filterData);
-        } else {
-            $slug = $filter->slug;
-        }
-
-        $url['sluggedFilter'] = $slug;
+        $url['filterSlug'] = $slug;
 
         return $url;
     }

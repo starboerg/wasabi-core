@@ -14,8 +14,8 @@ const LangSwitch = View.extend({
     this.render();
   },
 
-  updateLanguageLinkPositions (event, data) {
-    let frontendLanguages = data.frontendLanguages;
+  updateLanguageLinkPositions (event, responseData) {
+    let frontendLanguages = responseData.data.frontendLanguages;
     let $sortedLi = [];
     let $li = this.$('li');
     _.each(frontendLanguages, function(el) {

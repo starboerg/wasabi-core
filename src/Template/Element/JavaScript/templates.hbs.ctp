@@ -62,7 +62,7 @@
 
 <script id="wasabi-core-login-modal" type="text/template">
     <div class="modal-wrapper modal--login" tabindex="-1">
-        <?= $this->Form->create(null, ['url' => $this->Route->login(), 'novalidate' => 'novalidate']) ?>
+        <?= $this->Form->create(null, ['url' => $this->Route->apiLogin(), 'novalidate' => 'novalidate']) ?>
         <div class="modal-backdrop"></div>
         <div class="modal-scrollable">
             <div class="modal-container">

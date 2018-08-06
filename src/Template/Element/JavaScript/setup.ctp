@@ -12,7 +12,7 @@ $options = [
         'confirmNo' => __d('wasabi_core', 'No')
     ],
     'heartbeat' => $heartBeatFrequency,
-    'heartbeatEndpoint' => $this->Url->build('/backend/heartbeat'),
+    'heartbeatEndpoint' => $this->Url->build($this->Route->apiHeartbeat()),
     'cookiePath' => $this->request->getAttribute('base')
 ];
 

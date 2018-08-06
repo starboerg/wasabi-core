@@ -25357,8 +25357,8 @@ var LangSwitch = _backbone.View.extend({
 
     this.render();
   },
-  updateLanguageLinkPositions: function updateLanguageLinkPositions(event, data) {
-    var frontendLanguages = data.frontendLanguages;
+  updateLanguageLinkPositions: function updateLanguageLinkPositions(event, responseData) {
+    var frontendLanguages = responseData.data.frontendLanguages;
     var $sortedLi = [];
     var $li = this.$('li');
     _underscore2.default.each(frontendLanguages, function (el) {
@@ -25490,13 +25490,13 @@ var LoginModal = _backbone.View.extend({
       data: $form.serialize(),
       method: 'post',
       dataType: 'json',
-      success: function success(data) {
-        if (data.content) {
-          _this.$('.modal-body').html(data.content);
+      success: function success(responseData) {
+        if (responseData.error) {
+          _this.$('.modal-body').html(responseData.data.content || '');
           _this.$('#email').focus();
           var loadingButton = _this.$button.data('loadingButton');
           loadingButton.toggleLoadingState();
-        } else if (!data.redirect) {
+        } else {
           _this.closeModal();
           _this.initHeartBeat();
         }
@@ -25530,8 +25530,8 @@ var LoginModal = _backbone.View.extend({
       });
     }, this.heartbeat);
   },
-  handleHeartBeatResponse: function handleHeartBeatResponse(data) {
-    if (data.status === 401) {
+  handleHeartBeatResponse: function handleHeartBeatResponse(responseData) {
+    if (responseData.error) {
       this.authError();
     } else {
       this.initHeartBeat();

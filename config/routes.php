@@ -19,22 +19,33 @@ use Cake\Routing\RouteBuilder;
 
 Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index']);
-    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
-    $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
+    $routes->connect('/login', ['controller' => 'Authentication', 'action' => 'login']);
+    $routes->connect('/logout', ['controller' => 'Authentication', 'action' => 'logout']);
     $routes->connect('/register', ['controller' => 'Users', 'action' => 'register']);
     $routes->connect('/forbidden', ['controller' => 'Users', 'action' => 'unauthorized']);
-    $routes->connect('/heartbeat', ['controller' => 'Users', 'action' => 'heartBeat']);
     $routes->connect('/profile', ['controller' => 'Users', 'action' => 'profile']);
     $routes->connect('/request-new-verification-email', ['controller' => 'Users', 'action' => 'requestNewVerificationEmail']);
     $routes->connect('/verify/:token', ['controller' => 'Users', 'action' => 'verifyByToken'], ['token' => '[a-zA-Z0-9\-]+', 'pass' => ['token']]);
 
-    $routes->scope('/password', ['controller' => 'Users'], function(RouteBuilder $route) {
-        $route->connect('/lost', ['action' => 'lostPassword']);
-        $route->connect('/reset/:token', ['action' => 'resetPassword'], ['token' => '[a-zA-Z0-9\-]+', 'pass' => ['token']]);
+    $routes->scope('/password', ['controller' => 'Users'], function (RouteBuilder $routes) {
+        $routes->connect('/lost', ['action' => 'lostPassword']);
+        $routes->connect('/reset/:token', ['action' => 'resetPassword'], ['token' => '[a-zA-Z0-9\-]+', 'pass' => ['token']]);
+    });
+
+    $routes->prefix('api', function(RouteBuilder $routes) {
+
+        $routes->scope('/authentication', ['controller' => 'Authentication'], function(RouteBuilder $routes) {
+            $routes->connect('/login', ['action' => 'login']);
+            $routes->connect('/heartbeat', ['action' => 'heartbeat']);
+        });
+
+        $routes->scope('/languages', ['controller' => 'Languages'], function(RouteBuilder $routes) {
+            $routes->connect('/sort', ['action' => 'sort']);
+        });
     });
 
     $routes->scope('/users', ['controller' => 'Users'], function (RouteBuilder $routes) {
-        $routes->connect('/:sluggedFilter', ['action' => 'index'], ['pass' => ['sluggedFilter']]);
+        $routes->connect('/:filterSlug', ['action' => 'index'], ['pass' => ['filterSlug']]);
         $routes->connect('/', ['action' => 'index']);
         $routes->connect('/add', ['action' => 'add']);
         $routes->connect('/edit/:id', ['action' => 'edit'], ['pass' => ['id'], 'id' => '[0-9]+']);
@@ -45,7 +56,7 @@ Router::scope('/backend', ['plugin' => 'Wasabi/Core'], function (RouteBuilder $r
     });
 
     $routes->scope('/groups', ['controller' => 'Groups'], function (RouteBuilder $routes) {
-        $routes->connect('/:sluggedFilter', ['action' => 'index'], ['pass' => ['sluggedFilter']]);
+        $routes->connect('/:filterSlug', ['action' => 'index'], ['pass' => ['filterSlug']]);
         $routes->connect('/', ['action' => 'index']);
         $routes->connect('/add', ['action' => 'add']);
         $routes->connect('/edit/:id', ['action' => 'edit'], ['pass' => ['id'], 'id' => '[0-9]+']);

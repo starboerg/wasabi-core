@@ -5,10 +5,10 @@
 
 use Wasabi\Core\Wasabi;
 
-$identityField = Wasabi::setting('Auth.identity_field');
-$identityLabel = __d('wasabi_core', 'Email');
+$identityField = Wasabi::setting('Auth.identityField');
+$identityLabel = __d('wasabi_core', 'IDENTITY_FORM_FIELD_LABEL');
 
-$passwordField = Wasabi::setting('Auth.password_field');
+$passwordField = Wasabi::setting('Auth.passwordField');
 $passwordLabel = __d('wasabi_core', 'Password');
 
 echo $this->Form->control($identityField, [

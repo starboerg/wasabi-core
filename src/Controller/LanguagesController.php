@@ -35,7 +35,6 @@ class LanguagesController extends BackendAppController
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('RequestHandler');
     }
 
     /**
@@ -137,61 +136,6 @@ class LanguagesController extends BackendAppController
         //@codingStandardIgnoreStart
         return;
         //@codingStandardIgnoreEnd
-    }
-
-    /**
-     * Sort action
-     * AJAX POST
-     *
-     * Save the order of languages.
-     *
-     * @return void
-     * @throws \Aura\Intl\Exception
-     */
-    public function sort()
-    {
-        if (!$this->request->is('ajax') || !$this->request->is('post')) {
-            throw new MethodNotAllowedException();
-        }
-        if (empty($this->request->getData())) {
-            throw new BadRequestException();
-        }
-
-        // save the new language positions
-        $languages = $this->Languages->patchEntities(
-            $this->Languages->find('allFrontendBackend'),
-            $this->request->getData()
-        );
-        /** @var Connection $connection */
-        $connection = $this->Languages->getConnection();
-        $connection->begin();
-        foreach ($languages as $language) {
-            if (!$this->Languages->save($language)) {
-                $connection->rollback();
-                break;
-            }
-        }
-        if ($connection->inTransaction()) {
-            $connection->commit();
-            $status = 'success';
-            $flashMessage = __d('wasabi_core', 'The language position has been updated.');
-        } else {
-            $status = 'error';
-            $flashMessage = $this->dbErrorMessage;
-        }
-
-        // create the json response
-        $frontendLanguages = $this->Languages
-            ->filterFrontend(new Collection($languages))
-            ->sortBy('position', SORT_ASC, SORT_NUMERIC)
-            ->toList();
-        $backendLanguages = $this->Languages
-            ->filterBackend(new Collection($languages))
-            ->sortBy('position', SORT_ASC, SORT_NUMERIC)
-            ->toList();
-
-        $this->set(compact('status', 'flashMessage', 'frontendLanguages', 'backendLanguages'));
-        $this->set('_serialize', ['status', 'flashMessage', 'frontendLanguages', 'backendLanguages']);
     }
 
     /**

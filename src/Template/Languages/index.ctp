@@ -19,7 +19,7 @@ $this->Html->addAction(
     )
 );
 ?>
-<?= $this->Form->create($language, ['url' => $this->Route->languagesSort()]) ?>
+<?= $this->Form->create($language, ['url' => $this->Route->apiLanguagesSort()]) ?>
 <div class="datatable-wrapper">
     <table class="datatable languages valign-middle">
         <thead>
