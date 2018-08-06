@@ -5,7 +5,6 @@
 
 use Cake\Core\Configure;
 use Wasabi\Core\Wasabi;
-
 ?><!DOCTYPE html>
 <html class="no-js" lang="<?= Configure::read('backendLanguage')->iso2 ?>">
 <head>

@@ -18,17 +18,14 @@ use Cake\Event\EventDispatcherTrait;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\Query;
-use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
-use FrankFoerster\Filter\Controller\Component\FilterComponent;
+use Wasabi\Core\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Entity\Token;
 use Wasabi\Core\Model\Entity\User;
-use Wasabi\Core\Model\Table\LoginLogsTable;
 use Wasabi\Core\Model\Table\TokensTable;
 use Wasabi\Core\Model\Table\UsersTable;
 use Wasabi\Core\Permission\Permission;
-use Wasabi\Core\View\AppView;
 use Wasabi\Core\Wasabi;
 
 /**
@@ -37,122 +34,11 @@ use Wasabi\Core\Wasabi;
  * @property UsersTable Users
  * @property TokensTable Tokens
  * @property FilterComponent Filter
- * @property LoginLogsTable LoginLogs
  */
 class UsersController extends BackendAppController
 {
     use EventDispatcherTrait;
     use MailerAwareTrait;
-
-    /**
-     * Filter fields definitions
-     *
-     * `actions` describes on which controller
-     * action this filter field is available.
-     *
-     * @var array
-     */
-    public $filterFields = [
-        'user_id' => [
-            'modelField' => 'Users.id',
-            'type' => '=',
-            'actions' => ['index']
-        ],
-        'username' => [
-            'modelField' => 'Users.username',
-            'type' => 'like',
-            'actions' => ['index']
-        ],
-        'name' => [
-            'modelField' => [
-                'Users.lastname',
-                'Users.firstname'
-            ],
-            'type' => 'like',
-            'actions' => ['index']
-        ],
-        'email' => [
-            'modelField' => 'Users.email',
-            'type' => 'like',
-            'actions' => ['index']
-        ],
-        'group_id' => [
-            'type' => 'custom',
-            'actions' => ['index']
-        ],
-        'status' => [
-            'type' => 'custom',
-            'actions' => ['index']
-        ]
-    ];
-
-    /**
-     * Controller actions where slugged filters are used.
-     *
-     * @var array
-     */
-    public $filterActions = [
-        'index'
-    ];
-
-    /**
-     * Sortable Fields definition
-     *
-     * `actions` describes on which controller
-     * action this field is sortable.
-     *
-     * @var array
-     */
-    public $sortFields = [
-        'id' => [
-            'modelField' => 'Users.id',
-            'actions' => ['index']
-        ],
-        'username' => [
-            'modelField' => 'Users.username',
-            'default' => 'asc',
-            'actions' => ['index']
-        ],
-        'name' => [
-            'modelField' => [
-                'Users.lastname',
-                'Users.firstname'
-            ],
-            'custom' => [
-                'Users.lastname :dir',
-                'Users.firstname :dir'
-            ],
-            'default' => 'asc',
-            'actions' => ['index']
-        ],
-        'email' => [
-            'modelField' => 'Users.email',
-            'default' => 'asc',
-            'actions' => ['index']
-        ],
-        'status' => [
-            'modelField' => 'Users.active',
-            'custom' => [
-                'Users.verified :dir',
-                'Users.active :dir'
-            ],
-            'actions' => ['index']
-        ]
-    ];
-
-    /**
-     * Limit options determine the available dropdown
-     * options (display items per page) for each action.
-     *
-     * @var array
-     */
-    public $limits = [
-        'index' => [
-            'limits' => [10, 25, 50, 75, 100, 150, 200],
-            'default' => 25,
-            'fieldName' => 'l'
-        ]
-    ];
 
     /**
      * Initialization hook method.
@@ -164,178 +50,50 @@ class UsersController extends BackendAppController
     {
         parent::initialize();
 
-        if (!Wasabi::setting('Core.User.has_username')) {
-            unset($this->filterFields['username']);
-            unset($this->sortFields['username']);
-        } else {
-            if (isset($this->sortFields['email']['default'])) {
-                unset($this->sortFields['email']['default']);
-            }
+        $filterFields = [
+            'email',
+            'user_id',
+            'group_id',
+            'status'
+        ];
+
+        $sortFields = [
+            'id',
+            'email',
+            'status'
+        ];
+
+        $sortDefault = 'email';
+
+        if (Wasabi::setting('Core.User.has_username')) {
+            $filterFields[] = 'username';
+            $sortFields[] = 'username';
+            $sortDefault = 'username';
         }
 
-        if (!Wasabi::setting('Core.User.has_firstname_lastname')) {
-            unset($this->filterFields['name']);
-            unset($this->sortFields['name']);
-        } else {
-            if (isset($this->sortFields['email']['default'])) {
-                unset($this->sortFields['email']['default']);
-            }
+        if (Wasabi::setting('Core.User.has_firstname_lastname')) {
+            $filterFields[] = 'name';
+            $sortFields[] = 'name';
         }
 
-        $this->filterFields['group_id']['customConditions'] = function ($value) {
-            if ((int)$value === 0) {
-                $query = $this->Users->findUsersWithNoGroup();
-                $userIds = $query->extract('id')->toArray();
-            } else {
-                $userIds = $this->Users->UsersGroups->find()
-                    ->where(['group_id' => $value])
-                    ->extract('user_id')
-                    ->toArray();
-            }
-            if (!empty($userIds)) {
-                return ['Users.id IN' => $userIds];
-            } else {
-                return ['Users.id' => 0];
-            }
-        };
-
-        $this->filterFields['status']['customConditions'] = function ($value) {
-            switch ($value) {
-                case 'verified':
-                    $query = $this->Users->find('verified')->select(['id']);
-                    break;
-                case 'notverified':
-                    $query = $this->Users->find('notVerified')->select(['id']);
-                    break;
-                case 'active':
-                    $query = $this->Users->find('active')->select(['id']);
-                    break;
-                case 'inactive':
-                    $query = $this->Users->find('inactive')->select(['id']);
-                    break;
-            }
-
-            if (!isset($query)) {
-                return ['1 = 1'];
-            }
-
-            $userIds = $query->extract('id')->toArray();
-
-            if (!empty($userIds)) {
-                return ['Users.id IN' => $userIds];
-            } else {
-                return ['Users.id' => 0];
-            }
-        };
-
-        $this->loadComponent('FrankFoerster/Filter.Filter');
-        $this->loadComponent('RequestHandler');
-    }
-
-    /**
-     * login action
-     * GET | POST
-     *
-     * @return void
-     * @throws \Aura\Intl\Exception
-     */
-    public function login()
-    {
-        if ($this->request->is('post')) {
-            $this->loadModel('Wasabi/Core.LoginLogs');
-            $clientIp = $this->request->clientIp();
-            $ipIsBlocked = $this->LoginLogs->ipIsBlocked($clientIp);
-
-            if ($ipIsBlocked) {
-                $errorMsg = __d('wasabi_core', 'You made too many failed login attempts in a short period of time. Please try again later.');
-            }
-
-            if (!$ipIsBlocked && ($user = $this->Auth->identify())) {
-                if ((bool)$user['verified'] === false) {
-                    $message = __d(
-                        'wasabi_core',
-                        'Please verify your email address or request a {0}.',
-                        '<a href="' . Router::url(['plugin' => 'Wasabi/Core', 'controller' => 'Users', 'action' => 'requestNewVerificationEmail']) . '">' . __d('wasabi_core', 'new verification email') . '</a>'
-                    );
-                    unset($this->request->data['password']);
-                    $this->Flash->warning($message, 'auth', false);
-                } elseif ((bool)$user['active'] === false) {
-                    $message = __d(
-                        'wasabi_core',
-                        'Your account has not yet been activated. Once your account has been checked by an administrator, you will receive a notification email.'
-                    );
-                    unset($this->request->data['password']);
-                    $this->Flash->warning($message, 'auth', false);
-                } else {
-                    $this->Auth->setUser($user);
-                    $this->request->getSession()->write('loginTime', time());
-                    if (!$this->request->is('ajax')) {
-                        $this->Flash->success(__d('wasabi_core', 'Welcome back.'), 'auth');
-                        if (($redirectUrl = $this->Auth->redirectUrl()) === '/backend/heartbeat') {
-                            $this->redirect(['plugin' => 'Wasabi/Core', 'controller' => 'Dashboard', 'action' => 'index']);
-                        } else {
-                            $this->redirect($redirectUrl);
-                        }
-                        return;
-                    }
-                }
-            } else {
-                unset($this->request->data['password']);
-                $this->request->getSession()->write('data.login', $this->request->getData());
-                if (!$ipIsBlocked) {
-                    $identityField = Wasabi::setting('Auth.identity_field');
-                    $this->dispatchEvent('Auth.failedLogin', [$clientIp, $identityField, $this->request->getData($identityField)]);
-                    $errorMsg = __d('wasabi_core', 'Email or password is incorrect.');
-                }
-
-                if (isset($errorMsg)) {
-                    $this->Flash->error($errorMsg, 'auth', false);
-                }
-                if (!$this->request->is('ajax')) {
-                    $this->redirect(['action' => 'login']);
-                    return;
-                }
-            }
-
-            if ($this->request->is('ajax')) {
-                $this->set([
-                    'status' => 200,
-                    '_serialize' => ['status']
-                ]);
-                $flashType = $this->request->getSession()->read('Flash.auth.0.params.type');
-                if ($flashType === 'warning') {
-                    $this->set('redirect', Router::url('/' . $this->request->url, true));
-                    $this->viewVars['_serialize'][] = 'redirect';
-                }
-                if ($flashType === 'error') {
-                    $this->set('content', (new AppView($this->request, $this->response, $this->getEventManager()))->element('Wasabi/Core.login-form-ajax'));
-                    $this->viewVars['_serialize'][] = 'content';
-                }
-            }
-        } else {
-            if ($this->request->getSession()->check('data.login')) {
-                $this->request->data = (array)$this->request->getSession()->read('data.login');
-                $this->request->getSession()->delete('data.login');
-            }
-        }
-
-        if (!$this->request->is('ajax')) {
-            $this->render(null, 'Wasabi/Core.support');
-        }
-    }
-
-    /**
-     * logout action
-     * GET
-     *
-     * @return void
-     */
-    public function logout()
-    {
-        $this->redirect($this->Auth->logout());
-        //@codingStandardIgnoreStart
-        return;
-        //@codingStandardIgnoreEnd
+        $this->loadComponent('Wasabi/Core.Filter', [
+            'index' => [
+                'filterFields' => $filterFields,
+                'sort' => [
+                    'fields' => $sortFields,
+                    'default' => $sortDefault,
+                    'param' => 's'
+                ],
+                'limit' => [
+                    'available' => [10, 25, 50, 75, 100, 150, 200],
+                    'default' => 25,
+                    'param' => 'l'
+                ],
+                'pagination' => [
+                    'param' => 'p'
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -347,7 +105,6 @@ class UsersController extends BackendAppController
      */
     public function register()
     {
-        /** @var User $user */
         $user = $this->Users->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Users->save($user)) {
@@ -369,10 +126,12 @@ class UsersController extends BackendAppController
      * Index action
      * GET
      *
+     * @param string $filterSlug
      * @return void
      * @throws \Aura\Intl\Exception
+     * @throws \Wasabi\Core\Filter\Exception\FilterableTraitNotAppliedException
      */
-    public function index()
+    public function index($filterSlug = '')
     {
         $userQuery = $this->Users->find()
             ->select([
@@ -407,7 +166,7 @@ class UsersController extends BackendAppController
         ];
 
         $this->set([
-            'users' => $this->Filter->paginate($this->Filter->filter($userQuery)),
+            'users' => $this->Filter->filter($userQuery, $filterSlug),
             'groups' => $groups,
             'statusOptions' => $statusOptions,
             'displayUsername' => Wasabi::setting('Core.User.has_username', false),
@@ -613,37 +372,6 @@ class UsersController extends BackendAppController
         $this->set([
             'user' => $user
         ]);
-    }
-
-    /**
-     * HeartBeat action
-     * AJAX POST
-     *
-     * @return void
-     */
-    public function heartBeat()
-    {
-        if (!$this->request->isAll(['ajax', 'post'])) {
-            throw new MethodNotAllowedException();
-        }
-
-        $loginTime = $this->request->getSession()->check('loginTime') ? $this->request->getSession()->read('loginTime') : 0;
-        $maxLoggedInTime = (int)Wasabi::setting('Core.Login.HeartBeat.max_login_time', 0) / 1000;
-        $logoutTime = $loginTime + $maxLoggedInTime;
-
-        if (time() <= $logoutTime) {
-            $this->set([
-                'status' => 200,
-                '_serialize' => ['status']
-            ]);
-        } else {
-            $this->Auth->logout();
-
-            $this->set([
-                'status' => 401,
-                '_serialize' => ['status']
-            ]);
-        }
     }
 
     /**

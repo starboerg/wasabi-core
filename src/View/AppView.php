@@ -19,23 +19,17 @@ use Cake\View\View;
 /**
  * Class AppView
  *
- * @property \Cake\View\Helper\FlashHelper $Flash
- * @property \Cake\View\Helper\UrlHelper $Url
- * @property \FrankFoerster\Asset\View\Helper\AssetHelper $Asset
- * @property \FrankFoerster\Filter\View\Helper\FilterHelper $Filter
- * @property \Wasabi\Core\View\Helper\FormHelper $Form
- * @property \Wasabi\Core\View\Helper\GuardianHelper $Guardian
- * @property \Wasabi\Core\View\Helper\HtmlHelper $Html
- * @property \Wasabi\Core\View\Helper\MenuHelper $Menu
- * @property \Wasabi\Core\View\Helper\EmailHelper $Email
- * @property \Wasabi\Core\View\Helper\IconHelper $Icon
- * @property \Wasabi\Core\View\Helper\RouteHelper $Route
- * @property array activeFilters
- * @property array filterFields
- * @property array activeSort
- * @property array sortFields
- * @property array paginationParams
- * @property array defaultSort
+ * @property \Cake\View\Helper\FlashHelper Flash
+ * @property \Cake\View\Helper\UrlHelper Url
+ * @property \FrankFoerster\Asset\View\Helper\AssetHelper Asset
+ * @property \Wasabi\Core\View\Helper\EmailHelper Email
+ * @property \Wasabi\Core\View\Helper\FilterHelper Filter
+ * @property \Wasabi\Core\View\Helper\FormHelper Form
+ * @property \Wasabi\Core\View\Helper\GuardianHelper Guardian
+ * @property \Wasabi\Core\View\Helper\HtmlHelper Html
+ * @property \Wasabi\Core\View\Helper\IconHelper Icon
+ * @property \Wasabi\Core\View\Helper\MenuHelper Menu
+ * @property \Wasabi\Core\View\Helper\RouteHelper Route
  */
 class AppView extends View
 {
@@ -82,7 +76,7 @@ class AppView extends View
             'className' => 'Wasabi/Core.Guardian'
         ]);
         $this->loadHelper('Filter', [
-            'className' => 'FrankFoerster/Filter.Filter'
+            'className' => 'Wasabi/Core.Filter'
         ]);
         $this->loadHelper('Email', [
             'className' => 'Wasabi/Core.Email'

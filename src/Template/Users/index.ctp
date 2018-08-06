@@ -20,7 +20,7 @@ $this->Html->addAction(
             'escape' => false
         ])
 );?>
-<?= $this->Form->create(false, [
+<?= $this->Form->create($this->Filter->getContext(), [
     'id' => false,
     'class' => 'filter-form',
     'url' => $this->Route->usersIndex()

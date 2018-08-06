@@ -13,10 +13,14 @@
  */
 namespace Wasabi\Core\Model\Table;
 
+use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\EntityInterface;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Wasabi\Core\Filter\Filterable;
+use Wasabi\Core\Filter\Sortable;
 use Wasabi\Core\Model\Entity\Group;
 
 /**
@@ -28,6 +32,9 @@ use Wasabi\Core\Model\Entity\Group;
  */
 class GroupsTable extends Table
 {
+    use Filterable;
+    use Sortable;
+
     /**
      * Initialize a table instance. Called after the constructor.
      *
@@ -72,6 +79,7 @@ class GroupsTable extends Table
      *
      * @param RulesChecker $rules The rules checker to customize.
      * @return RulesChecker
+     * @throws \Aura\Intl\Exception
      */
     public function buildRules(RulesChecker $rules)
     {
@@ -82,7 +90,7 @@ class GroupsTable extends Table
     /**
      * {@inheritdoc}
      *
-     * @return Group
+     * @return EntityInterface|Group
      */
     public function newEntity($data = null, array $options = [])
     {
@@ -92,7 +100,7 @@ class GroupsTable extends Table
     /**
      * {@inheritdoc}
      *
-     * @return Group
+     * @return EntityInterface|Group
      */
     public function patchEntity(EntityInterface $entity, array $data, array $options = [])
     {
@@ -102,7 +110,7 @@ class GroupsTable extends Table
     /**
      * {@inheritDoc}
      *
-     * @return array|Group
+     * @return EntityInterface|Group
      */
     public function get($primaryKey, $options = [])
     {
@@ -153,5 +161,113 @@ class GroupsTable extends Table
             $userCount = isset($groupIdUserCount[$groupId]) ? $groupIdUserCount[$groupId] : 0;
             $this->save($this->get($groupId)->set('user_count', $userCount));
         }
+    }
+
+    /**
+     * Filter the given query by $id.
+     *
+     * @param Query $query
+     * @param string $id
+     * @return Query
+     */
+    public function filterById(Query $query, $id)
+    {
+        return $query->where(
+            $this->likeFilter($this->aliasField('id'), '%' . $id . '%')
+        );
+    }
+
+    /**
+     * Filter the given query by $name.
+     *
+     * @param Query $query
+     * @param string $name
+     * @return Query
+     */
+    public function filterByName(Query $query, $name)
+    {
+        return $query->where(
+            $this->likeFilter($this->aliasField('name'), '%' . $name . '%')
+        );
+    }
+
+    /**
+     * Filter the given query by $description.
+     *
+     * @param Query $query
+     * @param string $name
+     * @return Query
+     */
+    public function filterByDescription(Query $query, $description)
+    {
+        return $query->where(
+            $this->likeFilter($this->aliasField('description'), '%' . $description . '%')
+        );
+    }
+
+    /**
+     * Sort the given query by id ASC.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByIdAsc(Query $query)
+    {
+        return $this->naturalSortAsc($query, $this->aliasField('id'));
+    }
+
+    /**
+     * Sort the given query by id DESC.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByIdDesc(Query $query)
+    {
+        return $this->naturalSortDesc($query, $this->aliasField('id'));
+    }
+
+    /**
+     * Sort the given query by group name ASC.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByNameAsc(Query $query)
+    {
+        return $this->naturalSortAsc($query, $this->aliasField('name'));
+    }
+
+    /**
+     * Sort the given query by group name DESC.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByNameDesc(Query $query)
+    {
+        return $this->naturalSortDesc($query, $this->aliasField('name'));
+    }
+
+    /**
+     * Sort the given query by user_count ASC.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByUserCountAsc(Query $query)
+    {
+        return $query->orderAsc($this->aliasField('user_count'));
+    }
+
+    /**
+     * Sort the given query by user_count DESC.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByUserCountDesc(Query $query)
+    {
+        return $query->orderDesc($this->aliasField('user_count'));
     }
 }

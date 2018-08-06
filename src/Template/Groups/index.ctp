@@ -17,10 +17,11 @@ $this->Html->addAction(
         ])
 );
 ?>
-<?= $this->Form->create(false, [
+<?= $this->Form->create($this->Filter->getContext(), [
     'id' => false,
     'class' => 'filter-form',
-    'url' => $this->Route->groupsIndex()
+    'url' => $this->Route->groupsIndex(),
+    'valueSources' => ['context']
 ]) ?>
 <div class="row pagination"><?= ($pagination = $this->Filter->pagination(5, __d('wasabi_core', 'Groups'))) ?></div>
 <div class="datatable-wrapper">
@@ -28,16 +29,16 @@ $this->Html->addAction(
         <thead>
         <tr class="datatable-filters">
             <th><?= $this->Form->control('id', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'ID'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
-            <th><?= $this->Form->control('group', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for Group'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
+            <th><?= $this->Form->control('name', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search for Group'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
             <th><?= $this->Form->control('description', ['type' => 'text', 'id' => false, 'label' => false, 'placeholder' => __d('wasabi_core', 'Search in Description'), 'templates' => 'Wasabi/Core.FormTemplates/filter']) ?></th>
             <th></th>
             <th class="center"><?= $this->Form->button(__d('wasabi_core', 'Search'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']); ?></th>
         </tr>
         <tr class="datatable-headers">
             <th class="t-1-12 center"><?= $this->Filter->sortLink('ID', 'id') ?></th>
-            <th class="t-3-12"><?= $this->Filter->sortLink(__d('wasabi_core', 'Group'), 'group') ?></th>
+            <th class="t-3-12"><?= $this->Filter->sortLink(__d('wasabi_core', 'Group'), 'name') ?></th>
             <th class="t-5-12"><?= __d('wasabi_core', 'Description') ?></th>
-            <th class="t-2-12"><?= $this->Filter->sortLink(__d('wasabi_core', '# Users'), 'count') ?></th>
+            <th class="t-2-12"><?= $this->Filter->sortLink(__d('wasabi_core', '# Users'), 'user_count') ?></th>
             <th class="t-1-12 center"><?= __d('wasabi_core', 'Actions') ?></th>
         </tr>
         </thead>

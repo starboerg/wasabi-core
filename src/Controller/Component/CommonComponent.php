@@ -40,7 +40,7 @@ class CommonComponent extends Component
 
         $data = $controller->request->getData();
         if (!empty($data) && !Configure::read('DataPreparation.notrimRequestData')) {
-            $data = $this->_trimDeep($data);
+            $data = $this->trimDeep($data);
             foreach ($data as $key => $value) {
                 $controller->request = $controller->request->withData($key, $value);
             }
@@ -48,13 +48,13 @@ class CommonComponent extends Component
 
         $query = $controller->request->getQuery();
         if (!empty($query) && !Configure::read('DataPreparation.notrimRequestQuery')) {
-            $query = $this->_trimDeep($query);
+            $query = $this->trimDeep($query);
             $controller->request = $controller->request->withQueryParams($query);
         }
 
         $pass = $controller->request->getParam('pass');
         if (!empty($pass) && !Configure::read('DataPreparation.notrimRequestParams')) {
-            $pass = $this->_trimDeep($pass);
+            $pass = $this->trimDeep($pass);
             foreach ($pass as $key => $value) {
                 $controller->request = $controller->request->withParam($key, $value);
             }
@@ -67,9 +67,9 @@ class CommonComponent extends Component
      * @param mixed $value
      * @return array|string
      */
-    protected function _trimDeep($value)
+    protected function trimDeep($value)
     {
-        $value = is_array($value) ? array_map([$this, '_trimDeep'], $value) : trim($value);
+        $value = is_array($value) ? array_map([$this, 'trimDeep'], $value) : trim($value);
         return $value;
     }
 }

@@ -16,7 +16,7 @@ namespace Wasabi\Core\Controller;
 use Cake\Database\Connection;
 use Cake\Database\Query;
 use Cake\Network\Exception\MethodNotAllowedException;
-use FrankFoerster\Filter\Controller\Component\FilterComponent;
+use Wasabi\Core\Controller\Component\FilterComponent;
 use Wasabi\Core\Model\Table\GroupsTable;
 use Wasabi\Core\Wasabi;
 
@@ -29,79 +29,6 @@ use Wasabi\Core\Wasabi;
 class GroupsController extends BackendAppController
 {
     /**
-     * Filter fields definitions
-     *
-     * `actions` describes on which controller
-     * action this filter field is available.
-     *
-     * @var array
-     */
-    public $filterFields = [
-        'id' => [
-            'modelField' => 'Groups.id',
-            'type' => 'like',
-            'actions' => ['index']
-        ],
-        'group' => [
-            'modelField' => 'Groups.name',
-            'type' => 'like',
-            'actions' => ['index']
-        ],
-        'description' => [
-            'modelField' => 'Groups.description',
-            'type' => 'like',
-            'actions' => ['index']
-        ]
-    ];
-
-    /**
-     * Controller actions where slugged filters are used.
-     *
-     * @var array
-     */
-    public $filterActions = [
-        'index'
-    ];
-
-    /**
-     * Sortable Fields definition
-     *
-     * `actions` describes on which controller
-     * action this field is sortable.
-     *
-     * @var array
-     */
-    public $sortFields = [
-        'id' => [
-            'modelField' => 'Groups.id',
-            'default' => 'asc',
-            'actions' => ['index']
-        ],
-        'group' => [
-            'modelField' => 'Groups.name',
-            'actions' => ['index']
-        ],
-        'count' => [
-            'modelField' => 'Groups.user_count',
-            'actions' => ['index']
-        ]
-    ];
-
-    /**
-     * Limit options determine the available dropdown
-     * options (display items per page) for each action.
-     *
-     * @var array
-     */
-    public $limits = [
-        'index' => [
-            'limits' => [10, 25, 50, 75, 100, 150, 200],
-            'default' => 10,
-            'fieldName' => 'l'
-        ]
-    ];
-
-    /**
      * Initialization hook method.
      *
      * @return void
@@ -110,20 +37,56 @@ class GroupsController extends BackendAppController
     public function initialize()
     {
         parent::initialize();
-        $this->loadComponent('FrankFoerster/Filter.Filter');
+
+        $this->loadModel('Wasabi/Core.Groups');
+        $this->loadComponent('Wasabi/Core.Filter', [
+            'index' => [
+                'filterFields' => [
+                    'id',
+                    'name',
+                    'description'
+                ],
+                'sort' => [
+                    'fields' => [
+                        'id',
+                        'name',
+                        'user_count'
+                    ],
+                    'default' => 'name',
+                    'param' => 's'
+                ],
+                'limit' => [
+                    'available' => [10, 25, 50, 75, 100, 150, 200],
+                    'default' => 10,
+                    'param' => 'l'
+                ],
+                'pagination' => [
+                    'param' => 'p'
+                ]
+            ]
+        ]);
     }
 
     /**
      * Index action
      * GET
      *
+     * @param string $filterSlug
      * @return void
+     * @throws \Wasabi\Core\Filter\Exception\FilterableTraitNotAppliedException
      */
-    public function index()
+    public function index($filterSlug = '')
     {
-        $groups = $this->Filter->filter($this->Groups->find('all'));
+        $query = $this->Groups->find()
+            ->select([
+                'id',
+                'name',
+                'description',
+                'user_count'
+            ]);
+
         $this->set([
-            'groups' => $this->Filter->paginate($groups)
+            'groups' => $this->Filter->filter($query, $filterSlug)
         ]);
     }
 
@@ -136,10 +99,14 @@ class GroupsController extends BackendAppController
      */
     public function add()
     {
+        if (!$this->request->is(['get', 'post'])) {
+            throw new MethodNotAllowedException();
+        }
+
         $group = $this->Groups->newEntity();
 
         if ($this->request->is('post')) {
-            $this->Groups->patchEntity($group, $this->request->getData());
+            $group = $this->Groups->patchEntity($group, $this->request->getData());
             if ($this->Groups->save($group)) {
                 $this->Flash->success(__d('wasabi_core', 'The group <strong>{0}</strong> has been created.', $group->name));
                 $this->redirect(['action' => 'index']);

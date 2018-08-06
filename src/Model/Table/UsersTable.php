@@ -23,6 +23,8 @@ use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use DateTimeZone;
+use Wasabi\Core\Filter\Filterable;
+use Wasabi\Core\Filter\Sortable;
 use Wasabi\Core\Model\Entity\User;
 use Wasabi\Core\Wasabi;
 
@@ -35,6 +37,9 @@ use Wasabi\Core\Wasabi;
  */
 class UsersTable extends Table
 {
+    use Filterable;
+    use Sortable;
+
     /**
      * Initialize a table instance. Called after the constructor.
      *
@@ -254,7 +259,7 @@ class UsersTable extends Table
     /**
      * {@inheritdoc}
      *
-     * @return User
+     * @return EntityInterface|User
      */
     public function newEntity($data = null, array $options = [])
     {
@@ -264,7 +269,7 @@ class UsersTable extends Table
     /**
      * {@inheritdoc}
      *
-     * @return User
+     * @return EntityInterface|User
      */
     public function patchEntity(EntityInterface $entity, array $data, array $options = [])
     {
@@ -274,11 +279,251 @@ class UsersTable extends Table
     /**
      * {@inheritDoc}
      *
-     * @return array|User
+     * @return EntityInterface|User
      */
     public function get($primaryKey, $options = [])
     {
         return parent::get($primaryKey, $options);
+    }
+
+    /**
+     * Filter by user id.
+     *
+     * @param Query $query
+     * @param string $id
+     * @return Query
+     */
+    public function filterByUserId(Query $query, $id): Query
+    {
+        return $query->where(
+            $this->likeFilter($this->aliasField('id'), '%' . $id . '%')
+        );
+    }
+
+    /**
+     * Filter by username.
+     *
+     * @param Query $query
+     * @param string $username
+     * @return Query
+     */
+    public function filterByUsername(Query $query, $username): Query
+    {
+        return $query->where(
+            $this->likeFilter($this->aliasField('username'), '%' . $username . '%')
+        );
+    }
+
+    /**
+     * Filter by name.
+     *
+     * @param Query $query
+     * @param string $name
+     * @return Query
+     */
+    public function filterByName(Query $query, $name): Query
+    {
+        return $query->where([
+            'or' => [
+                $this->likeFilter($this->aliasField('firstname'), '%' . $name . '%'),
+                $this->likeFilter($this->aliasField('lastname'), '%' . $name . '%')
+            ]
+        ]);
+    }
+
+    /**
+     * Filter by email.
+     *
+     * @param Query $query
+     * @param string $email
+     * @return Query
+     */
+    public function filterByEmail(Query $query, $email): Query
+    {
+        return $query->where(
+            $this->likeFilter($this->aliasField('email'), '%' . $email . '%')
+        );
+    }
+
+    /**
+     * Filter by group id.
+     *
+     * @param Query $query
+     * @param string $groupId
+     * @return Query
+     */
+    public function filterByGroupId(Query $query, $groupId): Query
+    {
+        if ((int)$groupId === 0) {
+            $query->where([
+                $this->aliasField('id') . ' IN' => $this->findUsersWithNoGroup()->extract('id')->toArray()
+            ]);
+        } else {
+            $query->where([
+                $this->aliasField('id') . ' IN' => $this->UsersGroups
+                    ->find()
+                    ->select(['Users__id' => $this->UsersGroups->aliasField('user_id')])
+                    ->where([
+                        $this->UsersGroups->aliasField('group_id') => $groupId
+                    ])
+            ]);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Filter by status.
+     *
+     * @param Query $query
+     * @param string $status
+     * @return Query
+     */
+    public function filterByStatus(Query $query, $status): Query
+    {
+        switch ($status) {
+            case 'verified':
+                $idQuery = $this->find('verified')->select(['id']);
+                break;
+            case 'notverified':
+                $idQuery = $this->find('notVerified')->select(['id']);
+                break;
+            case 'active':
+                $idQuery = $this->find('active')->select(['id']);
+                break;
+            case 'inactive':
+                $idQuery = $this->find('inactive')->select(['id']);
+                break;
+            case 'default':
+                $idQuery = $this->find()->where(['1 = 1']);
+                break;
+        }
+
+        return $query->where([
+            $this->aliasField('id') . ' IN' => $idQuery
+        ]);
+    }
+
+    /**
+     * Naturally sort by id asc.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByIdAsc(Query $query): Query
+    {
+        return $this->naturalSortAsc($query, $this->aliasField('username'));
+    }
+
+    /**
+     * Naturally sort by id desc.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByIdDesc(Query $query): Query
+    {
+        return $this->naturalSortDesc($query, $this->aliasField('username'));
+    }
+
+    /**
+     * Sort by username asc.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByUsernameAsc(Query $query): Query
+    {
+        return $query->orderAsc($this->aliasField('username'));
+    }
+
+    /**
+     * Sort by username desc.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByUsernameDesc(Query $query): Query
+    {
+        return $query->orderDesc($this->aliasField('username'));
+    }
+
+    /**
+     * Sort by name asc.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByNameAsc(Query $query): Query
+    {
+        $query->orderAsc($this->aliasField('firstname'));
+        $query->orderAsc($this->aliasField('lastname'));
+
+        return $query;
+    }
+
+    /**
+     * Sort by name desc.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByNameDesc(Query $query): Query
+    {
+        $query->orderDesc($this->aliasField('firstname'));
+        $query->orderDesc($this->aliasField('lastname'));
+
+        return $query;
+    }
+
+    /**
+     * Sort by email asc.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByEmailAsc(Query $query): Query
+    {
+        return $query->orderAsc($this->aliasField('email'));
+    }
+
+    /**
+     * Sort by email desc.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByEmailDesc(Query $query): Query
+    {
+        return $query->orderDesc($this->aliasField('email'));
+    }
+
+    /**
+     * Sort by status asc.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByStatusAsc(Query $query): Query
+    {
+        $query->orderAsc($this->aliasField('verified'));
+        $query->orderAsc($this->aliasField('active'));
+
+        return $query;
+    }
+
+    /**
+     * Sort by status desc.
+     *
+     * @param Query $query
+     * @return Query
+     */
+    public function sortByStatusDesc(Query $query): Query
+    {
+        $query->orderDesc($this->aliasField('verified'));
+        $query->orderDesc($this->aliasField('active'));
+
+        return $query;
     }
 
     /**

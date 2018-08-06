@@ -16,12 +16,13 @@
  * @var integer $from The item number the current page starts with.
  * @var integer $to The item number the current page ends with.
  * @var integer $nrOfPages The total number of available pages.
- *
- * // Set via controller action
+ * @var string $limitParamName
+ * @var int $limit
  * @var array $limitOptions
  */
 ?>
 <span class="item-count"><?php echo $from . ' - ' . $to . ' ' . __d('wasabi_core', 'of') . ' ' . $total . ' ' . $itemType ?></span>
+<?php if (!empty($pages)): ?>
 <nav>
     <ul class="row">
         <li class="first">
@@ -121,12 +122,14 @@
         </li>
     </ul>
 </nav>
-<?= $this->Form->control('l', [
+<?php endif; ?>
+<?= $this->Form->control($limitParamName, [
     'id' => false,
     'label' => false,
-    'options' => $this->Filter->paginationParams['limits'],
+    'options' => $limitOptions,
     'class' => 'limit',
-    'data-page' => $this->Filter->paginationParams['page'],
+    'data-page' => $currentPage,
     'data-url' => $baseUrl,
+    'value' => $limit,
     'templates' => 'Wasabi/Core.FormTemplates/filter'
 ]) ?>
