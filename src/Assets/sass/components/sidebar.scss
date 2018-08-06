@@ -135,9 +135,12 @@
 }
 
 .sidebar--menu-wrapper {
-  overflow-y: hidden;
   height: calc(100vh - #{rem-convert(rem, 42px)});
   height: calc(100vh - #{rem-convert(px, 42px)});
+
+  &:not(.gm-prevented) {
+    overflow-y: hidden;
+  }
 }
 
 .sidebar--menu {
