@@ -15,8 +15,33 @@
 return [
     'Wasabi' => [
         'Auth' => [
-            'identity_field' => 'email',
-            'password_field' => 'password'
+            'identityField' => 'email',
+            'passwordField' => 'password',
+            'userModel' => 'Wasabi/Core.Users',
+            'loginAction' => [
+                'plugin' => 'Wasabi/Core',
+                'controller' => 'Authentication',
+                'action' => 'login',
+                'prefix' => false
+            ],
+            'loginRedirect' => [
+                'plugin' => 'Wasabi/Core',
+                'controller' => 'Dashboard',
+                'action' => 'index',
+                'prefix' => false
+            ],
+            'unauthorizedRedirect' => [
+                'plugin' => 'Wasabi/Core',
+                'controller' => 'Authentication',
+                'action' => 'unauthorized',
+                'prefix' => false
+            ],
+            'newAccountsNeedActivationToLogin' => true,
+            'newAccountsNeedEmailVerificationToLogin' => true,
+            'login' => [
+                'view' => 'Wasabi/Core.Authentication/login',
+                'layout' => 'Wasabi/Core.support'
+            ]
         ]
     ]
 ];

@@ -70,44 +70,49 @@ class BackendAppController extends AppController
     {
         parent::initialize();
 
-        $fieldIdentity = Wasabi::setting('Auth.identity_field') ?? 'email';
-        $fieldPassword = Wasabi::setting('Auth.password_field') ?? 'password';
+        $identityField = Wasabi::setting('Auth.identityField', 'email');
+        $passwordField = Wasabi::setting('Auth.passwordField', 'password');
+        $userModel = Wasabi::setting('Auth.userModel', 'Wasabi/Core.Users');
+        $loginAction = Wasabi::setting('Auth.loginAction', [
+            'plugin' => 'Wasabi/Core',
+            'controller' => 'Authentication',
+            'action' => 'login',
+            'prefix' => false
+        ]);
+        $loginRedirect = Wasabi::setting('Auth.loginRedirect', [
+            'plugin' => 'Wasabi/Core',
+            'controller' => 'Dashboard',
+            'action' => 'index',
+            'prefix' => false
+        ]);
+        $unauthorizedRedirect = Wasabi::setting('Auth.unauthorizedRedirect', [
+            'plugin' => 'Wasabi/Core',
+            'controller' => 'Authentication',
+            'action' => 'unauthorized',
+            'prefix' => false
+        ]);
+        $flashElement = Wasabi::setting('Auth.flashElement', 'Wasabi/Core.default');
 
         $this->loadComponent('Auth', [
             'authenticate' => [
                 AuthComponent::ALL => [
-                    'userModel' => 'Wasabi/Core.Users',
+                    'userModel' => $userModel,
                 ],
                 'Form' => [
                     'fields' => [
-                        'username' => $fieldIdentity,
-                        'password' => $fieldPassword
+                        'username' => $identityField,
+                        'password' => $passwordField
                     ]
                 ]
             ],
-            'loginAction' => [
-                'plugin' => 'Wasabi/Core',
-                'controller' => 'Users',
-                'action' => 'login',
-                'prefix' => false
-            ],
-            'loginRedirect' => [
-                'plugin' => 'Wasabi/Core',
-                'controller' => 'Dashboard',
-                'action' => 'index',
-                'prefix' => false
-            ],
-            'unauthorizedRedirect' => [
-                'plugin' => 'Wasabi/Core',
-                'controller' => 'Users',
-                'action' => 'unauthorized',
-                'prefix' => false
-            ],
+            'loginAction' => $loginAction,
+            'loginRedirect' => $loginRedirect,
+            'unauthorizedRedirect' => $unauthorizedRedirect,
             'authorize' => 'Controller',
             'authError' => __d('wasabi_core', 'Please login using the form below.'),
             'flash' => [
                 'key' => 'auth',
-                'element' => 'Wasabi/Core.default',
+                'element' => $flashElement,
                 'params' => [
                     'type' => 'error'
                 ]
