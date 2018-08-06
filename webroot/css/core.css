@@ -503,10 +503,10 @@ template {
     top: -0.5rem;
     content: ""; }
 
-.icon-sortable-asc:after {
+.icon-sortable__asc:after {
   color: #878787; }
 
-.icon-sortable-desc:before {
+.icon-sortable__desc:before {
   color: #878787; }
 
 .icon-first {
@@ -4918,8 +4918,6 @@ span.error-message, div.error-message {
       padding-left: 0.75rem;
       padding-right: 12px;
       padding-right: 0.75rem;
-      margin-bottom: 5px;
-      margin-bottom: 0.3125rem;
       -webkit-transition: background-color 0.1s ease-in-out;
       transition: background-color 0.1s ease-in-out; }
     .pagination .nr-of-pages {
@@ -5061,9 +5059,10 @@ span.error-message, div.error-message {
   top: -0.0625rem; }
 
 .sidebar--menu-wrapper {
-  overflow-y: hidden;
   height: calc(100vh - 2.625rem);
   height: calc(100vh - 42px); }
+  .sidebar--menu-wrapper:not(.gm-prevented) {
+    overflow-y: hidden; }
 
 .sidebar--menu {
   padding-bottom: 30px;

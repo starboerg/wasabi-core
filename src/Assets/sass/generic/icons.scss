@@ -190,14 +190,14 @@ $icon-plus: "\ea0a";
   }
 }
 
-.icon-sortable-asc {
+.icon-sortable__asc {
 
   &:after {
     color: $icon-sortable-color--active;
   }
 }
 
-.icon-sortable-desc {
+.icon-sortable__desc {
 
   &:before {
     color: $icon-sortable-color--active;
