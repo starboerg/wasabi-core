@@ -156,7 +156,6 @@
     a {
       @include rem(padding-left, 12px);
       @include rem(padding-right, 12px);
-      @include rem(margin-bottom, 5px);
       transition: background-color 0.1s ease-in-out;
     }
 
