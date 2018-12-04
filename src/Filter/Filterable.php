@@ -102,4 +102,18 @@ trait Filterable
             return $expression->like($field, $value, 'string');
         };
     }
+
+    /**
+     * Create a `LIKE` filter expression for the given $field and '%' . $value . '%'.
+     *
+     * @param string $field
+     * @param string $value
+     * @return \Closure
+     */
+    protected function likeContainFilter(string $field, string $value): \Closure
+    {
+        return function (QueryExpression $expression) use ($field, $value) {
+            return $expression->like($field, '%' . $value . '%', 'string');
+        };
+    }
 }
