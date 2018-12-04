@@ -49,6 +49,7 @@ class FilterHandler
     {
         if ($this->filterManager->getStrategy() == FilterComponent::FILTER_STRATEGY_CONTAIN) {
             $this->_applyFilters($query);
+
             return $query->count();
         } else {
             $idsQuery = $this->table->find()->select([$this->table->aliasField('id')]);
@@ -67,7 +68,8 @@ class FilterHandler
      * @param Query $query
      * @throws MissingFilterMethodException
      */
-    protected function _applyFilters(Query $query) {
+    protected function _applyFilters(Query $query)
+    {
         foreach ($this->filterManager->getFilters() as $name => $value) {
             if ($value === '') {
                 continue;
