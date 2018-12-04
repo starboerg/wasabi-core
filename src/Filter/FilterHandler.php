@@ -38,7 +38,8 @@ class FilterHandler
     }
 
     /**
-     * Apply all filters of the filter manager to the given $query instance.
+     * Apply all filters of the filter manager to the given $query instance based on the
+     * {@link FilterManager::getStrategy}.
      *
      * @param Query $query
      * @return int count Count of filtered results
@@ -60,6 +61,12 @@ class FilterHandler
         }
     }
 
+    /**
+     * Apply all filters of the filter manager to the given $query instance.
+     *
+     * @param Query $query
+     * @throws MissingFilterMethodException
+     */
     protected function _applyFilters(Query $query) {
         foreach ($this->filterManager->getFilters() as $name => $value) {
             if ($value === '') {

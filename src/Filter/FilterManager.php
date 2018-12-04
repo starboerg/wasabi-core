@@ -84,7 +84,7 @@ class FilterManager
      *
      * Possible values are:
      *
-     * 'contain' (default) -> filter query contains filterable associations
+     * 'contain' (default) -> filter query contains filterable associations.
      * 'subquery' -> filter query adds filterable associations by subqueries.
      *
      * @var string
