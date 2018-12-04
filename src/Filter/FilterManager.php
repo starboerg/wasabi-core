@@ -3,6 +3,7 @@
 namespace Wasabi\Core\Filter;
 
 use Cake\Utility\Hash;
+use Wasabi\Core\Controller\Component\FilterComponent;
 
 class FilterManager
 {
@@ -79,6 +80,18 @@ class FilterManager
     private $sortParamName;
 
     /**
+     * Holds the type of strategy used for filtered associations.
+     *
+     * Possible values are:
+     *
+     * 'contain' (default) -> filter query contains filterable associations
+     * 'subquery' -> filter query adds filterable associations by subqueries.
+     *
+     * @var string
+     */
+    private $strategy;
+
+    /**
      * Constructor
      *
      * @param array $params The params to be filtered on.
@@ -91,6 +104,7 @@ class FilterManager
         $this->sortParamName = (string)Hash::get($config, 'sortParamName', 'sort');
         $this->paramsToHandle = (array)Hash::get($config, 'handledParams', []);
         $this->paramsToIgnore = (array)Hash::get($config, 'ignoredParams', []);
+        $this->strategy = (string)Hash::get($config, 'strategy', FilterComponent::FILTER_STRATEGY_CONTAIN);
 
         foreach ($params as $param => $value) {
             if ($this->shouldSkipParam($param)) {
@@ -248,6 +262,20 @@ class FilterManager
     public function getSortString()
     {
         return $this->sortString;
+    }
+
+    /**
+     * Gets the type of strategy used for filtered associations.
+     *
+     * Possible values are:
+     * 'contain' -> filter query contains filterable associations
+     * 'subquery' (default) -> filter query adds filterable associations by subqueries.
+     *
+     * @return string
+     */
+    public function getStrategy(): string
+    {
+        return $this->strategy;
     }
 
     /**

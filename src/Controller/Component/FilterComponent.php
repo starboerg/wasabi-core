@@ -70,6 +70,24 @@ class FilterComponent extends Component
     protected $sortParam;
 
     /**
+     * Holds the configured association strategy.
+     *
+     * @see FilterManager::$strategy
+     * @var string
+     */
+    protected $associationStrategy;
+
+    /**
+     * Filter query contains filterable associations
+     */
+    const FILTER_STRATEGY_CONTAIN = 'contain';
+
+    /**
+     * Filter query adds filterable associations by subqueries.
+     */
+    const FILTER_STRATEGY_SUBQUERY = 'subquery';
+
+    /**
      * Initialization hook method.
      *
      * @param array $config
@@ -135,6 +153,7 @@ class FilterComponent extends Component
         $this->limitParam = $this->getConfig($this->getAction() . '.limit.param');
         $this->pageParam = $this->getConfig($this->getAction() . '.pagination.param');
         $this->sortParam = $this->getConfig($this->getAction() . '.sort.param');
+        $this->associationStrategy = $this->getConfig($this->getAction() . '.association.strategy');
         $this->defaultSort = $this->getDefaultSort();
         $this->defaultLimit = $this->getDefaultLimit();
 
@@ -160,6 +179,7 @@ class FilterComponent extends Component
             'limitParamName' => $this->limitParam,
             'pageParamName' => $this->pageParam,
             'sortParamName' => $this->sortParam,
+            'strategy' => $this->associationStrategy,
             'handledParams' => $this->getFilterFields(),
             'allowedSortFields' => $this->getSortFields()
         ]);
