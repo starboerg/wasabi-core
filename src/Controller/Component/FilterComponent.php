@@ -285,10 +285,46 @@ class FilterComponent extends Component
             return $url;
         }
 
+        $url = $this->_applyPassedParams($url);
+
         return $url + [
             'filterSlug' => $this->Filters->findOrCreateSlugForFilterData($this->getRequest(), $filters),
             '?' => $this->getRequest()->getQueryParams()
         ];
+    }
+
+    /**
+     * Apply configured pass params to the url array.
+     *
+     * @param array $url
+     * @return array modified url array
+     */
+    protected function _applyPassedParams($url)
+    {
+        $passParams = $this->getPassedParams();
+
+        if (empty($passParams)) {
+            return $url;
+        }
+
+        return array_merge($url, $passParams);
+    }
+
+    /**
+     * Get the passed params.
+     *
+     * @return array
+     */
+    public function getPassedParams() {
+        $passParams = [];
+        if (!empty($this->getConfig($this->getAction() . '.passParams'))) {
+            foreach ($this->getConfig($this->getAction() . '.passParams') as $key) {
+                if (!empty($this->getRequest()->getParam($key))) {
+                    $passParams[$key] = $this->getRequest()->getParam($key);
+                }
+            }
+        }
+        return $passParams;
     }
 
     /**
