@@ -98,6 +98,23 @@ class FilterComponent extends Component
         parent::initialize($config);
 
         $this->loadModel('Wasabi/Core.Filters');
+
+        $this->limitParam = $this->getConfig($this->getAction() . '.limit.param');
+        $this->pageParam = $this->getConfig($this->getAction() . '.pagination.param');
+        $this->sortParam = $this->getConfig($this->getAction() . '.sort.param');
+        $this->associationStrategy = $this->getConfig($this->getAction() . '.association.strategy');
+        $this->defaultSort = $this->getDefaultSort();
+        $this->defaultLimit = $this->getDefaultLimit();
+
+        $this->filterManager = new FilterManager([
+            'limitParamName' => $this->limitParam,
+            'pageParamName' => $this->pageParam,
+            'sortParamName' => $this->sortParam,
+            'strategy' => $this->associationStrategy,
+            'handledParams' => $this->getFilterFields(),
+            'ignoredParams' => $this->getConfig($this->getAction() . '.params.ignore'),
+            'allowedSortFields' => $this->getSortFields()
+        ]);
     }
 
     /**
@@ -150,13 +167,6 @@ class FilterComponent extends Component
         $queryParams = empty($slug) ? [] : $this->Filters->findFilterDataForSlug($slug);
         $queryParams = $queryParams + $this->getRequest()->getQueryParams();
 
-        $this->limitParam = $this->getConfig($this->getAction() . '.limit.param');
-        $this->pageParam = $this->getConfig($this->getAction() . '.pagination.param');
-        $this->sortParam = $this->getConfig($this->getAction() . '.sort.param');
-        $this->associationStrategy = $this->getConfig($this->getAction() . '.association.strategy');
-        $this->defaultSort = $this->getDefaultSort();
-        $this->defaultLimit = $this->getDefaultLimit();
-
         if (!isset($queryParams[$this->sortParam])) {
             $queryParams[$this->sortParam] = $this->defaultSort;
         }
@@ -175,14 +185,7 @@ class FilterComponent extends Component
             }
         }
 
-        $this->filterManager = new FilterManager($queryParams, [
-            'limitParamName' => $this->limitParam,
-            'pageParamName' => $this->pageParam,
-            'sortParamName' => $this->sortParam,
-            'strategy' => $this->associationStrategy,
-            'handledParams' => $this->getFilterFields(),
-            'allowedSortFields' => $this->getSortFields()
-        ]);
+        $this->filterManager->setupFilter($queryParams);
 
         if (!method_exists($query->getRepository(), 'getFilterResult')) {
             throw new FilterableTraitNotAppliedException('Table "' . get_class($query->getRepository()) . '" must use the trait "Filterable" to be filtered.');

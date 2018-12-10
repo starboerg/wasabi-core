@@ -97,7 +97,7 @@ class FilterManager
      * @param array $params The params to be filtered on.
      * @param array $config Provides configuration options for the filter manager.
      */
-    public function __construct($params, array $config = [])
+    public function __construct(array $config = [])
     {
         $this->pageParamName = (string)Hash::get($config, 'pageParamName', 'page');
         $this->limitParamName = (string)Hash::get($config, 'limitParamName', 'limit');
@@ -105,39 +105,36 @@ class FilterManager
         $this->paramsToHandle = (array)Hash::get($config, 'handledParams', []);
         $this->paramsToIgnore = (array)Hash::get($config, 'ignoredParams', []);
         $this->strategy = (string)Hash::get($config, 'strategy', FilterComponent::FILTER_STRATEGY_CONTAIN);
+    }
 
+    /**
+     * Setup a filter for the given $params.
+     *
+     * @param string $param
+     * @param mixed $value
+     */
+    public function setupFilter($params) {
         foreach ($params as $param => $value) {
             if ($this->shouldSkipParam($param)) {
                 continue;
             }
 
-            $this->setupFilter($param, $value);
-        }
-    }
+            switch ($param) {
+                case $this->limitParamName:
+                    $this->limit = (int)$value;
+                    break;
 
-    /**
-     * Setup a filter for the given $param and $value.
-     *
-     * @param string $param
-     * @param mixed $value
-     */
-    protected function setupFilter($param, $value)
-    {
-        switch ($param) {
-            case $this->limitParamName:
-                $this->limit = (int)$value;
-                break;
+                case $this->pageParamName:
+                    $this->page = (int)$value;
+                    break;
 
-            case $this->pageParamName:
-                $this->page = (int)$value;
-                break;
+                case $this->sortParamName:
+                    $this->setupSort($value);
+                    break;
 
-            case $this->sortParamName:
-                $this->setupSort($value);
-                break;
-
-            default:
-                $this->addFilter($param, $value);
+                default:
+                    $this->addFilter($param, $value);
+            }
         }
     }
 
