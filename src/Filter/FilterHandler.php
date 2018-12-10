@@ -110,7 +110,9 @@ class FilterHandler
      */
     public function applyPagination(Query $query)
     {
-        $query->limit($this->filterManager->getLimit());
-        $query->page($this->filterManager->getPage());
+        if ($this->filterManager->isPaginationActive()) {
+            $query->limit($this->filterManager->getLimit());
+            $query->page($this->filterManager->getPage());
+        }
     }
 }

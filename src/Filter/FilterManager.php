@@ -73,6 +73,13 @@ class FilterManager
     private $limitParamName;
 
     /**
+     * Holds if limitation/pagination is on/off
+     *
+     * @var bool
+     */
+    private $paginationActive = true;
+
+    /**
      * Holds the sort parameter name.
      *
      * @var string
@@ -187,6 +194,26 @@ class FilterManager
     public function getLimit()
     {
         return $this->limit;
+    }
+
+    /**
+     * Is limitation/pagination on?
+     *
+     * @return bool
+     */
+    public function isPaginationActive(): bool
+    {
+        return $this->paginationActive;
+    }
+
+    /**
+     * Turns on/off limitation/pagination.
+     *
+     * @param bool $activeLimit
+     */
+    public function setPaginationActive(bool $paginationActive)
+    {
+        $this->paginationActive = $paginationActive;
     }
 
     /**
