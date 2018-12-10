@@ -63,6 +63,13 @@ class FilterComponent extends Component
     protected $pageParam;
 
     /**
+     * Holds the configured slug parameter name.
+     *
+     * @var string
+     */
+    protected $slugParam;
+
+    /**
      * Holds the configured sort parameter name.
      *
      * @var string
@@ -105,8 +112,31 @@ class FilterComponent extends Component
         $this->associationStrategy = $this->getConfig($this->getAction() . '.association.strategy');
         $this->defaultSort = $this->getDefaultSort();
         $this->defaultLimit = $this->getDefaultLimit();
+        $this->slugParam = $this->getConfig($this->getAction() . '.params.slug');
 
-        $this->filterManager = new FilterManager([
+        $slug = $this->getRequest()->getParam($this->slugParam, '');
+        $queryParams = empty($slug) ? [] : $this->Filters->findFilterDataForSlug($slug);
+        $queryParams = $queryParams + $this->getRequest()->getQueryParams();
+
+        if (!isset($queryParams[$this->sortParam])) {
+            $queryParams[$this->sortParam] = $this->defaultSort;
+        }
+
+        if (!isset($queryParams[$this->limitParam])) {
+            $lastLimit = $this->getRequest()->getSession()->read(join('.', [
+                'LIMIT_' . $this->getPluginName(),
+                $this->getPrefix(),
+                $this->getControllerName(),
+                $this->getAction()
+            ]));
+            if ($lastLimit) {
+                $queryParams[$this->limitParam] = $lastLimit;
+            } else {
+                $queryParams[$this->limitParam] = $this->defaultLimit;
+            }
+        }
+
+        $this->filterManager = new FilterManager($queryParams, [
             'limitParamName' => $this->limitParam,
             'pageParamName' => $this->pageParam,
             'sortParamName' => $this->sortParam,
@@ -162,31 +192,8 @@ class FilterComponent extends Component
      * @return Query
      * @throws FilterableTraitNotAppliedException
      */
-    public function filter(Query $query, string $slug = '')
+    public function filter(Query $query)
     {
-        $queryParams = empty($slug) ? [] : $this->Filters->findFilterDataForSlug($slug);
-        $queryParams = $queryParams + $this->getRequest()->getQueryParams();
-
-        if (!isset($queryParams[$this->sortParam])) {
-            $queryParams[$this->sortParam] = $this->defaultSort;
-        }
-
-        if (!isset($queryParams[$this->limitParam])) {
-            $lastLimit = $this->getRequest()->getSession()->read(join('.', [
-                'LIMIT_' . $this->getPluginName(),
-                $this->getPrefix(),
-                $this->getControllerName(),
-                $this->getAction()
-            ]));
-            if ($lastLimit) {
-                $queryParams[$this->limitParam] = $lastLimit;
-            } else {
-                $queryParams[$this->limitParam] = $this->defaultLimit;
-            }
-        }
-
-        $this->filterManager->setupFilter($queryParams);
-
         if (!method_exists($query->getRepository(), 'getFilterResult')) {
             throw new FilterableTraitNotAppliedException('Table "' . get_class($query->getRepository()) . '" must use the trait "Filterable" to be filtered.');
         }
@@ -320,13 +327,12 @@ class FilterComponent extends Component
      */
     public function getPassedParams() {
         $passParams = [];
-        if (!empty($this->getConfig($this->getAction() . '.passParams'))) {
-            foreach ($this->getConfig($this->getAction() . '.passParams') as $key) {
-                if (!empty($this->getRequest()->getParam($key))) {
-                    $passParams[$key] = $this->getRequest()->getParam($key);
-                }
+        foreach ($this->getConfig($this->getAction() . '.params.pass', []) as $key) {
+            if (!empty($this->getRequest()->getParam($key))) {
+                $passParams[$key] = $this->getRequest()->getParam($key);
             }
         }
+
         return $passParams;
     }
 
