@@ -20,7 +20,6 @@
     "ext-json": "*",
     "cakephp/cakephp": "3.*",
     "frankfoerster/cakephp-asset": "3.*",
-    "frankfoerster/cakephp-filter": "dev-cake3"
   },
   "require-dev": {
     "cakephp/cakephp-codesniffer": "3.*",
