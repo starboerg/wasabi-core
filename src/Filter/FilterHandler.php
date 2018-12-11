@@ -5,6 +5,7 @@ namespace Wasabi\Core\Filter;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
+use Dsc\Core\Controller\Component\FilterComponent;
 use Wasabi\Core\Filter\Exception\MissingFilterMethodException;
 use Wasabi\Core\Filter\Exception\MissingSortMethodException;
 
@@ -37,13 +38,37 @@ class FilterHandler
     }
 
     /**
-     * Apply all filters of the filter manager to the given $query instance.
+     * Apply all filters of the filter manager to the given $query instance based on the
+     * {@link FilterManager::getStrategy}.
      *
      * @param Query $query
-     * @return void
+     * @return int count Count of filtered results
      * @throws MissingFilterMethodException
      */
     public function applyFilters(Query $query)
+    {
+        if ($this->filterManager->getStrategy() == FilterComponent::FILTER_STRATEGY_CONTAIN) {
+            $this->_applyFilters($query);
+
+            return $query->count();
+        } else {
+            $idsQuery = $this->table->find()->select([$this->table->aliasField('id')]);
+
+            $this->_applyFilters($idsQuery);
+
+            $query->where([$this->table->aliasField('id') . ' IN' => $idsQuery]);
+
+            return $idsQuery->count();
+        }
+    }
+
+    /**
+     * Apply all filters of the filter manager to the given $query instance.
+     *
+     * @param Query $query
+     * @throws MissingFilterMethodException
+     */
+    protected function _applyFilters(Query $query)
     {
         foreach ($this->filterManager->getFilters() as $name => $value) {
             if ($value === '') {
@@ -85,7 +110,9 @@ class FilterHandler
      */
     public function applyPagination(Query $query)
     {
-        $query->limit($this->filterManager->getLimit());
-        $query->page($this->filterManager->getPage());
+        if ($this->filterManager->isPaginationActive()) {
+            $query->limit($this->filterManager->getLimit());
+            $query->page($this->filterManager->getPage());
+        }
     }
 }

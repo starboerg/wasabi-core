@@ -11,7 +11,7 @@ trait Sortable
      * Apply natural asc sorting to the given $field on the $query.
      *
      * @param Query $query
-     * @param $field
+     * @param string $field
      * @return Query
      */
     protected function naturalSortAsc(Query $query, string $field): Query

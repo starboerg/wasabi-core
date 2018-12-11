@@ -21,9 +21,7 @@ trait Filterable
         /** @var Table $this */
         $filterHandler = new FilterHandler($this, $filterManager);
 
-        $idsQuery = $this->getFilteredIdsQuery($filterHandler);
-
-        $count = $idsQuery->count();
+        $count = $filterHandler->applyFilters($query);
 
         if ($count === 0) {
             $paginationData = [
@@ -37,8 +35,6 @@ trait Filterable
             /** @var Table $this */
             return new FilterResult($this->find()->select($this->aliasField('id'))->where(['1 <> 1']), $paginationData);
         }
-
-        $query->where([$this->aliasField('id') . ' IN' => $idsQuery]);
 
         $filterHandler->applySort($query);
         $filterHandler->applyPagination($query);
@@ -104,6 +100,20 @@ trait Filterable
     {
         return function (QueryExpression $expression) use ($field, $value) {
             return $expression->like($field, $value, 'string');
+        };
+    }
+
+    /**
+     * Create a `LIKE` filter expression for the given $field and '%' . $value . '%'.
+     *
+     * @param string $field
+     * @param string $value
+     * @return \Closure
+     */
+    protected function likeContainFilter(string $field, string $value): \Closure
+    {
+        return function (QueryExpression $expression) use ($field, $value) {
+            return $expression->like($field, '%' . $value . '%', 'string');
         };
     }
 }

@@ -264,6 +264,10 @@ class FilterHelper extends Helper
             'prefix' => $this->request->getParam('prefix')
         ];
 
+        foreach($this->filterComponent->getPassedParams() as $name => $value) {
+            $url[$name] = $value;
+        }
+
         if (!empty($this->request->getParam('filterSlug'))) {
             $url['filterSlug'] = $this->request->getParam('filterSlug');
         };

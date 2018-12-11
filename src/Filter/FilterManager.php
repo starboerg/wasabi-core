@@ -3,6 +3,7 @@
 namespace Wasabi\Core\Filter;
 
 use Cake\Utility\Hash;
+use Wasabi\Core\Controller\Component\FilterComponent;
 
 class FilterManager
 {
@@ -72,11 +73,30 @@ class FilterManager
     private $limitParamName;
 
     /**
+     * Holds if limitation/pagination is on/off
+     *
+     * @var bool
+     */
+    private $paginationActive = true;
+
+    /**
      * Holds the sort parameter name.
      *
      * @var string
      */
     private $sortParamName;
+
+    /**
+     * Holds the type of strategy used for filtered associations.
+     *
+     * Possible values are:
+     *
+     * 'contain' (default) -> filter query contains filterable associations.
+     * 'subquery' -> filter query adds filterable associations by subqueries.
+     *
+     * @var string
+     */
+    private $strategy;
 
     /**
      * Constructor
@@ -91,6 +111,7 @@ class FilterManager
         $this->sortParamName = (string)Hash::get($config, 'sortParamName', 'sort');
         $this->paramsToHandle = (array)Hash::get($config, 'handledParams', []);
         $this->paramsToIgnore = (array)Hash::get($config, 'ignoredParams', []);
+        $this->strategy = (string)Hash::get($config, 'strategy', FilterComponent::FILTER_STRATEGY_CONTAIN);
 
         foreach ($params as $param => $value) {
             if ($this->shouldSkipParam($param)) {
@@ -176,6 +197,26 @@ class FilterManager
     }
 
     /**
+     * Is limitation/pagination on?
+     *
+     * @return bool
+     */
+    public function isPaginationActive(): bool
+    {
+        return $this->paginationActive;
+    }
+
+    /**
+     * Turns on/off limitation/pagination.
+     *
+     * @param bool $activeLimit
+     */
+    public function setPaginationActive(bool $paginationActive)
+    {
+        $this->paginationActive = $paginationActive;
+    }
+
+    /**
      * The the page.
      *
      * @return int
@@ -248,6 +289,20 @@ class FilterManager
     public function getSortString()
     {
         return $this->sortString;
+    }
+
+    /**
+     * Gets the type of strategy used for filtered associations.
+     *
+     * Possible values are:
+     * 'contain' -> filter query contains filterable associations
+     * 'subquery' (default) -> filter query adds filterable associations by subqueries.
+     *
+     * @return string
+     */
+    public function getStrategy(): string
+    {
+        return $this->strategy;
     }
 
     /**
