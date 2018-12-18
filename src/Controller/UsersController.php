@@ -105,6 +105,10 @@ class UsersController extends BackendAppController
      */
     public function register()
     {
+        if (!Configure::read('Core.User.can_register', true)) {
+            return $this->redirect(['action' => 'login']);
+        }
+
         $user = $this->Users->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Users->save($user)) {

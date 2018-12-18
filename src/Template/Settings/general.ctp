@@ -144,6 +144,14 @@ echo $this->Form->create($settings, ['context' => ['table' => 'Wasabi/Core.Gener
             '1' => __d('wasabi_core', 'Yes')
         ]
     ]);
+    echo $this->Form->control('User__can_register', [
+        'label' => __d('wasabi_core', 'User can register?'),
+        'default' => '1',
+        'options' => [
+            '0' => __d('wasabi_core', 'No'),
+            '1' => __d('wasabi_core', 'Yes')
+        ]
+    ]);
     echo $this->Html->div('form-controls');
         echo $this->Form->button(__d('wasabi_core', 'Save'), ['class' => 'button', 'data-toggle' => 'btn-loading']);
         echo $this->Guardian->protectedLink(
