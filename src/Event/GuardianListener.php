@@ -58,6 +58,7 @@ class GuardianListener implements EventListenerInterface
         $guardian->addGuestActions([
             'Wasabi/Core.Users.login',
             'Wasabi/Core.Users.logout',
+            'Wasabi/Core.Authentication.logout',
             'Wasabi/Core.Users.register',
             'Wasabi/Core.Users.unauthorized',
             'Wasabi/Core.Users.lostPassword',
