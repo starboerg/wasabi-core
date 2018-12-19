@@ -54,6 +54,8 @@ class FilterHandler
         } else {
             $idsQuery = $this->table->find()->select([$this->table->aliasField('id')]);
 
+            $idsQuery->applyOptions($query->getOptions());
+
             $this->_applyFilters($idsQuery);
 
             $query->where([$this->table->aliasField('id') . ' IN' => $idsQuery]);
