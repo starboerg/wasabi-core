@@ -26,12 +26,14 @@ if (Configure::read('Settings.Core.Login.Message.show') === '1' && $message) {
 </div>
 <div class="form-controls">
     <ul>
+        <?php if (Configure::read('Core.User.can_register')) { ?>
         <li>
             <?= $this->Html->link(
                 __d('wasabi_core', 'Create an account.'),
                 $this->Route->register()
             ) ?>
         </li>
+        <?php } ?>
     </ul>
     <div class="form-control-buttons">
         <?= $this->Form->button(__d('wasabi_core', 'Login'), ['class' => 'button blue', 'data-toggle' => 'btn-loading']) ?>
