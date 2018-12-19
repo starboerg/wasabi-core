@@ -32,7 +32,7 @@ return [
             ],
             'unauthorizedRedirect' => [
                 'plugin' => 'Wasabi/Core',
-                'controller' => 'Authentication',
+                'controller' => 'Users',
                 'action' => 'unauthorized',
                 'prefix' => false
             ],
