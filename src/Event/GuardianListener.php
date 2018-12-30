@@ -133,9 +133,6 @@ class GuardianListener implements EventListenerInterface
                 ]),
                 $pm->createPermission(8000, 'users.profile', __d('wasabi_core', 'Profile'), [
                     'Wasabi/Core.Users.profile'
-                ]),
-                $pm->createPermission(9000, 'users.heartBeat', __d('wasabi_core', 'HeartBeat'), [
-                    'Wasabi/Core.Users.heartBeat'
                 ])
             ]);
 
@@ -176,9 +173,6 @@ class GuardianListener implements EventListenerInterface
                 ]),
                 $pm->createPermission(4000, 'languages.delete', __d('wasabi_core', 'Delete'), [
                     'Wasabi/Core.Languages.delete'
-                ]),
-                $pm->createPermission(5000, 'languages.sort', __d('wasabi_core', 'Update Order'), [
-                    'Wasabi/Core.Languages.sort'
                 ]),
                 $pm->createPermission(6000, 'languages.change', __d('wasabi_core', 'Change content language'), [
                     'Wasabi/Core.Languages.change'
