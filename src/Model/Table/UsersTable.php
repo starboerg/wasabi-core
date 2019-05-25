@@ -412,7 +412,7 @@ class UsersTable extends Table
      */
     public function sortByIdAsc(Query $query): Query
     {
-        return $this->naturalSortAsc($query, $this->aliasField('username'));
+        return $this->naturalSortAsc($query, $this->aliasField('id'));
     }
 
     /**
@@ -423,7 +423,7 @@ class UsersTable extends Table
      */
     public function sortByIdDesc(Query $query): Query
     {
-        return $this->naturalSortDesc($query, $this->aliasField('username'));
+        return $this->naturalSortDesc($query, $this->aliasField('id'));
     }
 
     /**
