@@ -91,6 +91,9 @@ class UsersController extends BackendAppController
                 ],
                 'pagination' => [
                     'param' => 'p'
+                ],
+                'params' => [
+                    'slug' => 'filterSlug'
                 ]
             ]
         ]);
