@@ -488,7 +488,7 @@ class GuardianComponent extends Component
      */
     protected function _getGroupPermissions()
     {
-        if (get_class($this->GroupPermissions) === 'GroupPermission') {
+        if ($this->GroupPermissions && get_class($this->GroupPermissions) === 'GroupPermission') {
             return $this->GroupPermissions;
         }
 
